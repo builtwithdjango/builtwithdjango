@@ -1,0 +1,25 @@
+{
+  "name": "kushim",
+  "version": "1.0.0",
+  "description": "# Kushim ## Open Source Minimalist Life Management Tool",
+  "main": "index.js",
+  "scripts": {
+    "build": "postcss static-local/css/tailwind.css -o static-local/css/final.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rasulkireev/kushim.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rasulkireev/kushim/issues"
+  },
+  "homepage": "https://github.com/rasulkireev/kushim#readme",
+  "dependencies": {
+    "autoprefixer": "^9.7.3",
+    "postcss-cli": "^6.1.3",
+    "tailwindcss": "^1.1.4"
+  }
+}
