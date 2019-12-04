@@ -1,0 +1,27 @@
+{% load static %}
+
+<html class="bg-gray-100">
+  <head>
+    <title>Django blog</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/final.css' %}">
+
+  </head>
+  <body class="font-sans antialiased">
+    
+    <header class="pt-32 pb-56 bg-blue-600 sm:pt-24">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="mb-2 text-5xl"><a href="{% url 'home' %}">Built with Tailwind.</a></h1>
+                <h2 class="">A collection of awesome websites built with Django.</h2>
+            </div>
+        </div>
+    </header>
+
+    <div>
+      {% block content %}
+      {% endblock content %}
+    </div>
+  </body>
+</html>

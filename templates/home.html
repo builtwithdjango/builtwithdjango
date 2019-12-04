@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  {% for site in object_list %}
+    <div class="">
+      <h3><a href="">{{ site.website_title }}</a></h3>
+      <p>{{ site.website_description }}</p>
+    </div>
+  {% endfor %}
+
+{% endblock content %}
