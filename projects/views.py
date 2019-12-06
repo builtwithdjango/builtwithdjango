@@ -1,16 +1,19 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView
 from .models import Project
 from django.urls import reverse_lazy
+from .forms import AddProject
 
 
 class ProjectListView(ListView):
     model = Project
     template_name = 'home.html'
-
-
+    
 class ProjectCreateView(CreateView):
     model = Project
+    form_class = AddProject
     template_name = 'submit_project.html'
-    fields = '__all__'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('sucessfull-submit')
+
+class Thanks(TemplateView):
+    template_name = "sucessfull-submit.html"
