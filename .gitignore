@@ -9,6 +9,9 @@ __pycache__/
 # C extensions
 *.so
 
+# Media
+media/
+
 # Dependency directories
 node_modules/
 
@@ -65,8 +68,8 @@ coverage.xml
 # Django stuff:
 *.log
 # local_settings.py
-# db.sqlite3
-# db.sqlite3-journal
+db.sqlite3
+db.sqlite3-journal
 
 # Flask stuff:
 instance/
@@ -98,7 +101,7 @@ ipython_config.py
 #   install all needed dependencies.
 #Pipfile.lock
 
-# celery beat schedule file
+# celery beat schedul
 celerybeat-schedule
 
 # SageMath parsed files
