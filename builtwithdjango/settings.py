@@ -152,3 +152,8 @@ if not DEBUG:
         dsn=env('dsn'),
         integrations=[DjangoIntegration()]
     )
+
+# Django Analytical
+if not DEBUG:
+    GOOGLE_ANALYTICS_PROPERTY_ID = env('GOOGLE_ANALYTICS_PROPERTY_ID')
+    ANALYTICAL_INTERNAL_IPS = env.list('ANALYTICAL_INTERNAL_IPS')
