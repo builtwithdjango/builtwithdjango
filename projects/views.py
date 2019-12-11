@@ -8,6 +8,7 @@ from .forms import AddProject
 class ProjectListView(ListView):
     model = Project
     template_name = 'home.html'
+    ordering = ['-date_added']
     
 class ProjectCreateView(CreateView):
     model = Project
