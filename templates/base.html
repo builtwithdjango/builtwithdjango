@@ -53,23 +53,12 @@
       {% endblock content %}
     </section>
 
-    {% analytical_body_bottom %}
-  
-    <script>
-      (function(d, h, m){
-          var js, fjs = d.getElementsByTagName(h)[0];
-          if (d.getElementById(m)){return;}
-          js = d.createElement(h); js.id = m;
-          js.onload = function(){
-              window.makerWidgetComInit({
-              position: "left",          
-              widget: "s62e84viokypikrd-0b0mdlxxwbyj5xot-mcjb0aqmyhejxy7m"                
-          })};
-          js.src = "https://makerwidget.com/js/embed.js";
-          fjs.parentNode.insertBefore(js, fjs)
-      }(document, "script", "dhm"))
-  </script>
+      <a class="fixed bottom-0 right-0 z-10 p-1 font-semibold text-gray-900 no-underline bg-white border-t border-l border-white border-solid rounded-tl-lg" href="https://rasulkireev.typeform.com/to/ajUJ23">
+        <img class="inline w-4 align-middle rounded" src="{% static 'images/logo.png' %}" alt="Built with Django logo">
+        <p class="inline m-0 ml-1 font-bold align-middle">Feedback</p>
+      </a>
 
+    {% analytical_body_bottom %}
   </body>
 
 </html>
