@@ -40,10 +40,6 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 # Application definition
 
 INSTALLED_APPS = [
-    'projects.apps.ProjectsConfig',
-
-    'taggit',
-    'analytical',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -51,6 +47,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'taggit',
+    'analytical',
+    
+    'projects.apps.ProjectsConfig',
+    'newsletter.apps.NewsletterConfig',
+
 ]
 
 MIDDLEWARE = [

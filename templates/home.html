@@ -3,10 +3,6 @@
 
 {% block content %}
 
-<div class="mx-auto my-4 mb-10 text-center">
-    <a class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700" href="{% url 'submit_project' %}">Submit a Project</a>
-</div>
-
 <div class="flex flex-wrap">
   {% for site in object_list %}
   {% if site.published %}
@@ -22,5 +18,9 @@
     {% endif %}
   {% endfor %}
 </div>
+
+{% load email_signup_form_tag %}
+{% get_signup_form %}
+
 
 {% endblock content %}

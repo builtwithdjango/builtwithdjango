@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', include('projects.urls')),
+    path('newsletter/', include('newsletter.urls')),
 
     path('sentry-debug/', trigger_error),
     
