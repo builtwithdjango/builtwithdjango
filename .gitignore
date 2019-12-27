@@ -104,6 +104,9 @@ ipython_config.py
 # celery beat schedul
 celerybeat-schedule
 
+# Images
+builtwithdjango-site-images/
+
 # SageMath parsed files
 *.sage.py
 
