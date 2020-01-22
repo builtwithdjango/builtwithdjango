@@ -11,6 +11,15 @@
             <label class="block mb-2 font-bold text-gray-700" for="{{ form.user_email.id_for_label }}">Subscribe to our weekly newsletter</label>
             {{ form.user_email }}
             </div>
+
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
             
             <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-300" type="submit">Submit</button>
         </form>

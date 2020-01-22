@@ -9,6 +9,7 @@ class NewsletterSignupView(CreateView):
     form_class = NewsletterSignupForm
     model = Emails
     success_url = reverse_lazy('newsletter-thanks')
+    
 
 class NewsletterThanksView(TemplateView):
     template_name = "newsletter/sucessfull-email-submit.html"
