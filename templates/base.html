@@ -30,42 +30,58 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/final.css' %}">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
     {% analytical_head_bottom %}
   </head>
 
-  <body class="mx-4 font-sans text-lg text-gray-900 bg-gray-100">
+  <body class="font-sans text-lg text-gray-900 bg-gray-100">
     {% analytical_body_top %}
 
-    <nav class="mt-3">
-      <a href="/"><img class="w-20 mx-auto" src="{% static 'images/logo.png' %}" alt="BuiltwithDjango Logo"></a>
+  <div class="flex flex-col mb-2">
+    <nav class="w-full pb-4 mb-2 shadow-lg sm:bg-gray-200 md:order-2 sm:py-2 sm-1 lg:py-0">
+      <div class="flex flex-col items-center justify-center lg:justify-between sm:flex-row lg:ml-20">
+        <div class="flex flex-row items-center p-2">
+          <a class="p-1 text-lg font-semibold text-white text-blue-700 no-underline uppercase hover:text-blue-900 lg:p-2" href="{% url 'home' %}">
+            Home
+          </a>
+          <a class="p-1 text-lg font-semibold text-white text-blue-700 no-underline uppercase hover:text-blue-900 lg:p-2" href="{% url 'home' %}">
+            Podcast
+          </a>
+          <a class="p-1 text-lg font-semibold text-white text-blue-700 no-underline uppercase hover:text-blue-900 lg:p-2" href="{% url 'home' %}">
+            Newsletter
+          </a>
+        </div>
+        <div class="flex items-center lg:self-start">
+          <a class="flex px-4 lg:mr-2 lg:py-5" href="https://twitter.com/builtwithdjango">
+            <i class="self-center text-3xl text-blue-700 lab la-twitter"></i>
+          </a>
+          <a class="flex p-2 text-sm font-bold text-white bg-green-500 rounded shadow-lg lg:text-lg lg:rounded-none lg:w-auto lg:p-6 hover:bg-green-700" href="{% url 'submit-project' %}">
+            <span class="items-center">Submit a Project</span>
+          </a>        
+        </div>
+      </div>
     </nav>
     
-    <header class="container mx-auto">
-      <div class="text-center">
-        <h1 class="mb-2 text-5xl"><a href="{% url 'home' %}">Built with <span class="text-green-800">Django</span></a></h1>
+    <div class="flex flex-row items-center justify-center order-first pt-2 sm:my-3 sm:py-0 sm:order-last lg:flex-col lg:-mt-20">
+      <div class="mx-1 lg:mb-4">
+        <a class="shadow-lg" href="/"><img class="w-10 mx-auto lg:w-16" src="{% static 'images/logo.png' %}" alt="BuiltwithDjango Logo"></a>
       </div>
-
-      <div class="mx-auto my-4 mb-10 text-center">
-        <a class="px-4 py-2 m-1 font-bold text-white bg-green-500 rounded hover:bg-green-700" href="{% url 'submit_project' %}">Submit a Project</a>        
-      </div>
+      <div class="mx-1">
+        <h1 class="text-2xl lg:text-5xl"><a href="{% url 'home' %}">Built with <span class="text-green-800">Django</span></a></h1>
+      </div>    
+    </div>
+  </div>
     
-    </header>
 
-
-    <section class="container mx-auto mb-10">
+    <div class="container mx-auto mb-10">
       {% block content %}
       {% endblock content %}
-    </section>
+    </div>
 
       <a class="fixed bottom-0 right-0 z-10 px-2 py-1 font-semibold text-gray-900 no-underline bg-gray-200 border-t border-l border-white border-solid rounded-tl-lg" href="https://rasulkireev.com" target="_blank">
         <img class="inline w-4 align-middle rounded" src="https://dj-pw-static.s3.amazonaws.com/media/my_photo.jpg" alt="Rasul Kireev">
         <p class="inline m-0 ml-1 font-bold align-middle">by Rasul</p>
-      </a>
-
-      <a class="fixed bottom-0 left-0 z-10 px-2 py-1 font-semibold text-gray-900 no-underline bg-gray-200 border-t border-r border-white border-solid rounded-tr-lg" href="https://twitter.com/builtwithdjango" target="_blank">
-        <img class="inline w-4 align-middle rounded" src="{% static 'images/logo.png' %}" alt="Built with Django logo">
-        <p class="inline m-0 ml-1 font-bold align-middle">Feedback</p>
       </a>
 
     {% analytical_body_bottom %}
