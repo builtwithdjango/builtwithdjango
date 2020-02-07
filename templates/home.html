@@ -3,19 +3,17 @@
 
 {% block content %}
 
-<div class="flex flex-wrap">
+<div class="flex flex-col flex-wrap justify-center md:flex-row md:justify-start">
   {% for site in object_list %}
   {% if site.published %}
-    <div class="flex flex-col w-full max-w-md mx-auto mb-8 overflow-hidden shadow-lg md:max-w-xs lg:max-w-sm rounded-2xl hover:shadow lg:w-1/2 xl:w-1/3">
-      <a href="{{ site.website_url }}" target="_blank"><img class="object-cover object-top w-full h-48" src="{% get_media_prefix %}{{site.website_homepage_screenshot}}" alt="{{ site.website_title }} | Screenshot"></a>
-      <div class="flex flex-col justify-between flex-1 px-6 py-4 bg-white border-t">
-        <div class="h-32 mb-6">
-          <h2 class="mb-2 text-xl font-bold"><a href="{{ site.website_url }}" target="_blank">{{ site.website_title }}</a></h2>
-          <p class="text-base leading-relaxed text-gray-700">{{ site.website_short_description }}</p>
+      <a class="flex flex-col max-w-xs mx-auto my-2 border border-gray-300 rounded-lg md:m-2" href="{{ site.url }}">
+        <img class="object-cover object-left-top h-56 border-b border-gray-300 rounded-t-lg" src="{% get_media_prefix %}{{site.website_homepage_screenshot}}" alt="{{ site.website_title }} | Screenshot">
+        <div class="p-4">
+          <h2 class="mb-2 text-lg font-semibold text-gray-900">{{ site.website_title }}</h2>
+          <p class="text-gray-700">{{ site.website_short_description }}</p>
         </div>
-      </div>
-    </div>
-    {% endif %}
+      </a>
+  {% endif %}
   {% endfor %}
 </div>
 

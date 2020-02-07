@@ -39,19 +39,20 @@
     {% analytical_body_top %}
 
   <div class="flex flex-col mb-2">
-    <nav class="w-full pb-4 mb-2 shadow-lg sm:bg-gray-200 md:order-2 sm:py-2 sm-1 lg:py-0">
+    <nav class="z-50 w-full pb-4 mb-2 bg-transparent shadow-lg md:order-2 sm:py-2 sm-1 lg:py-0">
       <div class="flex flex-col items-center justify-center lg:justify-between sm:flex-row lg:ml-20">
         <div class="flex flex-row items-center p-2">
           <a class="p-1 text-lg font-semibold text-white text-blue-700 no-underline uppercase hover:text-blue-900 lg:p-2" href="{% url 'home' %}">
             Home
           </a>
-          <a class="p-1 text-lg font-semibold text-white text-blue-700 no-underline uppercase hover:text-blue-900 lg:p-2" href="{% url 'home' %}">
+          <!-- <a class="p-1 text-lg font-semibold text-white text-blue-700 no-underline uppercase hover:text-blue-900 lg:p-2" href="{% url 'home' %}">
             Podcast
-          </a>
+          </a> -->
           <a class="p-1 text-lg font-semibold text-white text-blue-700 no-underline uppercase hover:text-blue-900 lg:p-2" href="{% url 'home' %}">
             Newsletter
           </a>
         </div>
+        
         <div class="flex items-center lg:self-start">
           <a class="flex px-4 lg:mr-2 lg:py-5" href="https://twitter.com/builtwithdjango">
             <i class="self-center text-3xl text-blue-700 lab la-twitter"></i>
