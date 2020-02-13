@@ -32,6 +32,9 @@
     <link rel="stylesheet" href="{% static 'css/final.css' %}">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
+    <!-- Crisp Chat -->
+    <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="2c703bfb-5b5a-4bca-b8f9-f1bacc6c8122";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+  
     {% analytical_head_bottom %}
   </head>
 
@@ -81,9 +84,10 @@
       {% endblock content %}
     </div>
 
-      <a class="fixed bottom-0 right-0 z-10 px-2 py-1 font-semibold text-gray-900 no-underline bg-gray-200 border-t border-l border-white border-solid rounded-tl-lg" href="https://rasulkireev.com" target="_blank">
+      <a class="fixed bottom-0 left-0 z-10 px-2 py-1 font-semibold text-gray-900 no-underline bg-gray-200 border-t border-l border-white border-solid rounded-tr" 
+      href="https://rasulkireev.com" target="_blank">
         <img class="inline w-4 align-middle rounded" src="https://dj-pw-static.s3.amazonaws.com/media/my_photo.jpg" alt="Rasul Kireev">
-        <p class="inline m-0 ml-1 font-bold align-middle">by Rasul</p>
+        <p class="inline m-0 ml-1 text-sm font-bold align-middle">by Rasul</p>
       </a>
 
     {% analytical_body_bottom %}
