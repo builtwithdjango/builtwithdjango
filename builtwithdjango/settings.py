@@ -144,6 +144,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static-local/'),
 ]
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
 
 # Sentry Error Tracking
 import sentry_sdk
@@ -162,3 +164,4 @@ if not DEBUG:
 
 
 EMAILOCTOPUS_API = env("EMAILOCTOPUS_API")
+OCTO_LIST_ID = env("OCTO_LIST_ID")
