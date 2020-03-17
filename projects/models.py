@@ -22,6 +22,8 @@ class Project(models.Model):
     website_additional_info = models.TextField(blank=True)
     website_requirements = models.TextField(blank=True)
     
+    maker = models.ForeignKey("Maker", on_delete=models.CASCADE, null=True, blank=True)
+    
     # Optional Author Information
     author_name = models.CharField(max_length=100, blank=True)
     author_email = models.EmailField(blank=True)
@@ -37,4 +39,17 @@ class Project(models.Model):
 
 
 
+class Maker(models.Model):
+    # Basic Info
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    maker_email = models.EmailField(blank=True)
+    maker_profile_image = models.ImageField(upload_to='maker_profile_image/', blank=True)
 
+    # Social
+    twitter_handle = models.CharField(max_length=20, blank=True)
+    github_handle = models.CharField(max_length=20, blank=True)
+    personal_website = models.URLField(blank=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

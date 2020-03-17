@@ -20,6 +20,12 @@ class ProjectListView(ListView):
 
         return context
 
+class ProjectDetailView(DetailView):
+    model = Project
+    template_name = "projects/project_detail.html"
+
+
+
 class EmailFormView(SuccessMessageMixin, CreateView):
     form_class = NewsletterSignupForm
     model = Emails
@@ -49,5 +55,4 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('home')
     success_message = "Thanks for submitting your project! I'll let you know when it is up on the site!"
 
-class Thanks(TemplateView):
-    template_name = "sucessfull-submit.html"
+    
