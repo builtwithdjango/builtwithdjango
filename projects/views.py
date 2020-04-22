@@ -42,7 +42,6 @@ class EmailFormView(SuccessMessageMixin, CreateView):
         }
 
         response = requests.post(f"https://emailoctopus.com/api/1.5/lists/{list_id}/contacts", data=data)
-        response.status_code
         messages.success(self.request, 'Thanks for signing up! You should receive a confirmation email soon.')
         
         return HttpResponseRedirect(reverse_lazy('home'))

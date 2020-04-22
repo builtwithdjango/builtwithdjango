@@ -30,11 +30,7 @@ class NewsletterSignupView(SuccessMessageMixin, CreateView):
 
         r = requests.post(f"https://emailoctopus.com/api/1.5/lists/{list_id}/contacts", data=data)
         messages.success(self.request, 'Thanks for subscribing!')
-        print(r.status_code)
-        json_response = r.json()
-        print(json_response)
 
-        
         return HttpResponseRedirect(reverse_lazy('home'))
 
 class NewsletterThanksView(TemplateView):
