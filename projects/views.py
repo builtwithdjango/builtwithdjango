@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
-from .models import Project
+from .models import Project, Maker
 from django.urls import reverse_lazy
 
 from newsletter.views import NewsletterSignupForm
@@ -24,6 +24,11 @@ class ProjectDetailView(DetailView):
     model = Project
     template_name = "projects/project_detail.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = NewsletterSignupForm
+
+        return context
 
 
 class EmailFormView(SuccessMessageMixin, CreateView):

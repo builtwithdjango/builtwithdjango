@@ -24,13 +24,6 @@ class Project(models.Model):
     
     maker = models.ForeignKey("Maker", on_delete=models.CASCADE, null=True, blank=True)
     
-    # Optional Author Information
-    author_name = models.CharField(max_length=100, blank=True)
-    author_email = models.EmailField(blank=True)
-    author_website = models.URLField(blank=True)
-    author_twitter = models.CharField(max_length=50, blank=True)
-    author_github = models.CharField(max_length=50, blank=True)
-
     def __str__(self):
         return str(self.published) + ": " + self.website_title + "- " + str(self.date_added) 
     

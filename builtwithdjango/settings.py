@@ -49,8 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'taggit',
-    'analytical',
-    
+
     'projects.apps.ProjectsConfig',
     'newsletter.apps.NewsletterConfig',
 
@@ -156,12 +155,6 @@ if not DEBUG:
         dsn=env('dsn'),
         integrations=[DjangoIntegration()]
     )
-
-# Django Analytical
-if not DEBUG:
-    GOOGLE_ANALYTICS_PROPERTY_ID = env('GOOGLE_ANALYTICS_PROPERTY_ID')
-    ANALYTICAL_INTERNAL_IPS = env.list('ANALYTICAL_INTERNAL_IPS')
-
 
 EMAILOCTOPUS_API = env("EMAILOCTOPUS_API")
 OCTO_LIST_ID = env("OCTO_LIST_ID")
