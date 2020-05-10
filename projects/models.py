@@ -9,7 +9,7 @@ class Project(models.Model):
     website_url = models.URLField(unique=True)
     website_short_description = models.CharField(max_length=200)
     user_email = models.EmailField()
-    slug = AutoSlugField(populate_from='website_title')
+    slug = AutoSlugField(populate_from='website_title', always_update=True)
     published = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager(blank=True)
