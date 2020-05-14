@@ -1,6 +1,28 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block meta %}
+<meta name="twitter:card" content="summary_large_image">
+
+{% if object.maker.twitter_handle %}
+<meta name="twitter:creator" content="@{{object.maker.twitter_handle}}">
+<meta name="twitter:site" content="@{{object.maker.twitter_handle}}">
+{% endif %}
+
+<title>{{ object.website_title }} is Built with Django</title>
+<meta name="description" content="{{ object.website_short_description }}">
+
+<meta property="og:title" content="{{ object.website_title }}">
+<meta property="og:description" content="{{ object.website_short_description }}">
+<meta name="og:image" content="{% get_media_prefix %}{{object.website_homepage_screenshot}}">
+
+
+<meta name="twitter:title" content="{{ object.website_title }}">
+<meta name="twitter:description" content="{{ object.website_short_description }}">
+<meta name="twitter:image" content="{% get_media_prefix %}{{object.website_homepage_screenshot}}">
+{% endblock %}
+
+
 {% block content %}
 
 <section class="" itemscope="" itemtype="https://schema.org/WebSite">

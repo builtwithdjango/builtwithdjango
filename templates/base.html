@@ -7,23 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Other meta stuff -->
-    <title>Built with Django</title>
-    <meta name="description" content="Collection of projects people built with Django">
     <link rel="apple-touch-icon" href="{% static 'favicon/logo.png' %}">
     <link rel="icon" type="image/png" sizes="16x16 32x32 500x500" href="{% static 'favicon/logo.png' %}">
     
-    <meta property="og:title" content="Built with Django">
     <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    {% block meta %}
+    <title>Built with Django</title>
+    <meta name="description" content="Collection of projects people built with Django">
+
+    <meta property="og:title" content="Built with Django">
     <meta property="og:description" content="Collection of projects people built with Django">
     <meta name="og:image" content="{% static 'images/logo.png' %}">
 
-    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:creator" content="@rasulkireev">
     <meta name="twitter:site" content="@rasulkireev">
     <meta name="twitter:title" content="Built with Django">
     <meta name="twitter:description" content="Collection of projects people built with Django">
     <meta name="twitter:image" content="{% static 'images/logo.png' %}">
-
+    {% endblock %}
 
     <!-- CSS -->
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
@@ -41,17 +44,10 @@
           <a class="p-1 text-lg font-semibold text-white text-blue-700 no-underline uppercase hover:text-blue-900 lg:p-2" href="{% url 'home' %}">
             Home
           </a>
-          <!-- <a class="p-1 text-lg font-semibold text-white text-blue-700 no-underline uppercase hover:text-blue-900 lg:p-2" href="{% url 'home' %}">
-            Podcast
-          </a> -->
-          <!-- <a class="p-1 text-lg font-semibold text-white text-blue-700 no-underline uppercase hover:text-blue-900 lg:p-2" href="{% url 'newsletter-home' %}">
-            Newsletter
-          </a> -->
         </div>
         
         <div class="flex items-center lg:self-start">
-          <a class="flex px-4 lg:py-5" href="https://github.com/rasulkireev/builtwithdjango
-          ">
+          <a class="flex px-4 lg:py-5" href="https://github.com/rasulkireev/builtwithdjango">
             <i class="self-center text-3xl text-black lab la-github"></i>
           </a>
           <a class="flex px-4 lg:mr-2 lg:py-5" href="https://twitter.com/builtwithdjango">
