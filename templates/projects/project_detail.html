@@ -14,12 +14,12 @@
 
 <meta property="og:title" content="{{ object.website_title }}">
 <meta property="og:description" content="{{ object.website_short_description }}">
-<meta name="og:image" content="{{ request.get_host }}{{object.website_homepage_screenshot.url}}">
+<meta name="og:image" content="https://{{ request.get_host }}{{object.website_homepage_screenshot.url}}">
 
 
 <meta name="twitter:title" content="{{ object.website_title }}">
 <meta name="twitter:description" content="{{ object.website_short_description }}">
-<meta name="twitter:image" content="{{ request.get_host }}{{object.website_homepage_screenshot.url}}">
+<meta name="twitter:image" content="https://{{ request.get_host }}{{object.website_homepage_screenshot.url}}">
 {% endblock %}
 
 
