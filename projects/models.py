@@ -34,8 +34,8 @@ class Project(models.Model):
 
 class Maker(models.Model):
     # Basic Info
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
+    first_name = models.CharField(max_length=20, blank=True)
+    last_name = models.CharField(max_length=20, blank=True)
     maker_email = models.EmailField(blank=True)
     maker_profile_image = models.ImageField(upload_to='maker_profile_image/', blank=True)
 
