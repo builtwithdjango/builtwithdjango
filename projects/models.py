@@ -44,5 +44,8 @@ class Maker(models.Model):
     github_handle = models.CharField(max_length=20, blank=True)
     personal_website = models.URLField(blank=True)
 
+    # Additional
+    interviewed = models.BooleanField(default=False)
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
