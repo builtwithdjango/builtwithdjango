@@ -47,8 +47,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
+
     'taggit',
+    'webpack_loader',
 
     'projects.apps.ProjectsConfig',
     'newsletter.apps.NewsletterConfig',
@@ -140,11 +143,20 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static-local/'),
+    os.path.join(BASE_DIR, 'assets/'),
 ]
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
+# Sites
+SITE_ID = 1
 
 # Sentry Error Tracking
 import sentry_sdk

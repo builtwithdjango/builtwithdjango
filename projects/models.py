@@ -13,22 +13,23 @@ class Project(models.Model):
     published = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager(blank=True)
-    
+
     # Optional Website Information
+    is_open_source = models.BooleanField(default=False)
     website_description = models.TextField(blank=True)
     website_homepage_screenshot = models.ImageField(upload_to='website_homepage_screenshot/', blank=True)
     website_twitter = models.URLField(blank=True)
     website_github = models.URLField(blank=True)
     website_additional_info = models.TextField(blank=True)
     website_requirements = models.TextField(blank=True)
-    
+
     maker = models.ForeignKey("Maker", on_delete=models.CASCADE, null=True, blank=True)
-    
+
     def __str__(self):
-        return str(self.published) + ": " + self.website_title + "- " + str(self.date_added) 
-    
+        return str(self.published) + ": " + self.website_title + "- " + str(self.date_added)
+
     def get_absolute_url(self):
-        return reverse('website_detail', args=[self.slug])
+        return reverse('project', args=[self.slug])
 
 
 

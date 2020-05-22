@@ -7,6 +7,7 @@ authors = ["Rasul Kireev <me@rasulkireev.com>"]
 [tool.poetry.dependencies]
 python = "^3.7"
 django = "^3.0.5"
+django-autoslug = "^1.9.7"
 django-environ = "^0.4.5"
 django-taggit = "^1.2.0"
 djangorestframework = "^3.11.0"
@@ -14,9 +15,9 @@ gunicorn = "^20.0.4"
 requests = "^2.23.0"
 sentry_sdk = "^0.14.3"
 pillow = "^7.1.1"
+django-webpack-loader = "0.6.0"
 
 [tool.poetry.dev-dependencies]
-django-autoslug = "^1.9.7"
 
 [build-system]
 requires = ["poetry>=0.12"]

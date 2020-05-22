@@ -18,16 +18,34 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+
+# Sitemap imports
+from django.contrib.sitemaps.views import sitemap
+from django.contrib.sitemaps import GenericSitemap
+from .sitemaps import StaticViewSitemap
+
+from projects.models import Project
+
+sitemaps = {
+    'static': StaticViewSitemap,
+
+    'writings': GenericSitemap({
+        'queryset': Project.objects.filter(published=True),
+        'date_field': 'date_added',
+    }, priority=0.8),
+}
+
 def trigger_error(request):
     division_by_zero = 1 / 0
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
     path('', include('projects.urls')),
     path('newsletter/', include('newsletter.urls')),
 
     path('sentry-debug/', trigger_error),
-    
+
 ]   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
