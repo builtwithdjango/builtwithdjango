@@ -43,6 +43,7 @@ class Maker(models.Model):
     # Social
     twitter_handle = models.CharField(max_length=20, blank=True)
     github_handle = models.CharField(max_length=20, blank=True)
+    indiehackers = models.CharField(max_length=20, blank=True)
     personal_website = models.URLField(blank=True)
 
     # Additional
