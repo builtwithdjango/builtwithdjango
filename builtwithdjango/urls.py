@@ -29,7 +29,7 @@ from projects.models import Project
 sitemaps = {
     'static': StaticViewSitemap,
 
-    'writings': GenericSitemap({
+    'projects': GenericSitemap({
         'queryset': Project.objects.filter(published=True),
         'date_field': 'date_added',
     }, priority=0.8),
