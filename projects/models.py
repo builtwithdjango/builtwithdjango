@@ -26,7 +26,7 @@ class Project(models.Model):
     maker = models.ForeignKey("Maker", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return str(self.published) + ": " + self.website_title + "- " + str(self.date_added)
+        return str(self.published) + ": " + self.website_title + " by " + str(self.maker) + " - " + str(self.date_added)
 
     def get_absolute_url(self):
         return reverse('project', args=[self.slug])
