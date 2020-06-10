@@ -33,8 +33,24 @@
             <a class="block border-b border-gray-300 rounded-t-lg" href="{% url 'project' object.slug %}">
               <img class="w-full rounded-t-lg" src="{% get_media_prefix %}{{object.website_homepage_screenshot}}" alt="{{ object.website_title }} | Screenshot">
             </a>
-            <div class="justify-end px-4 py-2 border-t border-gray-300">
-              <a class="inline-block bg-gray-300 rounded-full" href="{{ object.website_url }}" target="_blank"><i class="p-2 las la-link"></i></a>
+            <div class="flex items-center justify-between border-t px-4 py-2 border-gray-300">
+                <div class="">
+                  <a class="inline-block bg-gray-300 rounded-full" href="{{ object.website_url }}" target="_blank"><i class="p-2 las la-link"></i></a>
+                  {% if object.website_github %}
+                  <a class="inline-block bg-gray-300 rounded-full" href="{{ object.website_github }}" target="_blank"><i class="p-2 lab la-github"></i></a>
+                  {% endif %}
+                  {% if object.website_twitter %}
+                  <a class="inline-block bg-gray-300 rounded-full" href="{{ object.website_twitter }}" target="_blank"><i class="p-2 lab la-twitter"></i></a>
+                  {% endif %}
+                </div>
+                <div class="">
+                      {% if object.maker.first_name or object.maker.last_name %}
+                      <p class="text-sm text-gray-700 font-semibold">by
+                          {% if object.maker.first_name %}{{ object.maker.first_name }}{% endif %}
+                          {% if object.maker.last_name %}{{ object.maker.last_name }}{% endif %}
+                      </p>
+                      {% endif %}
+                </div>
             </div>
           </div>
       </div>

@@ -37,7 +37,7 @@ class EmailFormView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        
+
         emailoctopus_api_key = settings.EMAILOCTOPUS_API
         list_id = settings.OCTO_LIST_ID
 
@@ -48,10 +48,10 @@ class EmailFormView(SuccessMessageMixin, CreateView):
 
         response = requests.post(f"https://emailoctopus.com/api/1.5/lists/{list_id}/contacts", data=data)
         messages.success(self.request, 'Thanks for signing up! You should receive a confirmation email soon.')
-        
+
         return HttpResponseRedirect(reverse_lazy('home'))
 
-    
+
 class ProjectCreateView(SuccessMessageMixin, CreateView):
     model = Project
     form_class = AddProject
@@ -59,4 +59,4 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('home')
     success_message = "Thanks for submitting your project! I'll let you know when it is up on the site!"
 
-    
+
