@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 
     'taggit',
     'webpack_loader',
+    'django_component',
 
     'projects.apps.ProjectsConfig',
     'newsletter.apps.NewsletterConfig',
@@ -76,6 +77,9 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
+            'builtins': [
+                'django_component.templatetags',
+            ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -139,7 +143,12 @@ USE_TZ = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-STATIC_URL = '/static/'
+if DEBUG:
+    STATIC_URL = '/assets/'
+else:
+    STATIC_URL = '/static/'
+
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 STATICFILES_DIRS = [

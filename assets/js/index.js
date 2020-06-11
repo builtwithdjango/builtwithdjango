@@ -1,11 +1,6 @@
-import Vue from 'vue';
-import Demo from "./components/Demo.vue";
+import { Application } from "stimulus"
+import { definitionsFromContext } from "stimulus/webpack-helpers"
 
-window.Vue = Vue;
-const app = new Vue({
-    el: '#app',
-
-    components: {
-        Demo
-    }
-});
+const application = Application.start()
+const context = require.context("./controllers", true, /\.js$/)
+application.load(definitionsFromContext(context))

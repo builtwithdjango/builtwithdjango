@@ -56,6 +56,17 @@ translitcodec = ["translitcodec (>=0.3)"]
 
 [[package]]
 category = "main"
+description = "Django template tags to create composable components"
+name = "django-component"
+optional = false
+python-versions = ">=3.6,<4.0"
+version = "0.1.6"
+
+[package.dependencies]
+django = ">=1.11"
+
+[[package]]
+category = "main"
 description = "Django-environ allows you to utilize 12factor inspired environment variables to configure your Django application."
 name = "django-environ"
 optional = false
@@ -199,7 +210,7 @@ secure = ["certifi", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "pyOpenSSL (>=0
 socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
 
 [metadata]
-content-hash = "5e82ebdca8b13876552af94e6caf32aa122a8c0df88431a4f060e541a0961644"
+content-hash = "29af6159136ff967871cfb5511b21df29d6680b1535b24d99eee8cc351d4b961"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -222,6 +233,10 @@ django = [
 django-autoslug = [
     {file = "django-autoslug-1.9.7.tar.gz", hash = "sha256:026b525beed3e259532d23f2bff768c1e5f4d238caa4e99db223f9d5d232cb57"},
     {file = "django_autoslug-1.9.7-py2.py3-none-any.whl", hash = "sha256:08065b662e05fa5ad8b9cff2b54d17481bd31672ea2a4e7e607267f692384b83"},
+]
+django-component = [
+    {file = "django-component-0.1.6.tar.gz", hash = "sha256:8ca87e8bef9d9ce7e0c85ca287543edd03be9f48c2ebd59c956220c821fc2e5e"},
+    {file = "django_component-0.1.6-py3-none-any.whl", hash = "sha256:84550101aa1b6cf4b6115b7fab49bab0ee328fddaba2d7cacf9908eabb152405"},
 ]
 django-environ = [
     {file = "django-environ-0.4.5.tar.gz", hash = "sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde"},

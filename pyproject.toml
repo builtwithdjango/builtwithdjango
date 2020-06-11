@@ -16,6 +16,7 @@ requests = "^2.23.0"
 sentry_sdk = "^0.14.3"
 pillow = "^7.1.1"
 django-webpack-loader = "0.6.0"
+django-component = "^0.1.6"
 
 [tool.poetry.dev-dependencies]
 
