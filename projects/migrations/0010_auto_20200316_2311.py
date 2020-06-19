@@ -7,26 +7,42 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('projects', '0009_project_date_added'),
+        ("projects", "0009_project_date_added"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Maker',
+            name="Maker",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=20)),
-                ('last_name', models.CharField(max_length=20)),
-                ('maker_email', models.EmailField(blank=True, max_length=254)),
-                ('maker_profile_image', models.ImageField(blank=True, upload_to='maker_profile_image/')),
-                ('twitter_handle', models.CharField(blank=True, max_length=20)),
-                ('github_handle', models.CharField(blank=True, max_length=20)),
-                ('personal_website', models.URLField(blank=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("first_name", models.CharField(max_length=20)),
+                ("last_name", models.CharField(max_length=20)),
+                ("maker_email", models.EmailField(blank=True, max_length=254)),
+                (
+                    "maker_profile_image",
+                    models.ImageField(blank=True, upload_to="maker_profile_image/"),
+                ),
+                ("twitter_handle", models.CharField(blank=True, max_length=20)),
+                ("github_handle", models.CharField(blank=True, max_length=20)),
+                ("personal_website", models.URLField(blank=True)),
             ],
         ),
         migrations.AddField(
-            model_name='project',
-            name='maker',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='projects.Maker'),
+            model_name="project",
+            name="maker",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="projects.Maker",
+            ),
         ),
     ]

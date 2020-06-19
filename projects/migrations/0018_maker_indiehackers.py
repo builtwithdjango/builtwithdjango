@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('projects', '0017_project_is_open_source'),
+        ("projects", "0017_project_is_open_source"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='maker',
-            name='indiehackers',
+            model_name="maker",
+            name="indiehackers",
             field=models.CharField(blank=True, max_length=20),
         ),
     ]

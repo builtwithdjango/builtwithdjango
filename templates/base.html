@@ -36,41 +36,37 @@
     <script async defer data-domain="builtwithdjango.com" src="https://plausible.io/js/plausible.js"></script>
   </head>
 
-  <body class="font-sans flex flex-col justify-between h-screen text-lg text-gray-900 bg-gray-100">
+  <body class="flex flex-col justify-between h-screen font-sans text-lg text-gray-900 bg-gray-100">
         <header class="flex flex-col mb-2">
-            <nav class="z-50 w-full pb-4 mb-2 bg-transparent shadow-lg md:order-2 sm:py-2 sm-1 lg:py-0">
-            <div class="flex flex-col items-center justify-center lg:justify-between sm:flex-row lg:ml-20">
-                <div class="flex flex-row items-center p-2">
-                <a class="p-1 text-lg font-semibold text-white text-blue-700 no-underline uppercase hover:text-blue-900 lg:p-2" href="{% url 'home' %}">
-                    Home
-                </a>
-                </div>
+            <nav class="w-full py-0 bg-transparent shadow-lg md:order-2 sm-1">
+                <div class="flex justify-between">
+                    <div class="flex justify-between">
+                        <div class="flex justify-center">
+                            <div class="flex items-center">
+                                <a href="{% url 'home' %}">
+                                    <img class="w-10 mx-auto ml-6 md:ml-16" src="{% static 'images/logo-nobg.png' %}" alt="BuiltwithDjango Logo">
+                                </a>
+                            </div>
+                            <div class="flex items-center">
+                                <h1 class="hidden mx-4 text-3xl md:block"><a href="{% url 'home' %}">Built with <span class="text-green-800">Django</span></a></h1>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="flex items-center lg:self-start">
-                <a class="flex px-4 lg:py-5" href="https://github.com/rasulkireev/builtwithdjango">
-                    <i class="self-center text-3xl text-black lab la-github"></i>
-                </a>
-                <a class="flex px-4 lg:mr-2 lg:py-5" rel="me" href="https://twitter.com/builtwithdjango">
-                    <i class="self-center text-3xl text-blue-700 lab la-twitter"></i>
-                </a>
-                <a class="flex p-2 text-sm font-bold text-white bg-green-500 rounded shadow-lg lg:text-lg lg:rounded-none lg:w-auto lg:p-6 hover:bg-green-700"
-                href="{% url 'submit-project' %}">
-                    <span class="items-center">Submit a Project</span>
-                </a>
+                    <div class="flex">
+                        <a class="hidden px-4 md:flex lg:py-5" href="https://github.com/rasulkireev/builtwithdjango">
+                            <i class="self-center text-3xl text-black lab la-github"></i>
+                        </a>
+                        <a class="hidden px-4 md:flex lg:mr-2 lg:py-5" rel="me" href="https://twitter.com/builtwithdjango">
+                            <i class="self-center text-3xl text-blue-700 lab la-twitter"></i>
+                        </a>
+                        <a class="flex items-center w-auto h-full p-2 p-6 bg-green-500 rounded-none hover:bg-green-700"
+                        href="{% url 'submit-project' %}">
+                            <p class="text-lg font-bold text-white">Submit a Project</p>
+                        </a>
+                    </div>
                 </div>
-            </div>
             </nav>
-
-            <div class="flex z-40 flex-row items-center justify-center order-first pt-2 sm:my-3 sm:py-0 sm:order-last lg:flex-col lg:-mt-20">
-            <div class="mx-1 lg:mb-4">
-                <a class="shadow-lg" href="{% url 'home' %}">
-                <img class="w-10 mx-auto lg:w-16" src="{% static 'images/logo.png' %}" alt="BuiltwithDjango Logo">
-                </a>
-            </div>
-            <div class="mx-1">
-                <h1 class="text-2xl lg:text-5xl"><a href="{% url 'home' %}">Built with <span class="text-green-800">Django</span></a></h1>
-            </div>
-            </div>
         </header>
 
 
@@ -82,8 +78,8 @@
         <footer class="bottom-0 py-2 bg-green-500">
             <div class="mx-auto mt-1 md:w-2/3">
 
-            <div class="m-10 flex flex-col items-center">
-                <div class="block mb-2 font-bold text-white text-3xl text-center">Subscribe to our newsletter</div>
+            <div class="flex flex-col items-center m-10">
+                <div class="block mb-2 text-3xl font-bold text-center text-white">Subscribe to our newsletter</div>
 
                 <form class="flex flex-row items-center" action="{% url 'newsletter-home' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
                     {{ form.non_field_errors }}

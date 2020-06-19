@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 import requests
 
+
 class Emails(models.Model):
     # Required Information
     user_email = models.EmailField()
@@ -9,6 +10,3 @@ class Emails(models.Model):
 
     def __str__(self):
         return str(self.user_email)
-
-
-

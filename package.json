@@ -7,7 +7,7 @@
     "url": "git+https://github.com/rasulkireev/builtwithdjango.git"
   },
   "scripts": {
-        "build": "npx webpack && pip install -r requirements.txt && python manage.py migrate && python manage.py collects static && sudo systemd nginx restart && sudo systemd bwd.gunicorn restart"
+    "build": "npx webpack && pip install -r requirements.txt && python manage.py migrate && python manage.py collects static && sudo systemd nginx restart && sudo systemd bwd.gunicorn restart"
   },
   "author": "Rasul Kireev",
   "license": "ISC",
@@ -23,7 +23,7 @@
     "css-loader": "^3.5.3",
     "style-loader": "^1.2.1",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "axios": "^0.19.2",

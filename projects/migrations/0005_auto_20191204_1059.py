@@ -6,17 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('projects', '0004_auto_20191204_1058'),
+        ("projects", "0004_auto_20191204_1058"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='project',
-            name='draft',
-        ),
+        migrations.RemoveField(model_name="project", name="draft",),
         migrations.AddField(
-            model_name='project',
-            name='published',
+            model_name="project",
+            name="published",
             field=models.BooleanField(default=False),
         ),
     ]
