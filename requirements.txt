@@ -13,6 +13,9 @@ django==3.0.6 \
 django-autoslug==1.9.7 \
     --hash=sha256:026b525beed3e259532d23f2bff768c1e5f4d238caa4e99db223f9d5d232cb57 \
     --hash=sha256:08065b662e05fa5ad8b9cff2b54d17481bd31672ea2a4e7e607267f692384b83
+django-component==0.1.6 \
+    --hash=sha256:8ca87e8bef9d9ce7e0c85ca287543edd03be9f48c2ebd59c956220c821fc2e5e \
+    --hash=sha256:84550101aa1b6cf4b6115b7fab49bab0ee328fddaba2d7cacf9908eabb152405
 django-environ==0.4.5 \
     --hash=sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde \
     --hash=sha256:c57b3c11ec1f319d9474e3e5a79134f40174b17c7cc024bbb2fad84646b120c4
@@ -59,6 +62,7 @@ pytz==2020.1 \
     --hash=sha256:a494d53b6d39c3c6e44c3bec237336e14305e4f29bbf800b599253057fbb79ed \
     --hash=sha256:c35965d010ce31b23eeb663ed3cc8c906275d6be1a34393a1d73a41febf4a048
 requests==2.23.0 \
+    --hash=sha256:5d2d0ffbb515f39417009a46c14256291061ac01ba8f875b90cad137de83beb4 \
     --hash=sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee \
     --hash=sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6
 sentry-sdk==0.14.4 \
