@@ -9,8 +9,9 @@ __pycache__/
 # C extensions
 *.so
 
-# Media
+# RK Added
 media/
+.DS_Store
 
 # Dependency directories
 node_modules/

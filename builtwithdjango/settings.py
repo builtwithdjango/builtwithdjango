@@ -48,9 +48,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
     "django.contrib.sites",
+    
     "taggit",
     "webpack_loader",
     "django_component",
+
+    'django_extensions',
+    'debug_toolbar',
+    
     "projects.apps.ProjectsConfig",
     "newsletter.apps.NewsletterConfig",
 ]
@@ -63,6 +68,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = "builtwithdjango.urls"
@@ -164,3 +171,7 @@ if not DEBUG:
 
 EMAILOCTOPUS_API = env("EMAILOCTOPUS_API")
 OCTO_LIST_ID = env("OCTO_LIST_ID")
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

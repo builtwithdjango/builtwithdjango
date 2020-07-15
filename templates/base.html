@@ -36,50 +36,52 @@
     <script async defer data-domain="builtwithdjango.com" src="https://plausible.io/js/plausible.js"></script>
   </head>
 
-  <body class="flex flex-col justify-between h-screen font-sans text-lg text-gray-900 bg-gray-100">
-        <header class="flex flex-col mb-2">
-            <div class="w-full py-0 bg-transparent shadow-lg md:order-2 sm-1">
-                <div class="flex justify-between">
-                    <div class="flex justify-between">
-                        <div class="flex justify-center">
-                            <div class="flex items-center">
-                                <a href="{% url 'home' %}">
-                                    <img class="w-10 mx-auto ml-6 md:ml-16 lg:ml-24" src="{% static 'images/logo.png' %}" alt="BuiltwithDjango Logo">
-                                </a>
-                            </div>
-                            <!-- <div class="flex items-center">
-                                <h1 class="hidden mx-4 text-3xl md:block"><a href="{% url 'home' %}">Built with <span class="text-green-800">Django</span></a></h1>
-                            </div> -->
+  <body class="container mx-auto font-sans bg-gray-100">
+        
+    <header data-controller="header" class="flex flex-col mb-2">
+            <div class="w-full py-0 bg-transparent md:order-2 sm-1">
+                <div class="flex flex-col md:flex-row justify-between">
+                    <div class="p-5 flex justify-between">
+                        <div class="flex items-center">
+                            <a href="{% url 'home' %}">
+                                <img class="w-10 mx-auto" src="{% static 'images/logo.png' %}" alt="BuiltwithDjango Logo">
+                            </a>
                         </div>
+
+                        <button data-action="click->header#shownav" class="w-10 md:hidden text-gray-700">
+                            <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                        </button>
                     </div>
 
-                    <nav class="flex items-center">
-                        <ul class="flex">
+                    <nav data-target="header.nav" class="hidden items-center flex justify-center">
+                        <ul class="flex flex-col md:flex-row items-center">
                             <li class="p-2 m-1"><a class="text-lg" href="#">Home</a></li>
                             <li class="p-2 m-1"><a class="text-lg" href="#">Blog</a></li>
                             <li class="p-2 m-1"><a class="text-lg" href="#">Makers</a></li>
                             <li class="p-2 m-1"><a class="text-lg" href="#">Podcast</a></li>
+                            <li class="hidden md:inline-block p-2 m-1">
+                                <a href="https://github.com/rasulkireev/builtwithdjango">
+                                    <i class="self-center text-3xl text-black lab la-github"></i>
+                                </a>
+                            </li>
+                            <li class="hidden md:inline-block p-2 m-1">
+                                <a rel="me" href="https://twitter.com/builtwithdjango">
+                                    <i class="self-center text-3xl text-blue-700 lab la-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="flex self-center h-10 items-center p-2 bg-green-500 rounded-lg hover:bg-green-700"
+                            href="{% url 'submit-project' %}">
+                                    <p class="text-lg font-bold text-white">Submit a Project</p>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
-
-                    <div class="flex">
-                        <!-- <a class="hidden px-4 md:flex lg:py-5" href="https://github.com/rasulkireev/builtwithdjango">
-                            <i class="self-center text-3xl text-black lab la-github"></i>
-                        </a>
-                        <a class="hidden px-4 md:flex lg:mr-2 lg:py-5" rel="me" href="https://twitter.com/builtwithdjango">
-                            <i class="self-center text-3xl text-blue-700 lab la-twitter"></i>
-                        </a> -->
-                        <a class="flex items-center w-auto h-full p-2 p-6 bg-green-500 rounded-none hover:bg-green-700"
-                        href="{% url 'submit-project' %}">
-                            <p class="text-lg font-bold text-white">Submit a Project</p>
-                        </a>
-                    </div>
                 </div>
             </div>
         </header>
 
-
-            <div class="container mx-auto my-10">
+            <div>
                 {% block content %}
                 {% endblock content %}
             </div>
