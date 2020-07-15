@@ -6,7 +6,7 @@ authors = ["Rasul Kireev <me@rasulkireev.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-django = "^3.0.5"
+django = "^3.0.7"
 django-autoslug = "^1.9.7"
 django-environ = "^0.4.5"
 django-taggit = "^1.2.0"
