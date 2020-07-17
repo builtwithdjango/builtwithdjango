@@ -15,15 +15,12 @@ gunicorn = "^20.0.4"
 requests = "^2.23.0"
 sentry_sdk = "^0.14.3"
 pillow = "^7.1.1"
-django-webpack-loader = "0.6.0"
 django-component = "^0.1.6"
 black = "^19.10b0"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
 pylint = "^2.5.3"
-django-extensions = "^3.0.3"
-django-debug-toolbar = "^2.2"
 pre-commit = "^2.6.0"
 
 [build-system]
