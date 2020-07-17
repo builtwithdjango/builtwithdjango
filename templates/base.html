@@ -9,6 +9,7 @@
 
     <!-- Other meta stuff -->
     <link rel="apple-touch-icon" href="{% static 'favicon/logo.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'favicon/logo.png' %}">
     <link rel="icon" type="image/png" sizes="16x16 32x32 500x500" href="{% static 'favicon/logo.png' %}">
 
     <meta property="og:type" content="website">
@@ -30,7 +31,7 @@
     {% endblock %}
 
     <!-- CSS -->
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'bundles/main.css' %}">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
     <script async defer data-domain="builtwithdjango.com" src="https://plausible.io/js/plausible.js"></script>
@@ -53,12 +54,12 @@
                         </button>
                     </div>
 
-                    <nav data-target="header.nav" class="hidden items-center flex justify-center">
+                    <nav data-target="header.nav" class="hidden items-center md:flex justify-center">
                         <ul class="flex flex-col md:flex-row items-center">
                             <li class="p-2 m-1"><a class="text-lg" href="#">Home</a></li>
-                            <li class="p-2 m-1"><a class="text-lg" href="#">Blog</a></li>
-                            <li class="p-2 m-1"><a class="text-lg" href="#">Makers</a></li>
-                            <li class="p-2 m-1"><a class="text-lg" href="#">Podcast</a></li>
+                            <!-- <li class="p-2 m-1"><a class="text-lg" href="#">Blog</a></li> -->
+                            <!-- <li class="p-2 m-1"><a class="text-lg" href="#">Makers</a></li> -->
+                            <!-- <li class="p-2 m-1"><a class="text-lg" href="#">Podcast</a></li> -->
                             <li class="hidden md:inline-block p-2 m-1">
                                 <a href="https://github.com/rasulkireev/builtwithdjango">
                                     <i class="self-center text-3xl text-black lab la-github"></i>
@@ -113,7 +114,7 @@
             </a>
 
         </footer>
-        {% render_bundle 'main' %}
+        <script src="{% static 'bundles/app.js' %}"></script>
 </body>
 
 </html>

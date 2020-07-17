@@ -7,6 +7,7 @@
     "url": "git+https://github.com/rasulkireev/builtwithdjango.git"
   },
   "scripts": {
+    "build:css": "postcss assets/css/tailwind.css -o assets/css/index.css",
     "develop": "npx webpack && poetry run python manage.py migrate && poetry run python manage.py collectstatic && python manage.py runserver",
     "build": "npx webpack && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic && sudo systemd nginx restart && sudo systemd bwd.gunicorn restart"
   },
@@ -21,13 +22,22 @@
     "babel-loader": "^8.1.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "css-loader": "^3.5.3",
+    "css-loader": "^3.6.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "postcss": "^7.0.32",
+    "postcss-cli": "^7.1.1",
+    "postcss-loader": "^3.0.0",
     "style-loader": "^1.2.1",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "@fullhuman/postcss-purgecss": "^2.3.0",
+    "autoprefixer": "^9.8.5",
     "axios": "^0.19.2",
-    "stimulus": "^1.1.1"
+    "cssnano": "^4.1.10",
+    "stimulus": "^1.1.1",
+    "tailwindcss": "^1.5.1",
+    "webpack-bundle-tracker": "^1.0.0-alpha.1"
   }
 }

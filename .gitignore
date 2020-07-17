@@ -12,6 +12,7 @@ __pycache__/
 # RK Added
 media/
 .DS_Store
+assets/css/index.js
 
 # Dependency directories
 node_modules/

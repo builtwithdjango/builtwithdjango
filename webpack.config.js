@@ -1,5 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
+const BundleTracker = require('webpack-bundle-tracker');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 
 module.exports = {
     mode: 'development',
@@ -11,10 +14,23 @@ module.exports = {
     },
     module: {
         rules:  [
-            {test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/},
+            {
+                test: /\.js$/, 
+                loader: 'babel-loader', 
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+            }
         ],
     },
     resolve: {
         extensions: ['.js']
-    }
+    },
+    plugins: [
+        new BundleTracker({filename: '../../webpack-stats.json'}),
+        new MiniCssExtractPlugin(),
+    ]
 };
