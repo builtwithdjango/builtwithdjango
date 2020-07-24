@@ -8,7 +8,7 @@
   },
   "scripts": {
     "develop": "npx webpack && poetry run python manage.py migrate && poetry run python manage.py collectstatic && python manage.py runserver",
-    "server-build": "source venv/bin/activate && npx webpack && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic && sudo systemd nginx restart && sudo systemd bwd.gunicorn restart"
+    "server-build": "npx webpack && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic && sudo systemd nginx restart && sudo systemd bwd.gunicorn restart"
   },
   "author": "Rasul Kireev",
   "license": "ISC",
