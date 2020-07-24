@@ -7,9 +7,8 @@
     "url": "git+https://github.com/rasulkireev/builtwithdjango.git"
   },
   "scripts": {
-    "build:css": "postcss assets/css/tailwind.css -o assets/css/index.css",
     "develop": "npx webpack && poetry run python manage.py migrate && poetry run python manage.py collectstatic && python manage.py runserver",
-    "build": "npx webpack && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic && sudo systemd nginx restart && sudo systemd bwd.gunicorn restart"
+    "server-build": "npx webpack && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic && sudo systemd nginx restart && sudo systemd bwd.gunicorn restart"
   },
   "author": "Rasul Kireev",
   "license": "ISC",
