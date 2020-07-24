@@ -4,6 +4,7 @@ export default class extends Controller {
     static targets = [ "nav" ]
 
     shownav() {
+        console.log("Controller is working")
         const element = this.navTarget
         if (element.classList.contains('hidden')) {
             element.classList.remove("hidden")
