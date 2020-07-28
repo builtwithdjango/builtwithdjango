@@ -9,7 +9,11 @@ module.exports = {
     ],
   },
   theme: {
-    extend: {},
+    extend: {
+      maxWidth: {
+        '1/3': '33.333333%'
+      }
+    },
   },
   variants: {},
   plugins: [],
