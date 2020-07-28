@@ -36,17 +36,14 @@
     <script async defer data-domain="builtwithdjango.com" src="https://plausible.io/js/plausible.js"></script>
   </head>
 
-  <body class="font-sans bg-gray-100">
+  <body class="px-6 font-sans bg-gray-100">
         
-    <header data-controller="header" class="container flex flex-col mx-auto mb-10 md:mb-2">
-            <div class="w-full py-0 bg-transparent md:order-2 sm-1">
-                <div class="flex flex-col justify-between md:flex-row">
-                    <div class="flex justify-between py-5">
-                        <div class="flex items-center">
-                            <a href="{% url 'home' %}">
-                                <img class="w-10 mx-auto" src="{% static 'images/logo.png' %}" alt="BuiltwithDjango Logo">
-                            </a>
-                        </div>
+    <header data-controller="header" class="container flex flex-col py-5 mx-auto mb-10 md:mb-2">
+                <div class="flex flex-col justify-between w-full py-0 bg-transparent md:order-2 sm-1 md:flex-row">
+                    <div class="flex justify-between ">
+                        <a class="flex items-center" href="{% url 'home' %}">
+                            <img class="w-10 mx-auto" src="{% static 'images/logo.png' %}" alt="BuiltwithDjango Logo">
+                        </a>
 
                         <button data-action="click->header#shownav" class="w-10 text-gray-700 md:hidden">
                             <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -78,7 +75,6 @@
                         </ul>
                     </nav>
                 </div>
-            </div>
         </header>
 
             <div class="container mx-auto ">
