@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "builtwithdjango"
 version = "0.1.0"
-description = ""
+description = "Source code for the builtwithdjango.com website."
 authors = ["Rasul Kireev <me@rasulkireev.com>"]
 
 [tool.poetry.dependencies]
