@@ -130,7 +130,7 @@ USE_TZ = True
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
-if DEBUG:
+if DEBUG == True:
     STATIC_URL = "/assets/"
 else:
     STATIC_URL = "/static/"
