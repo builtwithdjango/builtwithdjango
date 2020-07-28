@@ -40,7 +40,7 @@ jobs:
     - name: Export requirements file
       run: poetry export -f requirements.txt > requirements.txt
 
-    - name: Commit and push if README changed
+    - name: Commit and push if bundles or dependencies changes changed
       run: |-
         git diff
         git config --global user.email "me@rasulkireev.com"
