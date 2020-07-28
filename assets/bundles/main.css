@@ -857,10 +857,6 @@ video {
   height: 14rem;
 }
 
-.h-auto {
-  height: auto;
-}
-
 .h-full {
   height: 100%;
 }
