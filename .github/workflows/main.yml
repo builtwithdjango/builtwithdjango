@@ -39,3 +39,11 @@ jobs:
 
     - name: Export requirements file
       run: poetry export -f requirements.txt > requirements.txt
+
+    - name: Commit and push if README changed
+      run: |-
+        git diff
+        git config --global user.email "me@rasulkireev.com"
+        git config --global user.name "Rasul's Bot"
+        git diff --quiet || (git add README.md && git commit -m "Updated README")
+        git push
