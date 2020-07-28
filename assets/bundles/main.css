@@ -853,8 +853,8 @@ video {
   height: 2.5rem;
 }
 
-.h-64 {
-  height: 16rem;
+.h-auto {
+  height: auto;
 }
 
 .h-full {
@@ -949,9 +949,9 @@ video {
      object-fit: cover;
 }
 
-.object-left-top {
-  -o-object-position: left top;
-     object-position: left top;
+.object-top {
+  -o-object-position: top;
+     object-position: top;
 }
 
 .p-2 {
