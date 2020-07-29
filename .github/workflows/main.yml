@@ -35,7 +35,9 @@ jobs:
       run: npm install
 
     - name: Run Webpack
-      run: npx webpack
+      run: |
+        export NODE_ENV=production
+        npx webpack
 
     - name: Export requirements file
       run: poetry export -f requirements.txt > requirements.txt
