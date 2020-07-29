@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import environ
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env(
     # set casting, default value
@@ -155,9 +157,6 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 SITE_ID = 1
 
 # Sentry Error Tracking
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
-
 if not DEBUG:
     sentry_sdk.init(dsn=env("dsn"), integrations=[DjangoIntegration()])
 

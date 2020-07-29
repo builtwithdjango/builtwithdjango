@@ -21,4 +21,9 @@ class AddProject(ModelForm):
 
     class Meta:
         model = Project
-        fields = "__all__"
+        fields = [
+            "website_title",
+            "user_email",
+            "website_short_description",
+            "website_url",
+        ]

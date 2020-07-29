@@ -5,6 +5,9 @@ from taggit.managers import TaggableManager
 
 
 class Project(models.Model):
+    """Model for a Project
+    """
+
     # Required Information
     website_title = models.CharField(max_length=100, unique=True)
     website_url = models.URLField(unique=True)
