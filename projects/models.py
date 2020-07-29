@@ -16,9 +16,9 @@ class Project(models.Model):
     slug = AutoSlugField(populate_from="website_title", always_update=True)
     published = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
-    tags = TaggableManager(blank=True)
 
     # Optional Website Information
+    tags = TaggableManager(blank=True)
     is_open_source = models.BooleanField(default=False)
     website_description = models.TextField(blank=True)
     website_homepage_screenshot = models.ImageField(
