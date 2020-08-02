@@ -56,7 +56,7 @@ jobs:
         ssh-keyscan github.com >> ~/.ssh/known_hosts
         ssh-add - <<< "${{ secrets.DIGITAL_OCEAN_PRIVATE_KEY_SSH }}"
     
-    - name: SSH into the server, locate root dir and activate venv
+    - name: SSH into server, locate root dir and activate venv
       run: |
         ssh -tt root@${{ secrets.BWD_IP_ADDRESS }}
         cd /var/www/builtwithdjango
