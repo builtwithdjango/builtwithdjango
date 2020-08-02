@@ -59,7 +59,7 @@ jobs:
     
     - name: SSH into the server, locate root dir and activate venv
       run: |
-        ssh -o -t -t StrictHostKeyChecking=no rasulkireev@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}
+        ssh -tt rasulkireev@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}
         cd /var/www/builtwithdjango
         source venv/bin/activate
         
