@@ -11,6 +11,7 @@ __pycache__/
 
 # RK Added
 media/
+assets/bundles
 .DS_Store
 
 # Dependency directories
