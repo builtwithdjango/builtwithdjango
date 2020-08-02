@@ -49,27 +49,27 @@ jobs:
       uses: actions/checkout@v1
     
     - name: Add the private SSH key to the ssh-agent
-    env:
-      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-    run: |
-      mkdir -p ~/.ssh
-      ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-      ssh-keyscan github.com >> ~/.ssh/known_hosts
-      ssh-add - <<< "${{ secrets.DIGITAL_OCEAN_PRIVATE_KEY_SSH }}"
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        mkdir -p ~/.ssh
+        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        ssh-add - <<< "${{ secrets.DIGITAL_OCEAN_PRIVATE_KEY_SSH }}"
     
     - name: SSH into the server
-    run: |
-      ssh rasulkireev@"${{ secrets.BWD_IP_ADDRESS }}"
+      run: |
+        ssh rasulkireev@"${{ secrets.BWD_IP_ADDRESS }}"
 
     - name: Locate directory and activate virtual environment
-    run: |
-      cd /var/www/builtwithdjango
-      source venv/bin/activate
+      run: |
+        cd /var/www/builtwithdjango
+        source venv/bin/activate
 
     - name: Install Dependencies
-    run: |
-      python -m pip install -r requirements.txt
-      npm install
+      run: |
+        python -m pip install -r requirements.txt
+        npm install
 
     - name: Run Webpack
       run: |
@@ -77,9 +77,9 @@ jobs:
         npx webpack
 
     - name: Migrate Database and Collect Static
-    run: |
-      python manage.py migrate
-      python manage.py collectstatic -noinput
+      run: |
+        python manage.py migrate
+        python manage.py collectstatic -noinput
     
     - name: Restart Gunicorn and NGINX
       run: |
