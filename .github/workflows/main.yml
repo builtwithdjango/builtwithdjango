@@ -8,7 +8,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted 
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -40,25 +40,15 @@ jobs:
 
   deploy:
     name: Deploy to DigitalOcean
-    runs-on: ubuntu-latest
+    runs-on: self-hosted 
     needs: build
     # if: github.ref == 'refs/heaxds/master'
     steps:
     - name: Checkout master
       uses: actions/checkout@v1
     
-    - name: Add the private SSH key to the ssh-agent
-      env:
-        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+    - name: Locate root dir and activate venv
       run: |
-        mkdir -p ~/.ssh
-        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
-        ssh-add - <<< "${{ secrets.DIGITAL_OCEAN_PRIVATE_KEY_SSH }}"
-    
-    - name: SSH into server, locate root dir and activate venv
-      run: |
-        ssh -o StrictHostKeyChecking=no -tt root@${{ secrets.BWD_IP_ADDRESS }}
         cd /var/www/builtwithdjango
         source venv/bin/activate
         
