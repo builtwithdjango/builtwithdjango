@@ -29,6 +29,8 @@ jobs:
 
     - name: Commit and push if bundles or dependencies changes changed
       run: |-
+        pwd
+        ls
         git diff
         git config --global user.email "me@rasulkireev.com"
         git config --global user.name "Rasul's Bot"
@@ -42,7 +44,7 @@ jobs:
     # if: github.ref == 'refs/heaxds/master'
     steps:
     - name: Checkout master
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     
     - name: Locate root dir and activate venv
       run: |
