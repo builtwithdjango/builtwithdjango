@@ -35,7 +35,6 @@ jobs:
         git diff
         git config --global user.email "me@rasulkireev.com"
         git config --global user.name "Rasul's Bot"
-        git diff --quiet || (git add assets/bundles/main.css assets/bundles/app.js && git commit -m "Updated webpack output")
         git diff --quiet || (git add requirements.txt && git commit -m "Updated requirements.txt")
         git push
 
