@@ -58,7 +58,7 @@ jobs:
     
     - name: SSH into server, locate root dir and activate venv
       run: |
-        ssh -o StrictHostKeyChecking=no -t root@${{ secrets.BWD_IP_ADDRESS }}
+        ssh -o StrictHostKeyChecking=no -tt root@${{ secrets.BWD_IP_ADDRESS }}
         cd /var/www/builtwithdjango
         source venv/bin/activate
         
