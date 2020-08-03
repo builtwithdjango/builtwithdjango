@@ -26,10 +26,6 @@ jobs:
     - name: Build NPM Dependencies
       run: npm install
 
-    - name: Run Tests
-      run: poetry run python manage.py test
-
-
   deploy:
     name: Deploy to Digital Ocean
     runs-on: ubuntu-latest
