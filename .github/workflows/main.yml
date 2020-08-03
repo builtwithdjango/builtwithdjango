@@ -45,32 +45,16 @@ jobs:
     # if: github.ref == 'refs/heads/master'
     steps:
 
-    - name: Copy repository contents via scp
-      uses: appleboy/scp-action@master
-      env:
-        HOST: ${{ secrets.DO_HOST }}
-        USERNAME: ${{ secrets.DO_USERNAME }}
-        PORT: ${{ secrets.DO_PORT }}
-        KEY: ${{ secrets.DO_SSHKEY }}
-      with:
-        source: "."
-        target: "/var/www/builtwithdjango"
-
-    - name: Install dependencies
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.DO_HOST }}
-        USERNAME: ${{ secrets.DO_USERNAME }}
-        PORT: ${{ secrets.DO_PORT }}
-        KEY: ${{ secrets.DO_SSHKEY }}
-        script: |
-          cd /var/www/builtwithdjango
-          source venv/bin/activate
-          python -m pip install -r requirements.txt
-          npm install
-          npx webpack --mode=production
-          python manage.py migrate
-          python manage.py collectstatic --noinput
+    # - name: Copy repository contents via scp
+    #   uses: appleboy/scp-action@master
+    #   env:
+    #     HOST: ${{ secrets.DO_HOST }}
+    #     USERNAME: ${{ secrets.DO_USERNAME }}
+    #     PORT: ${{ secrets.DO_PORT }}
+    #     KEY: ${{ secrets.DO_SSHKEY }}
+    #   with:
+    #     source: "."
+    #     target: "/var/www/builtwithdjango"
 
     - name: Install Dependencies 
       uses: appleboy/ssh-action@master
@@ -81,6 +65,7 @@ jobs:
         KEY: ${{ secrets.DO_SSHKEY }}
         script: |
           cd /var/www/builtwithdjango
+          sudo git pull
           source venv/bin/activate
           python -m pip install -r requirements.txt
           npm install
@@ -96,8 +81,6 @@ jobs:
         PORT: ${{ secrets.DO_PORT }}
         KEY: ${{ secrets.DO_SSHKEY }}
         script: |
-          cd /var/www/builtwithdjango
-          source venv/bin/activate
           export NODE_ENV=production
           npx webpack --mode=production
           python manage.py migrate
