@@ -56,7 +56,7 @@ jobs:
         source: "."
         target: "/var/www/builtwithdjango"
 
-    - name: Executing remote command
+    - name: Install dependencies
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.DO_HOST }}
@@ -64,6 +64,51 @@ jobs:
         PORT: ${{ secrets.DO_PORT }}
         KEY: ${{ secrets.DO_SSHKEY }}
         script: |
+          cd /var/www/builtwithdjango
           source venv/bin/activate
-          ls
-          pwd
+          python -m pip install -r requirements.txt
+          npm install
+          npx webpack --mode=production
+          python manage.py migrate
+          python manage.py collectstatic --noinput
+
+    - name: Install Dependencies 
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DO_HOST }}
+        USERNAME: ${{ secrets.DO_USERNAME }}
+        PORT: ${{ secrets.DO_PORT }}
+        KEY: ${{ secrets.DO_SSHKEY }}
+        script: |
+          cd /var/www/builtwithdjango
+          source venv/bin/activate
+          python -m pip install -r requirements.txt
+          npm install
+          npx webpack --mode=production
+          python manage.py migrate
+          python manage.py collectstatic --noinput
+
+    - name: Build Project
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DO_HOST }}
+        USERNAME: ${{ secrets.DO_USERNAME }}
+        PORT: ${{ secrets.DO_PORT }}
+        KEY: ${{ secrets.DO_SSHKEY }}
+        script: |
+          cd /var/www/builtwithdjango
+          source venv/bin/activate
+          npx webpack --mode=production
+          python manage.py migrate
+          python manage.py collectstatic --noinput
+
+    - name: Restart Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DO_HOST }}
+        USERNAME: ${{ secrets.DO_USERNAME }}
+        PORT: ${{ secrets.DO_PORT }}
+        KEY: ${{ secrets.DO_SSHKEY }}
+        script: |
+          systemctl restart bwd.gunicorn
+          systemctl restart nginx

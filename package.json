@@ -7,7 +7,7 @@
     "url": "git+https://github.com/rasulkireev/builtwithdjango.git"
   },
   "scripts": {
-    "develop": "npx webpack && poetry run python manage.py migrate && poetry run python manage.py collectstatic && python manage.py runserver",
+    "webpack": "npx webpack --mode=development",
     "server-build": "npx webpack && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic && sudo systemctl restart nginx && sudo systemctl restart bwd.gunicorn"
   },
   "author": "Rasul Kireev",
