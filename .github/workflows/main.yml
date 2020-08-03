@@ -44,29 +44,17 @@ jobs:
     - name: Checkout master
       uses: actions/checkout@v1
     
-    - name: Locate root dir and activate venv
+    - name: Update the project
       run: |
         cd /var/www/builtwithdjango
         source venv/bin/activate
-        
-    - name: Install Dependencies
-      run: |
         python -m pip install -r requirements.txt
-        poetry install
         npm install
-
-    - name: Run Webpack
-      run: |
         export NODE_ENV=production
         npx webpack
-
-    - name: Migrate Database and Collect Static
-      run: |
-        pwd
-        cat builtwithdjango/.env
         poetry run python manage.py migrate
         poetry run python manage.py collectstatic -noinput
-    
+            
     - name: Restart Gunicorn and NGINX
       run: |
         sudo systemctl restart bwd.gunicorn
