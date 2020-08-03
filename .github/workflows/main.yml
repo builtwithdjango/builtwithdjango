@@ -48,10 +48,10 @@ jobs:
     - name: Copy repository contents via scp
       uses: appleboy/scp-action@master
       env:
-        HOST: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
+        HOST: ${{ secrets.DO_HOST }}
+        USERNAME: ${{ secrets.DO_USERNAME }}
+        PORT: ${{ secrets.DO_PORT }}
+        KEY: ${{ secrets.DO_SSHKEY }}
       with:
         source: "."
         target: "/var/www/builtwithdjango"
@@ -59,10 +59,10 @@ jobs:
     - name: Executing remote command
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
+        host: ${{ secrets.DO_HOST }}
+        USERNAME: ${{ secrets.DO_USERNAME }}
+        PORT: ${{ secrets.DO_PORT }}
+        KEY: ${{ secrets.DO_SSHKEY }}
         script: |
           source venv/bin/activate
           ls
