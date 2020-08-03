@@ -98,6 +98,7 @@ jobs:
         script: |
           cd /var/www/builtwithdjango
           source venv/bin/activate
+          export NODE_ENV=production
           npx webpack --mode=production
           python manage.py migrate
           python manage.py collectstatic --noinput
@@ -110,5 +111,5 @@ jobs:
         PORT: ${{ secrets.DO_PORT }}
         KEY: ${{ secrets.DO_SSHKEY }}
         script: |
-          systemctl restart bwd.gunicorn
-          systemctl restart nginx
+          sudo systemctl restart bwd.gunicorn
+          sudo systemctl restart nginx
