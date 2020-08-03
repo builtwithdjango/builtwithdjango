@@ -36,7 +36,7 @@ jobs:
     #     git push
 
   deploy:
-    name: Deploy to DigitalOcean
+    name: Deploy
     runs-on: self-hosted 
     needs: build
     # if: github.ref == 'refs/heads/master'
