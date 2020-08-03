@@ -52,8 +52,8 @@ jobs:
         npm install
         export NODE_ENV=production
         npx webpack
-        poetry run python manage.py migrate
-        poetry run python manage.py collectstatic -noinput
+        python manage.py migrate
+        python manage.py collectstatic -noinput
             
     - name: Restart Gunicorn and NGINX
       run: |
