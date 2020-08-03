@@ -61,8 +61,8 @@ jobs:
 
     - name: Migrate Database and Collect Static
       run: |
-        python manage.py migrate
-        python manage.py collectstatic -noinput
+        poetry run python manage.py migrate
+        poetry run python manage.py collectstatic -noinput
     
     - name: Restart Gunicorn and NGINX
       run: |
