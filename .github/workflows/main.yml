@@ -27,21 +27,19 @@ jobs:
     - name: Export requirements file
       run: poetry export -f requirements.txt > requirements.txt
 
-    - name: Commit and push if bundles or dependencies changes changed
-      run: |-
-        pwd
-        ls
-        git diff
-        git config --global user.email "me@rasulkireev.com"
-        git config --global user.name "Rasul's Bot"
-        git diff --quiet || (git add requirements.txt && git commit -m "Updated requirements.txt")
-        git push
+    # - name: Commit and push if bundles or dependencies changes changed
+    #   run: |-
+    #     git diff
+    #     git config --global user.email "me@rasulkireev.com"
+    #     git config --global user.name "Rasul's Bot"
+    #     git diff --quiet || (git add requirements.txt && git commit -m "Updated requirements.txt")
+    #     git push
 
   deploy:
     name: Deploy to DigitalOcean
     runs-on: self-hosted 
     needs: build
-    # if: github.ref == 'refs/heaxds/master'
+    # if: github.ref == 'refs/heads/master'
     steps:
     - name: Checkout master
       uses: actions/checkout@v1
