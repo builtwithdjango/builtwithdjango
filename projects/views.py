@@ -9,8 +9,9 @@ from .forms import AddProject
 
 class ProjectListView(ListView):
     model = Project
+    paginate_by = 6 
     template_name = "home.html"
-    ordering = ["-date_added"]
+    queryset = Project.objects.filter(published=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
