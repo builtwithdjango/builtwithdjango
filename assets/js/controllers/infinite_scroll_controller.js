@@ -14,19 +14,18 @@ export default class extends Controller {
             this.loadMore(url)
         }
     }
+
     loadMore(url) {
-        $.ajax({
-            type: "GET",
-            url: url,
-            dataType: 'json',
-            success: (data) => {
-                console.log("worked"),
-                console.log(data)
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'text/html',
             },
-            error: (data) => {
-                console.log("did not work"),
-                console.log(data)
-            }
         })
+        .then(response => response.text())
+        .then(data => console.log("Success (text)", data))
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }
 }

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "taggit",
     "django_component",
+    "rest_framework",
     "projects.apps.ProjectsConfig",
     "newsletter.apps.NewsletterConfig",
 ]
