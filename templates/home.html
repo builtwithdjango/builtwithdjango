@@ -27,7 +27,7 @@
   
 
 <div data-controller="infinite-scroll" data-action="scroll@window->infinite-scroll#scroll">
-  <div data-target="infinite-scroll.entries" class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
+  <div data-target="infinite-scroll.entries" id="entries" class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
     {% for site in page_obj %}
         <article class="flex flex-col justify-start bg-white border rounded shadow">
             <header class="border-b border-gray-300 rounded-t-lg">
@@ -62,7 +62,7 @@
     {% endfor %}
   </div>
 
-  <div data-target="infinite-scroll.pagination" class="pagination">
+  <div data-target="infinite-scroll.pagination" id="pagination" class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; first</a>
