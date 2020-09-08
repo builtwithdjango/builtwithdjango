@@ -26,42 +26,59 @@
 </div>
   
 
+<div data-controller="infinite-scroll" data-action="scroll@window->infinite-scroll#scroll">
+  <div data-target="infinite-scroll.entries" id="entries" class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
+    {% for site in page_obj %}
+        <article class="flex flex-col justify-start bg-white border rounded shadow">
+            <header class="border-b border-gray-300 rounded-t-lg">
+              <a class="" href="{% url 'project' site.slug %}">
+                <img class="object-cover object-left-top w-full h-56 border-0" src="{% get_media_prefix %}{{site.website_homepage_screenshot}}" alt="{{ site.website_title }} | Screenshot">
+              </a>
+            </header>
+            <div class="flex-auto h-full p-4 border-b border-gray-300">
+              <h2 class="mb-2 text-lg font-semibold text-gray-900"><a href="{% url 'project' site.slug %}">{{ site.website_title }}</a></h2>
+              <p class="text-sm leading-normal text-grey-700">{{ site.website_short_description }}</p>
+            </div>
+            <footer class="flex items-center justify-between px-4 py-2">
+                <div>
+                  <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_url }}" target="_blank"><i class="p-2 las la-link"></i></a>
+                  {% if site.website_github %}
+                  <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_github }}" target="_blank"><i class="p-2 lab la-github"></i></a>
+                  {% endif %}
+                  {% if site.website_twitter %}
+                  <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_twitter }}" target="_blank"><i class="p-2 lab la-twitter"></i></a>
+                  {% endif %}
+                </div>
+                <div>
+                      {% if site.maker.first_name or site.maker.last_name %}
+                      <p class="text-sm font-semibold text-gray-700">by
+                          {% if site.maker.first_name %}{{ site.maker.first_name }}{% endif %}
+                          {% if site.maker.last_name %}{{ site.maker.last_name }}{% endif %}
+                      </p>
+                      {% endif %}
+                </div>
+              </footer>
+        </article>
+    {% endfor %}
+  </div>
 
-<div class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
-  {% for site in object_list %}
-  {% if site.published %}
-      <article class="flex flex-col justify-start bg-white border rounded shadow">
-          <header class="border-b border-gray-300 rounded-t-lg">
-            <a class="" href="{% url 'project' site.slug %}">
-              <img class="object-cover object-left-top w-full h-56 border-0" src="{% get_media_prefix %}{{site.website_homepage_screenshot}}" alt="{{ site.website_title }} | Screenshot">
-            </a>
-          </header>
-          <div class="flex-auto h-full p-4 border-b border-gray-300">
-            <h2 class="mb-2 text-lg font-semibold text-gray-900"><a href="{% url 'project' site.slug %}">{{ site.website_title }}</a></h2>
-            <p class="text-sm leading-normal text-grey-700">{{ site.website_short_description }}</p>
-          </div>
-          <footer class="flex items-center justify-between px-4 py-2">
-              <div class="">
-                <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_url }}" target="_blank"><i class="p-2 las la-link"></i></a>
-                {% if site.website_github %}
-                <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_github }}" target="_blank"><i class="p-2 lab la-github"></i></a>
-                {% endif %}
-                {% if site.website_twitter %}
-                <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_twitter }}" target="_blank"><i class="p-2 lab la-twitter"></i></a>
-                {% endif %}
-              </div>
-              <div class="">
-                    {% if site.maker.first_name or site.maker.last_name %}
-                    <p class="text-sm font-semibold text-gray-700">by
-                        {% if site.maker.first_name %}{{ site.maker.first_name }}{% endif %}
-                        {% if site.maker.last_name %}{{ site.maker.last_name }}{% endif %}
-                    </p>
-                    {% endif %}
-              </div>
-            </footer>
-      </article>
-  {% endif %}
-  {% endfor %}
+  <div data-target="infinite-scroll.pagination" id="pagination" class="hidden">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a rel="next" href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+  </div>
 </div>
 
 {% endblock content %}

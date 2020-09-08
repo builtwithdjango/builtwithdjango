@@ -31,6 +31,10 @@ class Project(models.Model):
 
     maker = models.ForeignKey("Maker", on_delete=models.CASCADE, null=True, blank=True)
 
+    class Meta:
+        ordering = ["-date_added"] 
+
+
     def __str__(self):
         return (
             str(self.published)
