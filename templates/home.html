@@ -26,13 +26,13 @@
 </div>
   
 
-<div data-controller="infinite-scroll" data-action="scroll@window->infinite-scroll#scroll">
-  <div data-target="infinite-scroll.entries" id="entries" class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
+<div>
+  <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
     {% for site in page_obj %}
         <article class="flex flex-col justify-start bg-white border rounded shadow">
             <header class="border-b border-gray-300 rounded-t-lg">
               <a class="" href="{% url 'project' site.slug %}">
-                <img class="object-cover object-left-top w-full h-56 border-0" src="{% get_media_prefix %}{{site.website_homepage_screenshot}}" alt="{{ site.website_title }} | Screenshot">
+                <img class="object-cover object-left-top w-full h-56 border-0" src="{% get_media_prefix %}{{ site.website_homepage_screenshot }}" alt="{{ site.website_title }} | Screenshot">
               </a>
             </header>
             <div class="flex-auto h-full p-4 border-b border-gray-300">
@@ -60,24 +60,6 @@
               </footer>
         </article>
     {% endfor %}
-  </div>
-
-  <div data-target="infinite-scroll.pagination" id="pagination" class="hidden">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a rel="next" href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
   </div>
 </div>
 
