@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "projects.apps.ProjectsConfig",
     "newsletter.apps.NewsletterConfig",
+    "users.apps.UsersConfig",
 ]
 
 MIDDLEWARE = [
@@ -133,11 +134,10 @@ USE_TZ = True
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
-if DEBUG == True:
+if DEBUG:
     STATIC_URL = "/assets/"
 else:
     STATIC_URL = "/static/"
-
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
@@ -167,3 +167,5 @@ OCTO_LIST_ID = env("OCTO_LIST_ID")
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+AUTH_USER_MODEL = "users.CustomUser"
