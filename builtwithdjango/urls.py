@@ -23,7 +23,6 @@ from django.contrib.sitemaps import GenericSitemap
 from projects.models import Project
 from .sitemaps import StaticViewSitemap
 
-
 sitemaps = {
     "static": StaticViewSitemap,
     "projects": GenericSitemap(
@@ -46,6 +45,9 @@ urlpatterns = (
         ),
         path("", include("projects.urls")),
         path("newsletter/", include("newsletter.urls")),
+
+        path('users/', include('users.urls')),
+        path('users/', include('django.contrib.auth.urls')),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
