@@ -33,7 +33,7 @@
             <a class="block border-b border-gray-300 rounded-t-lg" href="{% url 'project' object.slug %}">
               <img class="w-full rounded-t-lg" src="{% get_media_prefix %}{{object.website_homepage_screenshot}}" alt="{{ object.website_title }} | Screenshot">
             </a>
-            <div class="flex items-center justify-between border-t px-4 py-2 border-gray-300">
+            <div class="flex items-center justify-between px-4 py-2 border-t border-gray-300">
                 <div class="">
                   <a class="inline-block bg-gray-300 rounded-full" href="{{ object.website_url }}" target="_blank"><i class="p-2 las la-link"></i></a>
                   {% if object.website_github %}
@@ -45,7 +45,7 @@
                 </div>
                 <div class="">
                       {% if object.maker.first_name or object.maker.last_name %}
-                      <p class="text-sm text-gray-700 font-semibold">by
+                      <p class="text-sm font-semibold text-gray-700">by
                           {% if object.maker.first_name %}{{ object.maker.first_name }}{% endif %}
                           {% if object.maker.last_name %}{{ object.maker.last_name }}{% endif %}
                       </p>
@@ -62,8 +62,11 @@
         </div>
 
         <div class="w-full mb-4 text-center">
-          <a class="inline-block px-4 py-3 text-sm font-bold text-center text-white no-underline uppercase transition bg-green-500 rounded-full shadow md:w-full flex-no-shrink hover:bg-green-400 hover:-translateY-sm hover:shadow"
-          href="{{ object.website_url }}">Visit Website</a>
+          <a 
+            class="inline-block px-4 py-3 text-sm font-bold text-center text-white no-underline uppercase transition bg-green-500 rounded-full shadow md:w-full flex-no-shrink hover:bg-green-400 hover:-translateY-sm hover:shadow"
+            href="{{ object.website_url }}"
+            target="_blank"
+          >Visit Website</a>
         </div>
 
         {% if object.maker.first_name %}
