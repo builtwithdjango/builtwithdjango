@@ -8,11 +8,11 @@
   <p class="mb-5 text-2xl text-gray-600">Get successful Django project interviews every week.</p>
 
   <form class="flex flex-row items-center" action="{% url 'newsletter-home' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
-      {{ form.non_field_errors }}
+      {{ newsletter_form.non_field_errors }}
       <div class="flex flex-row items-center">
         <div class="flex flex-col">
           <div class="flex flex-row item-center">
-            <span class="rounded-l-lg">{{ form.user_email }}</span>
+            <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
             <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300" type="submit">Submit</button>
           </div>
         </div>
