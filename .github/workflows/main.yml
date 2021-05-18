@@ -44,6 +44,7 @@ jobs:
           cd /var/www/builtwithdjango
           sudo git fetch --all
           sudo git reset --hard origin/master
+          pip install poetry
           poetry install
           poetry export -f requirements.txt > requirements.txt
           source venv/bin/activate
