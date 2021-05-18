@@ -32,6 +32,8 @@
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'bundles/main.css' %}">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
 
     <script async defer data-domain="builtwithdjango.com" src="https://plausible.io/js/plausible.js"></script>
   </head>
@@ -51,31 +53,71 @@
                     </div>
 
                     <nav data-target="header.nav" class="items-center justify-center hidden md:flex">
-                        <ul class="flex flex-col items-center md:flex-row">
-                            <li class="p-2 m-1"><a class="text-lg" href="{% url 'home' %}">Home</a></li>
-                            <!-- <li class="p-2 m-1"><a class="text-lg" href="#">Blog</a></li> -->
-                            <!-- <li class="p-2 m-1"><a class="text-lg" href="#">Makers</a></li> -->
-                            <!-- <li class="p-2 m-1"><a class="text-lg" href="#">Podcast</a></li> -->
-                            <li class="hidden p-2 m-1 md:inline-block">
+                        <ul class="flex flex-col items-center space-x-1 space-y-1 md:flex-row">
+                            <li class="">
+                                <a class="text-lg" href="{% url 'home' %}">Home</a>
+                            </li>
+                            <!-- <li class="p-2"><a class="text-lg" href="#">Blog</a></li> -->
+                            <!-- <li class="p-2"><a class="text-lg" href="#">Makers</a></li> -->
+                            <!-- <li class="p-2"><a class="text-lg" href="#">Podcast</a></li> -->
+                            <li class="hidden p-2 md:inline-block">
                                 <a href="https://github.com/rasulkireev/builtwithdjango">
                                     <i class="self-center text-3xl text-black lab la-github"></i>
                                 </a>
                             </li>
-                            <li class="hidden p-2 m-1 md:inline-block">
+                            <li class="hidden p-2 md:inline-block">
                                 <a rel="me" href="https://twitter.com/builtwithdjango">
                                     <i class="self-center text-3xl text-blue-700 lab la-twitter"></i>
                                 </a>
                             </li>
-                            <li>
-                                <a class="flex items-center self-center h-10 p-2 bg-green-500 rounded-lg hover:bg-green-700"
-                            href="{% url 'submit-project' %}">
-                                    <p class="text-lg font-bold text-white">Submit a Project</p>
-                                </a>
+                            <li x-data="{ isOpen: false }" class="relative">
+                                {% if user.is_authenticated %}
+                                    <button 
+                                        type="button" 
+                                        @click="isOpen = !isOpen" 
+                                        class="flex items-center self-center h-10 p-2 bg-green-700 rounded-lg hover:bg-green-800" 
+                                        id="user-menu-button" 
+                                        aria-expanded="false" 
+                                        aria-haspopup="true"
+                                    >
+                                        <span class="sr-only">Open user menu</span>
+                                        <p class="text-lg font-bold text-white">{{ user.username }}</p>
+                                    </button>
+                                    <div 
+                                        x-show="isOpen"
+                                        x-transition:enter="transition ease-out duration-100"
+                                        x-transition:enter-start="transform opacity-0 scale-95"
+                                        x-transition:enter-end="opacity-100 scale-100"
+                                        x-transition:leave="transition ease-in duration-75"
+                                        x-transition:leave-start="transform opacity-100 scale-100"
+                                        x-transition:leave-end="transform opacity-0 scale-95"
+                                        class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" 
+                                        role="menu" 
+                                        aria-orientation="vertical" 
+                                        aria-labelledby="user-menu-button" 
+                                        tabindex="-1"
+                                    >
+                                        <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a> -->
+                                        <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+                                    </div>
+  
+                                {% else %}
+                                
+                                    <a 
+                                        class="inline-flex items-center px-4 py-2 text-base font-medium text-green-700 bg-green-200 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" 
+                                        href="{% url 'login' %}"
+                                    >
+                                        Login
+                                    </a>
+                                {% endif %}
                             </li>
                         </ul>
                     </nav>
                 </div>
     </header>
+</div>
+
 
     <div class="container px-6 mx-auto ">
         {% block content %}
@@ -85,11 +127,11 @@
     <div class="flex flex-col items-center w-screen py-10 my-10 bg-green-500">
         <div class="block mb-2 text-3xl font-bold text-center text-white">Subscribe to our newsletter</div>
         <form class="flex flex-row items-center" action="{% url 'newsletter-home' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
-            {{ form.non_field_errors }}
+            {{ newsletter_form.non_field_errors }}
             <div class="flex flex-row items-center">
             <div class="flex flex-col">
                 <div class="flex flex-row item-center">
-                <div>{{ form.user_email }}</div>
+                <div>{{ newsletter_form.user_email }}</div>
                 <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg hover:bg-green-300" type="submit">Submit</button>
                 </div>
             </div>
