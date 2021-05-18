@@ -47,8 +47,6 @@ jobs:
           pip install poetry
           poetry install
           poetry export -f requirements.txt > requirements.txt
-          source venv/bin/activate
-          python -m pip install -r requirements.txt
           npm install
 
     - name: Build Project
@@ -61,10 +59,9 @@ jobs:
         script: |
           export NODE_ENV=production
           cd /var/www/builtwithdjango
-          source venv/bin/activate
           npx webpack --mode=production
-          python manage.py migrate
-          python manage.py collectstatic --noinput
+          poetry run python manage.py migrate
+          poetry python manage.py collectstatic --noinput
 
     - name: Restart Server
       uses: appleboy/ssh-action@master
