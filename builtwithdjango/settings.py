@@ -169,6 +169,6 @@ INTERNAL_IPS = [
 ]
 
 AUTH_USER_MODEL = "users.CustomUser"
-# config/settings.py 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+# config/settings.py
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"

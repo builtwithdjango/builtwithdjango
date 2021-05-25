@@ -11,48 +11,94 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('taggit', '0003_taggeditem_add_unique_index'),
+        ("taggit", "0003_taggeditem_add_unique_index"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Maker',
+            name="Maker",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(blank=True, max_length=20)),
-                ('last_name', models.CharField(blank=True, max_length=20)),
-                ('maker_email', models.EmailField(blank=True, max_length=254)),
-                ('maker_profile_image', models.ImageField(blank=True, upload_to='maker_profile_image/')),
-                ('twitter_handle', models.CharField(blank=True, max_length=20)),
-                ('github_handle', models.CharField(blank=True, max_length=20)),
-                ('indiehackers', models.CharField(blank=True, max_length=20)),
-                ('personal_website', models.URLField(blank=True)),
-                ('interviewed', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("first_name", models.CharField(blank=True, max_length=20)),
+                ("last_name", models.CharField(blank=True, max_length=20)),
+                ("maker_email", models.EmailField(blank=True, max_length=254)),
+                (
+                    "maker_profile_image",
+                    models.ImageField(blank=True, upload_to="maker_profile_image/"),
+                ),
+                ("twitter_handle", models.CharField(blank=True, max_length=20)),
+                ("github_handle", models.CharField(blank=True, max_length=20)),
+                ("indiehackers", models.CharField(blank=True, max_length=20)),
+                ("personal_website", models.URLField(blank=True)),
+                ("interviewed", models.BooleanField(default=False)),
             ],
         ),
         migrations.CreateModel(
-            name='Project',
+            name="Project",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('website_title', models.CharField(max_length=100, unique=True)),
-                ('website_url', models.URLField(unique=True)),
-                ('website_short_description', models.CharField(max_length=200)),
-                ('user_email', models.EmailField(max_length=254)),
-                ('slug', autoslug.fields.AutoSlugField(always_update=True, editable=False, populate_from='website_title')),
-                ('published', models.BooleanField(default=False)),
-                ('date_added', models.DateTimeField(auto_now_add=True)),
-                ('is_open_source', models.BooleanField(default=False)),
-                ('website_description', models.TextField(blank=True)),
-                ('website_homepage_screenshot', models.ImageField(blank=True, upload_to='website_homepage_screenshot/')),
-                ('website_twitter', models.URLField(blank=True)),
-                ('website_github', models.URLField(blank=True)),
-                ('website_additional_info', models.TextField(blank=True)),
-                ('website_requirements', models.TextField(blank=True)),
-                ('maker', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='projects.Maker')),
-                ('tags', taggit.managers.TaggableManager(blank=True, help_text='A comma-separated list of tags.', through='taggit.TaggedItem', to='taggit.Tag', verbose_name='Tags')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("website_title", models.CharField(max_length=100, unique=True)),
+                ("website_url", models.URLField(unique=True)),
+                ("website_short_description", models.CharField(max_length=200)),
+                ("user_email", models.EmailField(max_length=254)),
+                (
+                    "slug",
+                    autoslug.fields.AutoSlugField(
+                        always_update=True,
+                        editable=False,
+                        populate_from="website_title",
+                    ),
+                ),
+                ("published", models.BooleanField(default=False)),
+                ("date_added", models.DateTimeField(auto_now_add=True)),
+                ("is_open_source", models.BooleanField(default=False)),
+                ("website_description", models.TextField(blank=True)),
+                (
+                    "website_homepage_screenshot",
+                    models.ImageField(
+                        blank=True, upload_to="website_homepage_screenshot/"
+                    ),
+                ),
+                ("website_twitter", models.URLField(blank=True)),
+                ("website_github", models.URLField(blank=True)),
+                ("website_additional_info", models.TextField(blank=True)),
+                ("website_requirements", models.TextField(blank=True)),
+                (
+                    "maker",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="projects.Maker",
+                    ),
+                ),
+                (
+                    "tags",
+                    taggit.managers.TaggableManager(
+                        blank=True,
+                        help_text="A comma-separated list of tags.",
+                        through="taggit.TaggedItem",
+                        to="taggit.Tag",
+                        verbose_name="Tags",
+                    ),
+                ),
             ],
-            options={
-                'ordering': ['-date_added'],
-            },
+            options={"ordering": ["-date_added"],},
         ),
     ]

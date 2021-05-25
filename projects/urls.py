@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
-    ProjectListView, 
-    ProjectDetailView, 
+    ProjectListView,
+    ProjectDetailView,
     ProjectCreateView,
 )
 

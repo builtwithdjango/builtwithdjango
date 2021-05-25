@@ -10,6 +10,7 @@ from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
 from .serializers import ProjectsSerializer, MakersSerializer
 
+
 class ProjectListView(ListView):
     model = Project
     template_name = "home.html"
