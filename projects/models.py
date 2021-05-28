@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
 
@@ -46,7 +47,8 @@ class Project(models.Model):
         )
 
     def get_absolute_url(self):
-        return reverse("project", args=[self.slug])
+        current_project = Project.objects.get(slug=self.kwargs["slug"])
+        return reverse("project", args=current_project)
 
 
 class Maker(models.Model):
@@ -69,3 +71,17 @@ class Maker(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class Comment(models.Model):
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, related_name="comments"
+    )
+    comment = models.TextField(max_length=240)
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.comment
+
+    def get_absolute_url(self):
+        return reverse("project")

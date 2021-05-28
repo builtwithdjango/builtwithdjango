@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Project
+from .models import Project, Comment
 
 
 class AddProject(ModelForm):
@@ -26,4 +26,12 @@ class AddProject(ModelForm):
             "user_email",
             "website_short_description",
             "website_url",
+        ]
+
+
+class AddComment(ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            "comment",
         ]
