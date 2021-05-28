@@ -47,8 +47,7 @@ class Project(models.Model):
         )
 
     def get_absolute_url(self):
-        current_project = Project.objects.get(slug=self.kwargs["slug"])
-        return reverse("project", args=current_project)
+        return reverse("project", args=[self.slug])
 
 
 class Maker(models.Model):
@@ -84,4 +83,4 @@ class Comment(models.Model):
         return self.comment
 
     def get_absolute_url(self):
-        return reverse("project")
+        return reverse("project", args=[self.slug])
