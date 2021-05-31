@@ -52,3 +52,8 @@ class CommentCreateView(CreateView):
 
     def get_success_url(self):
         return reverse("project", kwargs={"slug": self.object.project.slug})
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.project = Project.objects.get(slug=self.kwargs["slug"])
+        return super(CommentCreateView, self).form_valid(form)

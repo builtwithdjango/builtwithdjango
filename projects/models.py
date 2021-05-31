@@ -6,8 +6,7 @@ from taggit.managers import TaggableManager
 
 
 class Project(models.Model):
-    """Model for a Project
-    """
+    """Model for a Project."""
 
     # Required Information
     website_title = models.CharField(max_length=100, unique=True)
@@ -21,14 +20,14 @@ class Project(models.Model):
     # Optional Website Information
     tags = TaggableManager(blank=True)
     is_open_source = models.BooleanField(default=False)
-    website_description = models.TextField(blank=True)
+    website_description = models.TextField(blank=True, null=True)
     website_homepage_screenshot = models.ImageField(
         upload_to="website_homepage_screenshot/", blank=True
     )
-    website_twitter = models.URLField(blank=True)
-    website_github = models.URLField(blank=True)
-    website_additional_info = models.TextField(blank=True)
-    website_requirements = models.TextField(blank=True)
+    website_twitter = models.URLField(blank=True, null=True)
+    website_github = models.URLField(blank=True, null=True)
+    website_additional_info = models.TextField(blank=True, null=True)
+    website_requirements = models.TextField(blank=True, null=True)
 
     maker = models.ForeignKey("Maker", on_delete=models.CASCADE, null=True, blank=True)
 
