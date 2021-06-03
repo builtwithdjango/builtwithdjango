@@ -39,7 +39,7 @@
   </head>
 
   <body class="font-sans bg-gray-100">
-        
+
     <header data-controller="header" class="container flex flex-col px-6 py-5 mx-auto mb-10 md:mb-2">
                 <div class="flex flex-col justify-between w-full py-0 bg-transparent md:order-2 sm-1 md:flex-row">
                     <div class="flex justify-between ">
@@ -72,18 +72,18 @@
                             </li>
                             <li x-data="{ isOpen: false }" class="relative">
                                 {% if user.is_authenticated %}
-                                    <button 
-                                        type="button" 
-                                        @click="isOpen = !isOpen" 
-                                        class="flex items-center self-center h-10 p-2 bg-green-700 rounded-lg hover:bg-green-800" 
-                                        id="user-menu-button" 
-                                        aria-expanded="false" 
+                                    <button
+                                        type="button"
+                                        @click="isOpen = !isOpen"
+                                        class="flex items-center self-center h-10 p-2 bg-green-700 rounded-lg hover:bg-green-800"
+                                        id="user-menu-button"
+                                        aria-expanded="false"
                                         aria-haspopup="true"
-                                    >
+                                        >
                                         <span class="sr-only">Open user menu</span>
                                         <p class="text-lg font-bold text-white">{{ user.username }}</p>
                                     </button>
-                                    <div 
+                                    <div
                                         x-show="isOpen"
                                         x-transition:enter="transition ease-out duration-100"
                                         x-transition:enter-start="transform opacity-0 scale-95"
@@ -91,21 +91,21 @@
                                         x-transition:leave="transition ease-in duration-75"
                                         x-transition:leave-start="transform opacity-100 scale-100"
                                         x-transition:leave-end="transform opacity-0 scale-95"
-                                        class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" 
-                                        role="menu" 
-                                        aria-orientation="vertical" 
-                                        aria-labelledby="user-menu-button" 
+                                        class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                        role="menu"
+                                        aria-orientation="vertical"
+                                        aria-labelledby="user-menu-button"
                                         tabindex="-1"
                                     >
                                         <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
                                         <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a> -->
                                         <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
                                     </div>
-  
+
                                 {% else %}
-                                
-                                    <a 
-                                        class="inline-flex items-center px-4 py-2 text-base font-medium text-green-700 bg-green-200 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" 
+
+                                    <a
+                                        class="inline-flex items-center px-4 py-2 text-base font-medium text-green-700 bg-green-200 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                         href="{% url 'login' %}"
                                     >
                                         Login
@@ -116,8 +116,6 @@
                     </nav>
                 </div>
     </header>
-</div>
-
 
     <div class="container px-6 mx-auto ">
         {% block content %}
@@ -147,7 +145,7 @@
             <p class="inline m-0 ml-1 text-sm font-normal align-middle">by Rasul</p>
         </a>
     </footer>
-    
+
     <script src="{% static 'bundles/app.js' %}"></script>
 </body>
 

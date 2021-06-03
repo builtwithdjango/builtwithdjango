@@ -14,9 +14,10 @@ djangorestframework = "^3.11.0"
 gunicorn = "^20.0.4"
 requests = "^2.23.0"
 sentry_sdk = "^0.14.3"
-pillow = "^7.1.1"
+pillow = "^8.0.0"
 django-component = "^0.1.6"
 black = "^19.10b0"
+Pillow = ">=8.0.0"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
