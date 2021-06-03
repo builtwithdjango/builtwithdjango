@@ -57,7 +57,7 @@ jobs:
           cd /var/www/builtwithdjango
           sudo rm -r venv/
           python -m venv venv
-          source venv/bin/activate
+          source ./venv/bin/activate
           pip install -r requirements.txt
           npm install
           npx webpack --mode=production
@@ -71,7 +71,7 @@ jobs:
         KEY: ${{ secrets.DO_SSHKEY }}
         script: |
           cd /var/www/builtwithdjango
-          source venv/bin/activate
+          source ./venv/bin/activate
           python manage.py migrate
           python manage.py collectstatic --noinput
 
