@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load markdown_extras %}
 
 {% block meta %}
 <meta name="twitter:card" content="summary_large_image">
@@ -28,7 +29,6 @@
 {% block content %}
 
 <section class="" itemscope="" itemtype="https://schema.org/WebSite">
-
   <div class="mb-2 lg:mb-4">
       <!-- Main 3 column grid -->
       <div class="grid items-start grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
@@ -159,106 +159,13 @@
                -
               <span class="text-sm text-gray-600">{{ comment.created_date|timesince }} ago</span>
             </p>
-            <p class="text-sm text-gray-800">{{ comment|linebreaks }}</p>
-
+            <div class="prose">{{ comment | markdown | safe }}</div>
           </div>
         </li>
 
       {% endfor %}
     </ul>
   </div>
-
-
-  <!-- <div class="">
-    <div class="flex flex-wrap space-x-2">
-      <div class="flex flex-col w-full mb-4 lg:w-2/3">
-          <div class="flex flex-col justify-between no-underline transition bg-white rounded-lg shadow-lg hover:shadow hover:-translateY-sm">
-            <a class="block rounded-t-lg" href="{% url 'project' object.slug %}">
-              <img class="w-full rounded-t-lg" src="{% get_media_prefix %}{{object.website_homepage_screenshot}}" alt="{{ object.website_title }} | Screenshot">
-            </a>
-            <div class="flex items-center justify-between px-4 py-2 border-t-2 border-gray-400">
-                <div class="">
-                  <a class="inline-block rounded-full" href="{{ object.website_url }}" target="_blank"><i class="p-2 las la-link"></i></a>
-                  {% if object.website_github %}
-                  <a class="inline-block rounded-full" href="{{ object.website_github }}" target="_blank"><i class="p-2 lab la-github"></i></a>
-                  {% endif %}
-                  {% if object.website_twitter %}
-                  <a class="inline-block rounded-full" href="{{ object.website_twitter }}" target="_blank"><i class="p-2 lab la-twitter"></i></a>
-                  {% endif %}
-                </div>
-                <div class="">
-                      {% if object.maker.first_name or object.maker.last_name %}
-                      <p class="text-sm font-semibold text-gray-700">by
-                          {% if object.maker.first_name %}{{ object.maker.first_name }}{% endif %}
-                          {% if object.maker.last_name %}{{ object.maker.last_name }}{% endif %}
-                      </p>
-                      {% endif %}
-                </div>
-            </div>
-          </div>
-      </div>
-      <div class="flex flex-col w-full lg:w-1/3">
-
-        <div class="flex flex-col mb-4 text-center md:text-left md:mt-0">
-          <h2 class="text-2xl text-gray-800" itemprop="name"><a href="{% url 'project' object.slug %}">{{ object.website_title }}</a></h2>
-          <p class="text-sm leading-normal text-black" itemprop="description">{{ object.website_short_description }}</p>
-        </div>
-
-        <div class="w-full mb-4 text-center">
-          <a
-            class="inline-block px-4 py-3 text-sm font-bold text-center text-white no-underline uppercase transition bg-green-500 rounded-full shadow md:w-full flex-no-shrink hover:bg-green-400 hover:-translateY-sm hover:shadow"
-            href="{{ object.website_url }}"
-            target="_blank"
-          >Visit Website</a>
-        </div>
-
-        {% if object.maker.first_name %}
-        <div class="p-4 leading-normal bg-white rounded-lg shadow">
-          <h4 class="mb-4 text-lg text-black">Author</h4>
-
-          {% if object.maker.first_name or object.maker.last_name %}
-          <div class="flex items-center mb-3">
-            <i class="h-4 mr-1 las la-user"></i>
-            <span class="text-sm text-black" itemprop="author">
-              {% if object.maker.first_name %}{{ object.maker.first_name }}{% endif %}
-              {% if object.maker.last_name %}{{ object.maker.last_name }}{% endif %}
-            </span>
-          </div>
-          {% endif %}
-
-          {% if object.maker.twitter_handle %}
-          <div class="flex items-center mb-3">
-            <i class="h-4 mr-1 lab la-twitter"></i>
-            <a href="https://twitter.com/{{object.maker.twitter_handle}}" class="inline-block text-sm font-bold text-blue-500 no-underline">
-              @{{ object.maker.twitter_handle }}
-            </a>
-          </div>
-          {% endif %}
-
-          {% if object.maker.github_handle %}
-          <div class="flex items-center mb-3">
-            <i class="h-4 mr-1 lab la-github"></i>
-            <a href="https://github.com/{{object.maker.github_handle}}" class="inline-block text-sm font-bold text-blue-500 no-underline">
-              {{ object.maker.github_handle }}
-            </a>
-          </div>
-          {% endif %}
-
-          {% if object.maker.personal_website %}
-          <div class="flex items-center mb-3">
-            <i class="h-4 mr-1 las la-link"></i>
-            <a href="{{object.maker.personal_website}}" class="inline-block text-sm font-bold text-blue-500 no-underline">
-              {{object.maker.personal_website}}
-            </a>
-          </div>
-          {% endif %}
-        </div>
-        {% endif %}
-
-      </div>
-    </div> -->
-
-  <!-- </div> -->
 </section>
 
 
