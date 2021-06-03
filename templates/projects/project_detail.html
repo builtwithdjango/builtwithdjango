@@ -78,10 +78,10 @@
                   </p>
                   <div>
                     {% if object.maker.github_handle %}
-                    <a class="inline-block rounded-full" href="{{ object.maker.github_handle }}" target="_blank"><i class="text-2xl lab la-github"></i></a>
+                    <a class="inline-block rounded-full" href="https://github.com/{{ object.maker.github_handle }}" target="_blank"><i class="text-2xl lab la-github"></i></a>
                     {% endif %}
                     {% if object.maker.twitter_handle %}
-                    <a class="inline-block rounded-full" href="{{ object.maker.twitter_handle }}" target="_blank"><i class="text-2xl lab la-twitter"></i></a>
+                    <a class="inline-block rounded-full" href="https://twitter.com/{{ object.maker.twitter_handle }}" target="_blank"><i class="text-2xl lab la-twitter"></i></a>
                     {% endif %}
                   </div>
                 {% endif %}
