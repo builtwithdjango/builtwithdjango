@@ -8,6 +8,9 @@ from taggit.managers import TaggableManager
 class Project(models.Model):
     """Model for a Project."""
 
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
     # Required Information
     website_title = models.CharField(max_length=100, unique=True)
     website_url = models.URLField(unique=True)
@@ -50,6 +53,10 @@ class Project(models.Model):
 
 
 class Maker(models.Model):
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
     # Basic Info
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20, blank=True)
@@ -72,6 +79,9 @@ class Maker(models.Model):
 
 
 class Comment(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
     project = models.ForeignKey(
         Project, on_delete=models.CASCADE, related_name="comments"
     )
