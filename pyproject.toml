@@ -6,7 +6,7 @@ authors = ["Rasul Kireev <me@rasulkireev.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-django = "^3.0.5"
+Django = "^3.2.4"
 django-autoslug = "^1.9.7"
 django-environ = "^0.4.5"
 django-taggit = "^1.2.0"
@@ -14,7 +14,6 @@ djangorestframework = "^3.11.0"
 gunicorn = "^20.0.4"
 requests = "^2.23.0"
 sentry_sdk = "^0.14.3"
-pillow = "^8.0.0"
 django-component = "^0.1.6"
 black = "^19.10b0"
 Pillow = ">=8.0.0"
