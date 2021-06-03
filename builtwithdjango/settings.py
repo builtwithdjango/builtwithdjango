@@ -169,6 +169,8 @@ INTERNAL_IPS = [
 ]
 
 AUTH_USER_MODEL = "users.CustomUser"
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 # config/settings.py
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
