@@ -16,6 +16,7 @@ requests = "^2.23.0"
 sentry_sdk = "^0.14.3"
 django-component = "^0.1.6"
 Pillow = ">=8.0.0"
+Markdown = "^3.3.4"
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b2"
