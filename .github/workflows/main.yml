@@ -55,9 +55,6 @@ jobs:
         script: |
           export NODE_ENV=production
           cd /var/www/builtwithdjango
-          ls
-          sudo rm -r venv/
-          sudo python3 -m venv venv
           source ./venv/bin/activate
           pip install -r requirements.txt
           npm install
