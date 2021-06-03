@@ -4,9 +4,6 @@ import requests
 
 
 class Emails(models.Model):
-    created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
-
     # Required Information
     user_email = models.EmailField()
     date_added = models.DateTimeField(auto_now_add=True)
