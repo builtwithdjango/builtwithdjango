@@ -11,8 +11,10 @@
 
 <title>{{ object.website_title }} is Built with Django</title>
 <meta name="description" content="{{ object.website_short_description }}">
+<link rel="canonical" href="https://{{ request.get_host }}/{{ object.slug }}" />
 
 <meta property="og:title" content="{{ object.website_title }}">
+<meta property="og:url" content="https://{{ request.get_host }}/{{ object.slug }}" />
 <meta property="og:description" content="{{ object.website_short_description }}">
 <meta name="og:image" content="https://{{ request.get_host }}{{object.website_homepage_screenshot.url}}">
 
@@ -35,7 +37,7 @@
         <div class="grid grid-cols-1 gap-4">
             <div class="p-6 overflow-hidden bg-white rounded-lg shadow">
                 <div class="flex flex-col mb-4 text-center md:text-left md:mt-0">
-                  <h2 class="text-2xl text-black" itemprop="name"><a href="{% url 'project' object.slug %}">{{ object.website_title }}</a></h2>
+                  <h1 class="text-2xl text-black" itemprop="name"><a href="{% url 'project' object.slug %}">{{ object.website_title }}</a></h1>
                   <p class="text-sm leading-normal text-black" itemprop="description">{{ object.website_short_description }}</p>
                 </div>
 
