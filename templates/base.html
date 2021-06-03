@@ -1,6 +1,6 @@
 {% load static %}
 
-<html class="">
+<html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -17,8 +17,10 @@
     {% block meta %}
     <title>Built with Django</title>
     <meta name="description" content="Collection of projects people built with Django">
+    <link rel="canonical" href="https://{{ request.get_host }}/" />
 
     <meta property="og:title" content="Built with Django">
+    <meta property="og:url" content="https://{{ request.get_host }}/" />
     <meta property="og:description" content="Collection of projects people built with Django">
     <meta name="og:image" content="{% static 'images/logo.png' %}">
 
