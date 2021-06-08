@@ -7,18 +7,7 @@ module.exports = {
       './templates/**/*.html',
     ],
     options: {
-      safelist: {
-        deep: [
-          /gray$/,
-          /red$/,
-          /yellow$/,
-          /green$/,
-          /blue$/,
-          /indigo$/,
-          /purple$/,
-          /pink$/,
-        ]
-      }
+      safelist: [/(from|via|to|border|bg|text)-(.*)-(\\d{1}0{1,2})/]
     }
   },
   theme: {
