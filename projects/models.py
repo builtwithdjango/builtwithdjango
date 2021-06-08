@@ -33,6 +33,9 @@ class Project(models.Model):
     website_requirements = models.TextField(blank=True)
 
     maker = models.ForeignKey("Maker", on_delete=models.CASCADE, null=True, blank=True)
+    technologies = models.ManyToManyField(
+        "Technology", related_name="technologies", null=True, blank=True
+    )
 
     class Meta:
         ordering = ["-date_added"]
@@ -52,6 +55,18 @@ class Project(models.Model):
         return reverse("project", args=[self.slug])
 
 
+class Technology(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
+    name = models.CharField(max_length=50)
+    color = models.CharField(max_length=50)
+    slug = models.SlugField(null=True, unique=True,)
+
+    def __str__(self):
+        return self.name
+
+
 class Maker(models.Model):
 
     created_date = models.DateTimeField(auto_now_add=True)
@@ -64,6 +79,8 @@ class Maker(models.Model):
     maker_profile_image = models.ImageField(
         upload_to="maker_profile_image/", blank=True
     )
+    # https://learndjango.com/tutorials/django-slug-tutorial
+    slug = models.SlugField(null=True, unique=True,)
 
     # Social
     twitter_handle = models.CharField(max_length=20, blank=True)
