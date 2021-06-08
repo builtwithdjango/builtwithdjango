@@ -1,10 +1,26 @@
 module.exports = {
-  purge: [
+  purge: {
+    content: [
       './assets/js/*.js',
       './assets/js/**/*.js',
       './templates/*.html',
       './templates/**/*.html',
-  ],
+    ],
+    options: {
+      safelist: {
+        deep: [
+          /gray$/,
+          /red$/,
+          /yellow$/,
+          /green$/,
+          /blue$/,
+          /indigo$/,
+          /purple$/,
+          /pink$/,
+        ]
+      }
+    }
+  },
   theme: {
     extend: {
       maxWidth: {
