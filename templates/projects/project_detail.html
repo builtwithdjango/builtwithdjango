@@ -56,7 +56,7 @@
 
                   {% if object.website_github %}
                   <a
-                    class="flex items-center bg-gray-300 rounded-lg"
+                    class="flex items-center bg-gray-100 rounded-lg hover:bg-gray-300"
                     href="{{ object.website_github }}"
                     target="_blank">
                   <i class="p-2 text-3xl lab la-github"></i>
@@ -65,7 +65,7 @@
 
                   {% if object.website_twitter %}
                   <a
-                    class="flex items-center bg-gray-300 rounded-lg"
+                    class="flex items-center bg-gray-100 rounded-lg hover:bg-gray-300"
                     href="{{ object.website_twitter }}"
                     target="_blank">
                   <i class="p-2 text-3xl text-blue-400 lab la-twitter"></i>
@@ -79,8 +79,10 @@
         <!-- Right column -->
         <div class="grid grid-cols-1 gap-4">
           <div class="flex flex-col space-y-2">
+
+            <!-- Author Card -->
             {% if object.maker.first_name %}
-            <div class="p-6 overflow-hidden bg-white rounded-lg shadow">
+            <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
               <h2 class="text-2xl text-black">Author</h2>
               <div class="flex items-center py-4">
                 {% if object.maker.maker_profile_image %}
@@ -109,12 +111,13 @@
             </div>
             {% endif %}
 
+            <!-- Tech Stack Card-->
             {% if object.technologies.all %}
-            <div class="p-6 overflow-hidden bg-white rounded-lg shadow">
+            <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
               <h2 class="text-2xl text-black">TechStack</h2>
-              <div class="flex flex-wrap items-center py-4 space-x-2 space-y-2">
+              <div class="flex flex-wrap items-center py-4 -m-1">
                 {% for tech in object.technologies.all %}
-                  <div class="inline-flex items-center px-3 py-1 rounded-full text-md font-medium bg-{{ tech.color }}-100 text-{{ tech.color }}-800">{{ tech.name }}</div>
+                  <div class="inline-flex items-center px-3 m-1 py-1 rounded-full text-md font-medium bg-{{ tech.color }}-100 text-{{ tech.color }}-800">{{ tech.name }}</div>
                 {% endfor %}
               </div>
             </div>

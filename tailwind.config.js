@@ -7,6 +7,7 @@ module.exports = {
       './templates/**/*.html',
     ],
     options: {
+      // https://nexxai.dev/tell-purgecss-to-ignore-purging-all-tailwind-colours/
       safelist: [/(bg|text)-(.*)-(.*)/]
     }
   },
