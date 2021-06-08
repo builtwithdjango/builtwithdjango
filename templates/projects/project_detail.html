@@ -47,12 +47,31 @@
                   </div>
                 </div>
 
-                <div class="w-full mb-4 text-center">
+                <div class="flex flex-row w-full mb-4 space-x-2 text-center">
                   <a
-                    class="inline-block px-4 py-3 text-sm font-bold text-center text-white no-underline uppercase transition bg-green-500 rounded-lg shadow md:w-full flex-no-shrink hover:bg-green-400 hover:-translateY-sm hover:shadow"
+                    class="inline-block w-full px-4 py-3 text-sm font-bold text-center text-white no-underline uppercase transition bg-green-500 rounded-lg shadow flex-no-shrink hover:bg-green-400 hover:-translateY-sm hover:shadow"
                     href="{{ object.website_url }}"
                     target="_blank"
                   >Visit Website</a>
+
+                  {% if object.website_github %}
+                  <a
+                    class="flex items-center bg-gray-300 rounded-lg"
+                    href="{{ object.website_github }}"
+                    target="_blank">
+                  <i class="p-2 text-3xl lab la-github"></i>
+                  </a>
+                  {% endif %}
+
+                  {% if object.website_twitter %}
+                  <a
+                    class="flex items-center bg-gray-300 rounded-lg"
+                    href="{{ object.website_twitter }}"
+                    target="_blank">
+                  <i class="p-2 text-3xl text-blue-400 lab la-twitter"></i>
+                  </a>
+                  {% endif %}
+
                 </div>
             </div>
         </div>
@@ -89,6 +108,15 @@
               </div>
             </div>
             {% endif %}
+
+            <div class="p-6 overflow-hidden bg-white rounded-lg shadow">
+              <h2 class="text-2xl text-black">TechStack</h2>
+              <div class="flex flex-wrap items-center py-4 space-x-2 space-y-2">
+                {% for tech in object.technologies.all %}
+                  <div class="inline-flex items-center px-3 py-1 rounded-full text-md font-medium bg-{{ tech.color }}-100 text-{{ tech.color }}-800">{{ tech.name }}</div>
+                {% endfor %}
+              </div>
+            </div>
           </div>
         </div>
 
