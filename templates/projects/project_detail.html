@@ -109,6 +109,7 @@
             </div>
             {% endif %}
 
+            {% if object.technologies %}
             <div class="p-6 overflow-hidden bg-white rounded-lg shadow">
               <h2 class="text-2xl text-black">TechStack</h2>
               <div class="flex flex-wrap items-center py-4 space-x-2 space-y-2">
@@ -117,6 +118,7 @@
                 {% endfor %}
               </div>
             </div>
+            {% endif %}
           </div>
         </div>
 
