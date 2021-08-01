@@ -27,38 +27,38 @@
 </div>
 
 {% if object_list %}
-  {% for job in object_list %}
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
-    <div class="relative flex items-center px-6 py-5 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-      <div class="flex-shrink-0">
-        <img class="w-10 h-10 rounded-full" src="{% get_media_prefix %}{{ job.company.company_logo }}" alt="{{ job.company }} Logo">
-      </div>
-      <div class="flex-1 min-w-0">
-        <a href="{{ job.job_listing_url }}?ref=builtwithdjango.com" target="_blank" class="focus:outline-none">
-          <span class="absolute inset-0" aria-hidden="true"></span>
-          <p class="text-base font-medium text-gray-900">
-            {{ job.job_title }}
-          </p>
-          <div class="flex items-center space-x-1">
-            <p class="flex items-center text-base text-gray-500">
-              <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-              </svg>
-              {{ job.company }}
+    {% for job in object_list %}
+      <div class="relative flex items-center px-6 py-5 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+        <div class="flex-shrink-0">
+          <img class="w-10 h-10 rounded-full" src="{% get_media_prefix %}{{ job.company.company_logo }}" alt="{{ job.company }} Logo">
+        </div>
+        <div class="flex-1 min-w-0">
+          <a href="{{ job.job_listing_url }}?ref=builtwithdjango.com" target="_blank" class="focus:outline-none">
+            <span class="absolute inset-0" aria-hidden="true"></span>
+            <p class="text-base font-medium text-gray-900">
+              {{ job.job_title }}
             </p>
-            <p class="flex items-center text-base text-gray-500">
-              <!-- Heroicon name: solid/location-marker -->
-              <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-              </svg>
-              Remote
-            </p>
-          </div>
-        </a>
+            <div class="flex items-center space-x-1">
+              <p class="flex items-center text-base text-gray-500">
+                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                </svg>
+                {{ job.company }}
+              </p>
+              <p class="flex items-center text-base text-gray-500">
+                <!-- Heroicon name: solid/location-marker -->
+                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                </svg>
+                Remote
+              </p>
+            </div>
+          </a>
+        </div>
       </div>
-    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
 {% else %}
   <div class="flex justify-center mx-auto my-10">
     <p class="text-3xl md:text-4xl">
