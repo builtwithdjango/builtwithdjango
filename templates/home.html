@@ -53,12 +53,12 @@
             </div>
             <footer class="flex items-center justify-between px-4 py-2">
                 <div>
-                  <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_url }}" target="_blank"><i class="p-2 las la-link"></i></a>
+                  <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_url }}?ref={{ request.get_host }}" target="_blank"><i class="p-2 las la-link"></i></a>
                   {% if site.website_github %}
-                  <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_github }}" target="_blank"><i class="p-2 lab la-github"></i></a>
+                  <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_github }}?ref={{ request.get_host }}" target="_blank"><i class="p-2 lab la-github"></i></a>
                   {% endif %}
                   {% if site.website_twitter %}
-                  <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_twitter }}" target="_blank"><i class="p-2 lab la-twitter"></i></a>
+                  <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_twitter }}?ref={{ request.get_host }}" target="_blank"><i class="p-2 lab la-twitter"></i></a>
                   {% endif %}
                 </div>
                 <div>

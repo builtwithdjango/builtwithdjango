@@ -50,14 +50,14 @@
                 <div class="flex flex-row w-full mb-4 space-x-2 text-center">
                   <a
                     class="inline-block w-full px-4 py-3 text-sm font-bold text-center text-white no-underline uppercase transition bg-green-500 rounded-lg shadow flex-no-shrink hover:bg-green-400 hover:-translateY-sm hover:shadow"
-                    href="{{ object.website_url }}"
+                    href="{{ object.website_url }}?ref={{ request.get_host }}"
                     target="_blank"
                   >Visit Website</a>
 
                   {% if object.website_github %}
                   <a
                     class="flex items-center bg-gray-100 rounded-lg hover:bg-gray-300"
-                    href="{{ object.website_github }}"
+                    href="{{ object.website_github }}?ref={{ request.get_host }}"
                     target="_blank">
                   <i class="p-2 text-3xl lab la-github"></i>
                   </a>
@@ -66,7 +66,7 @@
                   {% if object.website_twitter %}
                   <a
                     class="flex items-center bg-gray-100 rounded-lg hover:bg-gray-300"
-                    href="{{ object.website_twitter }}"
+                    href="{{ object.website_twitter }}?ref={{ request.get_host }}"
                     target="_blank">
                   <i class="p-2 text-3xl text-blue-400 lab la-twitter"></i>
                   </a>
@@ -99,10 +99,10 @@
                   </p>
                   <div>
                     {% if object.maker.github_handle %}
-                    <a class="inline-block rounded-full" href="https://github.com/{{ object.maker.github_handle }}" target="_blank"><i class="text-2xl lab la-github"></i></a>
+                    <a class="inline-block rounded-full" href="https://github.com/{{ object.maker.github_handle }}?ref={{ request.get_host }}" target="_blank"><i class="text-2xl lab la-github"></i></a>
                     {% endif %}
                     {% if object.maker.twitter_handle %}
-                    <a class="inline-block rounded-full" href="https://twitter.com/{{ object.maker.twitter_handle }}" target="_blank"><i class="text-2xl lab la-twitter"></i></a>
+                    <a class="inline-block rounded-full" href="https://twitter.com/{{ object.maker.twitter_handle }}?ref={{ request.get_host }}" target="_blank"><i class="text-2xl lab la-twitter"></i></a>
                     {% endif %}
                   </div>
                 {% endif %}
