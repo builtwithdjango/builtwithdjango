@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "django_component",
     "rest_framework",
     "projects.apps.ProjectsConfig",
+    "jobs.apps.JobsConfig",
     "newsletter.apps.NewsletterConfig",
     "users.apps.UsersConfig",
 ]
