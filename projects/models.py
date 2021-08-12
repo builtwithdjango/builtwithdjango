@@ -34,7 +34,7 @@ class Project(models.Model):
 
     maker = models.ForeignKey("Maker", on_delete=models.CASCADE, null=True, blank=True)
     technologies = models.ManyToManyField(
-        "Technology", related_name="technologies", null=True, blank=True
+        "Technology", related_name="projects", blank=True
     )
 
     class Meta:

@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
+    "podcast.apps.PodcastConfig",
     "newsletter.apps.NewsletterConfig",
     "users.apps.UsersConfig",
 ]
