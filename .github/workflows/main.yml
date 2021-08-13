@@ -57,7 +57,7 @@ jobs:
   #         cd /var/www/builtwithdjango
   #         source ./venv/bin/activate
   #         pip install -r requirements.txt
-  #         npm install
+  #         sudo npm install
   #         npx webpack --mode=production
 
   #   - name: Build Project
