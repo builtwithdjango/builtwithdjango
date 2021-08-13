@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load markdown_extras %}
+
+{% block content %}
+
+{% block meta %}
+<meta name="twitter:card" content="summary_large_image">
+
+{% if object.maker.twitter_handle %}
+<meta name="twitter:creator" content="@rasulkireev">
+<meta name="twitter:site" content="@builtwithdjango">
+{% endif %}
+
+<title>{{ object.title }}</title>
+<meta name="description" content="{{ object.details }}">
+<link rel="canonical" href="https://{{ request.get_host }}/{{ object.slug }}" />
+
+<meta property="og:title" content="{{ object.title }}">
+<meta property="og:url" content="https://{{ request.get_host }}/{{ object.slug }}" />
+<meta property="og:description" content="{{ object.details }}">
+<meta property="og:image" content="https://{{ request.get_host }}{{object.thumbnail.url}}">
+
+
+<meta name="twitter:title" content="{{ object.title }}">
+<meta name="twitter:description" content="{{ object.details }}">
+<meta name="twitter:image" content="https://{{ request.get_host }}{{object.thumbnail.url}}">
+{% endblock %}
+
+<div class="mt-10 prose md:mx-auto lg:prose-xl">
+  <h1>{{ object.title }}</h1>
+
+  <img class="w-full" src="{% get_media_prefix %}{{ object.thumbnail }}" alt="">
+
+  <div class="max-w-3xl">
+    {{ object.player_html_embed | safe }}
+  </div>
+
+  <div>
+    <h2>Details</h2>
+    <p>{{ object.details | markdown | safe }}</p>
+  </div>
+
+  <div>
+    <h2>Show Notes</h2>
+    <p>{{ object.show_notes  | markdown | safe }}</p>
+  </div>
+
+  <div>
+    <h2>Transcript</h2>
+    <p>{{ object.transcript | markdown | safe }}</p>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PodcastEpisode",
+  "name":"{{ object.title }}",
+  "episodeNumber": {{ object.pk }}
+  "thumbnailUrl": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.thumbnail }}"
+  "author": {
+    "@type": "Person",
+    "givenName": "Rasul",
+    "familyName": "Kireev",
+    "url": "https://rasulkireev.com/"
+  }
+  "url": "https://{{ request.get_host }}/podcast/{{ object.slug }}"
+  "partOfSeries": {
+    "@type": "PodcastSeries",
+    "name": "Built with Django Podcast",
+    "url": "https://{{ request.get_host }}/podcast/"
+  },
+  "description": "{{ object.details }}",
+  "datePublished": "{{ object.created_datetime }}"
+}
+</script>
+{% endblock schema %}

@@ -7,8 +7,10 @@ class Episode(models.Model):
     updated_datetime = models.DateTimeField(auto_now=True)
 
     title = models.CharField(max_length=100)
-    player_html_embed = models.TextField()
-    details = models.TextField()
+    slug = models.SlugField(unique=True)
+    thumbnail = models.ImageField(upload_to="podcast_episode_thumbnail/")
+    player_html_embed = models.TextField(blank=True)
+    details = models.TextField(blank=True)
     show_notes = models.TextField(blank=True)
     transcript = models.TextField(blank=True)
 
