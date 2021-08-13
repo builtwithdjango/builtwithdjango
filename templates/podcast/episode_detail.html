@@ -32,24 +32,33 @@
 
   <img class="w-full" src="{% get_media_prefix %}{{ object.thumbnail }}" alt="">
 
+  {% if object.player_html_embed %}
   <div class="max-w-3xl">
     {{ object.player_html_embed | safe }}
   </div>
+  {% endif %}
 
+  {% if object.details %}
   <div>
     <h2>Details</h2>
     <p>{{ object.details | markdown | safe }}</p>
   </div>
+  {% endif %}
 
+  {% if object.show_notes %}
   <div>
     <h2>Show Notes</h2>
     <p>{{ object.show_notes  | markdown | safe }}</p>
   </div>
+  {% endif %}
 
+  {% if object.transcript %}
   <div>
     <h2>Transcript</h2>
     <p>{{ object.transcript | markdown | safe }}</p>
   </div>
+  {% endif %}
+
 </div>
 
 {% endblock content %}
