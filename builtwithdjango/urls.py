@@ -46,6 +46,7 @@ urlpatterns = (
         path("", include("projects.urls")),
         path("jobs/", include("jobs.urls")),
         path("newsletter/", include("newsletter.urls")),
+        path("podcast/", include("podcast.urls")),
         path("users/", include("users.urls")),
         path("users/", include("django.contrib.auth.urls")),
     ]

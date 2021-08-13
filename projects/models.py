@@ -34,7 +34,7 @@ class Project(models.Model):
 
     maker = models.ForeignKey("Maker", on_delete=models.CASCADE, null=True, blank=True)
     technologies = models.ManyToManyField(
-        "Technology", related_name="technologies", null=True, blank=True
+        "Technology", related_name="projects", blank=True
     )
 
     class Meta:
@@ -80,7 +80,7 @@ class Maker(models.Model):
         upload_to="maker_profile_image/", blank=True
     )
     # https://learndjango.com/tutorials/django-slug-tutorial
-    slug = models.SlugField(null=True, unique=True,)
+    slug = models.SlugField(null=True, unique=True)
 
     # Social
     twitter_handle = models.CharField(max_length=20, blank=True)
