@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "taggit",
     "django_component",
     "rest_framework",
+    "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
     "podcast.apps.PodcastConfig",

@@ -13,7 +13,7 @@ from .serializers import ProjectsSerializer, MakersSerializer
 
 class ProjectListView(ListView):
     model = Project
-    template_name = "home.html"
+    template_name = "projects/all_projects.html"
     queryset = Project.objects.filter(published=True)
 
     def get_context_data(self, **kwargs):
