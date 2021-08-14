@@ -38,8 +38,8 @@ class ProjectDetailView(DetailView):
 class ProjectCreateView(SuccessMessageMixin, CreateView):
     model = Project
     form_class = AddProject
-    template_name = "submit-project.html"
-    success_url = reverse_lazy("home")
+    template_name = "projects/submit-project.html"
+    success_url = reverse_lazy("projects")
     success_message = """
         Thanks for submitting your project! I'll let you know when it is up on the site!
     """

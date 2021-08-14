@@ -14,5 +14,5 @@ urlpatterns = [
         CommentCreateView.as_view(),
         name="project_comment",
     ),
-    path("project/new/", ProjectCreateView.as_view(), name="submit-project"),
+    path("new/", ProjectCreateView.as_view(), name="submit-project"),
 ]

@@ -14,6 +14,8 @@ class Job(models.Model):
 
     company = models.ForeignKey("Company", on_delete=models.CASCADE,)
 
+    approved = models.BooleanField(default=False)
+
     class Meta:
         ordering = ["-created_datetime"]
 

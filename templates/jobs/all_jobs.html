@@ -49,6 +49,16 @@
   </div>
 </div>
 
+<div class="flex justify-start">
+  <a
+    type="button"
+    href="{% url 'post-job' %}"
+    class="inline-flex items-center px-4 py-2 mb-4 text-base font-medium text-green-700 bg-green-200 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+  >
+    Post a Job
+  </a>
+</div>
+
 {% if object_list %}
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     {% for job in object_list %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="w-auto mx-auto mt-10 lg:w-1/3">
+    <div class="p-8 mb-6 bg-white border-t-8 border-green-500 rounded-lg shadow-lg">
+        <form id="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="mb-4">
+            {{ form.title.errors }}
+            <label class="block mb-2 font-bold text-gray-700" for="{{ form.title.id_for_label }}">Title</label>
+            {{ form.title }}
+            </div>
+
+            <div class="mb-4">
+              {{ form.company.errors }}
+              <label class="block mb-2 font-bold text-gray-700" for="{{ form.company.id_for_label }}">Company (leave blank if no matches)</label>
+              {{ form.company }}
+            </div>
+
+            <div class="mb-4">
+                {{ form.listing_url.errors }}
+                <label class="block mb-2 font-bold text-gray-700" for="{{ form.listing_url.id_for_label }}">Job Listing URL</label>
+                {{ form.listing_url }}
+            </div>
+
+            <div class="mb-4">
+                {{ form.location.errors }}
+                <label class="block mb-2 font-bold text-gray-700" for="{{ form.location.id_for_label }}">Location</label>
+                {{ form.location }}
+            </div>
+
+            <div class="mb-4">
+                {{ form.salary.errors }}
+                <label class="block mb-2 font-bold text-gray-700" for="{{ form.salary.id_for_label }}">Yearly Salary in USD (optional)</label>
+                {{ form.salary }}
+            </div>
+
+            <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-300" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
