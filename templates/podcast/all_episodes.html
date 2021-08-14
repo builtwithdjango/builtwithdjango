@@ -1,6 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block meta %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@rasulkireev">
+<meta name="twitter:site" content="@builtwithdjango">
+
+<title>Built with Django | Jobs</title>
+<meta
+  name="description"
+  content="Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community."
+>
+<link rel="canonical" href="https://{{ request.get_host }}/podcast/" />
+
+<meta property="og:title" content="Built with Django | Jobs">
+<meta property="og:url" content="https://{{ request.get_host }}/podcast/" />
+<meta
+  property="og:description"
+  content="Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community."
+  >
+
+<meta name="twitter:title" content="Built with Django | Jobs">
+<meta name="twitter:description" content="Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community.">
+{% endblock %}
+
 {% block content %}
 
 <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
@@ -61,6 +84,31 @@
   {% endfor %}
 </div>
 
-
-
 {% endblock content %}
+
+{% block schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PodcastSeries",
+  "name":"Built with Django Podcast",
+  "description": "Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community.",
+  "abstract": "Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community.",
+  "image": "https://{{ request.get_host }}{% static 'favicon/logo.png' %}",
+  "url": "https://{{ request.get_host }}/podcast/",
+  "author": {
+    "@type": "Person",
+    "givenName": "Rasul",
+    "familyName": "Kireev",
+    "url": "https://rasulkireev.com/"
+  },
+  "actor": {
+    "@type": "Person",
+    "givenName": "Rasul",
+    "familyName": "Kireev",
+    "url": "https://rasulkireev.com/"
+  },
+  "webFeed": "https://feeds.transistor.fm/the-built-with-django-podcast"
+}
+</script>
+{% endblock schema %}

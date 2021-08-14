@@ -215,3 +215,23 @@
 
 
 {% endblock content %}
+
+{% block schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "author": {
+    "@type": "Person",
+    "givenName": "{{ object.maker.first_name }}",
+    "familyName": "{{ object.maker.last_name }}",
+    "url": "{{ object.personal_website }}",
+    "image": "https://{{ request.get_host }}{% get_media_prefix %}{{object.maker.maker_profile_image}}"
+  },
+  "name":"{{ object.title }}",
+  "thumbnailUrl": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.website_homepage_screenshot }}",
+  "image": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.website_homepage_screenshot }}",
+  "abstract": "{{ object.website_short_description }}"
+}
+</script>
+{% endblock schema %}

@@ -2,8 +2,24 @@
 {% load static %}
 {% load markdown_extras %}
 
-{% block content %}
+{% block meta %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@rasulkireev">
+<meta name="twitter:site" content="@builtwithdjango">
 
+<title>{{ object.title }}</title>
+<meta name="description" content="{{ object.details | truncatechars:125 }}">
+<link rel="canonical" href="https://{{ request.get_host }}/jobs/{{ object.pk }}" />
+
+<meta property="og:title" content="{{ object.title }}">
+<meta property="og:url" content="https://{{ request.get_host }}/jobs/{{ object.pk }}" />
+<meta property="og:description" content="{{ object.details | truncatechars:125 }}">
+
+<meta name="twitter:title" content="{{ object.title }}">
+<meta name="twitter:description" content="{{ object.details | truncatechars:125 }}">
+{% endblock %}
+
+{% block content %}
 
 <div class="max-w-3xl mx-auto">
   <div class="mt-10 prose md:mx-auto lg:prose-xl">
@@ -47,3 +63,26 @@
 </div>
 
 {% endblock content %}
+
+{% block schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "JobPosting",
+  "name":"{{ object.title }}",
+  "jobLocation": "{{ object.location }}",
+  "datePosted": "{{ object.created_datetime }}",
+  "url": "{{ object.listing_url }}",
+  "directApply": True,
+  "experienceRequirements": "{{ object.details }}",
+  "hiringOrganization": {
+    "@type": "Organization",
+    "name": "{{ object.company.name }}"
+  },
+  "relevantOccupation": {
+    "@type": "Occupation",
+    "name": "{{ object.title }}",
+  }
+}
+</script>
+{% endblock schema %}

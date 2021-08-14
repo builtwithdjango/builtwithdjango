@@ -6,18 +6,15 @@
 
 {% block meta %}
 <meta name="twitter:card" content="summary_large_image">
-
-{% if object.maker.twitter_handle %}
 <meta name="twitter:creator" content="@rasulkireev">
 <meta name="twitter:site" content="@builtwithdjango">
-{% endif %}
 
 <title>{{ object.title }}</title>
 <meta name="description" content="{{ object.details }}">
-<link rel="canonical" href="https://{{ request.get_host }}/{{ object.slug }}" />
+<link rel="canonical" href="https://{{ request.get_host }}/podcast/{{ object.slug }}" />
 
 <meta property="og:title" content="{{ object.title }}">
-<meta property="og:url" content="https://{{ request.get_host }}/{{ object.slug }}" />
+<meta property="og:url" content="https://{{ request.get_host }}/podcast/{{ object.slug }}" />
 <meta property="og:description" content="{{ object.details }}">
 <meta property="og:image" content="https://{{ request.get_host }}{{object.thumbnail.url}}">
 
@@ -69,21 +66,22 @@
   "@context": "https://schema.org",
   "@type": "PodcastEpisode",
   "name":"{{ object.title }}",
-  "episodeNumber": {{ object.pk }}
-  "thumbnailUrl": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.thumbnail }}"
+  "episodeNumber": {{ object.pk }},
+  "thumbnailUrl": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.thumbnail }}",
   "author": {
     "@type": "Person",
     "givenName": "Rasul",
     "familyName": "Kireev",
     "url": "https://rasulkireev.com/"
-  }
-  "url": "https://{{ request.get_host }}/podcast/{{ object.slug }}"
+  },
+  "url": "https://{{ request.get_host }}/podcast/{{ object.slug }}",
   "partOfSeries": {
     "@type": "PodcastSeries",
     "name": "Built with Django Podcast",
     "url": "https://{{ request.get_host }}/podcast/"
   },
   "description": "{{ object.details }}",
+  "abstract": "{{ object.details }}",
   "datePublished": "{{ object.created_datetime }}"
 }
 </script>
