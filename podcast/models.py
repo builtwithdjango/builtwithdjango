@@ -22,7 +22,7 @@ class Episode(models.Model):
     )
 
     class Meta:
-        ordering = ["-created_datetime"]
+        ordering = ["created_datetime"]
 
     def __str__(self):
         return f"{self.title}"

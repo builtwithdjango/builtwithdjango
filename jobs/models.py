@@ -14,6 +14,9 @@ class Job(models.Model):
 
     company = models.ForeignKey("Company", on_delete=models.CASCADE,)
 
+    class Meta:
+        ordering = ["-created_datetime"]
+
     def __str__(self):
         return f"{self.company}: {self.title}"
 
