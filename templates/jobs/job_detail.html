@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load markdown_extras %}
+
+{% block content %}
+
+
+<div class="max-w-3xl mx-auto">
+  <div class="mt-10 prose md:mx-auto lg:prose-xl">
+    <h1>{{object.title}} @ {{object.company.name}}</h1>
+  </div>
+
+  <div class="flex justify-center mt-10">
+    <a
+      class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+      href="{{object.listing_url}}?ref=builtwithdjango.com"
+      target="_blank"
+    >
+      Apply for this position
+    </a>
+  </div>
+
+  <div class="w-full py-6 mt-10 border-t-2 border-b-2 border-gray-300">
+    <p class="text-lg text-gray-800">Job posted {{ object.created_datetime|timesince }} ago</p>
+    {% if object.location %}<p class="text-lg text-gray-800">Location: {{ object.location }}</p>{% endif %}
+    {% if object.salary %}<p class="text-lg text-gray-800">Salary: {{ object.salary }}</p>{% endif %}
+  </div>
+
+  <div class="mt-10 prose md:mx-auto lg:prose-xl">
+      {% if object.description %}
+        {{ object.description | markdown | safe }}
+      {% else %}
+        There is no decription
+      {% endif %}
+  </div>
+
+  <div class="flex justify-center mt-10">
+    <a
+      class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+      href="{{object.listing_url}}?ref=builtwithdjango.com"
+      target="_blank"
+    >
+      Apply for this position
+    </a>
+  </div>
+
+</div>
+
+{% endblock content %}
