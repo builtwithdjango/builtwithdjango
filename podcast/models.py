@@ -21,5 +21,8 @@ class Episode(models.Model):
         "projects.Project", related_name="podcast_episodes", blank=True
     )
 
+    class Meta:
+        ordering = ["-created_datetime"]
+
     def __str__(self):
         return f"{self.title}"
