@@ -74,6 +74,7 @@ coverage.xml
 db.sqlite3
 db.sqlite3-journal
 db.sqlite3.backup
+db.sqlite3.backup.old
 
 # Flask stuff:
 instance/
