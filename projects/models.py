@@ -94,6 +94,9 @@ class Maker(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+    def get_absolute_url(self):
+        return reverse("project", args=[self.slug])
+
 
 class Comment(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
@@ -109,4 +112,4 @@ class Comment(models.Model):
         return self.comment
 
     def get_absolute_url(self):
-        return reverse("project", args=[self.slug])
+        return reverse("project", args=[self.project.slug])

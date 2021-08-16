@@ -22,6 +22,9 @@ class Job(models.Model):
     def __str__(self):
         return f"{self.company}: {self.title}"
 
+    def get_absolute_url(self):
+        return reverse("job_details", args=[self.pk])
+
 
 class Company(models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
