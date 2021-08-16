@@ -18,21 +18,8 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.sitemaps.views import sitemap
-from django.contrib.sitemaps import GenericSitemap
 
-from projects.models import Project
-from .sitemaps import StaticViewSitemap
-
-sitemaps = {
-    "static": StaticViewSitemap,
-    "projects": GenericSitemap(
-        {
-            "queryset": Project.objects.filter(published=True),
-            "date_field": "date_added",
-        },
-        priority=0.8,
-    ),
-}
+from .sitemaps import sitemaps
 
 urlpatterns = (
     [
