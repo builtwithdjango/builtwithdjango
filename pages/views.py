@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from django.views.generic import TemplateView
+from django.conf import settings
 
 from projects.models import Project
 from jobs.models import Job
@@ -28,6 +29,7 @@ class DonateOneTimeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["newsletter_form"] = NewsletterSignupForm
+        context["PAYPAL_CLIENT_ID"] = settings.PAYPAL_CLIENT_ID
 
         return context
 

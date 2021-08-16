@@ -177,3 +177,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # config/settings.py
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
+
+# Paypal
+PAYPAL_CLIENT_ID = env("PAYPAL_CLIENT_ID")
