@@ -32,5 +32,8 @@ class Company(models.Model):
     logo = models.ImageField(upload_to="company_logo/")
     email = models.EmailField(blank=True)
 
+    class Meta:
+        ordering = ["name"]
+
     def __str__(self):
         return f"{self.name}"

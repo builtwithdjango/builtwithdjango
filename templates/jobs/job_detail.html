@@ -7,16 +7,18 @@
 <meta name="twitter:creator" content="@rasulkireev">
 <meta name="twitter:site" content="@builtwithdjango">
 
-<title>{{ object.title }}</title>
+<title>{{ object.title }} @ {{ object.company.name }}</title>
 <meta name="description" content="{{ object.details | truncatechars:125 }}">
 <link rel="canonical" href="https://{{ request.get_host }}/jobs/{{ object.pk }}" />
 
-<meta property="og:title" content="{{ object.title }}">
+<meta property="og:title" content="{{ object.title }} @ {{ object.company.name }}">
 <meta property="og:url" content="https://{{ request.get_host }}/jobs/{{ object.pk }}" />
 <meta property="og:description" content="{{ object.details | truncatechars:125 }}">
+<meta property="og:image" content="https://{{ request.get_host }}{{object.company.logo.url}}">
 
-<meta name="twitter:title" content="{{ object.title }}">
+<meta name="twitter:title" content="{{ object.title }} @ {{ object.company.name }}">
 <meta name="twitter:description" content="{{ object.details | truncatechars:125 }}">
+<meta name="twitter:image" content="https://{{ request.get_host }}{{object.company.logo.url}}">
 {% endblock %}
 
 {% block content %}
