@@ -12,10 +12,10 @@
 
 <title>{{ object.website_title }} is Built with Django</title>
 <meta name="description" content="{{ object.website_short_description }}">
-<link rel="canonical" href="https://{{ request.get_host }}/{{ object.slug }}" />
+<link rel="canonical" href="https://{{ request.get_host }}/projects/{{ object.slug }}" />
 
 <meta property="og:title" content="{{ object.website_title }}">
-<meta property="og:url" content="https://{{ request.get_host }}/{{ object.slug }}" />
+<meta property="og:url" content="https://{{ request.get_host }}/projects/{{ object.slug }}" />
 <meta property="og:description" content="{{ object.website_short_description }}">
 <meta property="og:image" content="https://{{ request.get_host }}{{object.website_homepage_screenshot.url}}">
 
