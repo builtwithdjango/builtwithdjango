@@ -30,6 +30,7 @@ class StaticViewSitemap(sitemaps.Sitemap):
             "jobs",
             "job-thank-you",
             "post-job",
+            "makers",
         ]
 
     def location(self, item):
