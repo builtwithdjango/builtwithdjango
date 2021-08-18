@@ -91,5 +91,23 @@
     {% endfor %}
   </div>
 </div>
-
 {% endblock content %}
+
+{% block schema %}
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name":"Projects Built with Django",
+      "description": "Collection of cool projects people built with Django",
+      "thumbnailUrl": "{% static 'favicon/logo.png' %}",
+      "url": "https://{{ request.get_host }}/",
+      "author": {
+        "@type": "Person",
+        "givenName": "Rasul",
+        "familyName": "Kireev",
+        "url": "https://rasulkireev.com/"
+      }
+  }
+</script>
+{% endblock schema %}

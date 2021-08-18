@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Django Makers</title>
+<meta name="description" content="Coolest Django makers!">
+<link rel="canonical" href="https://{{ request.get_host }}/projects/makers/" />
+
+<meta property="og:title" content="Built with Django">
+<meta property="og:url" content="https://{{ request.get_host }}/projects/makers/" />
+<meta property="og:description" content="Coolest Django makers!">
+<meta name="og:image" content="{% static 'images/logo.png' %}">
+
+<meta name="twitter:creator" content="@rasulkireev">
+<meta name="twitter:site" content="@rasulkireev">
+<meta name="twitter:title" content="Built with Django">
+<meta name="twitter:description" content="Coolest Django makers!">
+<meta name="twitter:image" content="{% static 'images/logo.png' %}">
+{% endblock %}
+
+{% block content %}
+<div class="my-4 overflow-hidden bg-white rounded-lg shadow">
+  <div class="px-4 py-5 sm:p-6">
+    <p class="text-3xl font-semibold text-gray-800">Django Makers</p>
+    <p class="mb-5 text-2xl text-gray-600">Subscribe to know about the coolest Django makers out there.</p>
+    <form class="flex flex-row items-center" action="{% url 'newsletter-home' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{ newsletter_form.non_field_errors }}
+        <div class="flex flex-row items-center">
+          <div class="flex flex-col">
+            <div class="flex flex-row item-center">
+              <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
+              <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300" type="submit">Submit</button>
+            </div>
+          </div>
+        </div>
+    </form>
+    {% if messages %}
+      {% for message in messages %}
+        <p class="inline-block p-2 text-green-700 bg-green-200 border border-green-700 rounded">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+
+
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
+  {% for maker in object_list %}
+    <div class="relative flex items-center px-6 py-5 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+      <div class="flex-shrink-0">
+        <img class="w-10 h-10 rounded-full" src="{% get_media_prefix %}{{ maker.maker_profile_image }}" alt="{{ maker.first_name }} {{ maker.last_name }}">
+      </div>
+      <div class="flex-1 min-w-0">
+        <button class="focus:outline-none">
+          <span class="absolute inset-0" aria-hidden="true"></span>
+          <p class="text-lg font-medium text-gray-900">
+            {{ maker.first_name }} {{ maker.last_name }}
+          </p>
+          <div class="flex items-center space-x-1">
+            <a class="inline-block bg-gray-300 rounded-full" href="{{ site.website_url }}?ref={{ request.get_host }}" target="_blank"><i class="p-2 las la-link"></i></a>
+            {% if maker.github_handle %}
+            <a class="inline-block bg-gray-300 rounded-full" href="{{ maker.github_handle }}?ref={{ request.get_host }}" target="_blank"><i class="p-2 lab la-github"></i></a>
+            {% endif %}
+            {% if maker.twitter_handle %}
+            <a class="inline-block bg-gray-300 rounded-full" href="{{ maker.twitter_handle }}?ref={{ request.get_host }}" target="_blank"><i class="p-2 lab la-twitter"></i></a>
+            {% endif %}
+          </div>
+        </button>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock content %}
+
+{% block schema %}
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name":"Built with Django | Makers",
+      "description": "Coolest Django makers!",
+      "thumbnailUrl": "{% static 'favicon/logo.png' %}",
+      "url": "https://{{ request.get_host }}/",
+      "author": {
+        "@type": "Person",
+        "givenName": "Rasul",
+        "familyName": "Kireev",
+        "url": "https://rasulkireev.com/"
+      }
+    }
+</script>
+{% endblock schema %}

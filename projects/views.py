@@ -6,10 +6,6 @@ from newsletter.views import NewsletterSignupForm
 from .models import Project, Maker, Comment
 from .forms import AddProject, AddComment
 
-from rest_framework import generics
-from rest_framework.pagination import PageNumberPagination
-from .serializers import ProjectsSerializer, MakersSerializer
-
 
 class ProjectListView(ListView):
     model = Project
@@ -57,3 +53,15 @@ class CommentCreateView(CreateView):
         form.instance.author = self.request.user
         form.instance.project = Project.objects.get(slug=self.kwargs["slug"])
         return super(CommentCreateView, self).form_valid(form)
+
+
+class MakerListView(ListView):
+    model = Maker
+    template_name = "makers/all_makers.html"
+    queryset = Maker.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["newsletter_form"] = NewsletterSignupForm
+
+        return context
