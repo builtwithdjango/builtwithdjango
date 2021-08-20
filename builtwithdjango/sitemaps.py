@@ -1,11 +1,12 @@
 from datetime import datetime, timedelta
-from django.contrib import sitemaps
-from django.urls import reverse
-from django.contrib.sitemaps import GenericSitemap
 
-from projects.models import Project
+from django.contrib import sitemaps
+from django.contrib.sitemaps import GenericSitemap
+from django.urls import reverse
+
 from jobs.models import Job
 from podcast.models import Episode
+from projects.models import Project
 
 
 class StaticViewSitemap(sitemaps.Sitemap):
@@ -22,14 +23,14 @@ class StaticViewSitemap(sitemaps.Sitemap):
         """
         return [
             "home",
-            "submit-project",
+            "submit_project",
             "support",
-            "donate-subscription",
+            "support_subscription",
             "projects",
             "podcast_episodes",
             "jobs",
-            "job-thank-you",
-            "post-job",
+            "job_thank_you",
+            "post_job",
             "makers",
         ]
 
@@ -64,7 +65,7 @@ sitemaps = {
         priority=0.8,
     ),
     "podcast": GenericSitemap(
-        {"queryset": Episode.objects.all(), "date_field": "created_datetime",},
+        {"queryset": Episode.objects.all(), "date_field": "created_datetime"},
         priority=0.8,
     ),
 }

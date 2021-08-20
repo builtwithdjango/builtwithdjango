@@ -1,0 +1,74 @@
+{% extends 'base.html' %} {% load static %} {% block meta %}
+<title>Built with Django</title>
+<meta
+  name="description"
+  content="Collection of cool projects people built with Django"
+/>
+<link
+  rel="canonical"
+  href="https://{{ request.get_host }}{% url 'support_subscription' %}"
+/>
+
+<meta property="og:title" content="Built with Django" />
+<meta
+  property="og:url"
+  content="https://{{ request.get_host }}{% url 'support_subscription' %}"
+/>
+<meta
+  property="og:description"
+  content="Collection of cool projects people built with Django"
+/>
+<meta name="og:image" content="{% static 'images/logo.png' %}" />
+
+<meta name="twitter:creator" content="@rasulkireev" />
+<meta name="twitter:site" content="@rasulkireev" />
+<meta name="twitter:title" content="Built with Django" />
+<meta
+  name="twitter:description"
+  content="Collection of cool projects people built with Django"
+/>
+<meta name="twitter:image" content="{% static 'images/logo.png' %}" />
+{% endblock %} {% block content %}
+
+<div class="prose md:mx-auto lg:prose-xl">
+  <h1>Support the project with a subscription</h1>
+  <p>Right now, I only offer one subscription of <strong>$20/month</strong></p>
+  <p>If you decide to support me this way, click one of the button below</p>
+  <p>
+    Before you do click, though, let me say that I'm very grateful for your
+    support! Thank you!
+  </p>
+
+  <div
+    class="mx-auto"
+    id="paypal-button-container-P-82P18921SC440111BMEMAYJY"
+  ></div>
+</div>
+
+<script
+  src="https://www.paypal.com/sdk/js?client-id={{PAYPAL_CLIENT_ID}}&vault=true&intent=subscription"
+  data-sdk-integration-source="button-factory"
+></script>
+<script>
+  paypal
+    .Buttons({
+      style: {
+        shape: "rect",
+        color: "gold",
+        layout: "vertical",
+        label: "subscribe",
+      },
+      createSubscription: function (data, actions) {
+        return actions.subscription.create({
+          /* Creates the subscription */
+          plan_id: "P-82P18921SC440111BMEMAYJY",
+        });
+      },
+      onApprove: function (data, actions) {
+        alert(data.subscriptionID); // You can add optional success message for the subscriber here
+      },
+    })
+    .render("#paypal-button-container-P-82P18921SC440111BMEMAYJY"); // Renders the PayPal button
+</script>
+
+{% endblock content %}

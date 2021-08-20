@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta
 
-from django.views.generic import ListView, DetailView, CreateView, TemplateView
-from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
-from .models import Job
-from .forms import PostJob
 from newsletter.views import NewsletterSignupForm
+
+from .forms import PostJob
+from .models import Job
 
 
 class JobListView(ListView):
@@ -39,7 +39,7 @@ class JobCreateView(CreateView):
     model = Job
     form_class = PostJob
     template_name = "jobs/post-job.html"
-    success_url = reverse_lazy("job-thank-you")
+    success_url = reverse_lazy("job_thank_you")
 
 
 class ThankYouView(TemplateView):

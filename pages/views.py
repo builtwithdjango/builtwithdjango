@@ -1,11 +1,12 @@
 from datetime import datetime, timedelta
-from django.views.generic import TemplateView
-from django.conf import settings
 
-from projects.models import Project
+from django.conf import settings
+from django.views.generic import TemplateView
+
 from jobs.models import Job
-from podcast.models import Episode
 from newsletter.views import NewsletterSignupForm
+from podcast.models import Episode
+from projects.models import Project
 
 
 class HomeView(TemplateView):
@@ -35,7 +36,7 @@ class DonateOneTimeView(TemplateView):
 
 
 class DonateSubscriptionView(TemplateView):
-    template_name = "pages/donate-subscription.html"
+    template_name = "pages/support-subscription.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

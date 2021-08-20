@@ -1,68 +1,105 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block meta %}
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:creator" content="@rasulkireev">
-<meta name="twitter:site" content="@builtwithdjango">
+{% extends 'base.html' %} {% load static %} {% block meta %}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@rasulkireev" />
+<meta name="twitter:site" content="@builtwithdjango" />
 
 <title>Built with Django | Podcast</title>
 <meta
   name="description"
   content="Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community."
->
+/>
 <link rel="canonical" href="https://{{ request.get_host }}/podcast/" />
 
-<meta property="og:title" content="Built with Django | Podcast">
+<meta property="og:title" content="Built with Django | Podcast" />
 <meta property="og:url" content="https://{{ request.get_host }}/podcast/" />
 <meta
   property="og:description"
   content="Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community."
-  >
+/>
 
-<meta name="twitter:title" content="Built with Django | Podcast">
-<meta name="twitter:description" content="Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community.">
-<meta name="twitter:image" content="{% static 'favicon/logo.png' %}">
-{% endblock %}
-
-{% block content %}
+<meta name="twitter:title" content="Built with Django | Podcast" />
+<meta
+  name="twitter:description"
+  content="Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community."
+/>
+<meta name="twitter:image" content="{% static 'favicon/logo.png' %}" />
+{% endblock %} {% block content %}
 
 <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
   <div class="px-4 py-5 sm:p-6">
-    <p class="text-3xl font-semibold text-gray-800">Built with Django Podcast</p>
-    <p class="mb-5 text-2xl text-gray-600">Get the latest interviews with best Django developers, as soon as they come out.</p>
-    <form class="flex flex-row items-center" action="{% url 'newsletter-home' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
-        {{ newsletter_form.non_field_errors }}
-        <div class="flex flex-row items-center">
-          <div class="flex flex-col">
-            <div class="flex flex-row item-center">
-              <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
-              <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300" type="submit">Submit</button>
-            </div>
+    <p class="text-3xl font-semibold text-gray-800">
+      Built with Django Podcast
+    </p>
+    <p class="mb-5 text-2xl text-gray-600">
+      Get the latest interviews with best Django developers, as soon as they
+      come out.
+    </p>
+    <form
+      class="flex flex-row items-center"
+      action="{% url 'newsletter_home' %}"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %} {{ newsletter_form.non_field_errors }}
+      <div class="flex flex-row items-center">
+        <div class="flex flex-col">
+          <div class="flex flex-row item-center">
+            <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
+            <button
+              class="
+                px-4
+                py-2
+                font-bold
+                text-white
+                bg-green-700
+                rounded-r-lg
+                shadow
+                hover:bg-green-300
+              "
+              type="submit"
+            >
+              Submit
+            </button>
           </div>
         </div>
+      </div>
     </form>
-    {% if messages %}
-      {% for message in messages %}
-        <p class="inline-block p-2 text-green-700 bg-green-200 border border-green-700 rounded">{{ message }}</p>
-      {% endfor %}
-    {% endif %}
+    {% if messages %} {% for message in messages %}
+    <p
+      class="
+        inline-block
+        p-2
+        text-green-700
+        bg-green-200
+        border border-green-700
+        rounded
+      "
+    >
+      {{ message }}
+    </p>
+    {% endfor %} {% endif %}
   </div>
 </div>
 
 <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
   {% for episode in object_list %}
-      <article class="flex flex-col justify-start bg-white border rounded shadow">
-          <header class="border-b border-gray-300 rounded-t-lg">
-            <a class="" href="{% url 'episode_details' episode.slug %}">
-              <img class="object-cover object-left-top w-full h-auto border-0 rounded-t" src="{% get_media_prefix %}{{ episode.thumbnail }}" alt="{{ episode.title }} | Screenshot">
-            </a>
-          </header>
-          <div class="flex-auto h-full p-4">
-            <h2 class="mb-2 text-lg font-semibold text-gray-900"><a href="">{{ episode.title }}</a></h2>
-            <p class="text-sm leading-normal text-grey-700">{{ episode.details }}</p>
-          </div>
-          <!-- <footer class="flex items-center justify-between px-4 py-2">
+  <article class="flex flex-col justify-start bg-white border rounded shadow">
+    <header class="border-b border-gray-300 rounded-t-lg">
+      <a class="" href="{% url 'episode_details' episode.slug %}">
+        <img
+          class="object-cover object-left-top w-full h-auto border-0 rounded-t"
+          src="{% get_media_prefix %}{{ episode.thumbnail }}"
+          alt="{{ episode.title }} | Screenshot"
+        />
+      </a>
+    </header>
+    <div class="flex-auto h-full p-4">
+      <h2 class="mb-2 text-lg font-semibold text-gray-900">
+        <a href="">{{ episode.title }}</a>
+      </h2>
+      <p class="text-sm leading-normal text-grey-700">{{ episode.details }}</p>
+    </div>
+    <!-- <footer class="flex items-center justify-between px-4 py-2">
               <div>
                 <p class="text-sm font-semibold text-gray-700">
                   {% if episode.maker %}
@@ -81,35 +118,33 @@
                 {% endif %}
               </div>
             </footer> -->
-      </article>
+  </article>
   {% endfor %}
 </div>
 
-{% endblock content %}
-
-{% block schema %}
+{% endblock content %} {% block schema %}
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "PodcastSeries",
-  "name":"Built with Django Podcast",
-  "description": "Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community.",
-  "abstract": "Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community.",
-  "image": "https://{{ request.get_host }}{% static 'favicon/logo.png' %}",
-  "url": "https://{{ request.get_host }}/podcast/",
-  "author": {
-    "@type": "Person",
-    "givenName": "Rasul",
-    "familyName": "Kireev",
-    "url": "https://rasulkireev.com/"
-  },
-  "actor": {
-    "@type": "Person",
-    "givenName": "Rasul",
-    "familyName": "Kireev",
-    "url": "https://rasulkireev.com/"
-  },
-  "webFeed": "https://feeds.transistor.fm/the-built-with-django-podcast"
-}
+  {
+    "@context": "https://schema.org",
+    "@type": "PodcastSeries",
+    "name": "Built with Django Podcast",
+    "description": "Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community.",
+    "abstract": "Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community.",
+    "image": "https://{{ request.get_host }}{% static 'favicon/logo.png' %}",
+    "url": "https://{{ request.get_host }}/podcast/",
+    "author": {
+      "@type": "Person",
+      "givenName": "Rasul",
+      "familyName": "Kireev",
+      "url": "https://rasulkireev.com/"
+    },
+    "actor": {
+      "@type": "Person",
+      "givenName": "Rasul",
+      "familyName": "Kireev",
+      "url": "https://rasulkireev.com/"
+    },
+    "webFeed": "https://feeds.transistor.fm/the-built-with-django-podcast"
+  }
 </script>
 {% endblock schema %}
