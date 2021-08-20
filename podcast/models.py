@@ -15,7 +15,7 @@ class Episode(models.Model):
     transcript = models.TextField(blank=True)
 
     maker = models.ManyToManyField(
-        "projects.Maker", related_name="podcast_episodes", blank=True
+        "makers.Maker", related_name="podcast_episodes", blank=True
     )
     project = models.ManyToManyField(
         "projects.Project", related_name="podcast_episodes", blank=True

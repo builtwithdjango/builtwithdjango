@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block meta %}
-<title>Django Makers</title>
+<title>Built with Django | Makers</title>
 <meta name="description" content="Coolest Django makers!">
 <link rel="canonical" href="https://{{ request.get_host }}/projects/makers/" />
 
@@ -43,33 +43,39 @@
 </div>
 
 
+
+
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
   {% for maker in object_list %}
-    <div class="relative flex items-center px-6 py-5 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-      <div class="flex-shrink-0">
-        <img class="w-10 h-10 rounded-full" src="{% get_media_prefix %}{{ maker.maker_profile_image }}" alt="{{ maker.first_name }} {{ maker.last_name }}">
-      </div>
-      <div class="flex-1 min-w-0">
-        <div class="focus:outline-none">
+    <div class="relative flex items-center px-4 py-5 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+      <div class="flex items-center">
+        {% if maker.maker_profile_image %}
+          <img class="w-16 h-16 rounded-full" src="{% get_media_prefix %}{{ maker.maker_profile_image }}" alt="">
+        {% else %}
+          <!-- get image gray sillhoutte -->
+          <img class="w-10 h-10 rounded-full" src="" alt="">
+        {% endif %}
+        {% if maker.first_name or maker.last_name %}
+        <div class="ml-3">
           <p class="text-lg font-medium text-gray-900">
-            {{ maker.first_name }} {{ maker.last_name }}
+            {% if maker.first_name %}{{ maker.first_name }}{% endif %}
+            {% if maker.last_name %}{{ maker.last_name }}{% endif %}
           </p>
-          <div class="flex items-center space-x-1">
-            {% if maker.personal_website %}
-            <a class="inline-block text-lg bg-gray-300 rounded-full" href="{{ maker.personal_website }}?utm_source={{ request.get_host }}&ref={{ request.get_host }}" target="_blank"><i class="p-2 las la-link"></i></a>
-            {% endif %}
+          <div>
             {% if maker.github_handle %}
-              <a class="inline-block text-lg bg-gray-300 rounded-full" href="https://github.com/{{ maker.github_handle }}?utm_source={{ request.get_host }}&ref={{ request.get_host }}" target="_blank"><i class="p-2 lab la-github"></i></a>
+            <a class="inline-block rounded-full" href="https://github.com/{{ maker.github_handle }}?ref={{ request.get_host }}" target="_blank"><i class="text-2xl lab la-github"></i></a>
             {% endif %}
             {% if maker.twitter_handle %}
-              <a class="inline-block text-lg bg-gray-300 rounded-full" href="https://twitter.com/{{ maker.twitter_handle }}?utm_source={{ request.get_host }}&ref={{ request.get_host }}" target="_blank"><i class="p-2 lab la-twitter"></i></a>
+            <a class="inline-block rounded-full" href="https://twitter.com/{{ maker.twitter_handle }}?ref={{ request.get_host }}" target="_blank"><i class="text-2xl lab la-twitter"></i></a>
             {% endif %}
           </div>
+        {% endif %}
         </div>
       </div>
     </div>
   {% endfor %}
 </div>
+
 {% endblock content %}
 
 {% block schema %}

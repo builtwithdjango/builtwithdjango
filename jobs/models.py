@@ -12,7 +12,9 @@ class Job(models.Model):
     location = models.CharField(max_length=100, blank=True)
     salary = models.IntegerField(blank=True, null=True)
 
-    company = models.ForeignKey("Company", on_delete=models.CASCADE,)
+    company = models.ForeignKey(
+        "Company", on_delete=models.CASCADE, related_name="jobs"
+    )
 
     approved = models.BooleanField(default=False)
 
@@ -34,6 +36,10 @@ class Company(models.Model):
     url = models.URLField(unique=True)
     logo = models.ImageField(upload_to="company_logo/")
     email = models.EmailField(blank=True)
+
+    project = models.OneToOneField(
+        "projects.Project", on_delete=models.CASCADE, blank=True, null=True
+    )
 
     class Meta:
         ordering = ["name"]

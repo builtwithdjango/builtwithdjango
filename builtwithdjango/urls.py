@@ -33,6 +33,7 @@ urlpatterns = (
         path("", include("pages.urls")),
         path("projects/", include("projects.urls")),
         path("jobs/", include("jobs.urls")),
+        path("makers/", include("makers.urls")),
         path("newsletter/", include("newsletter.urls")),
         path("podcast/", include("podcast.urls")),
         path("users/", include("users.urls")),

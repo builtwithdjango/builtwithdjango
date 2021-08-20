@@ -24,7 +24,7 @@ class HomeView(TemplateView):
 
 
 class DonateOneTimeView(TemplateView):
-    template_name = "pages/donate-one-time.html"
+    template_name = "pages/support.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

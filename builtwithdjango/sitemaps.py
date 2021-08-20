@@ -23,7 +23,7 @@ class StaticViewSitemap(sitemaps.Sitemap):
         return [
             "home",
             "submit-project",
-            "donate-one-time",
+            "support",
             "donate-subscription",
             "projects",
             "podcast_episodes",

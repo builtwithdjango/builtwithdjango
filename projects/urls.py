@@ -4,12 +4,10 @@ from .views import (
     ProjectDetailView,
     ProjectCreateView,
     CommentCreateView,
-    MakerListView,
 )
 
 urlpatterns = [
     path("", ProjectListView.as_view(), name="projects"),
-    path("makers/", MakerListView.as_view(), name="makers"),
     path("<slug:slug>", ProjectDetailView.as_view(), name="project"),
     path(
         "<slug:slug>/create-comment",
