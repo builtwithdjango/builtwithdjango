@@ -1,5 +1,9 @@
 [tool.isort]
 profile = "django"
+combine_as_imports = true
+include_trailing_comma = true
+line_length = 79
+multi_line_output = 5
 
 [tool.poetry]
 name = "builtwithdjango"
