@@ -23,14 +23,6 @@ jobs:
           pip3 install poetry
           poetry install
           npm install
-    - name: 'Run linting'
-      run: |
-        set -e
-        poetry run black --check --diff .
-        poetry run pylint --load-plugins pylint_django --django-settings-module=builtwithdjango.settings
-        poetry run pip3 install radon
-        poetry run radon cc data_utils -s --total-average
-        poetry run radon mi data_utils -s
 
   deploy:
     name: Deploy to Digital Ocean
