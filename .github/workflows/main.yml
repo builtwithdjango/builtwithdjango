@@ -23,7 +23,7 @@ jobs:
           pip3 install poetry
           poetry install
           npm install
-    - displayName: 'Run linting'
+    - name: 'Run linting'
       run: |
         set -e
         poetry run black --check --diff .
