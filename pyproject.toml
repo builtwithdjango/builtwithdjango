@@ -1,3 +1,6 @@
+[tool.isort]
+profile = "django"
+
 [tool.poetry]
 name = "builtwithdjango"
 version = "0.1.0"
