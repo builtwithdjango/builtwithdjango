@@ -104,6 +104,12 @@
                             {% endif %}
                         </div>
                         <div>
+                            <div class="inline-block p-1 border rounded-full">
+                                <span>{{ site.comments.all.count }}</span>
+                                <i class="las la-comments"></i>
+                            </div>
+                        </div>
+                        <div>
                             {% if site.maker.first_name or site.maker.last_name %}
                                 <p class="text-sm font-semibold text-gray-700">
                                     by

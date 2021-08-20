@@ -3,6 +3,13 @@
 {% block content %}
     <div class="mt-8">
         <div class="mb-10">
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="inline-block p-2 mb-2 text-green-700 bg-green-200 border border-green-700 rounded ">
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            {% endif %}
             <div class="sm:mb-6 md:flex md:items-center md:justify-between">
                 <div class="flex-1 min-w-0">
                     <h2 class="inline text-2xl font-bold leading-7 ilnine sm:text-3xl md:text-4xl sm:truncate">
