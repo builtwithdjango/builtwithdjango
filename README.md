@@ -6,7 +6,7 @@ A list of projects and apps built with Django.
 
 ## Submitting a project
 
-You can submit your project here -> https://builtwithdjango.com/project/new/
+You can submit your project here -> https://builtwithdjango.com/projects/new/
 
 ## Contributing
 
