@@ -1,311 +1,195 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
-<div class="mt-8">
-  <div class="mb-10">
-    <div class="sm:mb-6 md:flex md:items-center md:justify-between">
-      <div class="flex-1 min-w-0">
-        <h2
-          class="
-            inline
-            text-2xl
-            font-bold
-            leading-7
-            ilnine
-            sm:text-3xl
-            md:text-4xl
-            sm:truncate
-          "
-        >
-          Latest Projects
-        </h2>
-        (<a
-          href="{% url 'projects' %}"
-          class="text-gray-600 hover:text-gray-900 hover:underline"
-          >See All</a
-        >)
-      </div>
-      <div class="flex mt-4 mb-4 sm:mb-0 md:mt-0 md:ml-4">
-        <a
-          type="button"
-          href="{% url 'submit_project' %}"
-          class="
-            inline-flex
-            items-center
-            px-4
-            py-2
-            text-base
-            font-medium
-            text-green-700
-            bg-green-200
-            border border-transparent
-            rounded-md
-            hover:bg-green-400
-            focus:outline-none
-            focus:ring-2
-            focus:ring-offset-2
-            focus:ring-green-500
-          "
-        >
-          Submit a Project
-        </a>
-      </div>
-    </div>
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
-      {% for site in projects %}
-      <article
-        class="flex flex-col justify-start bg-white border rounded shadow"
-      >
-        <header class="border-b border-gray-300 rounded-t-lg">
-          <a class="" href="{% url 'project' site.slug %}">
-            <img
-              class="
-                object-cover object-left-top
-                w-full
-                h-auto
-                border-0
-                rounded-t
-              "
-              src="{% get_media_prefix %}{{ site.website_homepage_screenshot }}"
-              alt="{{ site.website_title }} | Screenshot"
-            />
-          </a>
-        </header>
-        <div class="flex-auto h-full p-4 border-b border-gray-300">
-          <h2 class="mb-2 text-lg font-semibold text-gray-900">
-            <a href="{% url 'project' site.slug %}">{{ site.website_title }}</a>
-          </h2>
-          <p class="text-sm leading-normal text-grey-700">
-            {{ site.website_short_description }}
-          </p>
-        </div>
-        <footer class="flex items-center justify-between px-4 py-2">
-          <div>
-            <a
-              class="inline-block bg-gray-300 rounded-full"
-              href="{{ site.website_url }}?ref={{ request.get_host }}"
-              target="_blank"
-              ><i class="p-2 las la-link"></i
-            ></a>
-            {% if site.website_github %}
-            <a
-              class="inline-block bg-gray-300 rounded-full"
-              href="{{ site.website_github }}?ref={{ request.get_host }}"
-              target="_blank"
-              ><i class="p-2 lab la-github"></i
-            ></a>
-            {% endif %} {% if site.website_twitter %}
-            <a
-              class="inline-block bg-gray-300 rounded-full"
-              href="{{ site.website_twitter }}?ref={{ request.get_host }}"
-              target="_blank"
-              ><i class="p-2 lab la-twitter"></i
-            ></a>
-            {% endif %}
-          </div>
-          <div>
-            <div class="inline-block p-1 border rounded-full">
-              <span>{{ site.comments.all.count }}</span>
-              <i class="las la-comments"></i>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="mt-8">
+        <div class="mb-10">
+            <div class="sm:mb-6 md:flex md:items-center md:justify-between">
+                <div class="flex-1 min-w-0">
+                    <h2 class="inline text-2xl font-bold leading-7 ilnine sm:text-3xl md:text-4xl sm:truncate">
+                        Latest Projects
+                    </h2>
+                    (
+                    <a href="{% url 'projects' %}" class="text-gray-600 hover:text-gray-900 hover:underline">
+                        See All
+                    </a>
+                    )
+                </div>
+                <div class="flex mt-4 mb-4 sm:mb-0 md:mt-0 md:ml-4">
+                    <a type="button"
+                       href="{% url 'submit_project' %}"
+                       class="inline-flex items-center px-4 py-2 text-base font-medium text-green-700 bg-green-200 border border-transparent rounded-md hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        Submit a Project
+                    </a>
+                </div>
             </div>
-          </div>
-          <div>
-            {% if site.maker.first_name or site.maker.last_name %}
-            <p class="text-sm font-semibold text-gray-700">
-              by {% if site.maker.first_name %}{{ site.maker.first_name }}{%
-              endif %} {% if site.maker.last_name %}{{ site.maker.last_name }}{%
-              endif %}
-            </p>
-            {% endif %}
-          </div>
-        </footer>
-      </article>
-      {% endfor %}
-    </div>
-  </div>
-
-  <div class="mb-10">
-    <div class="sm:mb-6 md:flex md:items-center md:justify-between">
-      <div class="flex-1 min-w-0">
-        <h2
-          class="
-            inline
-            text-2xl
-            font-bold
-            leading-7
-            ilnine
-            sm:text-3xl
-            md:text-4xl
-            sm:truncate
-          "
-        >
-          Latest Jobs
-        </h2>
-        (<a
-          href="{% url 'jobs' %}"
-          class="text-gray-600 hover:text-gray-900 hover:underline"
-          >See All</a
-        >)
-      </div>
-      <div class="flex mt-4 mb-4 md:mt-0 md:ml-4 sm:mb-0">
-        <a
-          type="button"
-          href="{% url 'post_job' %}"
-          class="
-            inline-flex
-            items-center
-            px-4
-            py-2
-            text-base
-            font-medium
-            text-green-700
-            bg-green-200
-            border border-transparent
-            rounded-md
-            hover:bg-green-400
-            focus:outline-none
-            focus:ring-2
-            focus:ring-offset-2
-            focus:ring-green-500
-          "
-        >
-          Post a Job
-        </a>
-      </div>
-    </div>
-    {% if jobs %}
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      {% for job in jobs %}
-      <div
-        class="
-          relative
-          flex
-          items-center
-          px-6
-          py-5
-          space-x-3
-          bg-white
-          border border-gray-300
-          rounded-lg
-          shadow-sm
-          hover:bg-gray-100 hover:border-gray-400
-          focus-within:ring-2
-          focus-within:ring-offset-2
-          focus-within:ring-indigo-500
-        "
-      >
-        <div class="flex-shrink-0">
-          <img
-            class="w-10 h-10 rounded-full"
-            src="{% get_media_prefix %}{{ job.company.logo }}"
-            alt="{{ job.company }} Logo"
-          />
-        </div>
-        <div class="flex-1 min-w-0">
-          <a href="{% url 'job_details' job.pk %}" class="focus:outline-none">
-            <span class="absolute inset-0" aria-hidden="true"></span>
-            <p class="text-base font-medium text-gray-900">{{ job.title }}</p>
-            <div class="flex items-center space-x-1">
-              <p class="flex items-center text-base text-gray-500">
-                <svg
-                  class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"
-                  />
-                </svg>
-                {{ job.company }}
-              </p>
-              <p class="flex items-center text-base text-gray-500">
-                <!-- Heroicon name: solid/location-marker -->
-                <svg
-                  class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                Remote
-              </p>
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
+                {% for site in projects %}
+                    <article class="flex flex-col justify-start bg-white border rounded shadow">
+                        <header class="border-b border-gray-300 rounded-t-lg">
+                            <a class="" href="{% url 'project' site.slug %}">
+                                <img class="object-cover object-left-top w-full h-auto border-0 rounded-t"
+                                     src="{% get_media_prefix %}{{ site.website_homepage_screenshot }}"
+                                     alt="{{ site.website_title }} | Screenshot">
+                            </a>
+                        </header>
+                        <div class="flex-auto h-full p-4 border-b border-gray-300">
+                            <h2 class="mb-2 text-lg font-semibold text-gray-900">
+                                <a href="{% url 'project' site.slug %}">{{ site.website_title }}</a>
+                            </h2>
+                            <p class="text-sm leading-normal text-grey-700">
+                                {{ site.website_short_description }}
+                            </p>
+                        </div>
+                        <footer class="flex items-center justify-between px-4 py-2">
+                            <div>
+                                <a class="inline-block bg-gray-300 rounded-full"
+                                   href="{{ site.website_url }}?ref={{ request.get_host }}"
+                                   target="_blank">
+                                    <i class="p-2 las la-link"></i>
+                                </a>
+                                {% if site.website_github %}
+                                    <a class="inline-block bg-gray-300 rounded-full"
+                                       href="{{ site.website_github }}?ref={{ request.get_host }}"
+                                       target="_blank">
+                                        <i class="p-2 lab la-github"></i>
+                                    </a>
+                                {% endif %}
+                                {% if site.website_twitter %}
+                                    <a class="inline-block bg-gray-300 rounded-full"
+                                       href="{{ site.website_twitter }}?ref={{ request.get_host }}"
+                                       target="_blank">
+                                        <i class="p-2 lab la-twitter"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div class="inline-block p-1 border rounded-full">
+                                    <span>{{ site.comments.all.count }}</span>
+                                    <i class="las la-comments"></i>
+                                </div>
+                            </div>
+                            <div>
+                                {% if site.maker.first_name or site.maker.last_name %}
+                                    <p class="text-sm font-semibold text-gray-700">
+                                        by
+                                        {% if site.maker.first_name %}{{ site.maker.first_name }}{% endif %}
+                                        {% if site.maker.last_name %}{{ site.maker.last_name }}{% endif %}
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </footer>
+                    </article>
+                {% endfor %}
             </div>
-          </a>
         </div>
-      </div>
-      {% endfor %}
-    </div>
-    {% else %}
-    <div class="flex justify-center mx-auto my-10">
-      <p class="text-3xl md:text-4xl">
-        There are currently no jobs available...
-        <span class="font-bold"> that we know of </span>
-      </p>
-    </div>
-    {% endif %}
-  </div>
-
-  <div class="mb-10">
-    <div class="sm:mb-6 md:flex md:items-center md:justify-between">
-      <div class="flex-1 min-w-0">
-        <h2
-          class="
-            inline
-            text-2xl
-            font-bold
-            leading-7
-            ilnine
-            sm:text-3xl
-            md:text-4xl
-            sm:truncate
-          "
-        >
-          Latest Podcast Episodes
-        </h2>
-        (<a
-          href="{% url 'podcast_episodes' %}"
-          class="text-gray-600 hover:text-gray-900 hover:underline"
-          >See All</a
-        >)
-      </div>
-    </div>
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
-      {% for episode in podcast_episodes%}
-      <article
-        class="flex flex-col justify-start bg-white border rounded shadow"
-      >
-        <header class="border-b border-gray-300 rounded-t-lg">
-          <a class="" href="{% url 'episode_details' episode.slug %}">
-            <img
-              class="
-                object-cover object-left-top
-                w-full
-                h-auto
-                border-0
-                rounded-t
-              "
-              src="{% get_media_prefix %}{{ episode.thumbnail }}"
-              alt="{{ episode.title }} | Screenshot"
-            />
-          </a>
-        </header>
-        <div class="flex-auto h-full p-4">
-          <h2 class="mb-2 text-lg font-semibold text-gray-900">
-            <a href="">{{ episode.title }}</a>
-          </h2>
-          <p class="text-sm leading-normal text-grey-700">
-            {{ episode.details }}
-          </p>
+        <div class="mb-10">
+            <div class="sm:mb-6 md:flex md:items-center md:justify-between">
+                <div class="flex-1 min-w-0">
+                    <h2 class="inline text-2xl font-bold leading-7 ilnine sm:text-3xl md:text-4xl sm:truncate">
+                        Latest Jobs
+                    </h2>
+                    (
+                    <a href="{% url 'jobs' %}" class="text-gray-600 hover:text-gray-900 hover:underline">
+                        See All
+                    </a>
+                    )
+                </div>
+                <div class="flex mt-4 mb-4 md:mt-0 md:ml-4 sm:mb-0">
+                    <a type="button"
+                       href="{% url 'post_job' %}"
+                       class="inline-flex items-center px-4 py-2 text-base font-medium text-green-700 bg-green-200 border border-transparent rounded-md hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        Post a Job
+                    </a>
+                </div>
+            </div>
+            {% if jobs %}
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    {% for job in jobs %}
+                        <div class="relative flex items-center px-6 py-5 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                            <div class="flex-shrink-0">
+                                <img class="w-10 h-10 rounded-full"
+                                     src="{% get_media_prefix %}{{ job.company.logo }}"
+                                     alt="{{ job.company }} Logo">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <a href="{% url 'job_details' job.pk %}" class="focus:outline-none">
+                                    <span class="absolute inset-0" aria-hidden="true"></span>
+                                    <p class="text-base font-medium text-gray-900">
+                                        {{ job.title }}
+                                    </p>
+                                    <div class="flex items-center space-x-1">
+                                        <p class="flex items-center text-base text-gray-500">
+                                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 20 20"
+                                                 fill="currentColor"
+                                                 aria-hidden="true">
+                                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                                            </svg>
+                                            {{ job.company }}
+                                        </p>
+                                        <p class="flex items-center text-base text-gray-500">
+                                            <!-- Heroicon name: solid/location-marker -->
+                                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 20 20"
+                                                 fill="currentColor"
+                                                 aria-hidden="true">
+                                                <path fill-rule="evenodd"
+                                                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                                      clip-rule="evenodd"/>
+                                            </svg>
+                                            Remote
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="flex justify-center mx-auto my-10">
+                    <p class="text-3xl md:text-4xl">
+                        There are currently no jobs available...
+                        <span class="font-bold">that we know of</span>
+                    </p>
+                </div>
+            {% endif %}
         </div>
-      </article>
-      {% endfor %}
+        <div class="mb-10">
+            <div class="sm:mb-6 md:flex md:items-center md:justify-between">
+                <div class="flex-1 min-w-0">
+                    <h2 class="inline text-2xl font-bold leading-7 ilnine sm:text-3xl md:text-4xl sm:truncate">
+                        Latest Podcast Episodes
+                    </h2>
+                    (
+                    <a href="{% url 'podcast_episodes' %}" class="text-gray-600 hover:text-gray-900 hover:underline">
+                        See All
+                    </a>
+                    )
+                </div>
+            </div>
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
+                {% for episode in podcast_episodes %}
+                    <article class="flex flex-col justify-start bg-white border rounded shadow">
+                        <header class="border-b border-gray-300 rounded-t-lg">
+                            <a class="" href="{% url 'episode_details' episode.slug %}">
+                                <img class="object-cover object-left-top w-full h-auto border-0 rounded-t"
+                                     src="{% get_media_prefix %}{{ episode.thumbnail }}"
+                                     alt="{{ episode.title }} | Screenshot">
+                            </a>
+                        </header>
+                        <div class="flex-auto h-full p-4">
+                            <h2 class="mb-2 text-lg font-semibold text-gray-900">
+                                <a href="">{{ episode.title }}</a>
+                            </h2>
+                            <p class="text-sm leading-normal text-grey-700">
+                                {{ episode.details }}
+                            </p>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 {% endblock content %}

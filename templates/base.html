@@ -1,398 +1,198 @@
 {% load static %}
-
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <!-- Other meta stuff -->
-    <link rel="apple-touch-icon" href="{% static 'favicon/logo.png' %}" />
-    <link rel="apple-touch-icon" href="{% static 'favicon/logo.png' %}" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16 32x32 500x500"
-      href="{% static 'favicon/logo.png' %}"
-    />
-
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-
-    {% block meta %}
-    <title>Built with Django</title>
-    <meta
-      name="description"
-      content="Collection of cool projects people built with Django"
-    />
-    <link rel="canonical" href="https://{{ request.get_host }}/" />
-
-    <meta property="og:title" content="Built with Django" />
-    <meta property="og:url" content="https://{{ request.get_host }}/" />
-    <meta
-      property="og:description"
-      content="Collection of cool projects people built with Django"
-    />
-    <meta name="og:image" content="{% static 'images/logo.png' %}" />
-
-    <meta name="twitter:creator" content="@rasulkireev" />
-    <meta name="twitter:site" content="@rasulkireev" />
-    <meta name="twitter:title" content="Built with Django" />
-    <meta
-      name="twitter:description"
-      content="Collection of cool projects people built with Django"
-    />
-    <meta name="twitter:image" content="{% static 'images/logo.png' %}" />
-    {% endblock %}
-
-    <!-- CSS -->
-    <!-- CSS refresh solution from https://stackoverflow.com/a/56987021/6020165 -->
-    <link
-      rel="stylesheet"
-      href="{% static 'bundles/main.css' %}?{% now 'U' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
-      defer
-    ></script>
-
-    <script
-      async
-      defer
-      data-domain="builtwithdjango.com"
-      src="https://plausible.io/js/plausible.js"
-    ></script>
-  </head>
-
-  <body class="font-sans bg-gray-100">
-    <header>
-      <nav class="container px-4 mx-auto sm:px-6 lg:px-8" aria-label="Top">
-        <div class="flex items-center justify-between w-full py-6">
-          <div class="flex items-center">
-            <a href="{% url 'home' %}">
-              <span class="sr-only">Built with Django</span>
-              <img
-                class="w-auto h-14"
-                src="{% static 'images/logo.png' %}"
-                alt="BuiltwithDjango Logo"
-              />
-            </a>
-            <div class="hidden ml-10 space-x-8 sm:block">
-              <a
-                href="{% url 'projects' %}"
-                class="text-2xl font-medium text-green-800 hover:text-green-900"
-                key="Projects"
-              >
-                Projects
-              </a>
-              <a
-                href="{% url 'makers' %}"
-                class="text-2xl font-medium text-green-800 hover:text-green-900"
-                key="Makers"
-              >
-                Makers
-              </a>
-              <a
-                href="{% url 'jobs' %}"
-                class="text-2xl font-medium text-green-800 hover:text-green-900"
-                key="Jobs"
-              >
-                Jobs
-              </a>
-              <a
-                href="{% url 'podcast_episodes' %}"
-                class="text-2xl font-medium text-green-800 hover:text-green-900"
-                key="Jobs"
-              >
-                Podcast
-              </a>
-            </div>
-          </div>
-          <div x-data="{ isOpen: false }" class="relative hidden sm:block">
-            <div class="flex flex-row space-x-2">
-              <div>
-                <a
-                  class="
-                    inline-flex
-                    items-center
-                    px-3
-                    py-2
-                    text-lg
-                    font-bold
-                    text-blue-800
-                    no-underline
-                    bg-yellow-400
-                    rounded-full
-                  "
-                  href="{% url 'support' %}"
-                  >Support</a
-                >
-              </div>
-              {% if user.is_authenticated %}
-              <button
-                type="button"
-                @click="isOpen = !isOpen"
-                class="
-                  flex
-                  items-center
-                  self-center
-                  h-10
-                  p-2
-                  bg-green-600
-                  rounded
-                  hover:bg-green-900
-                "
-                id="user-menu-button"
-                aria-expanded="false"
-                aria-haspopup="true"
-              >
-                <span class="sr-only">Open user menu</span>
-                <p class="text-lg font-bold text-white">{{ user.username }}</p>
-              </button>
-              <div
-                x-show="isOpen"
-                x-transition:enter="transition ease-out duration-100"
-                x-transition:enter-start="transform opacity-0 scale-95"
-                x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-75"
-                x-transition:leave-start="transform opacity-100 scale-100"
-                x-transition:leave-end="transform opacity-0 scale-95"
-                class="
-                  absolute
-                  right-0
-                  w-48
-                  py-1
-                  mt-2
-                  origin-top-right
-                  bg-white
-                  rounded-md
-                  shadow-lg
-                  ring-1 ring-black ring-opacity-5
-                  focus:outline-none
-                "
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="user-menu-button"
-                tabindex="-1"
-              >
-                <a
-                  href="{% url 'logout' %}"
-                  class="block px-4 py-2 text-sm text-gray-700"
-                  role="menuitem"
-                  tabindex="-1"
-                  id="user-menu-item-2"
-                  >Sign out</a
-                >
-              </div>
-              {% else %}
-              <a
-                href="{% url 'login' %}"
-                class="
-                  inline-block
-                  px-4
-                  py-2
-                  text-base
-                  font-medium
-                  text-green-700
-                  bg-white
-                  border border-transparent
-                  rounded-md
-                  hover:bg-opacity-75
-                "
-              >
-                Sign in
-              </a>
-              {% endif %}
-            </div>
-          </div>
-
-          <div x-data="{ isOpen: false }" class="z-50 -my-2 -mr-2 sm:hidden">
-            <button
-              type="button"
-              @click="isOpen = !isOpen"
-              class="
-                inline-flex
-                items-center
-                justify-center
-                p-2
-                text-gray-400
-                bg-white
-                rounded-md
-                hover:text-gray-500 hover:bg-gray-100
-                focus:outline-none
-                focus:ring-2
-                focus:ring-inset
-                focus:ring-indigo-500
-              "
-              aria-expanded="false"
-            >
-              <span class="sr-only">Open menu</span>
-              <!-- Heroicon name: outline/menu -->
-              <svg
-                class="w-6 h-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-
-            <div
-              x-show="isOpen"
-              x-transition:enter="transition ease-out duration-100 transform"
-              x-transition:enter-start="opacity-0 scale-95"
-              x-transition:enter-end="opacity-100 scale-100"
-              x-transition:leave="transition ease-in duration-75 transform"
-              x-transition:leave-start="opacity-100 scale-100"
-              x-transition:leave-end="opacity-0 scale-95"
-              class="
-                absolute
-                w-11/12
-                bg-gray-100
-                border-2 border-gray-300
-                rounded-md
-                right-4
-                top-28
-              "
-            >
-              <div class="flex flex-col items-center w-full py-8 space-y-3">
-                <div>
-                  <a
-                    href="{% url 'projects' %}"
-                    class="
-                      text-2xl
-                      font-medium
-                      text-green-800
-                      hover:text-green-900
-                    "
-                    key="Projects"
-                  >
-                    Projects
-                  </a>
-                </div>
-                <a
-                  href="{% url 'makers' %}"
-                  class="
-                    text-2xl
-                    font-medium
-                    text-green-800
-                    hover:text-green-900
-                  "
-                  key="Makers"
-                >
-                  Makers
-                </a>
-                <div>
-                  <a
-                    href="{% url 'jobs' %}"
-                    class="
-                      text-2xl
-                      font-medium
-                      text-green-800
-                      hover:text-green-900
-                    "
-                    key="Jobs"
-                  >
-                    Jobs
-                  </a>
-                </div>
-                <div>
-                  <a
-                    href="{% url 'podcast_episodes' %}"
-                    class="
-                      text-2xl
-                      font-medium
-                      text-green-800
-                      hover:text-green-900
-                    "
-                    key="Podcast"
-                  >
-                    Podcast
-                  </a>
-                </div>
-                <div>
-                  <a
-                    class="
-                      inline-flex
-                      items-center
-                      px-3
-                      py-2
-                      text-lg
-                      font-bold
-                      text-blue-800
-                      no-underline
-                      bg-yellow-400
-                      rounded-full
-                    "
-                    href="{% url 'support' %}"
-                    >Support</a
-                  >
-                </div>
-
-                <div>
-                  {% if user.is_authenticated %}
-                  <p
-                    class="
-                      p-2
-                      text-lg
-                      font-bold
-                      text-green-700
-                      bg-white
-                      rounded
-                      hover:bg-gray-100
-                    "
-                  >
-                    {{ user.username }}
-                  </p>
-                  {% else %}
-                  <div>
-                    <a
-                      href="{% url 'login' %}"
-                      class="
-                        p-2
-                        text-lg
-                        font-bold
-                        text-green-700
-                        bg-white
-                        rounded
-                        hover:bg-gray-100
-                      "
-                    >
-                      Sign in
-                    </a>
-                  </div>
-
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
-
-    <div class="container px-6 mx-auto">
-      {% block content %} {% endblock content %}
-    </div>
-
-    <div class="flex flex-col items-center w-screen py-10 my-10">
-      <!-- <div class="block mb-2 text-3xl font-bold text-center text-white">Subscribe to our newsletter</div>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- Other meta stuff -->
+        <link rel="apple-touch-icon" href="{% static 'favicon/logo.png' %}" />
+        <link rel="apple-touch-icon" href="{% static 'favicon/logo.png' %}" />
+        <link rel="icon" type="image/png" sizes="16x16 32x32 500x500" href="{% static 'favicon/logo.png' %}"/>
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        {% block meta %}
+            <title>Built with Django</title>
+            <meta name="description" content="Collection of cool projects people built with Django"/>
+            <link rel="canonical" href="https://{{ request.get_host }}/" />
+            <meta property="og:title" content="Built with Django" />
+            <meta property="og:url" content="https://{{ request.get_host }}/" />
+            <meta property="og:description" content="Collection of cool projects people built with Django"/>
+            <meta name="og:image" content="{% static 'images/logo.png' %}" />
+            <meta name="twitter:creator" content="@rasulkireev" />
+            <meta name="twitter:site" content="@rasulkireev" />
+            <meta name="twitter:title" content="Built with Django" />
+            <meta name="twitter:description" content="Collection of cool projects people built with Django"/>
+            <meta name="twitter:image" content="{% static 'images/logo.png' %}" />
+        {% endblock %}
+        <!-- CSS -->
+        <!-- CSS refresh solution from https://stackoverflow.com/a/56987021/6020165 -->
+        <link rel="stylesheet" href="{% static 'bundles/main.css' %}?{% now 'U' %}"/>
+        <link rel="stylesheet"
+              href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"/>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+        <script async defer data-domain="builtwithdjango.com" src="https://plausible.io/js/plausible.js"></script>
+    </head>
+    <body class="font-sans bg-gray-100">
+        <header>
+            <nav class="container px-4 mx-auto sm:px-6 lg:px-8" aria-label="Top">
+                <div class="flex items-center justify-between w-full py-6">
+                    <div class="flex items-center">
+                        <a href="{% url 'home' %}">
+                            <span class="sr-only">Built with Django</span>
+                            <img class="w-auto h-14" src="{% static 'images/logo.png' %}" alt="BuiltwithDjango Logo"/>
+                        </a>
+                        <div class="hidden ml-10 space-x-8 sm:block">
+                            <a href="{% url 'projects' %}"
+                               class="text-2xl font-medium text-green-800 hover:text-green-900"
+                               key="Projects">
+                                Projects
+                            </a>
+                            <a href="{% url 'makers' %}"
+                               class="text-2xl font-medium text-green-800 hover:text-green-900"
+                               key="Makers">
+                                Makers
+                            </a>
+                            <a href="{% url 'jobs' %}"
+                               class="text-2xl font-medium text-green-800 hover:text-green-900"
+                               key="Jobs">
+                                Jobs
+                            </a>
+                            <a href="{% url 'podcast_episodes' %}"
+                               class="text-2xl font-medium text-green-800 hover:text-green-900"
+                               key="Jobs">
+                                Podcast
+                            </a>
+                        </div>
+                    </div>
+                    <div x-data="{ isOpen: false }" class="relative hidden sm:block">
+                        <div class="flex flex-row space-x-2">
+                            <div>
+                                <a class=" inline-flex items-center px-3 py-2 text-lg font-bold text-blue-800 no-underline bg-yellow-400 rounded-full "
+                                   href="{% url 'support' %}">Support</a
+                                    >
+                                </div>
+                                {% if user.is_authenticated %}
+                                    <button type="button"
+                                            @click="isOpen = !isOpen"
+                                            class=" flex items-center self-center h-10 p-2 bg-green-600 rounded hover:bg-green-900 "
+                                            id="user-menu-button"
+                                            aria-expanded="false"
+                                            aria-haspopup="true">
+                                        <span class="sr-only">Open user menu</span>
+                                        <p class="text-lg font-bold text-white">{{ user.username }}</p>
+                                    </button>
+                                    <div x-show="isOpen"
+                                         x-transition:enter="transition ease-out duration-100"
+                                         x-transition:enter-start="transform opacity-0 scale-95"
+                                         x-transition:enter-end="opacity-100 scale-100"
+                                         x-transition:leave="transition ease-in duration-75"
+                                         x-transition:leave-start="transform opacity-100 scale-100"
+                                         x-transition:leave-end="transform opacity-0 scale-95"
+                                         class=" absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
+                                         role="menu"
+                                         aria-orientation="vertical"
+                                         aria-labelledby="user-menu-button"
+                                         tabindex="-1">
+                                        <a href="{% url 'logout' %}"
+                                           class="block px-4 py-2 text-sm text-gray-700"
+                                           role="menuitem"
+                                           tabindex="-1"
+                                           id="user-menu-item-2">Sign out</a
+                                            >
+                                        </div>
+                                    {% else %}
+                                        <a href="{% url 'login' %}"
+                                           class=" inline-block px-4 py-2 text-base font-medium text-green-700 bg-white border border-transparent rounded-md hover:bg-opacity-75 ">
+                                            Sign in
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div x-data="{ isOpen: false }" class="z-50 -my-2 -mr-2 sm:hidden">
+                                <button type="button"
+                                        @click="isOpen = !isOpen"
+                                        class=" inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 "
+                                        aria-expanded="false">
+                                    <span class="sr-only">Open menu</span>
+                                    <!-- Heroicon name: outline/menu -->
+                                    <svg class="w-6 h-6"
+                                         xmlns="http://www.w3.org/2000/svg"
+                                         fill="none"
+                                         viewBox="0 0 24 24"
+                                         stroke="currentColor"
+                                         aria-hidden="true">
+                                        <path stroke-linecap="round"
+                                              stroke-linejoin="round"
+                                              stroke-width="2"
+                                              d="M4 6h16M4 12h16M4 18h16"/>
+                                    </svg>
+                                </button>
+                                <div x-show="isOpen"
+                                     x-transition:enter="transition ease-out duration-100 transform"
+                                     x-transition:enter-start="opacity-0 scale-95"
+                                     x-transition:enter-end="opacity-100 scale-100"
+                                     x-transition:leave="transition ease-in duration-75 transform"
+                                     x-transition:leave-start="opacity-100 scale-100"
+                                     x-transition:leave-end="opacity-0 scale-95"
+                                     class=" absolute w-11/12 bg-gray-100 border-2 border-gray-300 rounded-md right-4 top-28 ">
+                                    <div class="flex flex-col items-center w-full py-8 space-y-3">
+                                        <div>
+                                            <a href="{% url 'projects' %}"
+                                               class=" text-2xl font-medium text-green-800 hover:text-green-900 "
+                                               key="Projects">
+                                                Projects
+                                            </a>
+                                        </div>
+                                        <a href="{% url 'makers' %}"
+                                           class=" text-2xl font-medium text-green-800 hover:text-green-900 "
+                                           key="Makers">
+                                            Makers
+                                        </a>
+                                        <div>
+                                            <a href="{% url 'jobs' %}"
+                                               class=" text-2xl font-medium text-green-800 hover:text-green-900 "
+                                               key="Jobs">
+                                                Jobs
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a href="{% url 'podcast_episodes' %}"
+                                               class=" text-2xl font-medium text-green-800 hover:text-green-900 "
+                                               key="Podcast">
+                                                Podcast
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a class=" inline-flex items-center px-3 py-2 text-lg font-bold text-blue-800 no-underline bg-yellow-400 rounded-full "
+                                               href="{% url 'support' %}">Support</a
+                                                >
+                                            </div>
+                                            <div>
+                                                {% if user.is_authenticated %}
+                                                    <p class=" p-2 text-lg font-bold text-green-700 bg-white rounded hover:bg-gray-100 ">
+                                                        {{ user.username }}
+                                                    </p>
+                                                {% else %}
+                                                    <div>
+                                                        <a href="{% url 'login' %}"
+                                                           class=" p-2 text-lg font-bold text-green-700 bg-white rounded hover:bg-gray-100 ">
+                                                            Sign in
+                                                        </a>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </header>
+                    <div class="container px-6 mx-auto">
+                        {% block content %}{% endblock content %}
+                    </div>
+                    <div class="flex flex-col items-center w-screen py-10 my-10">
+                        <!-- <div class="block mb-2 text-3xl font-bold text-center text-white">Subscribe to our newsletter</div>
         <form class="flex flex-row items-center" action="{% url 'newsletter_home' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
             {{ newsletter_form.non_field_errors }}
             <div class="flex flex-row items-center">
@@ -403,41 +203,21 @@
                 </div>
             </div>
             </div>
-        </form> -->
-    </div>
-
-    <footer class="">
-      <a
-        class="
-          fixed
-          bottom-0
-          left-0
-          z-10
-          px-2
-          py-1
-          font-semibold
-          text-gray-900
-          no-underline
-          bg-gray-200
-          border-t border-l border-white border-solid
-          rounded-tr
-        "
-        href="https://rasulkireev.com"
-        target="_blank"
-      >
-        <img
-          class="inline w-4 align-middle rounded"
-          src="https://dj-pw-static.s3.amazonaws.com/media/my_photo.jpg"
-          alt="Rasul Kireev"
-        />
-        <p class="inline m-0 ml-1 text-sm font-normal align-middle">by Rasul</p>
-      </a>
-    </footer>
-
-    <script src="{% static 'bundles/app.js' %}"></script>
-
-    {% block schema %}
-    <script type="application/ld+json">
+                    </form> -->
+                </div>
+                <footer class="">
+                    <a class=" fixed bottom-0 left-0 z-10 px-2 py-1 font-semibold text-gray-900 no-underline bg-gray-200 border-t border-l border-white border-solid rounded-tr "
+                       href="https://rasulkireev.com"
+                       target="_blank">
+                        <img class="inline w-4 align-middle rounded"
+                             src="https://dj-pw-static.s3.amazonaws.com/media/my_photo.jpg"
+                             alt="Rasul Kireev"/>
+                        <p class="inline m-0 ml-1 text-sm font-normal align-middle">by Rasul</p>
+                    </a>
+                </footer>
+                <script src="{% static 'bundles/app.js' %}"></script>
+                {% block schema %}
+                    <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
@@ -452,7 +232,7 @@
           "url": "https://rasulkireev.com/"
         }
       }
-    </script>
-    {% endblock schema %}
-  </body>
-</html>
+                    </script>
+                {% endblock schema %}
+            </body>
+        </html>

@@ -1,57 +1,58 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block meta %}
-<title>Built with Django</title>
-<meta name="description" content="Collection of cool projects people built with Django">
-<link rel="canonical" href="https://{{ request.get_host }}/projects/new/" />
-
-<meta property="og:title" content="Built with Django">
-<meta property="og:url" content="https://{{ request.get_host }}/projects/new/" />
-<meta property="og:description" content="Collection of cool projects people built with Django">
-<meta name="og:image" content="{% static 'images/logo.png' %}">
-
-<meta name="twitter:creator" content="@rasulkireev">
-<meta name="twitter:site" content="@rasulkireev">
-<meta name="twitter:title" content="Built with Django">
-<meta name="twitter:description" content="Collection of cool projects people built with Django">
-<meta name="twitter:image" content="{% static 'images/logo.png' %}">
+    <title>Built with Django</title>
+    <meta name="description" content="Collection of cool projects people built with Django">
+    <link rel="canonical" href="https://{{ request.get_host }}/projects/new/" />
+    <meta property="og:title" content="Built with Django">
+    <meta property="og:url" content="https://{{ request.get_host }}/projects/new/" />
+    <meta property="og:description" content="Collection of cool projects people built with Django">
+    <meta name="og:image" content="{% static 'images/logo.png' %}">
+    <meta name="twitter:creator" content="@rasulkireev">
+    <meta name="twitter:site" content="@rasulkireev">
+    <meta name="twitter:title" content="Built with Django">
+    <meta name="twitter:description" content="Collection of cool projects people built with Django">
+    <meta name="twitter:image" content="{% static 'images/logo.png' %}">
 {% endblock %}
-
 {% block content %}
-
-<div class="w-auto mx-auto mt-10 lg:w-1/3">
-    <div class="p-8 mb-6 bg-white border-t-8 border-green-500 rounded-lg shadow-lg">
-        <form id="" method="post" enctype="multipart/form-data">{% csrf_token %}
-            {{ form.non_field_errors }}
-
-            <div class="mb-4">
-            {{ form.website_title.errors }}
-            <label class="block mb-2 font-bold text-gray-700" for="{{ form.website_title.id_for_label }}">Title</label>
-            {{ form.website_title }}
-            </div>
-
-            <div class="mb-4">
-                {{ form.website_url.errors }}
-                <label class="block mb-2 font-bold text-gray-700" for="{{ form.website_url.id_for_label }}">Demo or Project URL</label>
-                {{ form.website_url }}
-            </div>
-
-            <div class="mb-4">
-                {{ form.user_email.errors }}
-                <label class="block mb-2 font-bold text-gray-700" for="{{ form.user_email.id_for_label }}">Your Email</label>
-                {{ form.user_email }}
-            </div>
-
-            <div class="mb-4">
-                {{ form.website_short_description.errors }}
-                <label class="block mb-2 font-bold text-gray-700" for="{{ form.website_short_description.id_for_label }}">One Sentence Description </label>
-                {{ form.website_short_description }}
-            </div>
-
-            <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-300" type="submit">Submit</button>
-        </form>
+    <div class="w-auto mx-auto mt-10 lg:w-1/3">
+        <div class="p-8 mb-6 bg-white border-t-8 border-green-500 rounded-lg shadow-lg">
+            <form id="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="mb-4">
+                    {{ form.website_title.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.website_title.id_for_label }}">
+                        Title
+                    </label>
+                    {{ form.website_title }}
+                </div>
+                <div class="mb-4">
+                    {{ form.website_url.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.website_url.id_for_label }}">
+                        Demo or Project URL
+                    </label>
+                    {{ form.website_url }}
+                </div>
+                <div class="mb-4">
+                    {{ form.user_email.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.user_email.id_for_label }}">
+                        Your Email
+                    </label>
+                    {{ form.user_email }}
+                </div>
+                <div class="mb-4">
+                    {{ form.website_short_description.errors }}
+                    <label class="block mb-2 font-bold text-gray-700"
+                           for="{{ form.website_short_description.id_for_label }}">
+                        One Sentence Description
+                    </label>
+                    {{ form.website_short_description }}
+                </div>
+                <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-300" type="submit">
+                    Submit
+                </button>
+            </form>
+        </div>
     </div>
-</div>
-
 {% endblock content %}

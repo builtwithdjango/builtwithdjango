@@ -1,173 +1,131 @@
-{% extends 'base.html' %} {% load static %} {% block meta %}
-<title>Built with Django</title>
-<meta
-  name="description"
-  content="Collection of cool projects people built with Django"
-/>
-<link rel="canonical" href="https://{{ request.get_host }}/projects/" />
-
-<meta property="og:title" content="Built with Django" />
-<meta property="og:url" content="https://{{ request.get_host }}/projects/" />
-<meta
-  property="og:description"
-  content="Collection of cool projects people built with Django"
-/>
-<meta name="og:image" content="{% static 'images/logo.png' %}" />
-
-<meta name="twitter:creator" content="@rasulkireev" />
-<meta name="twitter:site" content="@rasulkireev" />
-<meta name="twitter:title" content="Built with Django" />
-<meta
-  name="twitter:description"
-  content="Collection of cool projects people built with Django"
-/>
-<meta name="twitter:image" content="{% static 'images/logo.png' %}" />
-{% endblock %} {% block content %}
-
-<div class="my-4 overflow-hidden bg-white rounded-lg shadow">
-  <div class="px-4 py-5 sm:p-6">
-    <p class="text-3xl font-semibold text-gray-800">Django Case Studies</p>
-    <p class="mb-5 text-2xl text-gray-600">
-      Get successful Django project interviews every week.
-    </p>
-    <form
-      class="flex flex-row items-center"
-      action="{% url 'newsletter_home' %}"
-      method="post"
-      enctype="multipart/form-data"
-    >
-      {% csrf_token %} {{ newsletter_form.non_field_errors }}
-      <div class="flex flex-row items-center">
-        <div class="flex flex-col">
-          <div class="flex flex-row item-center">
-            <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
-            <button
-              class="
-                px-4
-                py-2
-                font-bold
-                text-white
-                bg-green-700
-                rounded-r-lg
-                shadow
-                hover:bg-green-300
-              "
-              type="submit"
-            >
-              Submit
-            </button>
-          </div>
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+    <title>Built with Django</title>
+    <meta name="description" content="Collection of cool projects people built with Django" />
+    <link rel="canonical" href="https://{{ request.get_host }}/projects/" />
+    <meta property="og:title" content="Built with Django" />
+    <meta property="og:url" content="https://{{ request.get_host }}/projects/" />
+    <meta property="og:description" content="Collection of cool projects people built with Django" />
+    <meta name="og:image" content="{% static 'images/logo.png' %}" />
+    <meta name="twitter:creator" content="@rasulkireev" />
+    <meta name="twitter:site" content="@rasulkireev" />
+    <meta name="twitter:title" content="Built with Django" />
+    <meta name="twitter:description" content="Collection of cool projects people built with Django" />
+    <meta name="twitter:image" content="{% static 'images/logo.png' %}" />
+{% endblock %}
+{% block content %}
+    <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
+        <div class="px-4 py-5 sm:p-6">
+            <p class="text-3xl font-semibold text-gray-800">
+                Django Case Studies
+            </p>
+            <p class="mb-5 text-2xl text-gray-600">
+                Get successful Django project interviews every week.
+            </p>
+            <form class="flex flex-row items-center"
+                  action="{% url 'newsletter_home' %}"
+                  method="post"
+                  enctype="multipart/form-data">
+                {% csrf_token %} {{ newsletter_form.non_field_errors }}
+                <div class="flex flex-row items-center">
+                    <div class="flex flex-col">
+                        <div class="flex flex-row item-center">
+                            <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
+                            <button class=" px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300 "
+                                    type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    <p class=" inline-block p-2 text-green-700 bg-green-200 border border-green-700 rounded ">
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            {% endif %}
         </div>
-      </div>
-    </form>
-    {% if messages %} {% for message in messages %}
-    <p
-      class="
-        inline-block
-        p-2
-        text-green-700
-        bg-green-200
-        border border-green-700
-        rounded
-      "
-    >
-      {{ message }}
-    </p>
-    {% endfor %} {% endif %}
-  </div>
-</div>
-
-<div>
-  <div class="flex justify-start mb-4 sm:mb-0">
-    <a
-      type="button"
-      href="{% url 'submit_project' %}"
-      class="
-        inline-flex
-        items-center
-        px-4
-        py-2
-        mb-4
-        text-base
-        font-medium
-        text-green-700
-        bg-green-200
-        border border-transparent
-        rounded-md
-        hover:bg-green-200
-        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500
-      "
-    >
-      Submit a Project
-    </a>
-  </div>
-
-  <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
-    {% for site in object_list %}
-    <article class="flex flex-col justify-start bg-white border rounded shadow">
-      <ader class="border-b border-gray-300 rounded-t-lg">
-        <a class="" href="{% url 'project' site.slug %}">
-          <img
-            class="
-              object-cover object-left-top
-              w-full
-              h-auto
-              border-0
-              rounded-t
-            "
-            src="{% get_media_prefix %}{{ site.website_homepage_screenshot }}"
-            alt="{{ site.website_title }} | Screenshot"
-          />
-        </a>
-      </ader>
-      <div class="flex-auto h-full p-4 border-b border-gray-300">
-        <h2 class="mb-2 text-lg font-semibold text-gray-900">
-          <a href="{% url 'project' site.slug %}">{{ site.website_title }}</a>
-        </h2>
-        <p class="text-sm leading-normal text-grey-700">
-          {{ site.website_short_description }}
-        </p>
-      </div>
-      <footer class="flex items-center justify-between px-4 py-2">
-        <div>
-          <a
-            class="inline-block bg-gray-300 rounded-full"
-            href="{{ site.website_url }}?ref={{ request.get_host }}"
-            target="_blank"
-            ><i class="p-2 las la-link"></i
-          ></a>
-          {% if site.website_github %}
-          <a
-            class="inline-block bg-gray-300 rounded-full"
-            href="{{ site.website_github }}?ref={{ request.get_host }}"
-            target="_blank"
-            ><i class="p-2 lab la-github"></i
-          ></a>
-          {% endif %} {% if site.website_twitter %}
-          <a
-            class="inline-block bg-gray-300 rounded-full"
-            href="{{ site.website_twitter }}?ref={{ request.get_host }}"
-            target="_blank"
-            ><i class="p-2 lab la-twitter"></i
-          ></a>
-          {% endif %}
+    </div>
+    <div>
+        <div class="flex justify-start mb-4 sm:mb-0">
+            <a type="button"
+               href="{% url 'submit_project' %}"
+               class=" inline-flex items-center px-4 py-2 mb-4 text-base font-medium text-green-700 bg-green-200 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ">
+                Submit a Project
+            </a>
         </div>
-        <div>
-          {% if site.maker.first_name or site.maker.last_name %}
-          <p class="text-sm font-semibold text-gray-700">
-            by {% if site.maker.first_name %}{{ site.maker.first_name }}{% endif
-            %} {% if site.maker.last_name %}{{ site.maker.last_name }}{% endif
-            %}
-          </p>
-          {% endif %}
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
+            {% for site in object_list %}
+                <article class="flex flex-col justify-start bg-white border rounded shadow">
+                    <ader class="border-b border-gray-300 rounded-t-lg">
+                        <a class="" href="{% url 'project' site.slug %}">
+                            <img class=" object-cover object-left-top w-full h-auto border-0 rounded-t "
+                                 src="{% get_media_prefix %}{{ site.website_homepage_screenshot }}"
+                                 alt="{{ site.website_title }} | Screenshot"/>
+                        </a>
+                    </ader>
+                    <div class="flex-auto h-full p-4 border-b border-gray-300">
+                        <h2 class="mb-2 text-lg font-semibold text-gray-900">
+                            <a href="{% url 'project' site.slug %}">{{ site.website_title }}</a>
+                        </h2>
+                        <p class="text-sm leading-normal text-grey-700">
+                            {{ site.website_short_description }}
+                        </p>
+                    </div>
+                    <footer class="flex items-center justify-between px-4 py-2">
+                        <div>
+                            <a class="inline-block bg-gray-300 rounded-full"
+                               href="{{ site.website_url }}?ref={{ request.get_host }}"
+                               target="_blank">
+                                <i class="p-2 las la-link">
+                                </i
+                                >
+                            </a>
+                            {% if site.website_github %}
+                                <a class="inline-block bg-gray-300 rounded-full"
+                                   href="{{ site.website_github }}?ref={{ request.get_host }}"
+                                   target="_blank">
+                                    <i class="p-2 lab la-github">
+                                    </i
+                                    >
+                                </a>
+                            {% endif %}
+                            {% if site.website_twitter %}
+                                <a class="inline-block bg-gray-300 rounded-full"
+                                   href="{{ site.website_twitter }}?ref={{ request.get_host }}"
+                                   target="_blank">
+                                    <i class="p-2 lab la-twitter">
+                                    </i
+                                    >
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if site.maker.first_name or site.maker.last_name %}
+                                <p class="text-sm font-semibold text-gray-700">
+                                    by
+                                    {% if site.maker.first_name %}
+                                        {{ site.maker.first_name }}
+                                    {% endif
+                                    %}
+                                    {% if site.maker.last_name %}
+                                        {{ site.maker.last_name }}
+                                    {% endif
+                                    %}
+                                </p>
+                            {% endif %}
+                        </div>
+                    </footer>
+                </article>
+            {% endfor %}
         </div>
-      </footer>
-    </article>
-    {% endfor %}
-  </div>
-</div>
-{% endblock content %} {% block schema %}
-<script type="application/ld+json">
+    </div>
+{% endblock content %}
+{% block schema %}
+    <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -182,5 +140,5 @@
       "url": "https://rasulkireev.com/"
     }
   }
-</script>
+    </script>
 {% endblock schema %}

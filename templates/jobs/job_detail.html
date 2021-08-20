@@ -1,74 +1,70 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load markdown_extras %}
-
 {% block meta %}
-<meta name="twitter:card" content="summary">
-<meta name="twitter:creator" content="@rasulkireev">
-<meta name="twitter:site" content="@builtwithdjango">
-
-<title>{{ object.title }} @ {{ object.company.name }}</title>
-<meta name="description" content="{{ object.description | truncatechars:125 }}">
-<link rel="canonical" href="https://{{ request.get_host }}/jobs/{{ object.pk }}" />
-
-<meta property="og:title" content="{{ object.title }} @ {{ object.company.name }}">
-<meta property="og:url" content="https://{{ request.get_host }}/jobs/{{ object.pk }}" />
-<meta property="og:description" content="{{ object.description | truncatechars:125 }}">
-<meta property="og:image" content="https://{{ request.get_host }}{{object.company.logo.url}}">
-
-<meta name="twitter:title" content="{{ object.title }} @ {{ object.company.name }}">
-<meta name="twitter:description" content="{{ object.description | truncatechars:125 }}">
-<meta name="twitter:image" content="https://{{ request.get_host }}{{object.company.logo.url}}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@rasulkireev">
+    <meta name="twitter:site" content="@builtwithdjango">
+    <title>{{ object.title }} @ {{ object.company.name }}</title>
+    <meta name="description" content="{{ object.description | truncatechars:125 }}">
+    <link rel="canonical" href="https://{{ request.get_host }}/jobs/{{ object.pk }}" />
+    <meta property="og:title" content="{{ object.title }} @ {{ object.company.name }}">
+    <meta property="og:url" content="https://{{ request.get_host }}/jobs/{{ object.pk }}" />
+    <meta property="og:description" content="{{ object.description | truncatechars:125 }}">
+    <meta property="og:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}">
+    <meta name="twitter:title" content="{{ object.title }} @ {{ object.company.name }}">
+    <meta name="twitter:description" content="{{ object.description | truncatechars:125 }}">
+    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}">
 {% endblock %}
-
 {% block content %}
-
-<p class="mb-10 text-blue-700">← <a href="{% url 'jobs' %}">back to all jobs</a></p>
-
-<div class="max-w-3xl mx-auto">
-  <div class="mt-10 prose md:mx-auto lg:prose-xl">
-    <h1>{{object.title}} @ {{object.company.name}}</h1>
-  </div>
-
-  <div class="flex justify-center mt-10">
-    <a
-      class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-      href="{{object.listing_url}}?utm_source={{ request.get_host }}&ref={{ request.get_host }}"
-      target="_blank"
-    >
-      Apply for this position
-    </a>
-  </div>
-
-  <div class="w-full py-6 mt-10 border-t-2 border-b-2 border-gray-300">
-    <p class="text-lg text-gray-800">Job posted {{ object.created_datetime|timesince }} ago</p>
-    {% if object.location %}<p class="text-lg text-gray-800">Location: {{ object.location }}</p>{% endif %}
-    {% if object.salary %}<p class="text-lg text-gray-800">Salary: {{ object.salary }}</p>{% endif %}
-  </div>
-
-  <div class="mt-10 prose md:mx-auto lg:prose-xl">
-      {% if object.description %}
-        {{ object.description | markdown | safe }}
-      {% else %}
-        There is no decription
-      {% endif %}
-  </div>
-
-  <div class="flex justify-center mt-10">
-    <a
-      class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-      href="{{object.listing_url}}?utm_source={{ request.get_host }}&ref={{ request.get_host }}"
-      target="_blank"
-    >
-      Apply for this position
-    </a>
-  </div>
-</div>
-
+    <p class="mb-10 text-blue-700">
+        ←
+        <a href="{% url 'jobs' %}">back to all jobs</a>
+    </p>
+    <div class="max-w-3xl mx-auto">
+        <div class="mt-10 prose md:mx-auto lg:prose-xl">
+            <h1>{{ object.title }} @ {{ object.company.name }}</h1>
+        </div>
+        <div class="flex justify-center mt-10">
+            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+               href="{{ object.listing_url }}?utm_source={{ request.get_host }}&ref={{ request.get_host }}"
+               target="_blank">
+                Apply for this position
+            </a>
+        </div>
+        <div class="w-full py-6 mt-10 border-t-2 border-b-2 border-gray-300">
+            <p class="text-lg text-gray-800">
+                Job posted {{ object.created_datetime|timesince }} ago
+            </p>
+            {% if object.location %}
+                <p class="text-lg text-gray-800">
+                    Location: {{ object.location }}
+                </p>
+            {% endif %}
+            {% if object.salary %}
+                <p class="text-lg text-gray-800">
+                    Salary: {{ object.salary }}
+                </p>
+            {% endif %}
+        </div>
+        <div class="mt-10 prose md:mx-auto lg:prose-xl">
+            {% if object.description %}
+                {{ object.description | markdown | safe }}
+            {% else %}
+                There is no decription
+            {% endif %}
+        </div>
+        <div class="flex justify-center mt-10">
+            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+               href="{{ object.listing_url }}?utm_source={{ request.get_host }}&ref={{ request.get_host }}"
+               target="_blank">
+                Apply for this position
+            </a>
+        </div>
+    </div>
 {% endblock content %}
-
 {% block schema %}
-<script type="application/ld+json">
+    <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "JobPosting",
@@ -89,5 +85,5 @@
     "name": "{{ object.company.name }}"
   }
 }
-</script>
+    </script>
 {% endblock schema %}

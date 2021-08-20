@@ -1,243 +1,259 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load markdown_extras %}
-
 {% block meta %}
-<meta name="twitter:card" content="summary_large_image">
-
-{% if object.maker.twitter_handle %}
-<meta name="twitter:creator" content="@{{object.maker.twitter_handle}}">
-<meta name="twitter:site" content="@{{object.maker.twitter_handle}}">
-{% endif %}
-
-<title>{{ object.website_title }} is Built with Django</title>
-<meta name="description" content="{{ object.website_short_description }}">
-<link rel="canonical" href="https://{{ request.get_host }}/projects/{{ object.slug }}" />
-
-<meta property="og:title" content="{{ object.website_title }}">
-<meta property="og:url" content="https://{{ request.get_host }}/projects/{{ object.slug }}" />
-<meta property="og:description" content="{{ object.website_short_description }}">
-<meta property="og:image" content="https://{{ request.get_host }}{{object.website_homepage_screenshot.url}}">
-
-
-<meta name="twitter:title" content="{{ object.website_title }}">
-<meta name="twitter:description" content="{{ object.website_short_description }}">
-<meta name="twitter:image" content="https://{{ request.get_host }}{{object.website_homepage_screenshot.url}}">
+    <meta name="twitter:card" content="summary_large_image">
+    {% if object.maker.twitter_handle %}
+        <meta name="twitter:creator" content="@{{ object.maker.twitter_handle }}">
+        <meta name="twitter:site" content="@{{ object.maker.twitter_handle }}">
+    {% endif %}
+    <title>{{ object.website_title }} is Built with Django</title>
+    <meta name="description" content="{{ object.website_short_description }}">
+    <link rel="canonical" href="https://{{ request.get_host }}/projects/{{ object.slug }}" />
+    <meta property="og:title" content="{{ object.website_title }}">
+    <meta property="og:url" content="https://{{ request.get_host }}/projects/{{ object.slug }}" />
+    <meta property="og:description" content="{{ object.website_short_description }}">
+    <meta property="og:image" content="https://{{ request.get_host }}{{ object.website_homepage_screenshot.url }}">
+    <meta name="twitter:title" content="{{ object.website_title }}">
+    <meta name="twitter:description" content="{{ object.website_short_description }}">
+    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.website_homepage_screenshot.url }}">
 {% endblock %}
-
-
 {% block content %}
-
-<p class="mb-10 text-blue-700">← <a href="{% url 'projects' %}">back to all projects</a></p>
-
-<div class="flex flex-col justify-center max-w-5xl mx-auto space-y-2">
-  <!-- Projects -->
-  <div class="p-6 overflow-hidden bg-white rounded-lg shadow">
-      <div class="flex flex-col mb-4 md:text-left md:mt-0">
-        <h1 class="text-2xl font-semibold text-black" itemprop="name"><a href="{% url 'project' object.slug %}">{{ object.website_title }}</a></h1>
-        <p class="text-sm leading-normal text-black" itemprop="description">{{ object.website_short_description }}</p>
-      </div>
-
-      <div class="mb-2 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
-        <div class="">
-          <img class="w-full" src="{% get_media_prefix %}{{object.website_homepage_screenshot}}" alt="{{ object.website_title }} | Screenshot">
-        </div>
-      </div>
-
-      <div class="flex flex-row w-full mb-4 space-x-2 text-center">
-        <a
-          class="inline-block w-full px-4 py-3 text-sm font-bold text-center text-white no-underline uppercase transition bg-green-500 rounded-lg shadow flex-no-shrink hover:bg-green-400 hover:-translateY-sm hover:shadow"
-          href="{{ object.website_url }}?ref={{ request.get_host }}"
-          target="_blank"
-        >Visit Website</a>
-
-        {% if object.website_github %}
-        <a
-          class="flex items-center bg-gray-100 rounded-lg hover:bg-gray-300"
-          href="{{ object.website_github }}?ref={{ request.get_host }}"
-          target="_blank">
-        <i class="p-2 text-3xl lab la-github"></i>
-        </a>
-        {% endif %}
-
-        {% if object.website_twitter %}
-        <a
-          class="flex items-center bg-gray-100 rounded-lg hover:bg-gray-300"
-          href="{{ object.website_twitter }}?ref={{ request.get_host }}"
-          target="_blank">
-        <i class="p-2 text-3xl text-blue-400 lab la-twitter"></i>
-        </a>
-        {% endif %}
-
-      </div>
-  </div>
-
-  <!-- Author Card -->
-  {% if object.maker.first_name %}
-  <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
-    <h2 class="text-2xl font-semibold text-black">Author(s)</h2>
-    <div class="flex items-center py-4">
-      {% if object.maker.maker_profile_image %}
-        <img class="w-16 h-16 rounded-full" src="{% get_media_prefix %}{{ object.maker.maker_profile_image }}" alt="">
-      {% else %}
-        <!-- get image gray sillhoutte -->
-        <img class="w-10 h-10 rounded-full" src="" alt="">
-      {% endif %}
-      {% if object.maker.first_name or object.maker.last_name %}
-      <div class="ml-3">
-        <p class="text-lg font-medium text-gray-900">
-          {% if object.maker.first_name %}{{ object.maker.first_name }}{% endif %}
-          {% if object.maker.last_name %}{{ object.maker.last_name }}{% endif %}
-        </p>
-        <div>
-          {% if object.maker.github_handle %}
-          <a class="inline-block rounded-full" href="https://github.com/{{ object.maker.github_handle }}?ref={{ request.get_host }}" target="_blank"><i class="text-2xl lab la-github"></i></a>
-          {% endif %}
-          {% if object.maker.twitter_handle %}
-          <a class="inline-block rounded-full" href="https://twitter.com/{{ object.maker.twitter_handle }}?ref={{ request.get_host }}" target="_blank"><i class="text-2xl lab la-twitter"></i></a>
-          {% endif %}
-        </div>
-      {% endif %}
-      </div>
-    </div>
-  </div>
-  {% endif %}
-
-  <!-- Tech Stack Card-->
-  {% if object.technologies.all %}
-  <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
-    <h2 class="text-2xl font-semibold text-black">TechStack</h2>
-    <div class="flex flex-wrap items-center py-4 -m-1">
-      {% for tech in object.technologies.all %}
-        <div class="inline-flex items-center px-3 m-1 py-1 rounded-full text-md font-medium bg-{{ tech.color }}-100 text-{{ tech.color }}-800">{{ tech.name }}</div>
-      {% endfor %}
-    </div>
-  </div>
-  {% endif %}
-
-  <!-- Jobs -->
-  {% if object.company.jobs.all %}
-  <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
-    <h2 class="text-2xl font-semibold text-black">Jobs</h2>
-    <div class="grid grid-cols-1 gap-4 py-4 -m-1 sm:grid-cols-1">
-      {% for job in object.company.jobs.all %}
-        <div class="relative flex items-center px-6 py-5 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-          <div class="flex-shrink-0">
-            <img class="w-10 h-10 rounded-full" src="{% get_media_prefix %}{{ job.company.logo }}" alt="{{ job.company }} Logo">
-          </div>
-          <div class="flex-1 min-w-0">
-            <a href="{% url 'job_details' job.pk %}" class="focus:outline-none">
-              <span class="absolute inset-0" aria-hidden="true"></span>
-              <p class="text-base font-medium text-gray-900">
-                {{ job.title }}
-              </p>
-              <div class="flex items-center space-x-1">
-                <p class="flex items-center text-base text-gray-500">
-                  <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                  </svg>
-                  {{ job.company }}
+    <p class="mb-10 text-blue-700">
+        ←
+        <a href="{% url 'projects' %}">back to all projects</a>
+    </p>
+    <div class="flex flex-col justify-center max-w-5xl mx-auto space-y-2">
+        <!-- Projects -->
+        <div class="p-6 overflow-hidden bg-white rounded-lg shadow">
+            <div class="flex flex-col mb-4 md:text-left md:mt-0">
+                <h1 class="text-2xl font-semibold text-black" itemprop="name">
+                    <a href="{% url 'project' object.slug %}">{{ object.website_title }}</a>
+                </h1>
+                <p class="text-sm leading-normal text-black" itemprop="description">
+                    {{ object.website_short_description }}
                 </p>
-                <p class="flex items-center text-base text-gray-500">
-                  <!-- Heroicon name: solid/location-marker -->
-                  <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                  </svg>
-                  {{ job.location }}
-                </p>
-              </div>
-            </a>
-          </div>
+            </div>
+            <div class="mb-2 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
+                <div class="">
+                    <img class="w-full"
+                         src="{% get_media_prefix %}{{ object.website_homepage_screenshot }}"
+                         alt="{{ object.website_title }} | Screenshot">
+                </div>
+            </div>
+            <div class="flex flex-row w-full mb-4 space-x-2 text-center">
+                <a class="inline-block w-full px-4 py-3 text-sm font-bold text-center text-white no-underline uppercase transition bg-green-500 rounded-lg shadow flex-no-shrink hover:bg-green-400 hover:-translateY-sm hover:shadow"
+                   href="{{ object.website_url }}?ref={{ request.get_host }}"
+                   target="_blank">
+                    Visit Website
+                </a>
+                {% if object.website_github %}
+                    <a class="flex items-center bg-gray-100 rounded-lg hover:bg-gray-300"
+                       href="{{ object.website_github }}?ref={{ request.get_host }}"
+                       target="_blank">
+                        <i class="p-2 text-3xl lab la-github"></i>
+                    </a>
+                {% endif %}
+                {% if object.website_twitter %}
+                    <a class="flex items-center bg-gray-100 rounded-lg hover:bg-gray-300"
+                       href="{{ object.website_twitter }}?ref={{ request.get_host }}"
+                       target="_blank">
+                        <i class="p-2 text-3xl text-blue-400 lab la-twitter"></i>
+                    </a>
+                {% endif %}
+            </div>
         </div>
-      {% endfor %}
-    </div>
-  </div>
-  {% endif %}
-
-  <!-- Additional Info Card-->
-  {% if object.website_additional_info %}
-  <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
-    <h2 class="text-2xl font-semibold text-black">Additional Info</h2>
-    <div class="prose">
-        {{ object.website_additional_info | markdown | safe }}
-    </div>
-  </div>
-  {% endif %}
-
-  <!-- Comments -->
-  <div x-data="{ isShowing: false }" class="overflow-hidden bg-white rounded-md shadow">
-    <div class="flex flex-row items-center space-x-2 border-b border-gray-200">
-      <h2 class="flex py-4 pl-6 text-2xl font-semibold">
-        Comments
-      </h2>
-      <div>
-        <button @click="isShowing = !isShowing" class="inline-block bg-green-500 rounded-full">
-          <i style="color:white;" class="p-2 las la-plus"></i>
-        </button>
-      </div>
-    </div>
-
-    <div>
-      {% if user.is_authenticated %}
-        <form
-          x-show="isShowing"
-          action="{% url 'project_comment' object.slug %}"
-          method="post"
-          class="mx-6 my-2"
-        >{% csrf_token %}
-
-          {{ comment_form.comment }}
-
-          <button
-            type="submit"
-            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Post Comment
-          </button>
-
-        </form>
-      {% else %}
-        <div
-          x-show="isShowing"
-          class="mx-6 my-4"
-        >
-          <p>To comment on this project please
-            <a href="{% url 'signup' %}" class="font-medium text-green-600 hover:text-green-500">signup</a>
-            or
-            <a href="{% url 'login' %}" class="font-medium text-green-600 hover:text-green-500">login</a>.
-          </p>
+        <!-- Author Card -->
+        {% if object.maker.first_name %}
+            <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
+                <h2 class="text-2xl font-semibold text-black">
+                    Author(s)
+                </h2>
+                <div class="flex items-center py-4">
+                    {% if object.maker.maker_profile_image %}
+                        <img class="w-16 h-16 rounded-full"
+                             src="{% get_media_prefix %}{{ object.maker.maker_profile_image }}"
+                             alt="">
+                    {% else %}
+                        <!-- get image gray sillhoutte -->
+                        <img class="w-10 h-10 rounded-full" src="" alt="">
+                    {% endif %}
+                    {% if object.maker.first_name or object.maker.last_name %}
+                        <div class="ml-3">
+                            <p class="text-lg font-medium text-gray-900">
+                                {% if object.maker.first_name %}{{ object.maker.first_name }}{% endif %}
+                                {% if object.maker.last_name %}{{ object.maker.last_name }}{% endif %}
+                            </p>
+                            <div>
+                                {% if object.maker.github_handle %}
+                                    <a class="inline-block rounded-full"
+                                       href="https://github.com/{{ object.maker.github_handle }}?ref={{ request.get_host }}"
+                                       target="_blank">
+                                        <i class="text-2xl lab la-github"></i>
+                                    </a>
+                                {% endif %}
+                                {% if object.maker.twitter_handle %}
+                                    <a class="inline-block rounded-full"
+                                       href="https://twitter.com/{{ object.maker.twitter_handle }}?ref={{ request.get_host }}"
+                                       target="_blank">
+                                        <i class="text-2xl lab la-twitter"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <!-- Tech Stack Card-->
+        {% if object.technologies.all %}
+            <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
+                <h2 class="text-2xl font-semibold text-black">
+                    TechStack
+                </h2>
+                <div class="flex flex-wrap items-center py-4 -m-1">
+                    {% for tech in object.technologies.all %}
+                        <div class="inline-flex items-center px-3 m-1 py-1 rounded-full text-md font-medium bg-{{ tech.color }}-100 text-{{ tech.color }}-800">
+                            {{ tech.name }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        <!-- Jobs -->
+        {% if object.company.jobs.all %}
+            <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
+                <h2 class="text-2xl font-semibold text-black">
+                    Jobs
+                </h2>
+                <div class="grid grid-cols-1 gap-4 py-4 -m-1 sm:grid-cols-1">
+                    {% for job in object.company.jobs.all %}
+                        <div class="relative flex items-center px-6 py-5 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                            <div class="flex-shrink-0">
+                                <img class="w-10 h-10 rounded-full"
+                                     src="{% get_media_prefix %}{{ job.company.logo }}"
+                                     alt="{{ job.company }} Logo">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <a href="{% url 'job_details' job.pk %}" class="focus:outline-none">
+                                    <span class="absolute inset-0" aria-hidden="true"></span>
+                                    <p class="text-base font-medium text-gray-900">
+                                        {{ job.title }}
+                                    </p>
+                                    <div class="flex items-center space-x-1">
+                                        <p class="flex items-center text-base text-gray-500">
+                                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 20 20"
+                                                 fill="currentColor"
+                                                 aria-hidden="true">
+                                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                                            </svg>
+                                            {{ job.company }}
+                                        </p>
+                                        <p class="flex items-center text-base text-gray-500">
+                                            <!-- Heroicon name: solid/location-marker -->
+                                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 20 20"
+                                                 fill="currentColor"
+                                                 aria-hidden="true">
+                                                <path fill-rule="evenodd"
+                                                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                                      clip-rule="evenodd"/>
+                                            </svg>
+                                            {{ job.location }}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        <!-- Additional Info Card-->
+        {% if object.website_additional_info %}
+            <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
+                <h2 class="text-2xl font-semibold text-black">
+                    Additional Info
+                </h2>
+                <div class="prose">
+                    {{ object.website_additional_info | markdown | safe }}
+                </div>
+            </div>
+        {% endif %}
+        <!-- Comments -->
+        <div x-data="{ isShowing: false }" class="overflow-hidden bg-white rounded-md shadow">
+            <div class="flex flex-row items-center space-x-2 border-b border-gray-200">
+                <h2 class="flex py-4 pl-6 text-2xl font-semibold">
+                    Comments
+                </h2>
+                <div>
+                    <button @click="isShowing = !isShowing" class="inline-block bg-green-500 rounded-full">
+                        <i style="color:white;" class="p-2 las la-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div>
+                {% if user.is_authenticated %}
+                    <form x-show="isShowing"
+                          action="{% url 'project_comment' object.slug %}"
+                          method="post"
+                          class="mx-6 my-2">
+                        {% csrf_token %}
+                        {{ comment_form.comment }}
+                        <button type="submit"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Post Comment
+                        </button>
+                    </form>
+                {% else %}
+                    <div x-show="isShowing" class="mx-6 my-4">
+                        <p>
+                            To comment on this project please
+                            <a href="{% url 'signup' %}" class="font-medium text-green-600 hover:text-green-500">
+                                signup
+                            </a>
+                            or
+                            <a href="{% url 'login' %}" class="font-medium text-green-600 hover:text-green-500">
+                                login
+                            </a>
+                            .
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+            <ul class="divide-y divide-gray-200">
+                {% for comment in object.comments.all %}
+                    <li class="flex items-start px-6 py-4">
+                        {% if comment.author.profile_image %}
+                            <img class="w-10 h-10 mt-2 rounded-full"
+                                 src="{% get_media_prefix %}{{ comment.author.profile_image }}"
+                                 alt="">
+                        {% else %}
+                            <img class="w-10 h-10 mt-2 rounded-full"
+                                 src="https://img.icons8.com/color/48/000000/test-account.png"
+                                 alt="">
+                        {% endif %}
+                        <div class="ml-3">
+                            <p class="font-medium">
+                                <span class="text-sm text-gray-900">{{ comment.author }}</span>
+                                -
+                                <span class="text-sm text-gray-600">{{ comment.created_date|timesince }} ago</span>
+                            </p>
+                            <div class="prose">
+                                {{ comment | markdown | safe }}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
-      {% endif %}
     </div>
-
-    <ul class="divide-y divide-gray-200">
-
-      {% for comment in object.comments.all %}
-        <li class="flex items-start px-6 py-4">
-          {% if comment.author.profile_image %}
-          <img class="w-10 h-10 mt-2 rounded-full" src="{% get_media_prefix %}{{comment.author.profile_image}}" alt="">
-          {% else %}
-          <img class="w-10 h-10 mt-2 rounded-full" src="https://img.icons8.com/color/48/000000/test-account.png" alt="">
-          {% endif %}
-          <div class="ml-3">
-            <p class="font-medium">
-              <span class="text-sm text-gray-900">{{ comment.author }}</span>
-                -
-              <span class="text-sm text-gray-600">{{ comment.created_date|timesince }} ago</span>
-            </p>
-            <div class="prose">{{ comment | markdown | safe }}</div>
-          </div>
-        </li>
-
-      {% endfor %}
-    </ul>
-  </div>
-</div>
-
 {% endblock content %}
-
 {% block schema %}
-<script type="application/ld+json">
+    <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "CreativeWork",
@@ -246,12 +262,12 @@
     "givenName": "{{ object.maker.first_name }}",
     "familyName": "{{ object.maker.last_name }}",
     "url": "{{ object.personal_website }}",
-    "image": "https://{{ request.get_host }}{% get_media_prefix %}{{object.maker.maker_profile_image}}"
+    "image": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.maker.maker_profile_image }}"
   },
   "name":"{{ object.title }}",
   "thumbnailUrl": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.website_homepage_screenshot }}",
   "image": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.website_homepage_screenshot }}",
   "abstract": "{{ object.website_short_description }}"
 }
-</script>
+    </script>
 {% endblock schema %}

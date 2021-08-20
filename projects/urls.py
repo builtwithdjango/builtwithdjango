@@ -1,9 +1,10 @@
 from django.urls import path
+
 from .views import (
-    ProjectListView,
-    ProjectDetailView,
-    ProjectCreateView,
     CommentCreateView,
+    ProjectCreateView,
+    ProjectDetailView,
+    ProjectListView,
 )
 
 urlpatterns = [
@@ -14,5 +15,5 @@ urlpatterns = [
         CommentCreateView.as_view(),
         name="project_comment",
     ),
-    path("new/", ProjectCreateView.as_view(), name="submit-project"),
+    path("new/", ProjectCreateView.as_view(), name="submit_project"),
 ]
