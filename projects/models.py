@@ -1,7 +1,8 @@
+from autoslug import AutoSlugField
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth import get_user_model
-from autoslug import AutoSlugField
+from model_utils.models import TimeStampedModel
 from taggit.managers import TaggableManager
 
 
@@ -43,15 +44,7 @@ class Project(models.Model):
         ordering = ["-date_added"]
 
     def __str__(self):
-        return (
-            str(self.published)
-            + ": "
-            + self.website_title
-            + " by "
-            + str(self.maker)
-            + " - "
-            + str(self.date_added)
-        )
+        return self.website_title
 
     def get_absolute_url(self):
         return reverse("project", args=[self.slug])
@@ -63,7 +56,10 @@ class Technology(models.Model):
 
     name = models.CharField(max_length=50)
     color = models.CharField(max_length=50)
-    slug = models.SlugField(null=True, unique=True,)
+    slug = models.SlugField(
+        null=True,
+        unique=True,
+    )
 
     def __str__(self):
         return self.name
@@ -77,10 +73,25 @@ class Comment(models.Model):
         Project, on_delete=models.CASCADE, related_name="comments"
     )
     comment = models.TextField(max_length=240)
-    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.comment
 
     def get_absolute_url(self):
         return reverse("project", args=[self.project.slug])
+
+
+class Like(TimeStampedModel):
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, related_name="like"
+    )
+    like = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.project}: {self.author}"

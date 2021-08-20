@@ -1,4 +1,4 @@
 [flake8]
-exclude = build,.git,.tox,./tests/.env
+exclude = build,.git,.tox,./tests/.envm migrations
 ignore = W504,W601
 max-line-length = 119

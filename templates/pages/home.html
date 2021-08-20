@@ -74,6 +74,14 @@
                                     <span>{{ site.comments.all.count }}</span>
                                     <i class="las la-comments"></i>
                                 </div>
+                                <div class="inline-block p-1 border rounded-full">
+                                    <span>{{ site.like.all.count }}</span>
+                                    {% if site.website_title in user_likes %}
+                                        <i class="text-red-600 las la-heart"></i>
+                                    {% else %}
+                                        <i class="lar la-heart"></i>
+                                    {% endif %}
+                                </div>
                             </div>
                             <div>
                                 {% if site.maker.first_name or site.maker.last_name %}

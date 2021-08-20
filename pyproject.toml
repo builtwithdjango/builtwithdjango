@@ -47,6 +47,8 @@ sentry_sdk = "^0.14.3"
 django-component = "^0.1.6"
 Pillow = ">=8.0.0"
 Markdown = "^3.3.4"
+django-model-utils = "^4.1.1"
+django-extensions = "^3.1.3"
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b2"
