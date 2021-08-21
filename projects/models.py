@@ -86,7 +86,7 @@ class Comment(models.Model):
 
 class Like(TimeStampedModel):
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="like"
     )
     project = models.ForeignKey(
         Project, on_delete=models.CASCADE, related_name="like"
@@ -94,4 +94,4 @@ class Like(TimeStampedModel):
     like = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.project}: {self.author}"
+        return f"{self.project}: {self.author} ({self.like})"

@@ -74,13 +74,15 @@
                                     <span>{{ site.comments.all.count }}</span>
                                     <i class="las la-comments"></i>
                                 </div>
-                                <div class="inline-block p-1 border rounded-full">
-                                    <span>{{ site.like.all.count }}</span>
-                                    {% if site.website_title in user_likes %}
-                                        <i class="text-red-600 las la-heart"></i>
-                                    {% else %}
-                                        <i class="lar la-heart"></i>
-                                    {% endif %}
+                                <div data-controller="like" class="inline-block p-1 border rounded-full">
+                                    <input type="hidden" data-target="like.projectId" value={{ site.id }}>
+                                    <input type="hidden" data-target="like.currentUser" value={{ user.id }}>
+                                    {% csrf_token %}
+                                    <button data-action="click->
+                                        like#modify">
+                                        <span data-target="like.numberOfLikes" id="{{ site.id }}_likes"></span>
+                                        <i id="{{ site.id }}_heart" class=""></i>
+                                    </button>
                                 </div>
                             </div>
                             <div>

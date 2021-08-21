@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "taggit",
     "django_extensions",
     "django_component",
+    "django_filters",
     "rest_framework",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
@@ -62,6 +63,7 @@ INSTALLED_APPS = [
     "makers.apps.MakersConfig",
     "newsletter.apps.NewsletterConfig",
     "users.apps.UsersConfig",
+    "api.apps.ApiConfig",
 ]
 
 MIDDLEWARE = [
@@ -191,3 +193,10 @@ LOGOUT_REDIRECT_URL = "home"
 
 # Paypal
 PAYPAL_CLIENT_ID = env("PAYPAL_CLIENT_ID")
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend"
+    ],
+}
