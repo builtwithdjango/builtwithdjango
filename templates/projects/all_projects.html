@@ -108,6 +108,16 @@
                                 <span>{{ site.comments.all.count }}</span>
                                 <i class="las la-comments"></i>
                             </div>
+                            <div data-controller="like" class="inline-block p-1 border rounded-full">
+                                <input type="hidden" data-target="like.projectId" value={{ site.id }}>
+                                <input type="hidden" data-target="like.currentUser" value={{ user.id }}>
+                                {% csrf_token %}
+                                <button data-action="click->
+                                    like#modify">
+                                    <span data-target="like.numberOfLikes" id="{{ site.id }}_likes"></span>
+                                    <i id="{{ site.id }}_heart" class=""></i>
+                                </button>
+                            </div>
                         </div>
                         <div>
                             {% if site.maker.first_name or site.maker.last_name %}

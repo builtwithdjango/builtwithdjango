@@ -1,10 +1,11 @@
-from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, DetailView, ListView
 
 from newsletter.views import NewsletterSignupForm
-from .models import Project, Comment
-from .forms import AddProject, AddComment
+
+from .forms import AddComment, AddProject
+from .models import Comment, Project
 
 
 class ProjectListView(ListView):
