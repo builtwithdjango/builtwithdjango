@@ -22,7 +22,6 @@ class Project(models.Model):
     published = models.BooleanField(default=False)
 
     # Optional Website Information
-    tags = TaggableManager(blank=True)
     is_open_source = models.BooleanField(default=False)
     description = models.TextField(blank=True)
     homepage_screenshot = models.ImageField(
@@ -41,6 +40,7 @@ class Project(models.Model):
     # To remove
     additional_info = models.TextField(blank=True)
     requirements = models.TextField(blank=True)
+    tags = TaggableManager(blank=True)
 
     class Meta:
         ordering = ["-date_added"]
