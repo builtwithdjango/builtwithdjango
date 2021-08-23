@@ -77,7 +77,7 @@
                 <p class="text-sm font-semibold text-gray-700">
                   {% if episode.maker %}{{ episode.maker.all | join:" and " }} on{% endif %}
                   {% for project in episode.project.all %}
-                    {{ project.website_title }}
+                    {{ project.title }}
                     {% if not forloop.last %}and{% endif %}
                   {% endfor %}
                   </p>

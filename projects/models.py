@@ -9,29 +9,27 @@ from taggit.managers import TaggableManager
 class Project(models.Model):
     """Model for a Project."""
 
+    date_added = models.DateTimeField(auto_now_add=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
     # Required Information
-    website_title = models.CharField(max_length=100, unique=True)
-    website_url = models.URLField(unique=True)
-    website_short_description = models.CharField(max_length=200)
+    title = models.CharField(max_length=100, unique=True)
+    url = models.URLField(unique=True)
+    short_description = models.CharField(max_length=200)
     user_email = models.EmailField()
-    slug = AutoSlugField(populate_from="website_title", always_update=True)
+    slug = AutoSlugField(populate_from="title", always_update=True)
     published = models.BooleanField(default=False)
-    date_added = models.DateTimeField(auto_now_add=True)
 
     # Optional Website Information
     tags = TaggableManager(blank=True)
     is_open_source = models.BooleanField(default=False)
-    website_description = models.TextField(blank=True)
-    website_homepage_screenshot = models.ImageField(
+    description = models.TextField(blank=True)
+    homepage_screenshot = models.ImageField(
         upload_to="website_homepage_screenshot/", blank=True
     )
-    website_twitter = models.URLField(blank=True)
-    website_github = models.URLField(blank=True)
-    website_additional_info = models.TextField(blank=True)
-    website_requirements = models.TextField(blank=True)
+    twitter_url = models.URLField(blank=True)
+    github_url = models.URLField(blank=True)
 
     maker = models.ForeignKey(
         "makers.Maker", on_delete=models.CASCADE, null=True, blank=True
@@ -40,11 +38,15 @@ class Project(models.Model):
         "Technology", related_name="projects", blank=True
     )
 
+    # To remove
+    additional_info = models.TextField(blank=True)
+    requirements = models.TextField(blank=True)
+
     class Meta:
         ordering = ["-date_added"]
 
     def __str__(self):
-        return self.website_title
+        return self.title
 
     def get_absolute_url(self):
         return reverse("project", args=[self.slug])

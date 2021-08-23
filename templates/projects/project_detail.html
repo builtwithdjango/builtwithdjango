@@ -7,16 +7,16 @@
         <meta name="twitter:creator" content="@{{ object.maker.twitter_handle }}">
         <meta name="twitter:site" content="@{{ object.maker.twitter_handle }}">
     {% endif %}
-    <title>{{ object.website_title }} is Built with Django</title>
-    <meta name="description" content="{{ object.website_short_description }}">
+    <title>{{ object.title }} is Built with Django</title>
+    <meta name="description" content="{{ object.short_description }}">
     <link rel="canonical" href="https://{{ request.get_host }}/projects/{{ object.slug }}" />
-    <meta property="og:title" content="{{ object.website_title }}">
+    <meta property="og:title" content="{{ object.title }}">
     <meta property="og:url" content="https://{{ request.get_host }}/projects/{{ object.slug }}" />
-    <meta property="og:description" content="{{ object.website_short_description }}">
-    <meta property="og:image" content="https://{{ request.get_host }}{{ object.website_homepage_screenshot.url }}">
-    <meta name="twitter:title" content="{{ object.website_title }}">
-    <meta name="twitter:description" content="{{ object.website_short_description }}">
-    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.website_homepage_screenshot.url }}">
+    <meta property="og:description" content="{{ object.short_description }}">
+    <meta property="og:image" content="https://{{ request.get_host }}{{ object.homepage_screenshot.url }}">
+    <meta name="twitter:title" content="{{ object.title }}">
+    <meta name="twitter:description" content="{{ object.short_description }}">
+    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.homepage_screenshot.url }}">
 {% endblock %}
 {% block content %}
     <p class="mb-10 text-blue-700">
@@ -28,35 +28,35 @@
         <div class="p-6 overflow-hidden bg-white rounded-lg shadow">
             <div class="flex flex-col mb-4 md:text-left md:mt-0">
                 <h1 class="text-2xl font-semibold text-black" itemprop="name">
-                    <a href="{% url 'project' object.slug %}">{{ object.website_title }}</a>
+                    <a href="{% url 'project' object.slug %}">{{ object.title }}</a>
                 </h1>
                 <p class="text-sm leading-normal text-black" itemprop="description">
-                    {{ object.website_short_description }}
+                    {{ object.short_description }}
                 </p>
             </div>
             <div class="mb-2 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
                 <div class="">
                     <img class="w-full"
-                         src="{% get_media_prefix %}{{ object.website_homepage_screenshot }}"
-                         alt="{{ object.website_title }} | Screenshot">
+                         src="{% get_media_prefix %}{{ object.homepage_screenshot }}"
+                         alt="{{ object.title }} | Screenshot">
                 </div>
             </div>
             <div class="flex flex-row w-full mb-4 space-x-2 text-center">
                 <a class="inline-block w-full px-4 py-3 text-sm font-bold text-center text-white no-underline uppercase transition bg-green-500 rounded-lg shadow flex-no-shrink hover:bg-green-400 hover:-translateY-sm hover:shadow"
-                   href="{{ object.website_url }}?ref={{ request.get_host }}"
+                   href="{{ object.url }}?ref={{ request.get_host }}"
                    target="_blank">
                     Visit Website
                 </a>
-                {% if object.website_github %}
+                {% if object.github_url %}
                     <a class="flex items-center bg-gray-100 rounded-lg hover:bg-gray-300"
-                       href="{{ object.website_github }}?ref={{ request.get_host }}"
+                       href="{{ object.github_url }}?ref={{ request.get_host }}"
                        target="_blank">
                         <i class="p-2 text-3xl lab la-github"></i>
                     </a>
                 {% endif %}
-                {% if object.website_twitter %}
+                {% if object.twitter_url %}
                     <a class="flex items-center bg-gray-100 rounded-lg hover:bg-gray-300"
-                       href="{{ object.website_twitter }}?ref={{ request.get_host }}"
+                       href="{{ object.twitter_url }}?ref={{ request.get_host }}"
                        target="_blank">
                         <i class="p-2 text-3xl text-blue-400 lab la-twitter"></i>
                     </a>
@@ -172,14 +172,40 @@
                 </div>
             </div>
         {% endif %}
+        {% if object.podcast_episodes.all %}
+            <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
+                <h2 class="text-2xl font-semibold text-black">
+                    Podcast Episodes
+                </h2>
+                {% for episode in object.podcast_episodes.all %}
+                    <article class="flex flex-col justify-start mt-4 space-y-4 bg-white border rounded md:border-0 md:mt-2 md:flex-row">
+                        <header class="border-b border-gray-300 rounded-t-lg md:border-0">
+                            <a class="" href="{% url 'episode_details' episode.slug %}">
+                                <img class="object-cover object-left-top w-full h-auto border-0 rounded-t"
+                                     src="{% get_media_prefix %}{{ episode.thumbnail }}"
+                                     alt="{{ episode.title }} | Screenshot"/>
+                            </a>
+                        </header>
+                        <div class="flex-auto h-full p-4">
+                            <h2 class="mb-2 text-lg font-semibold text-gray-900">
+                                <a href="">{{ episode.title }}</a>
+                            </h2>
+                            <p class="text-sm leading-normal text-grey-700">
+                                {{ episode.details }}
+                            </p>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% endif %}
         <!-- Additional Info Card-->
-        {% if object.website_additional_info %}
+        {% if object.additional_info %}
             <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
                 <h2 class="text-2xl font-semibold text-black">
                     Additional Info
                 </h2>
                 <div class="prose">
-                    {{ object.website_additional_info | markdown | safe }}
+                    {{ object.additional_info | markdown | safe }}
                 </div>
             </div>
         {% endif %}
@@ -265,9 +291,9 @@
     "image": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.maker.maker_profile_image }}"
   },
   "name":"{{ object.title }}",
-  "thumbnailUrl": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.website_homepage_screenshot }}",
-  "image": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.website_homepage_screenshot }}",
-  "abstract": "{{ object.website_short_description }}"
+  "thumbnailUrl": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.homepage_screenshot }}",
+  "image": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.homepage_screenshot }}",
+  "abstract": "{{ object.short_description }}"
 }
     </script>
 {% endblock schema %}

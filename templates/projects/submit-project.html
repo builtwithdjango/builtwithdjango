@@ -21,18 +21,18 @@
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 <div class="mb-4">
-                    {{ form.website_title.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.website_title.id_for_label }}">
+                    {{ form.title.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.title.id_for_label }}">
                         Title
                     </label>
-                    {{ form.website_title }}
+                    {{ form.title }}
                 </div>
                 <div class="mb-4">
-                    {{ form.website_url.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.website_url.id_for_label }}">
+                    {{ form.url.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.url.id_for_label }}">
                         Demo or Project URL
                     </label>
-                    {{ form.website_url }}
+                    {{ form.url }}
                 </div>
                 <div class="mb-4">
                     {{ form.user_email.errors }}
@@ -42,12 +42,11 @@
                     {{ form.user_email }}
                 </div>
                 <div class="mb-4">
-                    {{ form.website_short_description.errors }}
-                    <label class="block mb-2 font-bold text-gray-700"
-                           for="{{ form.website_short_description.id_for_label }}">
+                    {{ form.short_description.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.short_description.id_for_label }}">
                         One Sentence Description
                     </label>
-                    {{ form.website_short_description }}
+                    {{ form.short_description }}
                 </div>
                 <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-300" type="submit">
                     Submit

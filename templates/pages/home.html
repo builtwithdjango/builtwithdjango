@@ -35,35 +35,35 @@
                         <header class="border-b border-gray-300 rounded-t-lg">
                             <a class="" href="{% url 'project' site.slug %}">
                                 <img class="object-cover object-left-top w-full h-auto border-0 rounded-t"
-                                     src="{% get_media_prefix %}{{ site.website_homepage_screenshot }}"
-                                     alt="{{ site.website_title }} | Screenshot">
+                                     src="{% get_media_prefix %}{{ site.homepage_screenshot }}"
+                                     alt="{{ site.title }} | Screenshot">
                             </a>
                         </header>
                         <div class="flex-auto h-full p-4 border-b border-gray-300">
                             <h2 class="mb-2 text-lg font-semibold text-gray-900">
-                                <a href="{% url 'project' site.slug %}">{{ site.website_title }}</a>
+                                <a href="{% url 'project' site.slug %}">{{ site.title }}</a>
                             </h2>
                             <p class="text-sm leading-normal text-grey-700">
-                                {{ site.website_short_description }}
+                                {{ site.short_description }}
                             </p>
                         </div>
                         <footer class="flex items-center justify-between px-4 py-2">
                             <div>
                                 <a class="inline-block bg-gray-300 rounded-full"
-                                   href="{{ site.website_url }}?ref={{ request.get_host }}"
+                                   href="{{ site.url }}?ref={{ request.get_host }}"
                                    target="_blank">
                                     <i class="p-2 las la-link"></i>
                                 </a>
-                                {% if site.website_github %}
+                                {% if site.github_url %}
                                     <a class="inline-block bg-gray-300 rounded-full"
-                                       href="{{ site.website_github }}?ref={{ request.get_host }}"
+                                       href="{{ site.github_url }}?ref={{ request.get_host }}"
                                        target="_blank">
                                         <i class="p-2 lab la-github"></i>
                                     </a>
                                 {% endif %}
-                                {% if site.website_twitter %}
+                                {% if site.twitter_url %}
                                     <a class="inline-block bg-gray-300 rounded-full"
-                                       href="{{ site.website_twitter }}?ref={{ request.get_host }}"
+                                       href="{{ site.twitter_url }}?ref={{ request.get_host }}"
                                        target="_blank">
                                         <i class="p-2 lab la-twitter"></i>
                                     </a>

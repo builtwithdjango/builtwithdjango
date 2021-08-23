@@ -8,10 +8,10 @@ class AddProject(ModelForm):
         super(AddProject, self).__init__(*args, **kwargs)
 
         for fieldname in [
-            "website_title",
+            "title",
             "user_email",
-            "website_short_description",
-            "website_url",
+            "short_description",
+            "url",
         ]:
             self.fields[fieldname].help_text = None
             self.fields[fieldname].widget.attrs.update(
@@ -21,17 +21,17 @@ class AddProject(ModelForm):
                 }
             )
 
-        self.fields["website_url"].widget.attrs.update(
+        self.fields["url"].widget.attrs.update(
             {"placeholder": "https://test.com"}
         )
 
     class Meta:
         model = Project
         fields = [
-            "website_title",
+            "title",
             "user_email",
-            "website_short_description",
-            "website_url",
+            "short_description",
+            "url",
         ]
 
 
