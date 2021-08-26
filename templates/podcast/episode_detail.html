@@ -45,6 +45,11 @@
                 </p>
             </div>
         {% endif %}
+        {% if object.youtube_html_embed %}
+            <div class="max-w-3xl">
+                {{ object.youtube_html_embed | safe }}
+            </div>
+        {% endif %}
         {% if object.transcript %}
             <div>
                 <h2>Transcript</h2>

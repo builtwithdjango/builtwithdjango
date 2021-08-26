@@ -10,6 +10,7 @@ class Episode(models.Model):
     slug = models.SlugField(unique=True)
     thumbnail = models.ImageField(upload_to="podcast_episode_thumbnail/")
     player_html_embed = models.TextField(blank=True)
+    youtube_html_embed = models.TextField(blank=True)
     details = models.TextField(blank=True)
     show_notes = models.TextField(blank=True)
     transcript = models.TextField(blank=True)
