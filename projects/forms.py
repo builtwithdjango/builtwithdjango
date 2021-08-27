@@ -1,3 +1,5 @@
+from django.core.mail import send_mail
+from django.db import transaction
 from django.forms import ModelForm
 
 from .models import Comment, Project
@@ -24,6 +26,25 @@ class AddProject(ModelForm):
         self.fields["url"].widget.attrs.update(
             {"placeholder": "https://test.com"}
         )
+
+    def save(self):
+        instance = super(AddProject, self).save()
+
+        @transaction.on_commit
+        def send_notification():
+            message = f"""
+            Someone submitted a project.
+            Instance: {instance}
+          """
+            send_mail(
+                "New Project Submission",
+                message,
+                "rasul@builtwithdjango.com",
+                ["rasul@builtwithdjango.com"],
+                fail_silently=False,
+            )
+
+        return instance
 
     class Meta:
         model = Project
