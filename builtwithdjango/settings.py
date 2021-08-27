@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "django_component",
     "django_filters",
     "rest_framework",
+    "anymail",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
@@ -200,3 +201,12 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend"
     ],
 }
+
+ANYMAIL = {
+    # (exact settings here depend on your ESP...)
+    "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),
+    "MAILGUN_SENDER_DOMAIN": "mg.builtwithdjango.com",
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+DEFAULT_FROM_EMAIL = "rasul@builtwithdjango.com"
+SERVER_EMAIL = "error@builtwithdjango.com"
