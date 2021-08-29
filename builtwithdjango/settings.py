@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "jobs.apps.JobsConfig",
     "podcast.apps.PodcastConfig",
     "makers.apps.MakersConfig",
+    "blog.apps.BlogConfig",
     "newsletter.apps.NewsletterConfig",
     "users.apps.UsersConfig",
     "api.apps.ApiConfig",

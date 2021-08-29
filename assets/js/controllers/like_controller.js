@@ -29,10 +29,12 @@ export default class extends Controller {
           document.getElementById(`${projectId}_heart`).classList.add('text-red-600')
           document.getElementById(`${projectId}_heart`).classList.add('las')
           document.getElementById(`${projectId}_heart`).classList.add('la-heart')
+          document.getElementById(`${projectId}_heart`).classList.add('block')
         }
         else {
           document.getElementById(`${projectId}_heart`).classList.add('lar')
           document.getElementById(`${projectId}_heart`).classList.add('la-heart')
+          document.getElementById(`${projectId}_heart`).classList.add('block')
         }
       })
       .catch(error => console.log(error))

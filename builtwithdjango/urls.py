@@ -35,6 +35,7 @@ urlpatterns = (
         path("api/v1/", include("api.urls")),
         path("jobs/", include("jobs.urls")),
         path("makers/", include("makers.urls")),
+        path("blog/", include("blog.urls")),
         path("newsletter/", include("newsletter.urls")),
         path("podcast/", include("podcast.urls")),
         path("users/", include("users.urls")),

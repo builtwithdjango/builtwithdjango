@@ -61,6 +61,16 @@
                         <i class="p-2 text-3xl text-blue-400 lab la-twitter"></i>
                     </a>
                 {% endif %}
+                <div data-controller="like" class="flex flex-row p-1 border rounded-lg ">
+                    <input type="hidden" data-target="like.projectId" value={{ object.id }}>
+                    <input type="hidden" data-target="like.currentUser" value={{ user.id }}>
+                    {% csrf_token %}
+                    <button data-action="click->
+                        like#modify" class="flex flex-row items-center text-xl">
+                        <div data-target="like.numberOfLikes" id="{{ object.id }}_likes"></div>
+                        <i id="{{ object.id }}_heart"></i>
+                    </button>
+                </div>
             </div>
         </div>
         <!-- Author Card -->
