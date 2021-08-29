@@ -37,7 +37,7 @@
     "axios": "^0.21.1",
     "cssnano": "^4.1.10",
     "js-cookie": "^3.0.0",
-    "stimulus": "^1.1.1",
+    "stimulus": "^2.0.0",
     "tailwindcss": "^2.2.7",
     "webpack-bundle-tracker": "^1.0.0-alpha.1"
   }

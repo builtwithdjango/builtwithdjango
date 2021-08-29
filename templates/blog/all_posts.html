@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load markdown_extras %}
+{% block meta %}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@rasulkireev" />
+    <meta name="twitter:site" content="@builtwithdjango" />
+    <title>Built with Django | Blog</title>
+    <meta name="description" content="Articles about Django"/>
+    <link rel="canonical" href="https://{{ request.get_host }}/blog/" />
+    <meta property="og:title" content="Built with Django | Blog" />
+    <meta property="og:url" content="https://{{ request.get_host }}/blog/" />
+    <meta property="og:description" content="Articles about Django"/>
+    <meta name="twitter:title" content="Built with Django | Blog" />
+    <meta name="twitter:description" content="Articles about Django"/>
+    <meta name="twitter:image" content="{% static 'favicon/logo.png' %}" />
+{% endblock %}
+{% block content %}
+    <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
+        <div class="px-4 py-5 sm:p-6">
+            <p class="text-3xl font-semibold text-gray-800">
+                Built with Django Blog
+            </p>
+            <p class="mb-5 text-2xl text-gray-600">
+                Get the latest posts and tutorials in your inbox.
+            </p>
+            <form class="flex flex-row items-center"
+                  action="{% url 'newsletter_home' %}"
+                  method="post"
+                  enctype="multipart/form-data">
+                {% csrf_token %} {{ newsletter_form.non_field_errors }}
+                <div class="flex flex-row items-center">
+                    <div class="flex flex-col">
+                        <div class="flex flex-row item-center">
+                            <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
+                            <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300"
+                                    type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="inline-block p-2 text-green-700 bg-green-200 border border-green-700 rounded ">
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="mx-auto overflow-hidden bg-white rounded-md shadow">
+        <div class="divide-y divide-gray-200">
+            {% for post in object_list %}
+                <div class="px-6 py-4">
+                    <p class="text-sm text-gray-500">
+                        <time datetime="2020-03-10">
+                        {{ post.created }}
+                        </time>
+                    </p>
+                    <a href="{% url 'post' post.slug %}" class="block mt-2">
+                        <p class="text-xl font-semibold text-gray-900">
+                            {{ post.title }}
+                        </p>
+                        <p class="mt-3 text-base prose text-gray-500">
+                            {{ post.description | truncatechars:300 | markdown | safe }}
+                        </p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
+{% block schema %}
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Built with Django | Blog",
+    "about": "Blog",
+    "description": "Articles about Django",
+    "abstract": "Articles about Django",
+    "thumbnailUrl": "https://{{ request.get_host }}{% static 'favicon/logo.png' %}",
+    "url": "https://{{ request.get_host }}/blog/",
+    "author": {
+      "@type": "Person",
+      "givenName": "Rasul",
+      "familyName": "Kireev",
+      "url": "https://rasulkireev.com/"
+    }
+  }
+    </script>
+{% endblock schema %}

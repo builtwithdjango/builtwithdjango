@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load markdown_extras %}
+{% block meta %}
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@rasulkireev">
+    <meta name="twitter:site" content="@builtwithdjango">
+    <title>{{ object.title }}</title>
+    <meta name="description" content="{{ object.description }}">
+    <link rel="canonical" href="https://{{ request.get_host }}/blog/{{ object.slug }}" />
+    <meta property="og:title" content="{{ object.title }}">
+    <meta property="og:url" content="https://{{ request.get_host }}/blog/{{ object.slug }}" />
+    <meta property="og:description" content="{{ object.description }}">
+    <meta property="og:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}">
+    <meta name="twitter:title" content="{{ object.title }}">
+    <meta name="twitter:description" content="{{ object.description }}">
+    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}">
+{% endblock %}
+{% block content %}
+    <p class="mt-5 mb-10 text-blue-700">
+        ←
+        <a href="{% url 'blog' %}">back to all posts</a>
+    </p>
+    <div class="max-w-3xl mx-auto">
+        <div class="mt-10 prose md:mx-auto lg:prose-xl">
+            <h1>{{ object.title }}</h1>
+            <div>
+                {{ object.content | markdown | safe }}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block schema %}
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "BlogPosting",
+  "author": {
+    "@type": "Person",
+    "name": "Rasul Kireev",
+    "image": "{% static 'images/logo.png' %}"
+  },
+  "headline": "{{ object.title }}",
+  "about": "Django",
+  "abstract": "{{ object.description }}",
+  "articleBody": "{{ object.content }}",
+  "image": "{% static 'images/logo.png' %}",
+  "thumbnailUrl": "{% static 'images/logo.png' %}",
+  "dateCreated": "{{ object.created }}",
+  "datePublished": "{{ object.created }}",
+  "dateModified": "{{ object.modified }}",
+}
+    </script>
+{% endblock schema %}
