@@ -36,7 +36,7 @@
                     <div class="flex flex-col">
                         <div class="flex flex-row item-center">
                             <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
-                            <button class=" px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300 "
+                            <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300"
                                     type="submit">
                                 Submit
                             </button>
@@ -46,14 +46,14 @@
             </form>
             {% if messages %}
                 {% for message in messages %}
-                    <p class=" inline-block p-2 text-green-700 bg-green-200 border border-green-700 rounded ">
+                    <p class="inline-block p-2 text-green-700 bg-green-200 border border-green-700 rounded ">
                         {{ message }}
                     </p>
                 {% endfor %}
             {% endif %}
         </div>
     </div>
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
+    <div class="grid grid-cols-1 gap-6 mb-10 lg:grid-cols-3 md:grid-cols-2">
         {% for episode in object_list %}
             <article class="flex flex-col justify-start bg-white border rounded shadow">
                 <header class="border-b border-gray-300 rounded-t-lg">
