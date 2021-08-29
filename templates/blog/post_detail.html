@@ -17,11 +17,11 @@
     <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}">
 {% endblock %}
 {% block content %}
-    <p class="mt-5 mb-10 text-blue-700">
+    <p class="mt-4 text-blue-700">
         ←
         <a href="{% url 'blog' %}">back to all posts</a>
     </p>
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-3xl mx-auto my-10">
         <div class="mt-10 prose md:mx-auto lg:prose-xl">
             <h1>{{ object.title }}</h1>
             <div>

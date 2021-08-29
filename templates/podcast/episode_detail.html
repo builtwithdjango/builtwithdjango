@@ -17,11 +17,11 @@
     <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.thumbnail.url }}">
 {% endblock %}
 {% block content %}
-    <p class="mb-10 text-blue-700">
+    <p class="mt-4 text-blue-700">
         ←
         <a href="{% url 'podcast_episodes' %}">back to all episodes</a>
     </p>
-    <div class="mt-10 prose md:mx-auto lg:prose-xl">
+    <div class="my-10 prose md:mx-auto lg:prose-xl">
         <h1>{{ object.title }}</h1>
         <img class="w-full" src="{% get_media_prefix %}{{ object.thumbnail }}" alt="">
         {% if object.player_html_embed %}

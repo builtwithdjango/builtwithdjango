@@ -19,11 +19,11 @@
     <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.homepage_screenshot.url }}">
 {% endblock %}
 {% block content %}
-    <p class="mt-4 mb-10 text-blue-700">
+    <p class="mt-4 text-blue-700">
         ←
         <a href="{% url 'projects' %}">back to all projects</a>
     </p>
-    <div class="flex flex-col justify-center max-w-5xl mx-auto space-y-2">
+    <div class="flex flex-col justify-center max-w-5xl mx-auto my-10 space-y-2">
         <!-- Projects -->
         <div class="p-6 overflow-hidden bg-white rounded-lg shadow">
             <div class="flex flex-col mb-4 md:text-left md:mt-0">
