@@ -41,6 +41,11 @@ repos:
     pass_filenames: false
   - id: run-django-html-linter
     name: run-django-html-linter
+    exclude: >
+        (?x)^(
+          templates/django/forms/widgets/.*
+          # doesn't work
+        )$
     description: 'Run djlint on all template files'
     entry: poetry
     args: [run, djlint, templates, --reformat]

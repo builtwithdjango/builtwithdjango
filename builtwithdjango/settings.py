@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
     "django.contrib.sites",
+    "django.forms",
     "taggit",
     "django_extensions",
     "django_component",
@@ -211,3 +212,7 @@ ANYMAIL = {
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEFAULT_FROM_EMAIL = "rasul@builtwithdjango.com"
 SERVER_EMAIL = "error@builtwithdjango.com"
+
+# Overriding the HTML of Built-In Widgets
+# from Two Scoops of Django 3.x
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
