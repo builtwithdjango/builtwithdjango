@@ -3,7 +3,7 @@
     Sign Up
 {% endblock title %}
 {% block content %}
-    <div class="flex items-center justify-center px-4 py-12 my-4 bg-gray-50 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-center px-4 py-12 my-4 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8">
             <div>
                 <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900">
@@ -12,51 +12,28 @@
             </div>
             <form class="mt-8 space-y-6" method="POST">
                 {% csrf_token %}
+                {{ form.non_field_errors | safe }}
                 <input type="hidden" name="remember" value="true">
                 <div class="-space-y-px rounded-md shadow-sm">
                     <div>
+                        {{ form.username.errors | safe }}
                         <label for="id_username" class="sr-only">Username</label>
-                        <input type="text"
-                               name="username"
-                               maxlength="150"
-                               autofocus=""
-                               required
-                               id="id_username"
-                               autocomplete="username"
-                               class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-                               placeholder="Username">
+                        {{ form.username }}
                     </div>
                     <div>
+                        {{ form.email.errors | safe }}
                         <label for="id_email" class="sr-only">Username</label>
-                        <input type="email"
-                               name="email"
-                               maxlength="254"
-                               autofocus=""
-                               required
-                               id="id_email"
-                               autocomplete="email"
-                               class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-                               placeholder="Email">
+                        {{ form.email }}
                     </div>
                     <div>
+                        {{ form.password1.errors | safe }}
                         <label for="id_password1" class="sr-only">Password</label>
-                        <input type="password"
-                               name="password1"
-                               autocomplete="new-password"
-                               required=""
-                               id="id_password1"
-                               class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-                               placeholder="Password">
+                        {{ form.password1 }}
                     </div>
                     <div>
+                        {{ form.password2.errors | safe }}
                         <label for="id_password2" class="sr-only">Password</label>
-                        <input type="password"
-                               name="password2"
-                               autocomplete="new-password"
-                               required
-                               id="id_password2"
-                               class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-                               placeholder="Confirm Password">
+                        {{ form.password2 }}
                     </div>
                 </div>
                 <div>

@@ -1,10 +1,10 @@
+from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from django.contrib.auth.views import LoginView
 
 from newsletter.views import NewsletterSignupForm
 
-from .forms import CustomUserCreationForm
+from .forms import CustomLoginForm, CustomUserCreationForm
 
 
 class SignUpView(CreateView):
@@ -20,6 +20,8 @@ class SignUpView(CreateView):
 
 
 class CustomLoginView(LoginView):
+    form_class = CustomLoginForm
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["newsletter_form"] = NewsletterSignupForm
