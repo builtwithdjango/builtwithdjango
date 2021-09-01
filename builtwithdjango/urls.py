@@ -38,8 +38,7 @@ urlpatterns = (
         path("blog/", include("blog.urls")),
         path("newsletter/", include("newsletter.urls")),
         path("podcast/", include("podcast.urls")),
-        path("users/", include("users.urls")),
-        path("users/", include("django.contrib.auth.urls")),
+        path("users/", include("allauth.urls")),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

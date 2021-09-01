@@ -1,4 +1,6 @@
+from allauth.account.forms import LoginForm
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (
     AuthenticationForm,
     UserChangeForm,
@@ -57,7 +59,7 @@ class CustomUserCreationForm(UserCreationForm):
             }
         )
 
-    def save(self):
+    def save(self, request, *args, **kwargs):
         instance = super(CustomUserCreationForm, self).save()
 
         @transaction.on_commit
@@ -76,52 +78,43 @@ class CustomUserCreationForm(UserCreationForm):
 
         return instance
 
-    class Meta(UserCreationForm):
-        model = CustomUser
-        fields = (
-            "username",
-            "email",
-        )
+    class Meta:
+        model = get_user_model()
+        fields = ("username", "email", "password1", "password2")
 
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
-        model = CustomUser
+        model = get_user_model()
         fields = UserChangeForm.Meta.fields
 
 
-class CustomLoginForm(AuthenticationForm):
+class CustomLoginForm(LoginForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.error_class = DivErrorList
 
-        self.fields["username"].widget.attrs.update(
+        self.fields["login"].widget.attrs.update(
             {
-                "id": "username",
-                "name": "username",
-                "type": "username",
-                "autocomplete": "username",
-                "required": "true",
                 "placeholder": "Username",
                 "class": """
-          relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500
-          border border-gray-300 rounded-none appearance-none rounded-t-md
-          focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm
-        """,
+                      relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500
+                      border border-gray-300 rounded-none appearance-none rounded-t-md
+                      focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm
+                """,
             }
         )
         self.fields["password"].widget.attrs.update(
             {
-                "id": "password",
-                "name": "password",
-                "type": "password",
-                "autocomplete": "current-password",
-                "required": "true",
                 "placeholder": "Password",
                 "class": """
-          relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500
-          border border-gray-300 rounded-none appearance-none rounded-b-md
-          focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm
-        """,
+                    relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500
+                    border border-gray-300 rounded-none appearance-none rounded-b-md
+                    focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm
+                """,
             }
         )
+
+    # def login(self, *args, **kwargs):
+    #     # You must return the original result.
+    #     return super(CustomLoginForm, self).login(*args, **kwargs)

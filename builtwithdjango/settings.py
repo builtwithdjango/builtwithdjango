@@ -58,6 +58,9 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework",
     "anymail",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
@@ -216,3 +219,21 @@ SERVER_EMAIL = "error@builtwithdjango.com"
 # Overriding the HTML of Built-In Widgets
 # from Two Scoops of Django 3.x
 FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+
+# django-allauth
+# From django for professional book
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+ACCOUNT_FORMS = {
+    "login": "users.forms.CustomLoginForm",
+    "signup": "users.forms.CustomUserCreationForm",
+}
+
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True

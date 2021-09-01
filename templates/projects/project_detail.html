@@ -248,11 +248,13 @@
                     <div x-show="isShowing" class="mx-6 my-4">
                         <p>
                             To comment on this project please
-                            <a href="{% url 'signup' %}" class="font-medium text-green-600 hover:text-green-500">
+                            <a href="{% url 'account_signup' %}"
+                               class="font-medium text-green-600 hover:text-green-500">
                                 signup
                             </a>
                             or
-                            <a href="{% url 'login' %}" class="font-medium text-green-600 hover:text-green-500">
+                            <a href="{% url 'account_login' %}"
+                               class="font-medium text-green-600 hover:text-green-500">
                                 login
                             </a>
                             .
