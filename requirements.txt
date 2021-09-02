@@ -97,6 +97,8 @@ django-filter==2.4.0; python_version >= "3.5" \
 django-model-utils==4.1.1 \
     --hash=sha256:eb5dd05ef7d7ce6bc79cae54ea7c4a221f6f81e2aad7722933aee66489e7264b \
     --hash=sha256:ef7c440024e797796a3811432abdd2be8b5225ae64ef346f8bfc6de7d8e5d73c
+django-rest-auth==0.9.5 \
+    --hash=sha256:f11e12175dafeed772f50d740d22caeab27e99a3caca24ec65e66a8d6de16571
 django-taggit==1.4.0; python_version >= "3.6" \
     --hash=sha256:b9ed6e94bad0bed3bf062a6be7ee3db117fda02c6419c680d614197364ea018b \
     --hash=sha256:9f947b7fe330875ac7f05f9616f42ef90df9253b639ca102a9449dd34cec0cab
@@ -178,6 +180,9 @@ requests==2.25.1; (python_version >= "2.7" and python_full_version < "3.0.0") or
 sentry-sdk==0.14.4 \
     --hash=sha256:0e5e947d0f7a969314aa23669a94a9712be5a688ff069ff7b9fc36c66adc160c \
     --hash=sha256:799a8bf76b012e3030a881be00e97bc0b922ce35dde699c6537122b751d80e2c
+six==1.16.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.3.0" \
+    --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254 \
+    --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926
 sqlparse==0.4.1; python_version >= "3.6" \
     --hash=sha256:017cde379adbd6a1f15a61873f43e8274179378e95ef3fede90b5aa64d304ed0 \
     --hash=sha256:0f91fd2e829c44362cbcfab3e9ae12e22badaa8a29ad5ff599f9ec109f0454e8

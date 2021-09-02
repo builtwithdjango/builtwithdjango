@@ -261,6 +261,23 @@ python-versions = "*"
 Django = ">=2.0.1"
 
 [[package]]
+name = "django-rest-auth"
+version = "0.9.5"
+description = "Create a set of REST API endpoints for Authentication and Registration"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Django = ">=1.8.0"
+django-allauth = {version = ">=0.25.0", optional = true, markers = "extra == \"with_social\""}
+djangorestframework = ">=3.1.3"
+six = ">=1.9.0"
+
+[package.extras]
+with_social = ["django-allauth (>=0.25.0)"]
+
+[[package]]
 name = "django-taggit"
 version = "1.4.0"
 description = "django-taggit is a reusable Django application for simple tagging."
@@ -661,7 +678,7 @@ tornado = ["tornado (>=5)"]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 
@@ -768,7 +785,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b28bb4bfa4504e272b7dc13e14f1023411d43badf1b286e082be6ceee82edda8"
+content-hash = "c3bb227fe6847e1384f92cc0f337e6421a0c6172d421061b065518c95306974f"
 
 [metadata.files]
 appdirs = [
@@ -915,6 +932,9 @@ django-filter = [
 django-model-utils = [
     {file = "django-model-utils-4.1.1.tar.gz", hash = "sha256:eb5dd05ef7d7ce6bc79cae54ea7c4a221f6f81e2aad7722933aee66489e7264b"},
     {file = "django_model_utils-4.1.1-py3-none-any.whl", hash = "sha256:ef7c440024e797796a3811432abdd2be8b5225ae64ef346f8bfc6de7d8e5d73c"},
+]
+django-rest-auth = [
+    {file = "django-rest-auth-0.9.5.tar.gz", hash = "sha256:f11e12175dafeed772f50d740d22caeab27e99a3caca24ec65e66a8d6de16571"},
 ]
 django-taggit = [
     {file = "django-taggit-1.4.0.tar.gz", hash = "sha256:b9ed6e94bad0bed3bf062a6be7ee3db117fda02c6419c680d614197364ea018b"},
