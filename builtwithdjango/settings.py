@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.twitter",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
@@ -195,7 +197,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # config/settings.py
 LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_REDIRECT_URL = "home"
 
 # Paypal
 PAYPAL_CLIENT_ID = env("PAYPAL_CLIENT_ID")
