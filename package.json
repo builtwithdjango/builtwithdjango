@@ -32,6 +32,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.3.3",
     "@tailwindcss/typography": "^0.4.1",
     "autoprefixer": "^10.2.6",
     "axios": "^0.21.1",

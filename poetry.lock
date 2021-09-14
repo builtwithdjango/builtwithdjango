@@ -209,6 +209,17 @@ cyrillic = ["pytils (>=0.2)"]
 translitcodec = ["translitcodec (>=0.3)"]
 
 [[package]]
+name = "django-bootstrap-datepicker-plus"
+version = "3.0.5"
+description = "Bootstrap3/Bootstrap4 DatePickerInput, TimePickerInput, DateTimePickerInput, MonthPickerInput, YearPickerInput with date-range-picker functionality for django version 2.1, 2.0, 1.11, 1.10 and 1.8"
+category = "main"
+optional = false
+python-versions = ">=3"
+
+[package.dependencies]
+django = ">=1.8"
+
+[[package]]
 name = "django-component"
 version = "0.1.7"
 description = "Django template tags to create composable components"
@@ -785,7 +796,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "c3bb227fe6847e1384f92cc0f337e6421a0c6172d421061b065518c95306974f"
+content-hash = "c2ad601c2f1a117ffb8ec2ba306451e9f56be1ae896f47c21b1de4d55e17c5c9"
 
 [metadata.files]
 appdirs = [
@@ -912,6 +923,10 @@ django-anymail = [
 django-autoslug = [
     {file = "django-autoslug-1.9.8.tar.gz", hash = "sha256:bae66c27d35615f472865b99c4d107f3b3add3d22ee337e84960fc07694abd45"},
     {file = "django_autoslug-1.9.8-py2.py3-none-any.whl", hash = "sha256:26459eeddec207e307c55777a10fc25d17f4978753695340b16a17ed248a6f70"},
+]
+django-bootstrap-datepicker-plus = [
+    {file = "django-bootstrap-datepicker-plus-3.0.5.tar.gz", hash = "sha256:490058eba99d47f48a7d24fa78581c0e36375bdc7aa9605783eeb170d51fd0df"},
+    {file = "django_bootstrap_datepicker_plus-3.0.5-py3-none-any.whl", hash = "sha256:a8bc19cc6846f97ff1e6c447f4e0387881d16e8afa1e8bd7a652c19e545c566b"},
 ]
 django-component = [
     {file = "django-component-0.1.7.tar.gz", hash = "sha256:bd414f2d44a7211d1a4d95a4a31c1dff9f6ada4450092afd95039a0c900cbbb4"},

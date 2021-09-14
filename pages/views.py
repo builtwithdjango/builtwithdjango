@@ -1,12 +1,17 @@
 from datetime import datetime, timedelta
 
 from django.conf import settings
-from django.views.generic import TemplateView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, TemplateView
 
 from jobs.models import Job
 from newsletter.views import NewsletterSignupForm
 from podcast.models import Episode
 from projects.models import Project
+
+from .forms import AddNftRequest
+from .models import CistercianDateNftRequest
 
 
 class HomeView(TemplateView):
@@ -41,5 +46,25 @@ class DonateSubscriptionView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["newsletter_form"] = NewsletterSignupForm
+
+        return context
+
+
+class RequestNftView(SuccessMessageMixin, CreateView):
+    model = CistercianDateNftRequest
+    form_class = AddNftRequest
+    template_name = "pages/request-nft.html"
+    success_url = reverse_lazy("request-nft")
+    success_message = """
+        Thanks for requesting an NFT. I'll create it and send it to you at my earliest convinience.
+        If you provided correct wallet address it should show up in your wallet soon.
+        If you provided correct email I will let you know when I've sent it.
+        If you would like to support this project, consider buying other NFTs from this collections :)
+        Thanks!!!!
+    """
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["dates_requested"] = CistercianDateNftRequest.objects.all()
 
         return context
