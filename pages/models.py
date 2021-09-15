@@ -11,4 +11,4 @@ class CistercianDateNftRequest(TimeStampedModel):
     link = models.URLField(blank=True)
 
     def __str__(self):
-        return f"{self.email}-{self.date_requested}"
+        return f"{self.date_requested}"
