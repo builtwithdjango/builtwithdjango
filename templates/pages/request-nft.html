@@ -128,6 +128,14 @@
                                         class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                         Sent
                                     </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                        Proofs
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                        NFT Page
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -146,6 +154,18 @@
                                                     No
                                                 </span>
                                             {% endif %}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            <a class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                               href="{{ object.proof }}">
+                                                Link
+                                            </a>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            <a class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                               href="{{ object.link }}">
+                                                Link
+                                            </a>
                                         </td>
                                     </tr>
                                 </tbody>
