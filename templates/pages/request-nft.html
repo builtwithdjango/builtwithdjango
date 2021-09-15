@@ -130,11 +130,7 @@
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                        Proofs
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                        NFT Page
+                                        Proof
                                     </th>
                                 </tr>
                             </thead>
@@ -142,7 +138,15 @@
                                 {% for object in dates_requested %}
                                     <tr class="bg-white">
                                         <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                            {{ object.date_requested }}
+                                            {% if object.link %}
+                                                <a class="text-blue-600 underline"
+                                                   target="_blank"
+                                                   href="{{ object.link }}">
+                                                    {{ object.date_requested }}
+                                                </a>
+                                            {% else %}
+                                                {{ object.date_requested }}
+                                            {% endif %}
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                             {% if object.sent %}
@@ -159,14 +163,6 @@
                                             {% if object.proof %}
                                                 <a class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                                    href="{{ object.proof }}">
-                                                    Link
-                                                </a>
-                                            {% endif %}
-                                        </td>
-                                        <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                            {% if object.link %}
-                                                <a class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                   href="{{ object.link }}">
                                                     Link
                                                 </a>
                                             {% endif %}
