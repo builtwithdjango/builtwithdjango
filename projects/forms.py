@@ -33,7 +33,7 @@ class AddProject(ModelForm):
         @transaction.on_commit
         def send_notification():
             message = f"""
-            Someone submitted a project.
+            {instance.email} submitted a project.
             Instance: {instance}
           """
             send_mail(

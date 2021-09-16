@@ -37,7 +37,7 @@ class AddNftRequest(ModelForm):
           Instance: {instance}
         """
             send_mail(
-                "New Job Submission",
+                "New NFT request",
                 message,
                 "rasul@builtwithdjango.com",
                 ["rasul@builtwithdjango.com"],
