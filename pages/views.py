@@ -2,15 +2,15 @@ from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, TemplateView, UpdateView
 
 from jobs.models import Job
 from newsletter.views import NewsletterSignupForm
 from podcast.models import Episode
 from projects.models import Project
 
-from .forms import AddNftRequest
+from .forms import AddNftRequest, ConfirmEmail
 from .models import CistercianDateNftRequest
 
 
@@ -56,9 +56,9 @@ class RequestNftView(SuccessMessageMixin, CreateView):
     template_name = "pages/request-nft.html"
     success_url = reverse_lazy("request-nft")
     success_message = """
-        Thanks for requesting an NFT. I'll create it and send it to you at my earliest convinience.
-        If you provided correct wallet address it should show up in your wallet soon.
-        If you provided correct email I will let you know when I've sent it.
+        Thanks for requesting an NFT. Before I mint it and send it to you, I will ask you one last thing.
+        Can you please confirm your email? I just sent an email to your inbox with a link. Thanks a ton.
+        Sorry for any inconvinience.
         If you would like to support this project, consider buying other NFTs from this collections :)
         Thanks!!!!
     """
@@ -68,3 +68,14 @@ class RequestNftView(SuccessMessageMixin, CreateView):
         context["dates_requested"] = CistercianDateNftRequest.objects.all()
 
         return context
+
+
+class ConfirmEmail(SuccessMessageMixin, UpdateView):
+    model = CistercianDateNftRequest
+    form_class = ConfirmEmail
+    template_name = "pages/confirm-email.html"
+    success_url = reverse_lazy("request-nft")
+    success_message = (
+        "Thanks for confirming your email! You will receive your NFT shortly."
+    )
+    slug_field = "wallet_public_key"

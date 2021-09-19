@@ -4,6 +4,7 @@ from model_utils.models import TimeStampedModel
 
 class CistercianDateNftRequest(TimeStampedModel):
     email = models.EmailField(unique=True)
+    email_confirmed = models.BooleanField(default=False)
     wallet_public_key = models.CharField(max_length=200, unique=True)
     date_requested = models.DateField(unique=True)
     sent = models.BooleanField(default=False)

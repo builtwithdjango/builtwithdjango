@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="my-10">
+        {% if messages %}
+            <div class="p-4 my-4 border border-green-500 rounded-md bg-green-50">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <!-- Heroicon name: solid/check-circle -->
+                        <svg class="w-5 h-5 text-green-400"
+                             xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 20 20"
+                             fill="currentColor"
+                             aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <div class="text-sm text-green-700">
+                            {% for message in messages %}
+                                <p>
+                                    {{ message }}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="prose lg:prose-lg">
+            <h2>Is this your email - {{ object.email }}?</h2>
+            <form method="post" class="max-w-lg" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="hidden">
+                    {{ form }}
+                </div>
+                <button type="submit"
+                        class="inline-flex items-center px-6 py-3 text-lg font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Confirm Email
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

@@ -33,11 +33,48 @@ class AddNftRequest(ModelForm):
         @transaction.on_commit
         def send_notification():
             message = f"""
-          {instance.email} requested an NFT.
-          Instance: {instance}
+            Hey,
+
+            Please follow the link below to confirm your email. I did that to make sure people don't use fake identities.
+            Thanks for understanding. I will send you the NFT right after you confirm.
+
+            https://builtwithdjango.com/confirm-nft-email/{instance.wallet_public_key}
         """
             send_mail(
-                "New NFT request",
+                "Please confirm your email :)",
+                message,
+                "rasul@builtwithdjango.com",
+                [f"{instance.email}"],
+                fail_silently=False,
+            )
+
+        return instance
+
+    class Meta:
+        model = CistercianDateNftRequest
+        fields = ["email", "wallet_public_key", "date_requested"]
+
+
+class ConfirmEmail(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ConfirmEmail, self).__init__(*args, **kwargs)
+        self.fields["email_confirmed"].widget.attrs.update({"checked": "true"})
+
+    def save(self):
+        instance = super(ConfirmEmail, self).save()
+
+        @transaction.on_commit
+        def send_notification():
+            message = f"""
+      {instance.email} just approved his NFT request.
+
+      NFT INFO:
+        - email: {instance.email}
+        - wallet: {instance.wallet_public_key}
+        - reqeusted date: {instance.date_requested}
+            """
+            send_mail(
+                f"{instance.email} just approved his NFT request.",
                 message,
                 "rasul@builtwithdjango.com",
                 ["rasul@builtwithdjango.com"],
@@ -48,4 +85,4 @@ class AddNftRequest(ModelForm):
 
     class Meta:
         model = CistercianDateNftRequest
-        fields = ["email", "wallet_public_key", "date_requested"]
+        fields = ["email_confirmed"]
