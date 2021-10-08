@@ -3,7 +3,12 @@ from datetime import datetime, timedelta
 from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, TemplateView, UpdateView
+from django.views.generic import (
+    CreateView,
+    RedirectView,
+    TemplateView,
+    UpdateView,
+)
 
 from jobs.models import Job
 from newsletter.views import NewsletterSignupForm
@@ -27,6 +32,10 @@ class HomeView(TemplateView):
         ).filter(approved=True)[:6]
 
         return context
+
+
+class SupportRedirect(RedirectView):
+    url = "https://cryptip.to/builtwithdjango"
 
 
 class DonateOneTimeView(TemplateView):
