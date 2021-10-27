@@ -5,6 +5,7 @@ module.exports = {
       './assets/js/**/*.js',
       './templates/*.html',
       './templates/**/*.html',
+      './**/forms.py'
     ],
     options: {
       // https://nexxai.dev/tell-purgecss-to-ignore-purging-all-tailwind-colours/

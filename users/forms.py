@@ -23,7 +23,7 @@ class CustomUserCreationForm(UserCreationForm):
                 "placeholder": "Username",
                 "class": """
                     relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500
-                    border border-gray-300 rounded-none appearance-none rounded-t-md
+                    border border-solid border-gray-300 rounded-none appearance-none rounded-t-md
                     focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm
                 """,
             }
@@ -33,7 +33,7 @@ class CustomUserCreationForm(UserCreationForm):
                 "placeholder": "Email",
                 "class": """
                     relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500
-                    border border-gray-300 rounded-none appearance-none focus:outline-none
+                    border border-solid border-gray-300 rounded-none appearance-none focus:outline-none
                     focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm
                 """,
             }
@@ -43,7 +43,7 @@ class CustomUserCreationForm(UserCreationForm):
                 "placeholder": "Password",
                 "class": """
                     relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500
-                    border border-gray-300 rounded-none appearance-none focus:outline-none
+                    border border-solid border-gray-300 rounded-none appearance-none focus:outline-none
                     focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm
                 """,
             }
@@ -53,7 +53,7 @@ class CustomUserCreationForm(UserCreationForm):
                 "placeholder": "Confirm Password",
                 "class": """
                     relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500
-                    border border-gray-300 rounded-none appearance-none rounded-b-md
+                    border border-solid border-gray-300 rounded-none appearance-none rounded-b-md
                     focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm
                 """,
             }
@@ -99,7 +99,7 @@ class CustomLoginForm(LoginForm):
                 "placeholder": "Username",
                 "class": """
                     relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500
-                    border border-gray-300 rounded-none appearance-none rounded-t-md
+                    border border-solid border-gray-300 rounded-none appearance-none rounded-t-md
                     focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm
                 """,
             }
@@ -109,7 +109,7 @@ class CustomLoginForm(LoginForm):
                 "placeholder": "Password",
                 "class": """
                     relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500
-                    border border-gray-300 rounded-none appearance-none rounded-b-md
+                    border border-solid border-gray-300 rounded-none appearance-none rounded-b-md
                     focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm
                 """,
             }

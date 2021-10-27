@@ -18,7 +18,7 @@ class AddProject(ModelForm):
             self.fields[fieldname].help_text = None
             self.fields[fieldname].widget.attrs.update(
                 {
-                    "class": "block appearance-none w-full bg-white border border-grey-light \
+                    "class": "block appearance-none w-full bg-white border border-solid border-grey-light \
                               hover:border-grey px-2 py-2 rounded shadow"
                 }
             )
@@ -64,7 +64,7 @@ class AddComment(ModelForm):
             self.fields[fieldname].help_text = None
             self.fields[fieldname].widget.attrs.update(
                 {
-                    "class": "block border w-full p-2 mb-2 border-gray-300 rounded-md \
+                    "class": "block border border-solid w-full p-2 mb-2 border-gray-300 rounded-md \
                               shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm",
                     "rows": "3",
                 }

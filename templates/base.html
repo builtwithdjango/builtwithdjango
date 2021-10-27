@@ -1,5 +1,5 @@
 {% load static %}
-<html lang="en">
+<html class="h-full bg-gray-50" lang="en">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
@@ -33,7 +33,7 @@
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
         <script async defer data-domain="builtwithdjango.com" src="https://plausible.io/js/plausible.js"></script>
     </head>
-    <body class="font-sans bg-gray-100">
+    <body class="h-full font-sans bg-gray-100">
         <nav x-data="{ isOn: false }" class="bg-gray-800">
             <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="relative flex items-center justify-between h-16">
@@ -156,7 +156,7 @@
                         {% else %}
                             <div class="flex-shrink-0">
                                 <a href="{% url 'account_login' %}"
-                                   class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-green-500">
+                                   class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-500 border border-solid border-transparent rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-green-500">
                                     <span>Login</span>
                                 </a>
                             </div>
@@ -194,7 +194,7 @@
             {% block content %}{% endblock content %}
         </div>
         <footer>
-            <a class="fixed bottom-0 left-0 z-10 px-2 py-1 font-semibold text-gray-900 no-underline bg-gray-200 border-t border-l border-white border-solid rounded-tr "
+            <a class="fixed bottom-0 left-0 z-10 px-2 py-1 font-semibold text-gray-900 no-underline bg-gray-200 border-t border-solid border-l border-white border-solid rounded-tr "
                href="https://rasulkireev.com"
                target="_blank">
                 <!-- <img class="inline w-4 align-middle rounded" src="https://github.com/account" alt="Rasul Kireev"/> -->

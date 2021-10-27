@@ -26,7 +26,7 @@
             <h1>{{ object.title }} @ {{ object.company.name }}</h1>
         </div>
         <div class="flex justify-center mt-10">
-            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-solid border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                href="{{ object.listing_url }}?utm_source={{ request.get_host }}&ref={{ request.get_host }}"
                target="_blank">
                 Apply for this position
@@ -55,7 +55,7 @@
             {% endif %}
         </div>
         <div class="flex justify-center mt-10">
-            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-solid border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                href="{{ object.listing_url }}?utm_source={{ request.get_host }}&ref={{ request.get_host }}"
                target="_blank">
                 Apply for this position

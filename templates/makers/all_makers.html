@@ -42,7 +42,7 @@
             </form>
             {% if messages %}
                 {% for message in messages %}
-                    <p class="inline-block p-2 text-green-700 bg-green-200 border border-green-700 rounded ">
+                    <p class="inline-block p-2 text-green-700 bg-green-200 border border-solid border-green-700 rounded ">
                         {{ message }}
                     </p>
                 {% endfor %}
@@ -51,7 +51,7 @@
     </div>
     <div class="grid grid-cols-1 gap-4 mb-10 sm:grid-cols-4">
         {% for maker in object_list %}
-            <div class="relative flex items-center px-4 py-5 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+            <div class="relative flex items-center px-4 py-5 space-x-3 bg-white border border-solid border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                 <div class="flex items-center">
                     {% if maker.maker_profile_image %}
                         <img class="w-16 h-16 rounded-full"
