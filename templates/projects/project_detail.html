@@ -138,7 +138,7 @@
                 </h2>
                 <div class="grid grid-cols-1 gap-4 py-4 -m-1 sm:grid-cols-1">
                     {% for job in object.company.jobs.all %}
-                        <div class="relative flex items-center px-6 py-5 space-x-3 bg-white border border-solid border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                        <div class="relative flex items-center px-6 py-5 space-x-3 bg-white border border-gray-300 border-solid rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                             <div class="flex-shrink-0">
                                 <img class="w-10 h-10 rounded-full"
                                      src="{% get_media_prefix %}{{ job.company.logo }}"
@@ -240,7 +240,7 @@
                         {% csrf_token %}
                         {{ comment_form.comment }}
                         <button type="submit"
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-solid border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent border-solid rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Post Comment
                         </button>
                     </form>
@@ -271,12 +271,15 @@
                                  alt="">
                         {% else %}
                             <img class="w-10 h-10 mt-2 rounded-full"
-                                 src="https://img.icons8.com/color/48/000000/test-account.png"
+                                 src="https://avatars.dicebear.com/api/gridy/{{ comment.author.username }}.svg"
                                  alt="">
                         {% endif %}
                         <div class="ml-3">
                             <p class="font-medium">
                                 <span class="text-sm text-gray-900">{{ comment.author }}</span>
+                                {% if object.maker.user == comment.author %}
+                                    <span>⭐</span>
+                                {% endif %}
                                 -
                                 <span class="text-sm text-gray-600">{{ comment.created_date|timesince }} ago</span>
                             </p>

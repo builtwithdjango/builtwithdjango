@@ -1,7 +1,8 @@
 import { Controller } from "stimulus"
+import {enter, leave} from 'el-transition';
 
 export default class extends Controller {
-    static targets = [ "projectId", "numberOfLikes", "currentUser" ]
+    static targets = [ "projectId", "numberOfLikes", "currentUser", "modalButton", "modal" ]
 
     // load all likes
     connect () {
@@ -19,12 +20,10 @@ export default class extends Controller {
         }
       })
       .then(function(response) {
-        console.log(response)
         const arrayWithUsersWithLikes = response.data.filter(like => like.like == true);
         const arrayOfLikedUserIds = arrayWithUsersWithLikes.map(user => user.author);
         document.getElementById(`${projectId}_likes`).innerHTML = arrayWithUsersWithLikes.length
 
-        console.log(arrayWithUsersWithLikes.length > 0, arrayOfLikedUserIds.includes(Number(currentUserId)))
         if (arrayWithUsersWithLikes.length > 0 && arrayOfLikedUserIds.includes(Number(currentUserId))) {
           document.getElementById(`${projectId}_heart`).classList.add('text-red-600')
           document.getElementById(`${projectId}_heart`).classList.add('las')
@@ -51,7 +50,7 @@ export default class extends Controller {
       axios.get(`/api/v1/like?author=${this.currentUserTarget.value}&project=${this.projectIdTarget.value}`)
         .then(function (response) {
           var data = response.data
-          console.log(data)
+
           // if there is no like action happened before we need to create one
           if (data.length == 0) {
             axios({
@@ -68,7 +67,6 @@ export default class extends Controller {
               }
             })
             .then(function(response) {
-              console.log(response)
               document.getElementById(`${projectId}_likes`).textContent = numberOfLikes + 1
               document.getElementById(`${projectId}_likes`).removeAttribute("class")
               document.getElementById(`${projectId}_heart`).classList.add('text-red-600')
@@ -107,7 +105,6 @@ export default class extends Controller {
                 data
               })
               .then(function(response) {
-                console.log(response)
                 document.getElementById(`${projectId}_likes`).innerHTML = ""
                 document.getElementById(`${projectId}_likes`).innerHTML = `${numberOfLikes + 1}`
                 document.getElementById(`${projectId}_heart`).removeAttribute("class")
@@ -133,7 +130,6 @@ export default class extends Controller {
             })
             .then(function (response) {
               const id = response.data[0].id
-              console.log(response, id)
               axios({
                 method: 'put',
                 url: `/api/v1/like/${id}/`,
@@ -148,7 +144,6 @@ export default class extends Controller {
                 }
               })
               .then(function(response) {
-                console.log(response)
                 document.getElementById(`${projectId}_likes`).textContent = numberOfLikes - 1
                 document.getElementById(`${projectId}_heart`).removeAttribute("class")
                 document.getElementById(`${projectId}_heart`).classList.add('lar')
@@ -161,5 +156,14 @@ export default class extends Controller {
             .catch()
           }
         })
+    }
+
+    toggleModal() {
+      console.log("Pressing Button")
+      if(this.modalTarget.classList.contains('hidden')) {
+        enter(this.modalTarget)
+      } else {
+        leave(this.modalTarget)
+      }
     }
 }

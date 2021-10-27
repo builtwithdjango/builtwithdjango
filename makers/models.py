@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -14,6 +15,13 @@ class Maker(models.Model):
     )
     # https://learndjango.com/tutorials/django-slug-tutorial
     slug = models.SlugField(null=True, unique=True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="maker",
+    )
 
     # Social
     twitter_handle = models.CharField(max_length=20, blank=True)
