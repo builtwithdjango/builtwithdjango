@@ -62,7 +62,7 @@
                     </a>
                 {% endif %}
                 <div data-controller="like" class="flex flex-row p-1 border border-solid rounded-lg ">
-                    <input type="hidden" data-target="like.projectId" value={{ object.id }}>
+                    <input type="hidden" data-like-target="projectId" value={{ object.id }}>
                     <input type="hidden" data-target="like.currentUser" value={{ user.id }}>
                     {% csrf_token %}
                     {% if user.is_authenticated %}

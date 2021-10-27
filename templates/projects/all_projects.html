@@ -109,7 +109,7 @@
                                 <i class="las la-comments"></i>
                             </div>
                             <div data-controller="like" class="inline-block p-1 border border-solid rounded-full">
-                                <input type="hidden" data-target="like.projectId" value={{ site.id }}>
+                                <input type="hidden" data-like-target="projectId" value={{ site.id }}>
                                 <input type="hidden" data-target="like.currentUser" value={{ user.id }}>
                                 {% csrf_token %}
                                 {% if user.is_authenticated %}
