@@ -65,11 +65,95 @@
                     <input type="hidden" data-target="like.projectId" value={{ object.id }}>
                     <input type="hidden" data-target="like.currentUser" value={{ user.id }}>
                     {% csrf_token %}
-                    <button data-action="click->
-                        like#modify" class="flex flex-row items-center text-xl">
-                        <div data-target="like.numberOfLikes" id="{{ object.id }}_likes"></div>
-                        <i id="{{ object.id }}_heart"></i>
-                    </button>
+                    {% if user.is_authenticated %}
+                        <button data-action="click->
+                            like#modify" class="flex flex-row items-center text-xl">
+                            <span data-target="like.numberOfLikes" id="{{ object.id }}_likes"></span>
+                            <i id="{{ object.id }}_heart" class=""></i>
+                        </button>
+                    {% else %}
+                        <!-- Solution from https://dev.to/mmccall10/tailwind-enter-leave-transition-effects-with-stimulus-js-5hl7 -->
+                        <button data-action="click->
+                            like#toggleModal" class="flex flex-row items-center text-xl" data-like-target="modalButton">
+                            <span data-target="like.numberOfLikes" id="{{ object.id }}_likes"></span>
+                            <i id="{{ object.id }}_heart" class=""></i>
+                        </button>
+                        <div data-like-target="modal"
+                             class="fixed inset-0 z-10 hidden overflow-y-auto"
+                             aria-labelledby="modal-title"
+                             role="dialog"
+                             aria-modal="true">
+                            <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                                <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+                                     aria-hidden="true"
+                                     data-transition-enter="ease-out duration-300"
+                                     data-transition-enter-start="opacity-0"
+                                     data-transition-enter-end="opacity-100"
+                                     data-transition-leave="ease-in duration-200"
+                                     data-transition-leave-start="opacity-100"
+                                     data-transition-leave-end="opacity-0"></div>
+                                <!-- This element is to trick the browser into centering the modal contents. -->
+                                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                                    &#8203;
+                                </span>
+                                <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                                     data-transition-enter="ease-out duration-300"
+                                     data-transition-enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                     data-transition-enter-end="opacity-100 translate-y-0 sm:scale-100"
+                                     data-transition-leave="ease-in duration-200"
+                                     data-transition-leave-start="opacity-100 translate-y-0 sm:scale-100"
+                                     data-transition-leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                                    <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+                                        <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
+                                            <button data-action="click->
+                                                like#toggleModal"
+                                                data-like-target="modalButton"
+                                                type="button"
+                                                class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                >
+                                                <span class="sr-only">Close</span>
+                                                <!-- Heroicon name: outline/x -->
+                                                <svg class="w-6 h-6"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     fill="none"
+                                                     viewBox="0 0 24 24"
+                                                     stroke="currentColor"
+                                                     aria-hidden="true">
+                                                    <path stroke-linecap="round"
+                                                          stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M6 18L18 6M6 6l12 12"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div class="sm:flex sm:items-start">
+                                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                                <h3 class="text-lg font-medium leading-6 text-gray-900"
+                                                    id="modal-title">
+                                                    Please login
+                                                </h3>
+                                                <div class="mt-2">
+                                                    <p class="text-sm text-gray-500">
+                                                        In order to ❤️ projects you need to
+                                                        <a class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
+                                                           href="{% url 'account_login' %}">
+                                                            login
+                                                        </a>
+                                                        or
+                                                        <a href="{% url 'account_signup' %}"
+                                                           class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-200 text-green-800">
+                                                            signup
+                                                        </a>
+                                                        if you don't have an account yet.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

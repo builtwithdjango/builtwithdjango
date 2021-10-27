@@ -39,6 +39,7 @@ export default class extends Controller {
       .catch(error => console.log(error))
     }
 
+    // Handle liking
     modify() {
       const projectId = this.projectIdTarget.value
       const currentUserId = this.currentUserTarget.value
@@ -158,8 +159,8 @@ export default class extends Controller {
         })
     }
 
+    // Handle liking for unauthenticated user
     toggleModal() {
-      console.log("Pressing Button")
       if(this.modalTarget.classList.contains('hidden')) {
         enter(this.modalTarget)
       } else {
