@@ -53,12 +53,14 @@
         {% for maker in object_list %}
             <div class="relative flex items-center px-4 py-5 space-x-3 bg-white border border-gray-300 border-solid rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                 {% if user.is_authenticated and maker.maker_email == user.email and maker.user == None %}
-                    <span class="absolute top-0 right-0 p-2">
-                        <a href="#"
-                           class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-300">
+                    <form class="absolute top-0 right-0 p-2" action="{% url 'claim_account' maker.pk %}" method="post">
+                        {% csrf_token %}
+                        <input class="hidden" type="text" value="{{ user.email }}">
+                        <button type="submit"
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-300">
                             Claim
-                        </a>
-                    </span>
+                        </button>
+                    </form>
                 {% endif %}
                 <a href="#">
                     <div class="flex items-center">

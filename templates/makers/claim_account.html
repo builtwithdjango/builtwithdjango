@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+<form class="absolute top-0 right-0 p-2" method="post">
+    {% csrf_token %}
+    <input class="hidden" type="text" value="{{ user.email }}">
+    <button type="submit"
+            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-300">
+        Claim
+    </button>
+</form>

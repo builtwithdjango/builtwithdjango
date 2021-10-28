@@ -61,7 +61,8 @@
                         <i class="p-2 text-3xl text-blue-400 lab la-twitter"></i>
                     </a>
                 {% endif %}
-                <div data-controller="like" class="flex flex-row p-1 border border-solid rounded-lg">
+                <div data-controller="like"
+                     class="flex flex-row p-1 border border-gray-300 border-solid rounded-lg hover:border-gray-600 hover:bg-gray-200">
                     <input type="hidden" data-like-target="projectId" value={{ object.id }}>
                     <input type="hidden" data-target="like.currentUser" value={{ user.id }}>
                     {% csrf_token %}
