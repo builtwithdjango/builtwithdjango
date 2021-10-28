@@ -67,14 +67,13 @@
                     {% csrf_token %}
                     {% if user.is_authenticated %}
                         <button data-action="click->
-                            like#modify" class="flex flex-row items-center text-xl">
+                            like#modify">
                             <span data-target="like.numberOfLikes" id="{{ object.id }}_likes"></span>
                             <i id="{{ object.id }}_heart" class=""></i>
                         </button>
                     {% else %}
-                        <!-- Solution from https://dev.to/mmccall10/tailwind-enter-leave-transition-effects-with-stimulus-js-5hl7 -->
                         <button data-action="click->
-                            like#toggleModal" class="flex flex-row items-center text-xl" data-like-target="modalButton">
+                            like#toggleModal" data-like-target="modalButton">
                             <span data-target="like.numberOfLikes" id="{{ object.id }}_likes"></span>
                             <i id="{{ object.id }}_heart" class=""></i>
                         </button>
@@ -83,7 +82,7 @@
                              aria-labelledby="modal-title"
                              role="dialog"
                              aria-modal="true">
-                            <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                            <div class="flex items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
                                 <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
                                      aria-hidden="true"
                                      data-transition-enter="ease-out duration-300"
@@ -149,6 +148,19 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
+                                        <a href="{% url 'account_login' %}"
+                                           class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                            Login
+                                        </a>
+                                        <button data-action="click->
+                                            like#toggleModal"
+                                            data-like-target="modalButton"
+                                            type="button"
+                                            class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                            Cancel
+                                        </button>
                                     </div>
                                 </div>
                             </div>
