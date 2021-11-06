@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load markdown_extras %}
+{% block content %}
+    {% if user == object.user %}
+        <div class="max-w-5xl mx-auto my-10">
+            <div class="px-6 pt-6 overflow-hidden bg-white rounded-lg shadow">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+                        <div>
+                            <div>
+                                <h3 class="text-lg font-medium leading-6 text-gray-900">
+                                    Profile
+                                </h3>
+                                <p class="max-w-2xl mt-1 text-sm text-gray-500">
+                                    This information will be displayed publicly so be careful what you share.
+                                </p>
+                            </div>
+                            <div class="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
+                                <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label for="about"
+                                           class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        About
+                                    </label>
+                                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                        {{ form.short_bio }}
+                                        <p class="mt-2 text-sm text-gray-500">
+                                            Write a few sentences about yourself (Markdown is cool 😎).
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                    <label for="cover-photo"
+                                           class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                        Photo
+                                    </label>
+                                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                        {{ form.maker_profile_image }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-5">
+                        <div class="flex justify-end">
+                            <button type="submit"
+                                    class="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <div class="max-w-5xl mx-auto my-10">
+            You need to be the owner of a maker profile to edit it.
+        </div>
+    {% endif %}
+{% endblock content %}

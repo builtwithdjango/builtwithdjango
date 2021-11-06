@@ -81,47 +81,52 @@
                             Claim
                         </button>
                     </form>
+                {% elif user.is_authenticated and maker.user != None %}
+                    <div class="absolute top-0 right-0 p-2">
+                        <button type="submit"
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-300">
+                            Edit
+                        </button>
+                    </div>
                 {% endif %}
-                <a href="#">
-                    <div class="flex items-center">
-                        {% if maker.maker_profile_image %}
-                            <img class="w-16 h-16 rounded-full"
-                                 src="{% get_media_prefix %}{{ maker.maker_profile_image }}"
-                                 alt=""/>
-                        {% else %}
-                            <!-- get image gray sillhoutte -->
-                            <img class="w-16 h-16 rounded-full"
-                                 src="https://avatars.dicebear.com/api/gridy/{{ maker.first_name }} {{ maker.last_name }}.svg"
-                                 alt=""/>
+                <a href="{{ maker.get_absolute_url }}" class="flex items-center">
+                    {% if maker.maker_profile_image %}
+                        <img class="w-16 h-16 rounded-full"
+                             src="{% get_media_prefix %}{{ maker.maker_profile_image }}"
+                             alt=""/>
+                    {% else %}
+                        <!-- get image gray sillhoutte -->
+                        <img class="w-16 h-16 rounded-full"
+                             src="https://avatars.dicebear.com/api/gridy/{{ maker.first_name }} {{ maker.last_name }}.svg"
+                             alt=""/>
+                    {% endif %}
+                    {% if maker.first_name or maker.last_name %}
+                        <div class="ml-3">
+                            <p class="text-lg font-medium text-gray-900">
+                                {% if maker.first_name %}{{ maker.first_name }}{% endif %}
+                                {% if maker.last_name %}{{ maker.last_name }}{% endif %}
+                            </p>
+                            <div>
+                                {% if maker.github_handle %}
+                                    <a class="inline-block rounded-full"
+                                       href="https://github.com/{{ maker.github_handle }}?ref={{ request.get_host }}"
+                                       target="_blank">
+                                        <i class="text-2xl lab la-github">
+                                        </i
+                                        >
+                                    </a>
+                                {% endif %}
+                                {% if maker.twitter_handle %}
+                                    <a class="inline-block rounded-full"
+                                       href="https://twitter.com/{{ maker.twitter_handle }}?ref={{ request.get_host }}"
+                                       target="_blank">
+                                        <i class="text-2xl lab la-twitter">
+                                        </i
+                                        >
+                                    </a>
+                                {% endif %}
+                            </div>
                         {% endif %}
-                        {% if maker.first_name or maker.last_name %}
-                            <div class="ml-3">
-                                <p class="text-lg font-medium text-gray-900">
-                                    {% if maker.first_name %}{{ maker.first_name }}{% endif %}
-                                    {% if maker.last_name %}{{ maker.last_name }}{% endif %}
-                                </p>
-                                <div>
-                                    {% if maker.github_handle %}
-                                        <a class="inline-block rounded-full"
-                                           href="https://github.com/{{ maker.github_handle }}?ref={{ request.get_host }}"
-                                           target="_blank">
-                                            <i class="text-2xl lab la-github">
-                                            </i
-                                            >
-                                        </a>
-                                    {% endif %}
-                                    {% if maker.twitter_handle %}
-                                        <a class="inline-block rounded-full"
-                                           href="https://twitter.com/{{ maker.twitter_handle }}?ref={{ request.get_host }}"
-                                           target="_blank">
-                                            <i class="text-2xl lab la-twitter">
-                                            </i
-                                            >
-                                        </a>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                        </div>
                     </div>
                 </a>
             </div>

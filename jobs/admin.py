@@ -1,9 +1,14 @@
 from django.contrib import admin
-from .models import Job, Company
+
+from .models import Company, Job
 
 
 class JobInline(admin.TabularInline):
     model = Job
+
+
+class JobAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("title",)}
 
 
 class CompanyAdmin(admin.ModelAdmin):
@@ -13,4 +18,4 @@ class CompanyAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Company, CompanyAdmin)
-admin.site.register(Job)
+admin.site.register(Job, JobAdmin)

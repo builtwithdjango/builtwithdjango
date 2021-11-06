@@ -1,11 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
-from django.views.generic import ListView, UpdateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import DetailView, ListView, UpdateView
 
 from newsletter.views import NewsletterSignupForm
 
-from .forms import ClaimAccountForm
+from .forms import ClaimAccountForm, MakerUpdateViewForm
 from .models import Maker
 
 
@@ -19,6 +19,21 @@ class MakerListView(ListView):
         context["newsletter_form"] = NewsletterSignupForm
 
         return context
+
+
+class MakerDetailView(DetailView):
+    model = Maker
+    template_name = "makers/maker_detail.html"
+
+
+class MakerUpdateView(LoginRequiredMixin, UpdateView):
+    model = Maker
+    template_name = "makers/maker_detail_update.html"
+    form_class = MakerUpdateViewForm
+    success_message = "Account changed successfully!"
+
+    def get_success_url(self):
+        return reverse("maker", kwargs={"slug": self.object.slug})
 
 
 class ClaimAccountView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):

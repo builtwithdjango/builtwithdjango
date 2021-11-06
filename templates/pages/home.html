@@ -247,7 +247,7 @@
                                      alt="{{ job.company }} Logo">
                             </div>
                             <div class="flex-1 min-w-0">
-                                <a href="{% url 'job_details' job.pk %}" class="focus:outline-none">
+                                <a href="{{ job.get_absolute_url }}" class="focus:outline-none">
                                     <span class="absolute inset-0" aria-hidden="true"></span>
                                     <p class="text-base font-medium text-gray-900">
                                         {{ job.title }}

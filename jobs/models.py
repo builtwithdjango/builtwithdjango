@@ -7,6 +7,7 @@ class Job(models.Model):
     updated_datetime = models.DateTimeField(auto_now=True)
 
     title = models.CharField(max_length=100)
+    slug = models.SlugField(null=True)
     listing_url = models.URLField(unique=True)
     description = models.TextField(blank=True, null=True)
     location = models.CharField(max_length=100, blank=True)
@@ -25,7 +26,9 @@ class Job(models.Model):
         return f"{self.company}: {self.title}"
 
     def get_absolute_url(self):
-        return reverse("job_details", args=[self.pk])
+        return reverse(
+            "job_details", kwargs={"pk": self.id, "slug": self.slug}
+        )
 
 
 class Company(models.Model):
@@ -34,6 +37,7 @@ class Company(models.Model):
 
     name = models.CharField(max_length=100, unique=True)
     url = models.URLField(unique=True)
+    slug = models.SlugField(null=True)
     logo = models.ImageField(upload_to="company_logo/")
     email = models.EmailField(blank=True)
 
