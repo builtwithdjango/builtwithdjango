@@ -83,10 +83,10 @@
                     </form>
                 {% elif user.is_authenticated and maker.user != None %}
                     <div class="absolute top-0 right-0 p-2">
-                        <button type="submit"
-                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-300">
+                        <a href="{% url 'maker_update' maker.slug %}"
+                           class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-300">
                             Edit
-                        </button>
+                        </a>
                     </div>
                 {% endif %}
                 <a href="{{ maker.get_absolute_url }}" class="flex items-center">

@@ -101,11 +101,11 @@
                 </div>
             </div>
         </div>
-        <div class="p-6 overflow-hidden bg-white rounded-lg shadow">
-            <h3 class="mb-4 text-4xl font-semibold text-black">
-                Projects
-            </h3>
-            {% if object.projects.all %}
+        {% if object.projects.all %}
+            <div class="p-6 overflow-hidden bg-white rounded-lg shadow">
+                <h3 class="mb-4 text-4xl font-semibold text-black">
+                    Projects
+                </h3>
                 <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
                     {% for site in object.projects.all %}
                         {% if site.published %}
@@ -129,8 +129,8 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock content %}
 {% block schema %}
