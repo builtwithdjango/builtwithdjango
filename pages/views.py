@@ -27,9 +27,7 @@ class HomeView(TemplateView):
         context["newsletter_form"] = NewsletterSignupForm
         context["projects"] = Project.objects.filter(published=True)[:6]
         context["podcast_episodes"] = Episode.objects.all()[:3]
-        context["jobs"] = Job.objects.filter(
-            created_datetime__gte=datetime.today() - timedelta(days=31)
-        ).filter(approved=True)[:6]
+        context["jobs"] = Job.objects.order_by("-created_datetime")[:6]
 
         return context
 

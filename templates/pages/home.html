@@ -249,11 +249,11 @@
                             <div class="flex-1 min-w-0">
                                 <a href="{{ job.get_absolute_url }}" class="focus:outline-none">
                                     <span class="absolute inset-0" aria-hidden="true"></span>
-                                    <p class="text-base font-medium text-gray-900">
+                                    <p class="text-lg font-medium text-gray-900">
                                         {{ job.title }}
                                     </p>
                                     <div class="flex items-center space-x-1">
-                                        <p class="flex items-center text-base text-gray-500">
+                                        <p class="flex items-center text-sm text-gray-500">
                                             <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                                                  xmlns="http://www.w3.org/2000/svg"
                                                  viewBox="0 0 20 20"
@@ -263,7 +263,7 @@
                                             </svg>
                                             {{ job.company }}
                                         </p>
-                                        <p class="flex items-center text-base text-gray-500">
+                                        <p class="flex items-center text-sm text-gray-500">
                                             <!-- Heroicon name: solid/location-marker -->
                                             <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                                                  xmlns="http://www.w3.org/2000/svg"
@@ -275,6 +275,22 @@
                                                       clip-rule="evenodd"/>
                                             </svg>
                                             {{ job.location | truncatechars:15 }}
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <p class="flex items-center text-sm text-gray-500">
+                                            <!-- Heroicon name: solid/location-marker -->
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                                                 fill="none"
+                                                 viewBox="0 0 24 24"
+                                                 stroke="currentColor">
+                                                <path stroke-linecap="round"
+                                                      stroke-linejoin="round"
+                                                      stroke-width="2"
+                                                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            posted {{ job.created_datetime|timesince }} ago
                                         </p>
                                     </div>
                                 </a>
