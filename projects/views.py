@@ -1,10 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from newsletter.views import NewsletterSignupForm
 
-from .forms import AddComment, AddProject
+from .forms import AddComment, AddProject, ProjectUpdateViewForm
 from .models import Comment, Project
 
 
@@ -40,6 +41,16 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
     success_message = """
         Thanks for submitting your project! I'll let you know when it is up on the site!
     """
+
+
+class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+    model = Project
+    form_class = ProjectUpdateViewForm
+    template_name = "projects/project_detail_update.html"
+    success_message = "Project updated successfully!"
+
+    def get_success_url(self):
+        return reverse("project", kwargs={"slug": self.object.slug})
 
 
 class CommentCreateView(CreateView):

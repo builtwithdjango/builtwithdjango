@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load markdown_extras %}
+{% block content %}
+    {% if user == object.maker.user %}
+        <div class="max-w-5xl mx-auto my-10">
+            <div class="px-6 pt-6 overflow-hidden bg-white rounded-lg shadow">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+                        <div>
+                            <h3 class="text-lg font-medium leading-6 text-gray-900">
+                                Profile
+                            </h3>
+                            <p class="max-w-2xl mt-1 text-sm text-gray-500">
+                                This information will be displayed publicly so be careful what you share.
+                            </p>
+                        </div>
+                        <div class="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                {{ form.short_description.errors | safe }}
+                                <label for="short_description"
+                                       class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Short Description
+                                </label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    {{ form.short_description }}
+                                    <p class="mt-2 text-sm text-gray-500">
+                                        Write a few sentences about project (Up to 200 characters).
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                {{ form.description.errors | safe }}
+                                <label for="description"
+                                       class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Description (Optional)
+                                </label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    {{ form.description }}
+                                    <p class="mt-2 text-sm text-gray-500">
+                                        This is a longer descirption of your project / product (Markdown is cool 😎).
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                {{ form.twitter_url.errors | safe }}
+                                <label for="twitter_url"
+                                       class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Twitter URL (Optional)
+                                </label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    {{ form.twitter_url }}
+                                </div>
+                            </div>
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                {{ form.github_url.errors | safe }}
+                                <label for="github_url"
+                                       class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Github URL (Optional)
+                                </label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    {{ form.github_url }}
+                                </div>
+                            </div>
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                {{ form.technology_suggestions_by_user.errors | safe }}
+                                <label for="technology_suggestions_by_user"
+                                       class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Technologies Used
+                                </label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    {{ form.technology_suggestions_by_user }}
+                                    <p class="mt-2 text-sm text-gray-500">
+                                        Please enter any technologies your site uses (e.g. TailwindCSS, Vuejs, React, or
+                                        <b>
+                                        anything
+                                        </b>
+                                        else that comes to mind.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
+                            <div>
+                                <h3 class="text-lg font-medium leading-6 text-gray-900">
+                                    Sale Info (Optional)
+                                </h3>
+                                <p class="max-w-2xl mt-1 text-sm text-gray-500">
+                                    If you ever consider selling your app, consider sharing the details here.
+                                </p>
+                            </div>
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                {{ form.is_for_sale.errors | safe }}
+                                <label for="is_for_sale"
+                                       class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Is your project for sale?
+                                </label>
+                                <div class="self-center mt-1 sm:mt-0 sm:col-span-2">
+                                    {{ form.is_for_sale }}
+                                </div>
+                            </div>
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                {{ form.sale_link.errors | safe }}
+                                <label for="sale_link"
+                                       class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Link to the place you are selling at.
+                                </label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    {{ form.sale_link }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-5">
+                        <div class="flex justify-end">
+                            <button type="submit"
+                                    class="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <div class="max-w-5xl mx-auto my-10">
+            You need to be the owner of this project to edit it.
+        </div>
+    {% endif %}
+{% endblock content %}

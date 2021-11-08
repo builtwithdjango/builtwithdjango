@@ -41,6 +41,15 @@ class Project(models.Model):
         "Technology", related_name="projects", blank=True
     )
 
+    # Optional entered by user only
+
+    ### Ideally I would automatically parse suggestions, but
+    ### Will have to manually add those technologies :shrug
+    technology_suggestions_by_user = models.TextField(blank=True)
+
+    is_for_sale = models.BooleanField(default=False)
+    sale_link = models.URLField(blank=True)
+
     # To remove
     additional_info = models.TextField(blank=True)
     requirements = models.TextField(blank=True)
@@ -53,7 +62,7 @@ class Project(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("project", args=[self.slug])
+        return reverse("project", kwargs={"slug": self.slug})
 
 
 class Technology(models.Model):
@@ -82,6 +91,9 @@ class Comment(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
     )
+
+    class Meta:
+        ordering = ("-created_date",)
 
     def __str__(self):
         return self.comment

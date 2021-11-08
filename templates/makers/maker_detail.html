@@ -32,7 +32,7 @@
                         Claim
                     </button>
                 </form>
-            {% elif user.is_authenticated and maker.user != None %}
+            {% elif user == maker.user %}
                 <div class="">
                     <a href="{% url 'maker_update' object.slug %}"
                        class="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
