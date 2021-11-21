@@ -180,14 +180,16 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="" aria-hidden="true">
-                <h2 class="text-lg font-semibold md:text-2xl">
-                    Full Description
-                </h2>
-                <div class="text-base md:text-lg">
-                    {{ object.description }}
+            {% if object.description %}
+                <div class="" aria-hidden="true">
+                    <h2 class="text-lg font-semibold md:text-2xl">
+                        Full Description
+                    </h2>
+                    <div class="text-base md:text-lg">
+                        {{ object.description }}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
         <!-- Author Card -->
         {% if object.maker.first_name %}
@@ -202,7 +204,9 @@
                              alt="">
                     {% else %}
                         <!-- get image gray sillhoutte -->
-                        <img class="w-10 h-10 rounded-full" src="" alt="">
+                        <img class="w-10 h-10 rounded-full"
+                             src="https://avatars.dicebear.com/api/gridy/{{ object.maker.slug }}.svg"
+                             alt="">
                     {% endif %}
                     {% if object.maker.first_name or object.maker.last_name %}
                         <div class="ml-3">
