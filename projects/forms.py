@@ -75,9 +75,13 @@ class AddComment(ModelForm):
 
         @transaction.on_commit
         def send_notification():
-            project_owner_email = Project.objects.filter(
-                title=instance.project
-            )[0].maker.user.email
+
+            try:
+                project_owner_email = Project.objects.filter(
+                    title=instance.project
+                )[0].maker.user.email
+            except AttributeError:
+                project_owner_email = "rasul@builtwithdjango.com"
 
             message = f"""
             {instance.author} left a comment on your project ({instance.project}).
