@@ -10,8 +10,7 @@ from projects.models import Project
 
 
 class StaticViewSitemap(sitemaps.Sitemap):
-    """Generate Sitemap for the site
-    """
+    """Generate Sitemap for the site"""
 
     priority = 0.5
 
@@ -57,9 +56,7 @@ sitemaps = {
     ),
     "jobs": GenericSitemap(
         {
-            "queryset": Job.objects.filter(
-                created_datetime__gte=datetime.today() - timedelta(days=31)
-            ),
+            "queryset": Job.objects.filter(approved=True),
             "date_field": "created_datetime",
         },
         priority=0.8,

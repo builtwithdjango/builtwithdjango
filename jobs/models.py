@@ -11,10 +11,17 @@ class Job(models.Model):
     listing_url = models.URLField(unique=True)
     description = models.TextField(blank=True, null=True)
     location = models.CharField(max_length=100, blank=True)
-    salary = models.IntegerField(blank=True, null=True)
+    email = models.EmailField(blank=True)
+    min_yearly_salary = models.IntegerField(blank=True, null=True)
+    max_yearly_salary = models.IntegerField(blank=True, null=True)
 
+    company_name = models.CharField(max_length=100, blank=True)
     company = models.ForeignKey(
-        "Company", on_delete=models.CASCADE, related_name="jobs"
+        "Company",
+        on_delete=models.CASCADE,
+        related_name="jobs",
+        blank=True,
+        null=True,
     )
 
     approved = models.BooleanField(default=False)

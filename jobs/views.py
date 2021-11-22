@@ -16,7 +16,9 @@ class JobListView(ListView):
     # queryset = Job.objects.filter(created_datetime__gte=filter_date).filter(
     #     approved=True
     # )
-    queryset = Job.objects.order_by("-created_datetime")[:30]
+    queryset = Job.objects.filter(approved=True).order_by("-created_datetime")[
+        :30
+    ]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

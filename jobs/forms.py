@@ -13,8 +13,10 @@ class PostJob(ModelForm):
             "title",
             "listing_url",
             "location",
-            "salary",
-            "company",
+            "email",
+            "min_yearly_salary",
+            "max_yearly_salary",
+            "company_name",
         ]:
             self.fields[fieldname].help_text = None
             self.fields[fieldname].widget.attrs.update(
@@ -44,4 +46,12 @@ class PostJob(ModelForm):
 
     class Meta:
         model = Job
-        fields = ["title", "listing_url", "location", "salary", "company"]
+        fields = [
+            "title",
+            "listing_url",
+            "location",
+            "email",
+            "min_yearly_salary",
+            "max_yearly_salary",
+            "company_name",
+        ]

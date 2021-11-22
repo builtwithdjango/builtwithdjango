@@ -28,11 +28,11 @@
                     {{ form.title }}
                 </div>
                 <div class="mb-4">
-                    {{ form.company.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.company.id_for_label }}">
-                        Company (select "empty" if no matches)
+                    {{ form.company_name.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.company_name.id_for_label }}">
+                        Company Name
                     </label>
-                    {{ form.company }}
+                    {{ form.company_name }}
                 </div>
                 <div class="mb-4">
                     {{ form.listing_url.errors }}
@@ -42,6 +42,13 @@
                     {{ form.listing_url }}
                 </div>
                 <div class="mb-4">
+                    {{ form.email.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.email.id_for_label }}">
+                        Your Email (will not be shown)
+                    </label>
+                    {{ form.email }}
+                </div>
+                <div class="mb-4">
                     {{ form.location.errors }}
                     <label class="block mb-2 font-bold text-gray-700" for="{{ form.location.id_for_label }}">
                         Location
@@ -49,11 +56,18 @@
                     {{ form.location }}
                 </div>
                 <div class="mb-4">
-                    {{ form.salary.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.salary.id_for_label }}">
-                        Yearly Salary in USD (optional)
+                    {{ form.min_yearly_salary.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.min_yearly_salary.id_for_label }}">
+                        Min Yearly Salary in USD (optional)
                     </label>
-                    {{ form.salary }}
+                    {{ form.min_yearly_salary }}
+                </div>
+                <div class="mb-4">
+                    {{ form.max_yearly_salary.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.max_yearly_salary.id_for_label }}">
+                        Max Yearly Salary in USD (optional)
+                    </label>
+                    {{ form.max_yearly_salary }}
                 </div>
                 <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-300" type="submit">
                     Submit
