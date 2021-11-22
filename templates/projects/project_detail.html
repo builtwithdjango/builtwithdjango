@@ -186,7 +186,7 @@
                         Full Description
                     </h2>
                     <div class="text-base md:text-lg">
-                        {{ object.description }}
+                        {{ object.description | markdown | safe }}
                     </div>
                 </div>
             {% endif %}
