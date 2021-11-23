@@ -205,11 +205,12 @@
                             </div>
                             <div>
                                 {% if site.maker.first_name or site.maker.last_name %}
-                                    <p class="text-sm font-semibold text-gray-700">
+                                    <a href="{{ site.maker.get_absolute_url }}"
+                                       class="text-sm font-semibold text-gray-700 hover:underline hover:text-gray-900">
                                         by
                                         {% if site.maker.first_name %}{{ site.maker.first_name }}{% endif %}
                                         {% if site.maker.last_name %}{{ site.maker.last_name }}{% endif %}
-                                    </p>
+                                    </a>
                                 {% endif %}
                             </div>
                         </footer>

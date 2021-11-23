@@ -194,45 +194,47 @@
         <!-- Author Card -->
         {% if object.maker.first_name %}
             <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
-                <h2 class="text-2xl font-semibold text-black">
-                    Author(s)
-                </h2>
-                <div class="flex items-center py-4">
-                    {% if object.maker.maker_profile_image %}
-                        <img class="w-16 h-16 rounded-full"
-                             src="{% get_media_prefix %}{{ object.maker.maker_profile_image }}"
-                             alt="">
-                    {% else %}
-                        <!-- get image gray sillhoutte -->
-                        <img class="w-10 h-10 rounded-full"
-                             src="https://avatars.dicebear.com/api/gridy/{{ object.maker.slug }}.svg"
-                             alt="">
-                    {% endif %}
-                    {% if object.maker.first_name or object.maker.last_name %}
-                        <div class="ml-3">
-                            <p class="text-lg font-medium text-gray-900">
-                                {% if object.maker.first_name %}{{ object.maker.first_name }}{% endif %}
-                                {% if object.maker.last_name %}{{ object.maker.last_name }}{% endif %}
-                            </p>
-                            <div>
-                                {% if object.maker.github_handle %}
-                                    <a class="inline-block rounded-full"
-                                       href="https://github.com/{{ object.maker.github_handle }}?ref={{ request.get_host }}"
-                                       target="_blank">
-                                        <i class="text-2xl lab la-github"></i>
-                                    </a>
-                                {% endif %}
-                                {% if object.maker.twitter_handle %}
-                                    <a class="inline-block rounded-full"
-                                       href="https://twitter.com/{{ object.maker.twitter_handle }}?ref={{ request.get_host }}"
-                                       target="_blank">
-                                        <i class="text-2xl lab la-twitter"></i>
-                                    </a>
-                                {% endif %}
-                            </div>
+                <a href="{{ object.maker.get_absolute_url }}" class="flex items-center">
+                    <h2 class="text-2xl font-semibold text-black">
+                        Author(s)
+                    </h2>
+                    <div class="flex items-center py-4">
+                        {% if object.maker.maker_profile_image %}
+                            <img class="w-16 h-16 rounded-full"
+                                 src="{% get_media_prefix %}{{ object.maker.maker_profile_image }}"
+                                 alt="">
+                        {% else %}
+                            <!-- get image gray sillhoutte -->
+                            <img class="w-10 h-10 rounded-full"
+                                 src="https://avatars.dicebear.com/api/gridy/{{ object.maker.slug }}.svg"
+                                 alt="">
                         {% endif %}
+                        {% if object.maker.first_name or object.maker.last_name %}
+                            <div class="ml-3">
+                                <p class="text-lg font-medium text-gray-900">
+                                    {% if object.maker.first_name %}{{ object.maker.first_name }}{% endif %}
+                                    {% if object.maker.last_name %}{{ object.maker.last_name }}{% endif %}
+                                </p>
+                                <div>
+                                    {% if object.maker.github_handle %}
+                                        <a class="inline-block rounded-full"
+                                           href="https://github.com/{{ object.maker.github_handle }}?ref={{ request.get_host }}"
+                                           target="_blank">
+                                            <i class="text-2xl lab la-github"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if object.maker.twitter_handle %}
+                                        <a class="inline-block rounded-full"
+                                           href="https://twitter.com/{{ object.maker.twitter_handle }}?ref={{ request.get_host }}"
+                                           target="_blank">
+                                            <i class="text-2xl lab la-twitter"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         {% endif %}
         <!-- Tech Stack Card-->
