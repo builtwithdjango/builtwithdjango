@@ -1,4 +1,5 @@
-from django.forms import ModelForm
+from django import forms
+from django.forms import Form, ModelForm
 
 from .models import Emails
 
@@ -21,3 +22,7 @@ class NewsletterSignupForm(ModelForm):
     class Meta:
         model = Emails
         fields = "__all__"
+
+
+class getWeeklyTemplateForm(Form):
+    days = forms.IntegerField()

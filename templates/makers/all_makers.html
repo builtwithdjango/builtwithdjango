@@ -74,7 +74,7 @@
             {% if maker.projects.all.count > 0 %}
                 <div class="relative flex items-center px-4 py-5 space-x-3 bg-white border border-gray-300 border-solid rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                     {% if user.is_authenticated and maker.maker_email == user.email and maker.user == None %}
-                        <form class="absolute top-0 right-0 p-2"
+                        <form class="absolute bottom-0 right-0 p-2"
                               action="{% url 'claim_account' maker.pk %}"
                               method="post">
                             {% csrf_token %}
@@ -85,11 +85,27 @@
                             </button>
                         </form>
                     {% elif user == maker.user %}
-                        <div class="absolute top-0 right-0 p-2">
+                        <div class="absolute bottom-0 right-0 p-2">
                             <a href="{% url 'maker_update' maker.slug %}"
                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-300">
                                 Edit
                             </a>
+                        </div>
+                    {% endif %}
+                    {% if maker.user %}
+                        <div class="absolute top-0 right-0 flex-shrink-0 p-2">
+                            <!-- Heroicon name: outline/check-circle -->
+                            <svg class="w-6 h-6 text-green-400"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor"
+                                 aria-hidden="true">
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
                         </div>
                     {% endif %}
                     <a href="{{ maker.get_absolute_url }}" class="flex items-center">

@@ -12,7 +12,7 @@ from .models import Job
 class JobListView(ListView):
     model = Job
     template_name = "jobs/all_jobs.html"
-    filter_date = datetime.today() - timedelta(days=31)
+    # filter_date = datetime.today() - timedelta(days=31)
     # queryset = Job.objects.filter(created_datetime__gte=filter_date).filter(
     #     approved=True
     # )

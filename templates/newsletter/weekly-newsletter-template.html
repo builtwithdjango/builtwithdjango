@@ -1,0 +1,69 @@
+Here is the boilerplate email for this week.
+<hr>
+<h2 style="text-align: center;">
+    <strong>
+    <span style="font-size: 24px;">Projects</span>
+    </strong>
+</h2>
+{% for project in projects %}
+    <h3>
+        <a href="https://{{ request.get_host }}{{ project.get_absolute_url }}"
+           rel="noopener noreferrer"
+           target="_blank">
+            <strong>
+            <span style="font-size: 24px;">{{ project.title }}</span>
+            </strong>
+        </a>
+        <span style="font-size: 24px;">&nbsp;by</span>
+        <a href="https://{{ request.get_host }}{{ project.maker.get_absolute_url }}"
+           rel="noopener noreferrer"
+           target="_blank">
+            <span style="font-size: 24px;">
+                {{ project.maker.first_name }} {{ project.maker.last_name }}
+            </span>
+        </a>
+    </h3>
+    <p>
+        <span style="font-size: 18px;">{{ project.short_description }}</span>
+    </p>
+    <br>
+{% endfor %}
+<hr>
+<h2 style="text-align: center;">
+    <strong>
+    <span style="font-size: 24px;">Podcast</span>
+    </strong>
+</h2>
+{% for episode in podcast_episodes %}
+    <h3>
+        <a href="https://{{ request.get_host }}{{ episode.get_absolute_url }}"
+           rel="noopener noreferrer"
+           target="_blank">
+            <span style="font-size: 24px;">{{ episode.title }}</span>
+        </a>
+    </h3>
+    <p>
+        <span style="font-size: 18px;">{{ episode.details }}</span>
+    </p>
+    <br>
+{% endfor %}
+<hr>
+<h2 style="text-align: center;">
+    <strong>
+    <span style="font-size: 24px;">Jobs</span>
+    </strong>
+</h2>
+{% for job in jobs %}
+    <p>
+        <span style="font-size: 24px;">
+            <a href="https://{{ request.get_host }}{{ job.get_absolute_url }}"
+               rel="noopener noreferrer"
+               target="_blank">
+                <span style="font-size: 18px;">
+                    {{ job.title }} at {{ job.company.name }} ({{ job.location }})
+                </span>
+            </a>
+        </span>
+    </p>
+    <br>
+{% endfor %}
