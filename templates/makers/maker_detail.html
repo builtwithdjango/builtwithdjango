@@ -92,7 +92,7 @@
                             {% if object.short_bio %}
                                 <div class="prose-sm prose sm:prose-lg">
                                     <p class="text-gray-500">
-                                        {{ object.short_bio | markdown | safe | urlize }}
+                                        {{ object.short_bio | markdown | safe }}
                                     </p>
                                 </div>
                             {% endif %}
