@@ -1,69 +1,83 @@
-Here is the boilerplate email for this week.
-<hr>
-<h2 style="text-align: center;">
-    <strong>
-    <span style="font-size: 24px;">Projects</span>
-    </strong>
-</h2>
-{% for project in projects %}
-    <h3>
-        <a href="https://{{ request.get_host }}{{ project.get_absolute_url }}"
-           rel="noopener noreferrer"
-           target="_blank">
-            <strong>
-            <span style="font-size: 24px;">{{ project.title }}</span>
-            </strong>
-        </a>
-        <span style="font-size: 24px;">&nbsp;by</span>
-        <a href="https://{{ request.get_host }}{{ project.maker.get_absolute_url }}"
-           rel="noopener noreferrer"
-           target="_blank">
-            <span style="font-size: 24px;">
-                {{ project.maker.first_name }} {{ project.maker.last_name }}
-            </span>
-        </a>
-    </h3>
-    <p>
-        <span style="font-size: 18px;">{{ project.short_description }}</span>
-    </p>
-    <br>
-{% endfor %}
-<hr>
-<h2 style="text-align: center;">
-    <strong>
-    <span style="font-size: 24px;">Podcast</span>
-    </strong>
-</h2>
-{% for episode in podcast_episodes %}
-    <h3>
-        <a href="https://{{ request.get_host }}{{ episode.get_absolute_url }}"
-           rel="noopener noreferrer"
-           target="_blank">
-            <span style="font-size: 24px;">{{ episode.title }}</span>
-        </a>
-    </h3>
-    <p>
-        <span style="font-size: 18px;">{{ episode.details }}</span>
-    </p>
-    <br>
-{% endfor %}
-<hr>
-<h2 style="text-align: center;">
-    <strong>
-    <span style="font-size: 24px;">Jobs</span>
-    </strong>
-</h2>
-{% for job in jobs %}
-    <p>
-        <span style="font-size: 24px;">
-            <a href="https://{{ request.get_host }}{{ job.get_absolute_url }}"
-               rel="noopener noreferrer"
-               target="_blank">
-                <span style="font-size: 18px;">
-                    {{ job.title }} at {{ job.company.name }} ({{ job.location }})
-                </span>
-            </a>
-        </span>
-    </p>
-    <br>
-{% endfor %}
+<!DOCTYPE html>
+<html style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: rgb(0, 0, 0);">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div style="margin-bottom: 30px;">
+            <h1 style="font-size: 36px; margin: 10px 0 5px 0; padding:0;">
+                builtwith
+                <span style="color: rgba(5, 150, 105, 1);">django</span>
+            </h1>
+            <p style="font-size: 12px; color: rgb(0, 0, 0); margin: 0 0 10px 0; padding:0;">
+                Issue #2 // December 3rd, 2021 //
+                <a href="{{ WebVersionURL }}"
+                   rel="noopener noreferrer"
+                   style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: rgb(0, 0, 0);"
+                   target="_blank">
+                    View in your browser
+                </a>
+            </p>
+        </div>
+        <div style="padding: 20px 30px; background-color: rgba(236, 253, 245, 1); margin-bottom: 15px;">
+            <h2>Projects</h2>
+            <hr>
+            {% for project in projects %}
+                <div style="margin: 20px 0;">
+                    <p style="margin: 10px 0 5px 0; padding:0; font-size: 14px;">
+                        <a href="https://builtwithdjango.com{{ project.get_absolute_url }}"
+                           rel="noopener noreferrer"
+                           target="_blank">
+                            {{ project.title }}
+                        </a>
+                        by
+                        <a href="https://builtwithdjango.com{{ project.maker.get_absolute_url }}"
+                           rel="noopener noreferrer"
+                           target="_blank">
+                            {{ project.maker.first_name }} {{ project.maker.last_name }}
+                        </a>
+                    </p>
+                    <p style="margin: 0 0 10px 0; padding:0; font-size: 12px; color: rgba(55, 65, 81, 1);">
+                        {{ project.short_description }}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+        <div style="padding: 20px 30px; background-color: rgba(236, 253, 245, 1); margin-bottom: 15px;">
+            <h2>Jobs</h2>
+            <hr>
+            {% for job in jobs %}
+                <div style="margin: 20px 0;">
+                    <p style="margin: 10px 0 5px 0; padding:0; font-size: 14px;">
+                        <a href="https://builtwithdjango.com{{ job.get_absolute_url }}"
+                           rel="noopener noreferrer"
+                           target="_blank">
+                            {{ job.title }} at {{ job.company.name }}
+                        </a>
+                    </p>
+                    <p style="margin: 0 0 10px 0; padding:0; font-size: 12px; color: rgba(55, 65, 81, 1);">
+                        ({{ job.location }})
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+        <div style="padding: 20px 30px; background-color: rgba(236, 253, 245, 1); margin-bottom: 15px;">
+            <h2>Podcast Episodes</h2>
+            <hr>
+            {% for episode in podcast_episodes %}
+                <div style="margin: 20px 0;">
+                    <p style="margin: 10px 0 5px 0; padding:0; font-size: 14px;">
+                        <a href="https://builtwithdjango.com{{ episode.get_absolute_url }}"
+                           rel="noopener noreferrer"
+                           target="_blank">
+                            {{ episode.title }}
+                        </a>
+                    </p>
+                    <p style="margin: 0 0 10px 0; padding:0; font-size: 12px; color: rgba(55, 65, 81, 1);">
+                        {{ episode.details }}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>
