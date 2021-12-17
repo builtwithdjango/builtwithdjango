@@ -17,41 +17,44 @@
 {% block content %}
     <div class="w-auto mx-auto mt-10 lg:w-1/3">
         <div class="p-8 mb-6 bg-white border-t-8 border-green-500 rounded-lg shadow-lg">
-            <form id="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.non_field_errors }}
-                <div class="mb-4">
-                    {{ form.title.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.title.id_for_label }}">
-                        Title
-                    </label>
-                    {{ form.title }}
-                </div>
-                <div class="mb-4">
-                    {{ form.url.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.url.id_for_label }}">
-                        Demo or Project URL
-                    </label>
-                    {{ form.url }}
-                </div>
-                <div class="mb-4">
-                    {{ form.user_email.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.user_email.id_for_label }}">
-                        Your Email
-                    </label>
-                    {{ form.user_email }}
-                </div>
-                <div class="mb-4">
-                    {{ form.short_description.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.short_description.id_for_label }}">
-                        One Sentence Description
-                    </label>
-                    {{ form.short_description }}
-                </div>
-                <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-300" type="submit">
-                    Submit
-                </button>
-            </form>
+            <div></div>
+            <!--
+<form id="" method="post" enctype="multipart/form-data">
+        -->
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="mb-4">
+            {{ form.title.errors }}
+            <label class="block mb-2 font-bold text-gray-700" for="{{ form.title.id_for_label }}">
+                Title
+            </label>
+            {{ form.title }}
         </div>
-    </div>
+        <div class="mb-4">
+            {{ form.url.errors }}
+            <label class="block mb-2 font-bold text-gray-700" for="{{ form.url.id_for_label }}">
+                Demo or Project URL
+            </label>
+            {{ form.url }}
+        </div>
+        <div class="mb-4">
+            {{ form.user_email.errors }}
+            <label class="block mb-2 font-bold text-gray-700" for="{{ form.user_email.id_for_label }}">
+                Your Email
+            </label>
+            {{ form.user_email }}
+        </div>
+        <div class="mb-4">
+            {{ form.short_description.errors }}
+            <label class="block mb-2 font-bold text-gray-700" for="{{ form.short_description.id_for_label }}">
+                One Sentence Description
+            </label>
+            {{ form.short_description }}
+        </div>
+        <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-300" type="submit">
+            Submit
+        </button>
+    </form>
+</div>
+</div>
 {% endblock content %}

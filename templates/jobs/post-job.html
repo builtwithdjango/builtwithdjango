@@ -17,54 +17,56 @@
 {% block content %}
     <div class="w-auto mx-auto mt-10 lg:w-1/3">
         <div class="p-8 mb-6 bg-white border-t-8 border-green-500 rounded-lg shadow-lg">
-            <form id="" method="post" enctype="multipart/form-data">
+            <div class="prose-sm prose">
+                <h1>Post a Job</h1>
+                <p>
+                    It is my intention to make this form super simple. I will fill out all
+                    the necessary info based on the job listing URL you will provide (company logo, description, location, etc.)
+                </p>
+            </div>
+            <form class="my-4" id="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 <div class="mb-4">
                     {{ form.title.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.title.id_for_label }}">
+                    <label class="block text-sm font-medium text-gray-700" for="{{ form.title.id_for_label }}">
                         Title
                     </label>
                     {{ form.title }}
                 </div>
                 <div class="mb-4">
                     {{ form.company_name.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.company_name.id_for_label }}">
+                    <label class="block text-sm font-medium text-gray-700" for="{{ form.company_name.id_for_label }}">
                         Company Name
                     </label>
                     {{ form.company_name }}
                 </div>
                 <div class="mb-4">
                     {{ form.listing_url.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.listing_url.id_for_label }}">
+                    <label class="block text-sm font-medium text-gray-700" for="{{ form.listing_url.id_for_label }}">
                         Job Listing URL
                     </label>
                     {{ form.listing_url }}
                 </div>
                 <div class="mb-4">
                     {{ form.email.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.email.id_for_label }}">
+                    <label class="block text-sm font-medium text-gray-700" for="{{ form.email.id_for_label }}">
                         Your Email (will not be shown)
                     </label>
                     {{ form.email }}
                 </div>
                 <div class="mb-4">
-                    {{ form.location.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.location.id_for_label }}">
-                        Location
-                    </label>
-                    {{ form.location }}
-                </div>
-                <div class="mb-4">
                     {{ form.min_yearly_salary.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.min_yearly_salary.id_for_label }}">
+                    <label class="block text-sm font-medium text-gray-700"
+                           for="{{ form.min_yearly_salary.id_for_label }}">
                         Min Yearly Salary in USD (optional)
                     </label>
                     {{ form.min_yearly_salary }}
                 </div>
                 <div class="mb-4">
                     {{ form.max_yearly_salary.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.max_yearly_salary.id_for_label }}">
+                    <label class="block text-sm font-medium text-gray-700"
+                           for="{{ form.max_yearly_salary.id_for_label }}">
                         Max Yearly Salary in USD (optional)
                     </label>
                     {{ form.max_yearly_salary }}
