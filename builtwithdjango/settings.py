@@ -204,9 +204,7 @@ PAYPAL_CLIENT_ID = env("PAYPAL_CLIENT_ID")
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
-    "DEFAULT_FILTER_BACKENDS": [
-        "django_filters.rest_framework.DjangoFilterBackend"
-    ],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 }
 
 ANYMAIL = {
@@ -240,3 +238,9 @@ ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET = True
+
+# Stripe
+STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY")
+STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
+STRIPE_ENDPOINT_SECRET = env("STRIPE_ENDPOINT_SECRET")
+POST_JOB_PRODUCT_ID = env("POST_JOB_PRODUCT_ID")
