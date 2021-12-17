@@ -1,3 +1,4 @@
+from autoslug import AutoSlugField
 from django.db import models
 from django.urls import reverse
 
@@ -7,7 +8,7 @@ class Job(models.Model):
     updated_datetime = models.DateTimeField(auto_now=True)
 
     title = models.CharField(max_length=100)
-    slug = models.SlugField(null=True)
+    slug = AutoSlugField(populate_from="title", always_update=True, default="django-developer")
     listing_url = models.URLField(unique=True)
     description = models.TextField(blank=True, null=True)
     location = models.CharField(max_length=100, blank=True)
@@ -15,7 +16,6 @@ class Job(models.Model):
     min_yearly_salary = models.IntegerField(blank=True, null=True)
     max_yearly_salary = models.IntegerField(blank=True, null=True)
 
-    company_name = models.CharField(max_length=100, blank=True)
     company = models.ForeignKey(
         "Company",
         on_delete=models.CASCADE,
@@ -24,18 +24,20 @@ class Job(models.Model):
         null=True,
     )
 
+    # User Submitted
+    company_name = models.CharField(max_length=100, blank=True)
+
     approved = models.BooleanField(default=False)
+    paid = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-created_datetime"]
 
     def __str__(self):
-        return f"{self.company}: {self.title}"
+        return f"{self.company_name}: {self.title}"
 
     def get_absolute_url(self):
-        return reverse(
-            "job_details", kwargs={"pk": self.id, "slug": self.slug}
-        )
+        return reverse("job_details", kwargs={"pk": self.id, "slug": self.slug})
 
 
 class Company(models.Model):
@@ -48,9 +50,7 @@ class Company(models.Model):
     logo = models.ImageField(upload_to="company_logo/")
     email = models.EmailField(blank=True)
 
-    project = models.OneToOneField(
-        "projects.Project", on_delete=models.CASCADE, blank=True, null=True
-    )
+    project = models.OneToOneField("projects.Project", on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         ordering = ["name"]
