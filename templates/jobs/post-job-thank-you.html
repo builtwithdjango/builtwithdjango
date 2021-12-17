@@ -16,20 +16,20 @@
 {% endblock %}
 {% block content %}
     <div class="my-10 prose md:mx-auto lg:prose-xl">
-        <h1>Thank you</h1>
+        <h1>Thank you!</h1>
         <p>
-            Thanks for posting a job! I'll try to approve it ASAP!
+            Your job has been added to
+            <a href="{% url 'jobs' %}">the directory</a>
+            .
         </p>
         <p>
-            Meanwhile, if you were able to get a worthy candidate, I would appreciate it
-            if you could support the project.
+            It will also be featured in this week's newsletter.
         </p>
-    </div>
-    <div class="flex my-2 md:justify-center">
-        <a class="px-3 py-2 text-lg font-bold text-blue-800 no-underline bg-yellow-400 rounded-full "
-           href="{% url 'support' %}"
-           target="_blank">
-            Support
-        </a>
+        <iframe src="https://giphy.com/embed/DhstvI3zZ598Nb1rFf"
+                width="480"
+                height="400"
+                frameBorder="0"
+                class="giphy-embed"
+                allowFullScreen></iframe>
     </div>
 {% endblock content %}

@@ -220,5 +220,6 @@
             </script>
         {% endblock schema %}
         <script src="{% static 'bundles/app.js' %}?{% now 'U' %}"></script>
+        {% block additional-js %}{% endblock %}
     </body>
 </html>

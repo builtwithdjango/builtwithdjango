@@ -7,10 +7,6 @@ class JobInline(admin.TabularInline):
     model = Job
 
 
-class JobAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("title",)}
-
-
 class CompanyAdmin(admin.ModelAdmin):
     inlines = [
         JobInline,
@@ -18,4 +14,4 @@ class CompanyAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Company, CompanyAdmin)
-admin.site.register(Job, JobAdmin)
+admin.site.register(Job)

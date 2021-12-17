@@ -1,5 +1,5 @@
 [tool.black]
-line-length = 79
+line-length = 120
 target-version = ['py37']
 include = '\.pyi?$'
 exclude = '''
@@ -25,7 +25,7 @@ exclude = '''
 profile = "django"
 combine_as_imports = true
 include_trailing_comma = true
-line_length = 79
+line_length = 120
 multi_line_output = 3
 
 [tool.poetry]
@@ -53,6 +53,7 @@ django-filter = "^2.4.0"
 django-anymail = {extras = ["mailgun"], version = "^8.4"}
 django-allauth = "^0.45.0"
 django-rest-auth = {extras = ["with_social"], version = "^0.9.5"}
+stripe = "^2.63.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b2"

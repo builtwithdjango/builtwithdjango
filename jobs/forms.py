@@ -12,7 +12,6 @@ class PostJob(ModelForm):
         for fieldname in [
             "title",
             "listing_url",
-            "location",
             "email",
             "min_yearly_salary",
             "max_yearly_salary",
@@ -21,7 +20,7 @@ class PostJob(ModelForm):
             self.fields[fieldname].help_text = None
             self.fields[fieldname].widget.attrs.update(
                 {
-                    "class": "block appearance-none w-full bg-white border border-solid border-grey-light hover:border-grey px-2 py-2 rounded shadow"
+                    "class": "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                 }
             )
 
@@ -49,7 +48,6 @@ class PostJob(ModelForm):
         fields = [
             "title",
             "listing_url",
-            "location",
             "email",
             "min_yearly_salary",
             "max_yearly_salary",
