@@ -12,7 +12,7 @@ from .models import Maker
 class MakerListView(ListView):
     model = Maker
     template_name = "makers/all_makers.html"
-    queryset = Maker.objects.filter(projects__published=True)
+    queryset = Maker.objects.filter(projects__published=True).order_by("user").distinct().reverse()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
