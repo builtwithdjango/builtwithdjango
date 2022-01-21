@@ -11,7 +11,7 @@
             </h1>
             <p style="font-size: 12px; color: rgb(0, 0, 0); margin: 0 0 10px 0; padding:0;">
                 Issue #2 // December 3rd, 2021 //
-                <a href="\{{ WebVersionURL \ }}"
+                <a href="{% verbatim %}{{ WebVersionURL }}{% endverbatim %}"
                    rel="noopener noreferrer"
                    style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: rgb(0, 0, 0);"
                    target="_blank">
@@ -109,17 +109,18 @@
         </div>
         <p style="border-top: 1px solid #c6c6c6; color: #a9a9a9; margin-top: 50px; padding-top: 20px;font-size:13px; margin-bottom: 13px;">
             You received this email because you subscribed to our list. You can
-            <a href="\{{ UnsubscribeURL \ }}" style="color:#a9a9a9;" target="_blank">
+            <a href="{% verbatim %}{{ UnsubscribeURL }}{% endverbatim %}" style="color:#a9a9a9;" target="_blank">
                 unsubscribe
             </a>
             at any time.
         </p>
         <p style="color: #a9a9a9;margin-bottom: 13px;font-size:13px;">
-            \{{ SenderInfoLine \ }}
+            {% verbatim %}{{ SenderInfoLine }}
+            {% endverbatim %}
         </p>
         <p style="color: #a9a9a9;margin-bottom: 13px;font-size:13px;">
             Powered by
-            <a href="\{{ RewardsURL \ }}" style="color:#a9a9a9;" target="_blank">
+            <a href="{% verbatim %}{{ RewardsURL }}{% endverbatim %}" style="color:#a9a9a9;" target="_blank">
                 EmailOctopus
             </a>
             .
