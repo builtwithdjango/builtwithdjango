@@ -28,9 +28,10 @@ class Post(TimeStampedModel):
     )
 
     unsplashID = models.CharField(max_length=40, blank=True)
-    thumbnail = CloudinaryField(
-        "Image", overwrite=True, resource_type="image", folder=f"blog-thumbnail-{settings.ENV}", blank=True, null=True
-    )
+
+    # thumbnail = CloudinaryField(
+    #     "Image", overwrite=True, resource_type="image", folder=f"blog-thumbnail-{settings.ENV}", blank=True, null=True
+    # )
 
     class Meta:
         ordering = ("-created",)
