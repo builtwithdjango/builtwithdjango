@@ -54,6 +54,7 @@ django-anymail = {extras = ["mailgun"], version = "^8.4"}
 django-allauth = "^0.45.0"
 django-rest-auth = {extras = ["with_social"], version = "^0.9.5"}
 stripe = "^2.63.0"
+cloudinary = "^1.28.1"
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b2"

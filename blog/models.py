@@ -1,5 +1,6 @@
 from enum import Enum
 
+from cloudinary.models import CloudinaryField
 from django.conf import settings
 from django.db import models
 from model_utils.models import TimeStampedModel
@@ -15,9 +16,7 @@ class Post(TimeStampedModel):
 
     title = models.CharField(max_length=250)
     description = models.TextField(blank=True)
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="post"
-    )
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="post")
     slug = models.SlugField(max_length=250)
     tags = models.ManyToManyField("Tag", related_name="post", blank=True)
     content = models.TextField()
@@ -26,6 +25,11 @@ class Post(TimeStampedModel):
         max_length=3,
         choices=PUBLISH_STATUS,
         default=DRAFT,
+    )
+
+    unsplashID = models.CharField(max_length=40, blank=True)
+    thumbnail = CloudinaryField(
+        "Image", overwrite=True, resource_type="image", folder=f"blog-thumbnail-{settings.ENV}", blank=True, null=True
     )
 
     class Meta:
