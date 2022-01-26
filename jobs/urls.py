@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from .feeds import LatestJobsFeed
 from .views import JobCreateView, JobDetailView, JobListView, ThankYouView
 
 urlpatterns = [
@@ -10,4 +11,5 @@ urlpatterns = [
     path("thank-you", ThankYouView.as_view(), name="job_thank_you"),
     path("create-checkout-session/<int:pk>/", views.create_checkout_session, name="stripe_checkout_session"),
     path("webhook/", views.webhook, name="stripe_webhook"),
+    path("feed/rss", LatestJobsFeed(), name="post_feed"),
 ]
