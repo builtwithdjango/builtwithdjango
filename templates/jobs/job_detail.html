@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load markdown_extras %}
+{% load humanize %}
 {% block meta %}
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:creator" content="@rasulkireev">
-    <meta name="twitter:site" content="@builtwithdjango">
     <title>{{ object.title }} @ {{ object.company.name }}</title>
-    <meta name="description" content="{{ object.description | truncatechars:125 }}">
-    <link rel="canonical" href="https://{{ request.get_host }}/jobs/{{ object.pk }}" />
-    <meta property="og:title" content="{{ object.title }} @ {{ object.company.name }}">
-    <meta property="og:url" content="https://{{ request.get_host }}/jobs/{{ object.pk }}" />
-    <meta property="og:description" content="{{ object.description | truncatechars:125 }}">
-    <meta property="og:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}">
-    <meta name="twitter:title" content="{{ object.title }} @ {{ object.company.name }}">
-    <meta name="twitter:description" content="{{ object.description | truncatechars:125 }}">
-    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}">
+    <meta name="description" content="{{ object.company.name }} is looking for a {{ object.title }}" />
+    <link rel="canonical" href="https://{{ request.get_host }}/jobs/{{ object.pk }}/{{ object.slug }}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@rasulkireev" />
+    <meta name="twitter:site" content="@builtwithdjango" />
+    <meta name="twitter:title" content="{{ object.title }} @ {{ object.company.name }}" />
+    <meta name="twitter:description" content="{{ object.company.name }} is looking for a {{ object.title }}" />
+    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}" />
+    <meta property="og:title" content="{{ object.title }} @ {{ object.company.name }}" />
+    <meta property="og:url" content="https://{{ request.get_host }}/jobs/{{ object.pk }}/{{ object.slug }}" />
+    <meta property="og:description" content="{{ object.company.name }} is looking for a {{ object.title }}" />
+    <meta property="og:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}" />
 {% endblock %}
 {% block content %}
     <p class="mt-4 text-blue-700">
@@ -22,30 +23,46 @@
         <a href="{% url 'jobs' %}">back to all jobs</a>
     </p>
     <div class="max-w-3xl mx-auto my-10">
-        <div class="mt-10 prose md:mx-auto lg:prose-xl">
-            <h1>{{ object.title }} @ {{ object.company.name }}</h1>
+        <div class="flex flex-col items-center mt-10 prose md:mx-auto lg:prose-lg">
+            <div class="flex-shrink-0">
+                <img class="w-24 h-24 rounded-full"
+                     src="{% get_media_prefix %}{{ job.company.logo }}"
+                     alt="{{ job.company }} Logo"/>
+            </div>
+            <h1 class="text-center">
+                {{ object.title }} @
+                <a href="{{ object.company.project.get_absolute_url }}">
+                    {{ object.company.name }}
+                </a>
+            </h1>
         </div>
         <div class="flex justify-center mt-10">
-            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-solid border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent border-solid rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                href="{{ object.listing_url }}?utm_source={{ request.get_host }}&ref={{ request.get_host }}"
                target="_blank">
                 Apply for this position
             </a>
         </div>
-        <div class="w-full py-6 mt-10 border-t-2 border-b border-solid-2 border-gray-300">
-            <p class="text-lg text-gray-800">
-                Job posted {{ object.created_datetime|timesince }} ago
-            </p>
+        <div class="w-full py-6 mt-10 border-t-2 border-b border-gray-300 border-solid-2">
             {% if object.location %}
                 <p class="text-lg text-gray-800">
-                    Location: {{ object.location }}
+                    Location:
+                    <b>
+                    {{ object.location }}
+                    </b>
                 </p>
             {% endif %}
-            {% if object.salary %}
+            {% if object.min_yearly_salary %}
                 <p class="text-lg text-gray-800">
-                    Salary: {{ object.salary }}
+                    Salary:
+                    <b>
+                    ${{ object.min_yearly_salary | intcomma }} - ${{ object.max_yearly_salary | intcomma }}
+                    </b>
                 </p>
             {% endif %}
+            <p class="text-base text-gray-800">
+                Job posted {{ object.created_datetime|timesince }} ago
+            </p>
         </div>
         <div class="mt-10 prose md:mx-auto lg:prose-xl">
             {% if object.description %}
@@ -55,7 +72,7 @@
             {% endif %}
         </div>
         <div class="flex justify-center mt-10">
-            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-solid border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent border-solid rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                href="{{ object.listing_url }}?utm_source={{ request.get_host }}&ref={{ request.get_host }}"
                target="_blank">
                 Apply for this position
@@ -74,7 +91,7 @@
     "@type": "Place",
     "address": "{{ object.location }}"
   },
-  "description": "{{ object.description | truncatechars:125 }}",
+  "description": "{{ object.company.name }} is looking for a {{ object.title }}",
   "datePosted": "{{ object.created_datetime }}",
   "employmentType": "full-time",
   "url": "{{ object.listing_url }}",

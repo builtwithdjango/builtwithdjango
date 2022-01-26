@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block meta %}
+    <title>Django Jobs</title>
+    <meta name="description" content="Best jobs for best Django Developers!"/>
+    <link rel="canonical" href="https://{{ request.get_host }}/jobs/" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:creator" content="@rasulkireev" />
     <meta name="twitter:site" content="@builtwithdjango" />
-    <title>Built with Django | Jobs</title>
-    <meta name="description"
-          content="Jobs for people who love to build with Django! We have backend roles, fullstack role... Roles with React, Vue, etc. Once thing remains certain, and that is Django!"/>
-    <link rel="canonical" href="https://{{ request.get_host }}/jobs/" />
-    <meta property="og:title" content="Built with Django | Jobs" />
+    <meta name="twitter:title" content="Django Jobs" />
+    <meta name="twitter:description" content="Best jobs for best Django Developers!"/>
+    <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
+    <meta property="og:title" content="Django Jobs" />
     <meta property="og:url" content="https://{{ request.get_host }}/jobs/" />
-    <meta property="og:description"
-          content="Jobs for people who love to build with Django! We have backend roles, fullstack role... Roles with React, Vue, etc. Once thing remains certain, and that is Django!"/>
-    <meta name="twitter:title" content="Built with Django | Jobs" />
-    <meta name="twitter:description"
-          content="Jobs for people who love to build with Django! We have backend roles, fullstack role... Roles with React, Vue, etc. Once thing remains certain, and that is Django!"/>
-    <meta name="twitter:image" content="{% static 'images/logo.png' %}" />
+    <meta property="og:description" content="Best jobs for best Django Developers!"/>
+    <meta property="og:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
 {% endblock %}
 {% block content %}
     <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
@@ -134,10 +132,10 @@
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Built with Django Jobs",
+    "name": "Django Jobs",
     "about": "Job Board",
-    "description": "Jobs for people who love to build with Django! We have backend roles, fullstack role... Roles with React, Vue, etc. Once thing remains certain, and that is Django!",
-    "abstract": "Jobs for people who love to build with Django! We have backend roles, fullstack role... Roles with React, Vue, etc. Once thing remains certain, and that is Django!",
+    "description": "Best jobs for best Django Developers!",
+    "abstract": "Best jobs for best Django Developers!",
     "thumbnailUrl": "https://{{ request.get_host }}{% static 'images/logo.png' %}",
     "url": "https://{{ request.get_host }}/jobs/",
     "author": {

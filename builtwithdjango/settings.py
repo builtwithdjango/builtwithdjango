@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
     "django.contrib.sites",
+    "django.contrib.humanize",
     "django.forms",
     "taggit",
     "django_extensions",
