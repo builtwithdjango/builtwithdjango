@@ -13,7 +13,7 @@ class LatestJobsFeed(Feed):
         return Job.objects.filter(approved=True).order_by("-created_datetime")[:30]
 
     def item_title(self, item):
-        return item.title
+        return f"{item.title} at {item.company.name}"
 
     def item_description(self, item):
         return truncatewords(item.description, 50)
