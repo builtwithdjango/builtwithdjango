@@ -3,6 +3,7 @@ from enum import Enum
 from cloudinary.models import CloudinaryField
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 from model_utils.models import TimeStampedModel
 
 
@@ -38,6 +39,9 @@ class Post(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("post", kwargs={"slug": self.slug})
 
 
 class Tag(TimeStampedModel):

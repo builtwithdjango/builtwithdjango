@@ -34,7 +34,7 @@ class Job(models.Model):
         ordering = ["-created_datetime"]
 
     def __str__(self):
-        return f"{self.company_name}: {self.title}"
+        return f"{self.company.name} (self.company_name): {self.title}"
 
     def get_absolute_url(self):
         return reverse("job_details", kwargs={"pk": self.id, "slug": self.slug})
