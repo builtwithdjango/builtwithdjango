@@ -75,10 +75,10 @@
                     <div class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
                         <div class="flex items-center flex-shrink-0">
                             <a href="{% url 'home' %}"><img class="block w-auto h-10 lg:hidden"
-     src="https://{{ request.get_host }}{% static 'images/logo.png' %}"
+     src="{% static 'images/logo.png' %}"
      alt="Built with Django Logo"></a>
                             <a href="{% url 'home' %}"><img class="hidden w-auto h-10 lg:block"
-     src="https://{{ request.get_host }}{% static 'images/logo.png' %}"
+     src="{% static 'images/logo.png' %}"
      alt="Built with Django Logo"></a>
                         </div>
                         <div class="hidden sm:block sm:ml-6">
