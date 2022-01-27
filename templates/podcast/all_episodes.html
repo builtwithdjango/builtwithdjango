@@ -15,7 +15,7 @@
     <meta name="twitter:title" content="Built with Django | Podcast" />
     <meta name="twitter:description"
           content="Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community."/>
-    <meta name="twitter:image" content="{% static 'images/logo.png' %}" />
+    <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
 {% endblock %}
 {% block content %}
     <div class="my-4 overflow-hidden bg-white rounded-lg shadow">

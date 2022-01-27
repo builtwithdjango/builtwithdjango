@@ -2,19 +2,19 @@
 {% load static %}
 {% load markdown_extras %}
 {% block meta %}
-    <meta name="twitter:card" content="summary">
+    <title>{{ object.title }}</title>
+    <link rel="canonical" href="https://{{ request.get_host }}/blog/{{ object.slug }}" />
+    <meta name="description" content="{{ object.description }}">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:creator" content="@rasulkireev">
     <meta name="twitter:site" content="@builtwithdjango">
-    <title>{{ object.title }}</title>
-    <meta name="description" content="{{ object.description }}">
-    <link rel="canonical" href="https://{{ request.get_host }}/blog/{{ object.slug }}" />
+    <meta name="twitter:title" content="{{ object.title }}">
+    <meta name="twitter:description" content="{{ object.description }}">
+    <meta name="twitter:image" content="https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}">
     <meta property="og:title" content="{{ object.title }}">
     <meta property="og:url" content="https://{{ request.get_host }}/blog/{{ object.slug }}" />
     <meta property="og:description" content="{{ object.description }}">
-    <meta property="og:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}">
-    <meta name="twitter:title" content="{{ object.title }}">
-    <meta name="twitter:description" content="{{ object.description }}">
-    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}">
+    <meta property="og:image" content="https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}">
 {% endblock %}
 {% block content %}
     <p class="mt-4 text-blue-700">
@@ -38,14 +38,14 @@
   "author": {
     "@type": "Person",
     "name": "Rasul Kireev",
-    "image": "{% static 'images/logo.png' %}"
+    "image": "https://{{ request.get_host }}{% static 'images/logo.png' %}"
   },
   "headline": "{{ object.title }}",
   "about": "Django",
   "abstract": "{{ object.description }}",
   "articleBody": "{{ object.content }}",
-  "image": "{% static 'images/logo.png' %}",
-  "thumbnailUrl": "{% static 'images/logo.png' %}",
+  "image": "https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}",
+  "thumbnailUrl": "https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}",
   "dateCreated": "{{ object.created }}",
   "datePublished": "{{ object.created }}",
   "dateModified": "{{ object.modified }}",

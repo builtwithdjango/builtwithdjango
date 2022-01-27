@@ -14,7 +14,7 @@
     <meta property="og:description" content="Articles about Django"/>
     <meta name="twitter:title" content="Built with Django | Blog" />
     <meta name="twitter:description" content="Articles about Django"/>
-    <meta name="twitter:image" content="{% static 'images/logo.png' %}" />
+    <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
 {% endblock %}
 {% block content %}
     <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
