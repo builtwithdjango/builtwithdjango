@@ -8,7 +8,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ["date_joined", "username", "email", "first_name", "last_name"]
     model = CustomUser
 
-    fieldsets = UserAdmin.fieldsets + (("Extra Fields", {"fields": ("profile_image",)}),)
+    fieldsets = UserAdmin.fieldsets + (("Extra Fields", {"fields": ("profile_image", "referred_by")}),)
 
 
 admin.site.register(CustomUser, CustomUserAdmin)

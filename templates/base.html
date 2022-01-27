@@ -119,8 +119,8 @@
                                         <span class="sr-only">Open user menu</span>
                                         {% if user.profile_image %}
                                             <img class="w-8 h-8 rounded-full"
-                                                 src="{% get_media_prefix %}{{ user.profile_image }}"
-                                                 alt="">
+                                                 src="http://res.cloudinary.com/built-with-django/{{ user.profile_image }}"
+                                                 alt="{{ user.username }}">
                                         {% else %}
                                             <img class="w-8 h-8 rounded-full"
                                                  src="https://avatars.dicebear.com/api/gridy/{{ user.username }}.svg"
@@ -141,7 +141,7 @@
                                      aria-labelledby="user-menu-button"
                                      tabindex="-1">
                                     <!-- Active: "bg-gray-100", Not Active: "" -->
-                                    <a href="#"
+                                    <a href="{% url 'update-profile' %}"
                                        class="block px-4 py-2 text-sm text-gray-700"
                                        role="menuitem"
                                        tabindex="-1"

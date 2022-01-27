@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}<title>Built with Django | Update Profile</title>{% endblock %}
+{% block content %}
+    <div class="w-auto mx-auto mt-10 lg:w-1/3">
+        <div class="p-8 mb-6 bg-white border-t-8 border-green-500 rounded-lg shadow-lg">
+            <form id="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="mb-4">
+                    {{ form.profile_image.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.profile_image.id_for_label }}">
+                        Profile Image
+                    </label>
+                    {{ form.profile_image }}
+                </div>
+                <div class="mb-4">
+                    {{ form.referred_by_username.errors }}
+                    <label class="block mb-2 font-bold text-gray-700"
+                           for="{{ form.referred_by_username.id_for_label }}">
+                        Referred By
+                    </label>
+                    {% if messages %}
+                        <div class="p-2 my-2 border border-red-500 border-solid rounded-md bg-red-50">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <!-- Heroicon name: solid/check-circle -->
+                                    <svg class="w-5 h-5 text-red-400"
+                                         fill="none"
+                                         stroke="currentColor"
+                                         viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round"
+                                              stroke-linejoin="round"
+                                              stroke-width="2"
+                                              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <div class="text-sm text-red-700">
+                                        {% for message in messages %}
+                                            <p>
+                                                {{ message }}
+                                            </p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {{ form.referred_by_username }}
+                </div>
+                <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-300" type="submit">
+                    Submit
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

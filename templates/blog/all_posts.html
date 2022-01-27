@@ -81,8 +81,8 @@
                                         <span class="sr-only">{{ post.author.username }}</span>
                                         {% if post.author.profile_image %}
                                             <img class="w-8 h-8 rounded-full"
-                                                 src="{% get_media_prefix %}{{ post.author.profile_image }}"
-                                                 alt="">
+                                                 src="http://res.cloudinary.com/built-with-django/{{ post.author.profile_image }}"
+                                                 alt="{{ post.author.username }}">
                                         {% else %}
                                             <img class="w-8 h-8 rounded-full"
                                                  src="https://avatars.dicebear.com/api/gridy/{{ post.author.username }}.svg"

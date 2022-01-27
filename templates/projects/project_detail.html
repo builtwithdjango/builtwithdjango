@@ -405,8 +405,8 @@
                     <li class="flex items-start px-6 py-4">
                         {% if comment.author.profile_image %}
                             <img class="w-10 h-10 mt-2 rounded-full"
-                                 src="{% get_media_prefix %}{{ comment.author.profile_image }}"
-                                 alt="">
+                                 src="http://res.cloudinary.com/built-with-django/{{ comment.author.profile_image }}"
+                                 alt="{{ comment.author.username }}">
                         {% else %}
                             <img class="w-10 h-10 mt-2 rounded-full"
                                  src="https://avatars.dicebear.com/api/gridy/{{ comment.author.username }}.svg"

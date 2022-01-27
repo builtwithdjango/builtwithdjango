@@ -1,16 +1,17 @@
 from allauth.account.forms import LoginForm
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import (
-    AuthenticationForm,
-    UserChangeForm,
-    UserCreationForm,
-)
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm
 from django.core.mail import send_mail
 from django.db import transaction
+from django.forms.widgets import TextInput
 
 from .models import CustomUser
 from .utils import DivErrorList
+
+
+class ImageWidget(forms.widgets.ClearableFileInput):
+    template_name = "widgets/image_widget.html"
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -83,10 +84,25 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ("username", "email", "password1", "password2")
 
 
-class CustomUserChangeForm(UserChangeForm):
+class CustomUserUpdateForm(UserChangeForm):
+    referred_by_username = forms.CharField()
+
+    def __init__(self, *args, **kwargs):
+        super(CustomUserUpdateForm, self).__init__(*args, **kwargs)
+
+        self.fields["referred_by_username"].widget.attrs.update(
+            {
+                "class": "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+            }
+        )
+
     class Meta:
         model = get_user_model()
-        fields = UserChangeForm.Meta.fields
+        fields = (
+            "profile_image",
+            "referred_by",
+        )
+        widgets = {"profile_image": ImageWidget}
 
 
 class CustomLoginForm(LoginForm):

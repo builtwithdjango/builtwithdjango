@@ -1,4 +1,5 @@
 from django.forms.utils import ErrorList
+from django.utils.text import slugify
 
 
 class DivErrorList(ErrorList):
@@ -9,7 +10,7 @@ class DivErrorList(ErrorList):
         if not self:
             return ""
         return f"""
-            <div class="p-4 my-4 border border-solid border-red-600 rounded-md bg-red-50">
+            <div class="p-4 my-4 border border-red-600 border-solid rounded-md bg-red-50">
               <div class="flex">
                 <div class="flex-shrink-0">
                   <!-- Heroicon name: solid/x-circle -->
