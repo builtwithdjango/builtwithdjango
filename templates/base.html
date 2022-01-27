@@ -141,14 +141,19 @@
                                      aria-labelledby="user-menu-button"
                                      tabindex="-1">
                                     <!-- Active: "bg-gray-100", Not Active: "" -->
-                                    <a href="{% url 'update-profile' %}"
-                                       class="block px-4 py-2 text-sm text-gray-700"
+                                    <p class="block px-4 py-2 text-sm text-gray-700"
                                        role="menuitem"
                                        tabindex="-1"
-                                       id="user-menu-item-0">{{ user.username }}</a>
+                                       id="user-menu-item-0">{{ user.username }}</p>
+                                    <!-- Active: "bg-gray-100", Not Active: "" -->
+                                    <a href="{% url 'update-profile' %}"
+                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300"
+                                       role="menuitem"
+                                       tabindex="-1"
+                                       id="user-menu-item-0">Update Profile</a>
                                     <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a> -->
                                     <a href="{% url 'account_logout' %}"
-                                       class="block px-4 py-2 text-sm text-gray-700"
+                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300"
                                        role="menuitem"
                                        tabindex="-1"
                                        id="user-menu-item-2">Sign out</a>
