@@ -68,6 +68,8 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.twitter",
     "cloudinary",
+    "django_celery_results",
+    "django_celery_beat",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
@@ -254,3 +256,10 @@ POST_JOB_PRODUCT_ID = env("POST_JOB_PRODUCT_ID")
 cloudinary.config(
     cloud_name=env("CLOUDINARY_CLOUD_NAME"), api_key=env("CLOUDINARY_API_KEY"), api_secret=env("CLOUDINARY_API_SECRET")
 )
+
+# Celery
+CELERY_BROKER_URL = env("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_TIMEZONE = "	America/New_York"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
