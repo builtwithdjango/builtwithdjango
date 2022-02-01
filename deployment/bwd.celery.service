@@ -7,13 +7,13 @@ Requires=rabbitmq-server.service
 
 [Service]
 Type=forking
-User=celery
-Group=celery
+User=rasulkireev
+Group=www-data
 EnvironmentFile=/etc/conf.d/bwd.celery
 WorkingDirectory=/var/www/builtwithdjango
-ExecStart=/var/www/builtwithdjango/venv/bin/celery -A builtwithdjango multi start "w1 w2" \
+ExecStart=/var/www/builtwithdjango/venv/bin/celery -A builtwithdjango multi start w1 w2 \
     --pidfile=/var/run/celery/%n.pid --logfile=/var/log/celery/%n%I.log \
-    --loglevel=INFO --time-limit=300 --concurrency=8
+    --loglevel=INFO --time-limit=300 --concurrency=
 ExecStop=/bin/sh -c '${CELERY_BIN} multi stopwait $CELERYD_NODES \
     --pidfile=${CELERYD_PID_FILE} --logfile=${CELERYD_LOG_FILE} \
     --loglevel="${CELERYD_LOG_LEVEL}"'
