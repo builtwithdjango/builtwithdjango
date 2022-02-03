@@ -24,7 +24,6 @@ class StaticViewSitemap(sitemaps.Sitemap):
             "home",
             "submit_project",
             "support",
-            "support_subscription",
             "projects",
             "podcast_episodes",
             "jobs",

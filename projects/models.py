@@ -20,13 +20,12 @@ class Project(models.Model):
     user_email = models.EmailField()
     slug = AutoSlugField(populate_from="title", always_update=True)
     published = models.BooleanField(default=False)
+    large_company = models.BooleanField(default=False)
 
     # Optional Website Information
     is_open_source = models.BooleanField(default=False)
     description = models.TextField(blank=True)
-    homepage_screenshot = models.ImageField(
-        upload_to="website_homepage_screenshot/", blank=True
-    )
+    homepage_screenshot = models.ImageField(upload_to="website_homepage_screenshot/", blank=True)
     twitter_url = models.URLField(blank=True)
     github_url = models.URLField(blank=True)
 
@@ -37,11 +36,7 @@ class Project(models.Model):
         null=True,
         blank=True,
     )
-    technologies = models.ManyToManyField(
-        "Technology", related_name="projects", blank=True
-    )
-
-    # Optional entered by user only
+    technologies = models.ManyToManyField("Technology", related_name="projects", blank=True)
 
     ### Ideally I would automatically parse suggestions, but
     ### Will have to manually add those technologies :shrug
@@ -84,13 +79,9 @@ class Comment(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
-    project = models.ForeignKey(
-        Project, on_delete=models.CASCADE, related_name="comments"
-    )
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="comments")
     comment = models.TextField(max_length=240)
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
-    )
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ("-created_date",)
@@ -103,12 +94,8 @@ class Comment(models.Model):
 
 
 class Like(TimeStampedModel):
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="like"
-    )
-    project = models.ForeignKey(
-        Project, on_delete=models.CASCADE, related_name="like"
-    )
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="like")
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="like")
     like = models.BooleanField(default=False)
 
     def __str__(self):

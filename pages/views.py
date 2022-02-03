@@ -3,12 +3,7 @@ from datetime import datetime, timedelta
 from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
-from django.views.generic import (
-    CreateView,
-    RedirectView,
-    TemplateView,
-    UpdateView,
-)
+from django.views.generic import CreateView, RedirectView, TemplateView, UpdateView
 
 from jobs.models import Job
 from newsletter.views import NewsletterSignupForm
@@ -27,9 +22,7 @@ class HomeView(TemplateView):
         context["newsletter_form"] = NewsletterSignupForm
         context["projects"] = Project.objects.filter(published=True)[:6]
         context["podcast_episodes"] = Episode.objects.all()[:3]
-        context["jobs"] = Job.objects.filter(approved=True).order_by(
-            "-created_datetime"
-        )[:6]
+        context["jobs"] = Job.objects.filter(approved=True).order_by("-created_datetime")[:6]
 
         return context
 
@@ -45,16 +38,6 @@ class DonateOneTimeView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["newsletter_form"] = NewsletterSignupForm
         context["PAYPAL_CLIENT_ID"] = settings.PAYPAL_CLIENT_ID
-
-        return context
-
-
-class DonateSubscriptionView(TemplateView):
-    template_name = "pages/support-subscription.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["newsletter_form"] = NewsletterSignupForm
 
         return context
 
@@ -84,7 +67,5 @@ class ConfirmEmail(SuccessMessageMixin, UpdateView):
     form_class = ConfirmEmail
     template_name = "pages/confirm-email.html"
     success_url = reverse_lazy("request-nft")
-    success_message = (
-        "Thanks for confirming your email! You will receive your NFT shortly."
-    )
+    success_message = "Thanks for confirming your email! You will receive your NFT shortly."
     slug_field = "wallet_public_key"
