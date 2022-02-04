@@ -19,8 +19,6 @@ jobs:
 
     - name: Enforce version update
       run: |
-          echo "Checking if library code has changed..."
-          git diff -s --exit-code 'origin/master' && exit 0
           echo "Checking if the version has been changed from master..."
           git diff 'origin/master' -- pyproject.toml | grep "+version = "
 
