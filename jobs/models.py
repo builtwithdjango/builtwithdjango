@@ -11,10 +11,13 @@ class Job(models.Model):
     slug = AutoSlugField(populate_from="title", always_update=True, default="django-developer")
     listing_url = models.URLField(unique=True)
     description = models.TextField(blank=True, null=True)
-    location = models.CharField(max_length=100, blank=True)
     email = models.EmailField(blank=True)
     min_yearly_salary = models.IntegerField(blank=True, null=True)
     max_yearly_salary = models.IntegerField(blank=True, null=True)
+
+    remote = models.BooleanField(default=False)
+    time_zone = models.CharField(max_length=100, blank=True)
+    location = models.CharField(max_length=100, blank=True)
 
     company = models.ForeignKey(
         "Company",
@@ -34,7 +37,7 @@ class Job(models.Model):
         ordering = ["-created_datetime"]
 
     def __str__(self):
-        return f"{self.company} (self.company_name): {self.title}"
+        return f"{self.company} ({self.company_name}): {self.title}"
 
     def get_absolute_url(self):
         return reverse("job_details", kwargs={"pk": self.id, "slug": self.slug})
