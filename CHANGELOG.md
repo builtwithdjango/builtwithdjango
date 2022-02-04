@@ -15,7 +15,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 ## [Unreleased]
 
-## [0.1.0] - 2022-02-04
+## [0.1.2] - 2022-02-04
 ### Added
 - Filter Field with "Is Open Search".
 - Remote boolean and Timezone fields to Job Posts.
