@@ -69,8 +69,6 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.twitter",
     "cloudinary",
     "widget_tweaks",
-    "django_celery_results",
-    "django_celery_beat",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
