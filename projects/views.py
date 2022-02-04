@@ -2,17 +2,20 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django_filters.views import FilterView
 
 from newsletter.views import NewsletterSignupForm
 
+from .filters import ProjectFilter
 from .forms import AddComment, AddProject, ProjectUpdateViewForm
 from .models import Comment, Project
 
 
-class ProjectListView(ListView):
+class ProjectListView(FilterView):
     model = Project
     template_name = "projects/all_projects.html"
     queryset = Project.objects.filter(published=True)
+    filterset_class = ProjectFilter
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

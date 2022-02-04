@@ -148,6 +148,9 @@ django-taggit==1.5.1; python_version >= "3.6" \
 django-timezone-field==4.2.3; python_version >= "3.5" \
     --hash=sha256:5dd5bd9249382bef8847d3e7e4c32b7be182a4b538f354130d1252ed228892f8 \
     --hash=sha256:7552d2b0f145684b7de3fb5046101c7efd600cc6ba951b15c630fa1e1b83558e
+django-widget-tweaks==1.4.12; python_version >= "3.7" \
+    --hash=sha256:9bfc5c705684754a83cc81da328b39ad1b80f32bd0f4340e2a810cbab4b0c00e \
+    --hash=sha256:fe6b17d5d595c63331f300917980db2afcf71f240ab9341b954aea8f45d25b9a
 django==3.2.11; python_version >= "3.6" \
     --hash=sha256:0a0a37f0b93aef30c4bf3a839c187e1175bcdeb7e177341da0cb7b8194416891 \
     --hash=sha256:69c94abe5d6b1b088bf475e09b7b74403f943e34da107e798465d2045da27e75

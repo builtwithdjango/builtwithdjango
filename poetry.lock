@@ -457,6 +457,14 @@ pytz = "*"
 rest_framework = ["djangorestframework (>=3.0.0)"]
 
 [[package]]
+name = "django-widget-tweaks"
+version = "1.4.12"
+description = "Tweak the form field rendering in templates, not in python-level form definitions."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
 name = "djangorestframework"
 version = "3.13.1"
 description = "Web APIs for Django, made easy."
@@ -1076,7 +1084,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "2c0e0aef453a5c39f7ec12dde88035d015aa5002a9fdf2bada5ee73c0d3f3091"
+content-hash = "61a0b1e026c231424ec723a1b683a811bd595be1b6ca89e5465d911d3b92ac33"
 
 [metadata.files]
 amqp = [
@@ -1277,6 +1285,10 @@ django-taggit = [
 django-timezone-field = [
     {file = "django-timezone-field-4.2.3.tar.gz", hash = "sha256:5dd5bd9249382bef8847d3e7e4c32b7be182a4b538f354130d1252ed228892f8"},
     {file = "django_timezone_field-4.2.3-py3-none-any.whl", hash = "sha256:7552d2b0f145684b7de3fb5046101c7efd600cc6ba951b15c630fa1e1b83558e"},
+]
+django-widget-tweaks = [
+    {file = "django-widget-tweaks-1.4.12.tar.gz", hash = "sha256:9bfc5c705684754a83cc81da328b39ad1b80f32bd0f4340e2a810cbab4b0c00e"},
+    {file = "django_widget_tweaks-1.4.12-py3-none-any.whl", hash = "sha256:fe6b17d5d595c63331f300917980db2afcf71f240ab9341b954aea8f45d25b9a"},
 ]
 djangorestframework = [
     {file = "djangorestframework-3.13.1-py3-none-any.whl", hash = "sha256:24c4bf58ed7e85d1fe4ba250ab2da926d263cd57d64b03e8dcef0ac683f8b1aa"},

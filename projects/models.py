@@ -21,6 +21,7 @@ class Project(models.Model):
     slug = AutoSlugField(populate_from="title", always_update=True)
     published = models.BooleanField(default=False)
     large_company = models.BooleanField(default=False)
+    # type = models.CharField(max_length=50, blank=True)
 
     # Optional Website Information
     is_open_source = models.BooleanField(default=False)

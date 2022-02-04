@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 {% block meta %}
     <title>Built with Django</title>
     <meta name="description" content="Collection of cool projects people built with Django" />
@@ -50,15 +51,70 @@
         </div>
     </div>
     <div>
-        <div class="flex justify-start mb-4 sm:mb-0">
-            <a type="button"
-               href="{% url 'submit_project' %}"
-               class="inline-flex items-center px-4 py-2 mb-4 text-base font-medium text-green-700 bg-green-200 border border-transparent border-solid rounded-md hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                Submit a Project
-            </a>
+        <div class="flex items-center justify-between pb-4 sm:mb-0">
+            <div x-data="{ isOpen: false }" class="relative inline-block text-left">
+                <div>
+                    <button type="button"
+                            @click="isOpen = !isOpen"
+                            class="inline-flex justify-center w-full px-4 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                            id="menu-button"
+                            aria-expanded="true"
+                            aria-haspopup="true">
+                        Filter
+                        <!-- Heroicon name: solid/chevron-down -->
+                        <svg class="w-5 h-5 ml-2 -mr-1"
+                             xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 20 20"
+                             fill="currentColor"
+                             aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+                <div x-show="isOpen"
+                     x-transition:enter="transition ease-out duration-100"
+                     x-transition:enter-start="transform opacity-0 scale-95"
+                     x-transition:enter-end="transform opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-75"
+                     x-transition:leave-start="transform opacity-100 scale-100"
+                     x-transition:leave-end="transform opacity-0 scale-95"
+                     class="absolute left-0 mt-2 origin-top-left bg-white rounded-md shadow-lg w-96 md:w-56 ring-1 ring-black ring-opacity-5 focus:outline-none"
+                     role="menu"
+                     aria-orientation="vertical"
+                     aria-labelledby="menu-button"
+                     tabindex="-1">
+                    <form class="p-2" action="" method="get">
+                        <div class="mb-2">
+                            <label class="block text-sm font-medium text-gray-700">
+                                Large Company
+                            </label>
+                            {% render_field filter.form.large_company class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %}
+                        </div>
+                        <div class="mb-2">
+                            <label class="block text-sm font-medium text-gray-700">
+                                Is Open Source
+                            </label>
+                            {% render_field filter.form.is_open_source class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %}
+                        </div>
+                        <button type="submit"
+                                class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Filter
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div>
+                <a type="button"
+                   href="{% url 'submit_project' %}"
+                   class="inline-flex items-center px-4 py-2 text-base font-medium text-green-700 bg-green-200 border border-transparent border-solid rounded-md hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    Submit a Project
+                </a>
+            </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mb-10 lg:grid-cols-3 md:grid-cols-2">
-            {% for site in object_list %}
+            {% for site in filter.qs %}
                 <div class="flex flex-col justify-start bg-white border-solid rounded shadow border-1">
                     <div class="border-b border-gray-300 border-solid rounded-t-lg">
                         <a class="" href="{% url 'project' site.slug %}">

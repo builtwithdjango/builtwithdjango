@@ -58,6 +58,7 @@ cloudinary = "^1.28.1"
 celery = "^5.2.3"
 django-celery-results = "^2.2.0"
 django-celery-beat = "^2.2.1"
+django-widget-tweaks = "^1.4.12"
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b2"
