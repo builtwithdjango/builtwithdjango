@@ -17,11 +17,6 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v2
 
-    - name: Enforce version update
-      run: |
-          echo "Checking if the version has been changed from master..."
-          git diff 'origin/master' -- pyproject.toml | grep "+version = "
-
   deploy:
     name: Deploy to Digital Ocean
     runs-on: ubuntu-latest
