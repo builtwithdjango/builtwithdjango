@@ -30,7 +30,7 @@ multi_line_output = 3
 
 [tool.poetry]
 name = "builtwithdjango"
-version = "0.1.0"
+version = "0.1.1"
 description = "Source code for the builtwithdjango.com website."
 authors = ["Rasul Kireev <me@rasulkireev.com>"]
 
