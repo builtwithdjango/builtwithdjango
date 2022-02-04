@@ -14,7 +14,7 @@ from .models import Comment, Project
 class ProjectListView(FilterView):
     model = Project
     template_name = "projects/all_projects.html"
-    queryset = Project.objects.filter(published=True)
+    queryset = Project.objects.filter(published=True).order_by("-updated_date")
     filterset_class = ProjectFilter
 
     def get_context_data(self, **kwargs):
