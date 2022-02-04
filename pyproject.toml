@@ -35,7 +35,7 @@ description = "Source code for the builtwithdjango.com website."
 authors = ["Rasul Kireev <me@rasulkireev.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.9"
 Django = "^3.2.4"
 django-autoslug = "^1.9.7"
 django-environ = "^0.4.5"
