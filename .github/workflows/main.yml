@@ -52,6 +52,7 @@ jobs:
         KEY: ${{ secrets.DO_SSHKEY }}
         script: |
           export NODE_ENV=production
+          poetry env use 3.9.9
           cd /var/www/builtwithdjango
           source ./venv/bin/activate
           pip install -r requirements.txt
