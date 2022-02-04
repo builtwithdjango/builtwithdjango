@@ -9,4 +9,4 @@ class ProjectFilter(django_filters.FilterSet):
 
     class Meta:
         model = Project
-        fields = ["large_company", "is_open_source"]
+        fields = ["is_open_source"]
