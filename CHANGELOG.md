@@ -15,6 +15,13 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 ## [Unreleased]
 
+## [0.1.3] - 2022-02-07
+### Added
+- Exit Intent Email Form
+
+### Fixed
+- Paid job posts show up first now
+- Job posts more than 2 months old are now removed
 ## [0.1.2] - 2022-02-04
 ### Added
 - Filter Field with "Is Open Search".

@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import stripe
 from django.conf import settings
 from django.http import HttpResponse
@@ -16,7 +18,10 @@ from .models import Job
 class JobListView(ListView):
     model = Job
     template_name = "jobs/all_jobs.html"
-    queryset = Job.objects.filter(approved=True).order_by("-created_datetime")[:30]
+    filter_date = datetime.today() - timedelta(days=60)
+    queryset = Job.objects.filter(approved=True, created_datetime__gte=filter_date).order_by(
+        "-paid", "-created_datetime"
+    )[:30]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
