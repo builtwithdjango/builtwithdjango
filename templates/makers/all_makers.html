@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% block meta %}
     <title>Built with Django | Makers</title>
@@ -13,7 +13,7 @@
     <meta name="twitter:title" content="Coolest Django Makers!" />
     <meta name="twitter:description" content="Coolest Django makers!" />
     <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
-{% endblock %}
+{% endblock meta %}
 {% block content %}
     <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
         <div class="px-4 py-5 sm:p-6">
@@ -78,7 +78,7 @@
                               action="{% url 'claim_account' maker.pk %}"
                               method="post">
                             {% csrf_token %}
-                            <input class="hidden" type="text" value="{{ user.email }}">
+                            <input class="hidden" type="text" value="{{ user.email }}" />
                             <button type="submit"
                                     class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-300">
                                 Claim

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% block meta %}
     <title>Django Jobs</title>
@@ -14,7 +14,7 @@
     <meta property="og:url" content="https://{{ request.get_host }}/jobs/" />
     <meta property="og:description" content="Best jobs for best Django Developers!"/>
     <meta property="og:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
-{% endblock %}
+{% endblock meta %}
 {% block content %}
     <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
         <div class="px-4 py-5 sm:p-6">

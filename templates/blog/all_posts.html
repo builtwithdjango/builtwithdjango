@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% load markdown_extras %}
 {% load cloudinary %}
@@ -15,7 +15,7 @@
     <meta name="twitter:title" content="Built with Django | Blog" />
     <meta name="twitter:description" content="Articles about Django"/>
     <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
-{% endblock %}
+{% endblock meta %}
 {% block content %}
     <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
         <div class="px-4 py-5 sm:p-6">
@@ -59,7 +59,7 @@
                         <a href="{% url 'post' post.slug %}" class="flex-shrink-0">
                             <img class="object-cover w-full h-48"
                                  src="https://source.unsplash.com/{{ post.unsplashID }}/auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                 alt="">
+                                 alt="" />
                         </a>
                         <div class="flex flex-col justify-between flex-1 p-6 bg-white">
                             <div class="flex-1">
@@ -81,12 +81,12 @@
                                         <span class="sr-only">{{ post.author.username }}</span>
                                         {% if post.author.profile_image %}
                                             <img class="w-8 h-8 rounded-full"
-                                                 src="http://res.cloudinary.com/built-with-django/{{ post.author.profile_image }}"
-                                                 alt="{{ post.author.username }}">
+                                                 src="https://res.cloudinary.com/built-with-django/{{ post.author.profile_image }}"
+                                                 alt="{{ post.author.username }}" />
                                         {% else %}
                                             <img class="w-8 h-8 rounded-full"
                                                  src="https://avatars.dicebear.com/api/gridy/{{ post.author.username }}.svg"
-                                                 alt="">
+                                                 alt="{{ post.author.username }}" />
                                         {% endif %}
                                     </a>
                                 </div>

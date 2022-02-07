@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% block meta %}
     <title>Built with Django</title>
@@ -13,7 +13,7 @@
     <meta name="twitter:title" content="Built with Django" />
     <meta name="twitter:description" content="Collection of cool projects people built with Django" />
     <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
-{% endblock %}
+{% endblock meta %}
 {% block content %}
     <div class="prose md:mx-auto lg:prose-xl">
         <h1>Support the project with a subscription</h1>

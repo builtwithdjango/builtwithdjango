@@ -1,6 +1,6 @@
 {% load static %}
 {% load cloudinary %}
-<html class="" lang="en">
+<html lang="en">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
@@ -25,7 +25,7 @@
             <meta name="twitter:title" content="Built with Django" />
             <meta name="twitter:description" content="Collection of cool projects people built with Django"/>
             <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
-        {% endblock %}
+        {% endblock meta %}
         <!-- CSS -->
         <!-- CSS refresh solution from https://stackoverflow.com/a/56987021/6020165 -->
         <link rel="stylesheet" href="{% static 'bundles/main.css' %}?{% now 'U' %}"/>
@@ -76,10 +76,10 @@
                         <div class="flex items-center flex-shrink-0">
                             <a href="{% url 'home' %}"><img class="block w-auto h-10 lg:hidden"
      src="{% static 'images/logo.png' %}"
-     alt="Built with Django Logo"></a>
+     alt="Built with Django Logo" /></a>
                             <a href="{% url 'home' %}"><img class="hidden w-auto h-10 lg:block"
      src="{% static 'images/logo.png' %}"
-     alt="Built with Django Logo"></a>
+     alt="Built with Django Logo" /></a>
                         </div>
                         <div class="hidden sm:block sm:ml-6">
                             <div class="flex space-x-4">
@@ -119,12 +119,12 @@
                                         <span class="sr-only">Open user menu</span>
                                         {% if user.profile_image %}
                                             <img class="w-8 h-8 rounded-full"
-                                                 src="http://res.cloudinary.com/built-with-django/{{ user.profile_image }}"
-                                                 alt="{{ user.username }}">
+                                                 src="https://res.cloudinary.com/built-with-django/{{ user.profile_image }}"
+                                                 alt="{{ user.username }}" />
                                         {% else %}
                                             <img class="w-8 h-8 rounded-full"
                                                  src="https://avatars.dicebear.com/api/gridy/{{ user.username }}.svg"
-                                                 alt="">
+                                                 alt="{{ user.username }}" />
                                         {% endif %}
                                     </button>
                                 </div>
@@ -226,6 +226,6 @@
             </script>
         {% endblock schema %}
         <script src="{% static 'bundles/app.js' %}?{% now 'U' %}"></script>
-        {% block additional-js %}{% endblock %}
+        {% block additional-js %}{% endblock additional-js %}
     </body>
 </html>

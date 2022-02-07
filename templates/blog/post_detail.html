@@ -1,28 +1,29 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% load markdown_extras %}
 {% block meta %}
     <title>{{ object.title }}</title>
     <link rel="canonical" href="https://{{ request.get_host }}/blog/{{ object.slug }}" />
-    <meta name="description" content="{{ object.description }}">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:creator" content="@rasulkireev">
-    <meta name="twitter:site" content="@builtwithdjango">
-    <meta name="twitter:title" content="{{ object.title }}">
-    <meta name="twitter:description" content="{{ object.description }}">
-    <meta name="twitter:image" content="https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}">
-    <meta property="og:title" content="{{ object.title }}">
+    <meta name="description" content="{{ object.description }}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@rasulkireev" />
+    <meta name="twitter:site" content="@builtwithdjango" />
+    <meta name="twitter:title" content="{{ object.title }}" />
+    <meta name="twitter:description" content="{{ object.description }}" />
+    <meta name="twitter:image" content="https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}" />
+    <meta property="og:title" content="{{ object.title }}" />
     <meta property="og:url" content="https://{{ request.get_host }}/blog/{{ object.slug }}" />
-    <meta property="og:description" content="{{ object.description }}">
-    <meta property="og:image" content="https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}">
-{% endblock %}
+    <meta property="og:description" content="{{ object.description }}" />
+    <meta property="og:image" content="https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}" />
+{% endblock meta %}
 {% block content %}
     <p class="mt-4 text-blue-700">
         ←
         <a href="{% url 'blog' %}">back to all posts</a>
     </p>
-    <div data-controller="exit-intent" data-action="mouseout@document->
-        exit-intent#openModal">
+    {# djlint:off #}
+    <div data-controller="exit-intent" data-action="mouseout@document->exit-intent#openModal">
+    {# djlint:on #}
         <div class="max-w-3xl mx-auto my-10">
             <div class="mt-10 prose md:mx-auto lg:prose-xl">
                 <h1>{{ object.title }}</h1>

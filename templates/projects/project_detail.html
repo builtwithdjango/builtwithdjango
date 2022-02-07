@@ -1,23 +1,23 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% load markdown_extras %}
 {% block meta %}
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary_large_image" />
     {% if object.maker.twitter_handle %}
-        <meta name="twitter:creator" content="@{{ object.maker.twitter_handle }}">
-        <meta name="twitter:site" content="@{{ object.maker.twitter_handle }}">
+        <meta name="twitter:creator" content="@{{ object.maker.twitter_handle }}" />
+        <meta name="twitter:site" content="@{{ object.maker.twitter_handle }}" />
     {% endif %}
     <title>{{ object.title }} is Built with Django</title>
-    <meta name="description" content="{{ object.short_description }}">
+    <meta name="description" content="{{ object.short_description }}" />
     <link rel="canonical" href="https://{{ request.get_host }}/projects/{{ object.slug }}" />
-    <meta property="og:title" content="{{ object.title }}">
+    <meta property="og:title" content="{{ object.title }}" />
     <meta property="og:url" content="https://{{ request.get_host }}/projects/{{ object.slug }}" />
-    <meta property="og:description" content="{{ object.short_description }}">
-    <meta property="og:image" content="https://{{ request.get_host }}{{ object.homepage_screenshot.url }}">
-    <meta name="twitter:title" content="{{ object.title }}">
-    <meta name="twitter:description" content="{{ object.short_description }}">
-    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.homepage_screenshot.url }}">
-{% endblock %}
+    <meta property="og:description" content="{{ object.short_description }}" />
+    <meta property="og:image" content="https://{{ request.get_host }}{{ object.homepage_screenshot.url }}" />
+    <meta name="twitter:title" content="{{ object.title }}" />
+    <meta name="twitter:description" content="{{ object.short_description }}" />
+    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.homepage_screenshot.url }}" />
+{% endblock meta %}
 {% block content %}
     <p class="mt-4 text-blue-700">
         ←
@@ -25,7 +25,7 @@
     </p>
     <div class="flex flex-col justify-center max-w-5xl mx-auto my-10 space-y-2">
         {% if user == object.maker.user %}
-            <div class="">
+            <div>
                 <a href="{% url 'project_update' object.slug %}"
                    class="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                     Edit Project
@@ -43,10 +43,10 @@
                 </p>
             </div>
             <div class="mb-2 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
-                <div class="">
+                <div>
                     <img class="w-full"
                          src="{% get_media_prefix %}{{ object.homepage_screenshot }}"
-                         alt="{{ object.title }} | Screenshot">
+                         alt="{{ object.title }} | Screenshot" />
                 </div>
             </div>
             <div class="flex flex-row w-full mb-4 space-x-2 text-center">
@@ -71,14 +71,14 @@
                 {% endif %}
                 <div data-controller="like"
                      class="flex flex-row p-1 border border-gray-300 border-solid rounded-lg hover:border-gray-600 hover:bg-gray-200">
-                    <input type="hidden" data-like-target="projectId" value={{ object.id }}>
-                    <input type="hidden" data-target="like.currentUser" value={{ user.id }}>
+                    <input type="hidden" data-like-target="projectId" value={{ object.id }} />
+                    <input type="hidden" data-target="like.currentUser" value={{ user.id }} />
                     {% csrf_token %}
                     {% if user.is_authenticated %}
                         <button data-action="click->
                             like#modify" class="flex flex-row items-center text-xl">
                             <span data-target="like.numberOfLikes" id="{{ object.id }}_likes"></span>
-                            <i id="{{ object.id }}_heart" class=""></i>
+                            <i id="{{ object.id }}_heart"></i>
                         </button>
                     {% else %}
                         <button data-action="click->
@@ -87,7 +87,7 @@
                             data-like-target="modalButton"
                             >
                             <span data-target="like.numberOfLikes" id="{{ object.id }}_likes"></span>
-                            <i id="{{ object.id }}_heart" class=""></i>
+                            <i id="{{ object.id }}_heart"></i>
                         </button>
                         <div data-like-target="modal"
                              class="fixed inset-0 z-10 hidden overflow-y-auto"
@@ -181,7 +181,7 @@
                 </div>
             </div>
             {% if object.description %}
-                <div class="" aria-hidden="true">
+                <div aria-hidden="true">
                     <h2 class="text-lg font-semibold md:text-2xl">
                         Full Description
                     </h2>
@@ -202,12 +202,12 @@
                         {% if object.maker.maker_profile_image %}
                             <img class="w-16 h-16 rounded-full"
                                  src="{% get_media_prefix %}{{ object.maker.maker_profile_image }}"
-                                 alt="">
+                                 alt="" />
                         {% else %}
                             <!-- get image gray sillhoutte -->
                             <img class="w-10 h-10 rounded-full"
                                  src="https://avatars.dicebear.com/api/gridy/{{ object.maker.slug }}.svg"
-                                 alt="">
+                                 alt="" />
                         {% endif %}
                         {% if object.maker.first_name or object.maker.last_name %}
                             <div class="ml-3">
@@ -328,7 +328,7 @@
                 {% for episode in object.podcast_episodes.all %}
                     <article class="flex flex-col justify-start mt-4 space-y-4 bg-white border border-solid rounded md:border-0 md:mt-2 md:flex-row">
                         <header class="border-b border-gray-300 border-solid rounded-t-lg md:border-0">
-                            <a class="" href="{% url 'episode_details' episode.slug %}">
+                            <a href="{% url 'episode_details' episode.slug %}">
                                 <img class="object-cover object-left-top w-full h-auto border-0 rounded-t"
                                      src="{% get_media_prefix %}{{ episode.thumbnail }}"
                                      alt="{{ episode.title }} | Screenshot"/>
@@ -364,8 +364,8 @@
                     Comments
                 </h2>
                 <div>
-                    <button @click="isShowing = !isShowing" class="inline-block bg-green-500 rounded-full">
-                        <i style="color:white;" class="p-2 las la-plus"></i>
+                    <button @click="isShowing=!isShowing" class="inline-block bg-green-500 rounded-full">
+                        <i class="p-2 text-white las la-plus"></i>
                     </button>
                 </div>
             </div>
@@ -405,12 +405,12 @@
                     <li class="flex items-start px-6 py-4">
                         {% if comment.author.profile_image %}
                             <img class="w-10 h-10 mt-2 rounded-full"
-                                 src="http://res.cloudinary.com/built-with-django/{{ comment.author.profile_image }}"
-                                 alt="{{ comment.author.username }}">
+                                 src="https://res.cloudinary.com/built-with-django/{{ comment.author.profile_image }}"
+                                 alt="{{ comment.author.username }}" />
                         {% else %}
                             <img class="w-10 h-10 mt-2 rounded-full"
                                  src="https://avatars.dicebear.com/api/gridy/{{ comment.author.username }}.svg"
-                                 alt="">
+                                 alt="" />
                         {% endif %}
                         <div class="ml-3">
                             <p class="font-medium">

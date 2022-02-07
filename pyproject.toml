@@ -21,6 +21,10 @@ exclude = '''
 )
 '''
 
+[tool.djlint]
+profile = "django"
+ignore = "H006,H023,H031"
+
 [tool.isort]
 profile = "django"
 combine_as_imports = true

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% load markdown_extras %}
 {% load humanize %}
@@ -16,7 +16,7 @@
     <meta property="og:url" content="https://{{ request.get_host }}/jobs/{{ object.pk }}/{{ object.slug }}" />
     <meta property="og:description" content="{{ object.company.name }} is looking for a {{ object.title }}" />
     <meta property="og:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}" />
-{% endblock %}
+{% endblock meta %}
 {% block content %}
     <p class="mt-4 text-blue-700">
         ←

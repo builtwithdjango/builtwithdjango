@@ -1,21 +1,21 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% load markdown_extras %}
 {% block meta %}
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:creator" content="@rasulkireev">
-    <meta name="twitter:site" content="@builtwithdjango">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@rasulkireev" />
+    <meta name="twitter:site" content="@builtwithdjango" />
     <title>{{ object.title }}</title>
-    <meta name="description" content="{{ object.details }}">
+    <meta name="description" content="{{ object.details }}" />
     <link rel="canonical" href="https://{{ request.get_host }}/podcast/{{ object.slug }}" />
-    <meta property="og:title" content="{{ object.title }}">
+    <meta property="og:title" content="{{ object.title }}" />
     <meta property="og:url" content="https://{{ request.get_host }}/podcast/{{ object.slug }}" />
-    <meta property="og:description" content="{{ object.details }}">
-    <meta property="og:image" content="https://{{ request.get_host }}{{ object.thumbnail.url }}">
-    <meta name="twitter:title" content="{{ object.title }}">
-    <meta name="twitter:description" content="{{ object.details }}">
-    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.thumbnail.url }}">
-{% endblock %}
+    <meta property="og:description" content="{{ object.details }}" />
+    <meta property="og:image" content="https://{{ request.get_host }}{{ object.thumbnail.url }}" />
+    <meta name="twitter:title" content="{{ object.title }}" />
+    <meta name="twitter:description" content="{{ object.details }}" />
+    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.thumbnail.url }}" />
+{% endblock meta %}
 {% block content %}
     <p class="mt-4 text-blue-700">
         ←
@@ -23,7 +23,7 @@
     </p>
     <div class="my-10 prose md:mx-auto lg:prose-xl">
         <h1>{{ object.title }}</h1>
-        <img class="w-full" src="{% get_media_prefix %}{{ object.thumbnail }}" alt="">
+        <img class="w-full" src="{% get_media_prefix %}{{ object.thumbnail }}" alt="" />
         {% if object.player_html_embed %}
             <div class="max-w-3xl">
                 {{ object.player_html_embed | safe }}

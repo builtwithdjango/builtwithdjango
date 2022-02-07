@@ -1,19 +1,19 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% block meta %}
     <title>Built with Django</title>
-    <meta name="description" content="Collection of cool projects people built with Django">
+    <meta name="description" content="Collection of cool projects people built with Django" />
     <link rel="canonical" href="https://{{ request.get_host }}/donate-one-time/" />
-    <meta property="og:title" content="Built with Django">
+    <meta property="og:title" content="Built with Django" />
     <meta property="og:url" content="https://{{ request.get_host }}/donate-one-time/" />
-    <meta property="og:description" content="Collection of cool projects people built with Django">
-    <meta name="og:image" content="{% static 'images/logo.png' %}">
-    <meta name="twitter:creator" content="@rasulkireev">
-    <meta name="twitter:site" content="@rasulkireev">
-    <meta name="twitter:title" content="Built with Django">
-    <meta name="twitter:description" content="Collection of cool projects people built with Django">
-    <meta name="twitter:image" content="{% static 'images/logo.png' %}">
-{% endblock %}
+    <meta property="og:description" content="Collection of cool projects people built with Django" />
+    <meta name="og:image" content="{% static 'images/logo.png' %}" />
+    <meta name="twitter:creator" content="@rasulkireev" />
+    <meta name="twitter:site" content="@rasulkireev" />
+    <meta name="twitter:title" content="Built with Django" />
+    <meta name="twitter:description" content="Collection of cool projects people built with Django" />
+    <meta name="twitter:image" content="{% static 'images/logo.png' %}" />
+{% endblock meta %}
 {% block content %}
     <div class="mt-8 mb-10 prose md:mx-auto lg:prose-xl">
         <h1>Support the project with a one-time payment</h1>
@@ -30,14 +30,14 @@
         </p>
     </div>
     <div id="smart-button-container">
-        <div style="text-align: center">
+        <div class="text-center">
             <label for="description">Message</label>
             <input type="text" name="descriptionInput" id="description" maxlength="127" value="">
         </div>
         <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">
             Please enter a description
         </p>
-        <div style="text-align: center">
+        <div class="text-center">
             <label for="amount"></label>
             <input name="amountInput" type="number" id="amount" value="" >
             <span>USD</span>

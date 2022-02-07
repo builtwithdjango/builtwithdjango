@@ -25,10 +25,11 @@ repos:
       name: isort (pyi)
       types: [pyi]
 
-# - repo: https://github.com/PyCQA/flake8
-#   rev: 3.9.2
-#   hooks:
-#     - id: flake8
+- repo: https://github.com/Riverside-Healthcare/djLint
+  rev:  0.7.4
+  hooks:
+    - id: djlint-django
+      exclude: "support.html"
 
 - repo: local
   hooks:
@@ -37,17 +38,5 @@ repos:
     description: 'Generate requirements.txt based on poetry.lock'
     entry: poetry
     args: [export, --format, requirements.txt, --output, requirements.txt]
-    language: system
-    pass_filenames: false
-  - id: run-django-html-linter
-    name: run-django-html-linter
-    exclude: >
-        (?x)^(
-          templates/django/forms/widgets/.*
-          # doesn't work
-        )$
-    description: 'Run djlint on all template files'
-    entry: poetry
-    args: [run, djlint, templates, --reformat]
     language: system
     pass_filenames: false
