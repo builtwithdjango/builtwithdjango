@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.twitter",
     "cloudinary",
     "widget_tweaks",
+    "django_q",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
@@ -256,10 +257,14 @@ cloudinary.config(
     cloud_name=env("CLOUDINARY_CLOUD_NAME"), api_key=env("CLOUDINARY_API_KEY"), api_secret=env("CLOUDINARY_API_SECRET")
 )
 
-# Celery
-CELERY_BROKER_URL = env("CELERY_BROKER_URL")
-CELERY_RESULT_BACKEND = "django-db"
-CELERY_TIMEZONE = "	America/New_York"
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
-CELERY_WORKER_MAX_MEMORY_PER_CHILD = 12000
+# django-q
+Q_CLUSTER = {
+    "name": "builtwithdjango-q",
+    "orm": "default",
+    "timeout": 90,
+    "retry": 120,
+    "workers": 4,
+}
+
+# Screenshot API
+SCREENSHOT_API_KEY = env("SCREENSHOT_API_KEY")

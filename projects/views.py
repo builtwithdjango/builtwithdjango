@@ -3,6 +3,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django_filters.views import FilterView
+from django_q.tasks import async_task
 
 from newsletter.views import NewsletterSignupForm
 
@@ -44,6 +45,11 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
     success_message = """
         Thanks for submitting your project! I'll let you know when it is up on the site!
     """
+
+    def form_valid(self, form):
+        self.object = form.save()
+        async_task("projects.tasks.save_screenshot", self.object.title, hook="projects.tasks.screenshot_saved")
+        return super(ProjectCreateView, self).form_valid(form)
 
 
 class ProjectUpdateView(LoginRequiredMixin, UpdateView):

@@ -74,4 +74,5 @@ jobs:
         KEY: ${{ secrets.DO_SSHKEY }}
         script: |
           sudo systemctl restart bwd.gunicorn
+          sudo systemctl restart bwd.django_q
           sudo systemctl restart nginx

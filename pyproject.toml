@@ -1,3 +1,9 @@
+[tool.poetry]
+name = "builtwithdjango"
+version = "0.1.4"
+description = "Source code for the builtwithdjango.com website."
+authors = ["Rasul Kireev <me@rasulkireev.com>"]
+
 [tool.black]
 line-length = 120
 target-version = ['py37']
@@ -32,12 +38,6 @@ include_trailing_comma = true
 line_length = 120
 multi_line_output = 3
 
-[tool.poetry]
-name = "builtwithdjango"
-version = "0.1.3"
-description = "Source code for the builtwithdjango.com website."
-authors = ["Rasul Kireev <me@rasulkireev.com>"]
-
 [tool.poetry.dependencies]
 python = "^3.9"
 Django = "^3.2.4"
@@ -60,6 +60,7 @@ django-rest-auth = {extras = ["with_social"], version = "^0.9.5"}
 stripe = "^2.63.0"
 cloudinary = "^1.28.1"
 django-widget-tweaks = "^1.4.12"
+django-q = "^1.3.9"
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b2"

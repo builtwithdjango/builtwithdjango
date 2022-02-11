@@ -15,6 +15,11 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 ## [Unreleased]
 
+## [0.1.4] - 2022-02-11
+### Added
+- Added support for Django_q
+- As a consequence added a feature where screenshot is added automatically
+
 ## [0.1.3] - 2022-02-07
 ### Added
 - Exit Intent Email Form
