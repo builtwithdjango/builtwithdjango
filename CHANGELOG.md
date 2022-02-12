@@ -19,6 +19,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 ### Added
 - Added support for Django_q
 - As a consequence added a feature where screenshot is added automatically
+- Moved email notifications to background tasks
 
 ## [0.1.3] - 2022-02-07
 ### Added

@@ -9,7 +9,9 @@ from newsletter.views import NewsletterSignupForm
 
 from .filters import ProjectFilter
 from .forms import AddComment, AddProject, ProjectUpdateViewForm
+from .hooks import screenshot_saved
 from .models import Comment, Project
+from .tasks import notify_admins_of_comment, notify_of_new_project, notify_owner_of_new_comment, save_screenshot
 
 
 class ProjectListView(FilterView):
@@ -48,7 +50,8 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        async_task("projects.tasks.save_screenshot", self.object.title, hook="projects.tasks.screenshot_saved")
+        # async_task(save_screenshot, self.object.title, hook=screenshot_saved)
+        async_task(notify_of_new_project, self.object)
         return super(ProjectCreateView, self).form_valid(form)
 
 
@@ -73,4 +76,8 @@ class CommentCreateView(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         form.instance.project = Project.objects.get(slug=self.kwargs["slug"])
+        self.object = form.save()
+        async_task(notify_owner_of_new_comment, self.object)
+        async_task(notify_admins_of_comment, self.object)
+
         return super(CommentCreateView, self).form_valid(form)
