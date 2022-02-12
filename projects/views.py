@@ -50,7 +50,7 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        # async_task(save_screenshot, self.object.title, hook=screenshot_saved)
+        async_task(save_screenshot, self.object.title, hook=screenshot_saved)
         async_task(notify_of_new_project, self.object)
         return super(ProjectCreateView, self).form_valid(form)
 
