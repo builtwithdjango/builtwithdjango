@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
@@ -50,8 +51,9 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        async_task(save_screenshot, self.object.title, hook=screenshot_saved)
-        async_task(notify_of_new_project, self.object)
+        if settings.ENVIRONMENT == "prod":
+            async_task(save_screenshot, self.object.title, hook=screenshot_saved)
+            async_task(notify_of_new_project, self.object)
         return super(ProjectCreateView, self).form_valid(form)
 
 
@@ -77,7 +79,8 @@ class CommentCreateView(CreateView):
         form.instance.author = self.request.user
         form.instance.project = Project.objects.get(slug=self.kwargs["slug"])
         self.object = form.save()
-        async_task(notify_owner_of_new_comment, self.object)
-        async_task(notify_admins_of_comment, self.object)
+        if settings.ENVIRONMENT == "prod":
+            async_task(notify_owner_of_new_comment, self.object)
+            async_task(notify_admins_of_comment, self.object)
 
         return super(CommentCreateView, self).form_valid(form)
