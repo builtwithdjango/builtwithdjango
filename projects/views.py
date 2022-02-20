@@ -5,7 +5,8 @@ from django.views.generic import CreateView, DetailView, UpdateView
 from django_filters.views import FilterView
 from django_q.tasks import async_task
 
-from newsletter.views import NewsletterSignupForm
+from newsletter.forms import NewsletterSignupForm
+from users.forms import CustomUserCreationForm
 
 from .filters import ProjectFilter
 from .forms import AddComment, AddProject, ProjectUpdateViewForm
@@ -48,7 +49,14 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
         Thanks for submitting your project! I'll let you know when it is up on the site!
     """
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["registration_form"] = CustomUserCreationForm
+
+        return context
+
     def form_valid(self, form):
+        form.instance.logged_in_maker = self.request.user
         self.object = form.save()
         async_task(save_screenshot, self.object.title, hook=screenshot_saved)
         async_task(notify_of_new_project, self.object)

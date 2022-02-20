@@ -14,6 +14,8 @@ def save_screenshot(project_title):
     image = requests.get(r["screenshot"], stream=True)
     file = ContentFile(image.content)
     project.homepage_screenshot.save(f"{project.title}.png", file, save=True)
+    project.published = True
+    project.save()
 
 
 def notify_of_new_project(instance):

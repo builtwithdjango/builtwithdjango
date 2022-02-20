@@ -7,7 +7,7 @@
     <meta property="og:title" content="Built with Django" />
     <meta property="og:url" content="https://{{ request.get_host }}/donate-one-time/" />
     <meta property="og:description" content="Collection of cool projects people built with Django" />
-    <meta name="og:image" content="{% static 'images/logo.png' %}" />
+    <meta property="og:image" content="{% static 'images/logo.png' %}" />
     <meta name="twitter:creator" content="@rasulkireev" />
     <meta name="twitter:site" content="@rasulkireev" />
     <meta name="twitter:title" content="Built with Django" />
@@ -32,14 +32,14 @@
     <div id="smart-button-container">
         <div class="text-center">
             <label for="description">Message</label>
-            <input type="text" name="descriptionInput" id="description" maxlength="127" value="">
+            <input type="text" name="descriptionInput" id="description" maxlength="127" value="" />
         </div>
         <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">
             Please enter a description
         </p>
         <div class="text-center">
             <label for="amount"></label>
-            <input name="amountInput" type="number" id="amount" value="" >
+            <input name="amountInput" type="number" id="amount" value="" />
             <span>USD</span>
         </div>
         <p id="priceLabelError" style="visibility: hidden; color:red; text-align: center;">
@@ -47,7 +47,7 @@
         </p>
         <div id="invoiceidDiv" style="text-align: center; display: none;">
             <label for="invoiceid"></label>
-            <input name="invoiceid" maxlength="127" type="text" id="invoiceid" value="" >
+            <input name="invoiceid" maxlength="127" type="text" id="invoiceid" value="" />
         </div>
         <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">
             Please enter an Invoice ID

@@ -29,7 +29,6 @@ repos:
   rev:  0.7.4
   hooks:
     - id: djlint-django
-      exclude: "support.html"
 
 - repo: local
   hooks:

@@ -99,6 +99,8 @@ class CustomUserUpdateForm(UserChangeForm):
     class Meta:
         model = get_user_model()
         fields = (
+            "first_name",
+            "last_name",
             "profile_image",
             "referred_by",
         )

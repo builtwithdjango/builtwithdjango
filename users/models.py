@@ -6,6 +6,9 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
+    first_name = models.CharField(max_length=20, blank=True)
+    last_name = models.CharField(max_length=20, blank=True)
+
     referred_by = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -17,7 +20,7 @@ class CustomUser(AbstractUser):
         "Image",
         overwrite=True,
         resource_type="image",
-        folder=f"user-profile-image-{settings.ENV}",
+        folder=f"user-profile-image-{settings.ENVIRONMENT}",
         blank=True,
         null=True,
     )
