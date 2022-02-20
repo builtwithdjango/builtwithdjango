@@ -17,7 +17,7 @@ class Project(models.Model):
     title = models.CharField(max_length=100, unique=True)
     url = models.URLField(unique=True)
     short_description = models.CharField(max_length=200)
-    user_email = models.EmailField()
+    user_email = models.EmailField(blank=True, null=True)
     slug = AutoSlugField(populate_from="title", always_update=True)
     published = models.BooleanField(default=False)
     large_company = models.BooleanField(default=False)
@@ -31,13 +31,10 @@ class Project(models.Model):
     twitter_url = models.URLField(blank=True)
     github_url = models.URLField(blank=True)
 
-    maker = models.ForeignKey(
-        "makers.Maker",
-        related_name="projects",
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
+    logged_in_maker = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="project", blank=True, null=True
     )
+
     technologies = models.ManyToManyField("Technology", related_name="projects", blank=True)
 
     ### Ideally I would automatically parse suggestions, but
@@ -51,6 +48,13 @@ class Project(models.Model):
     additional_info = models.TextField(blank=True)
     requirements = models.TextField(blank=True)
     tags = TaggableManager(blank=True)
+    maker = models.ForeignKey(
+        "makers.Maker",
+        related_name="projects",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         ordering = ["-date_added"]

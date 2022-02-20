@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 {% block meta %}<title>Built with Django | Update Profile</title>{% endblock meta %}
 {% block content %}
     <div class="w-auto mx-auto mt-10 lg:w-1/3">
@@ -7,6 +8,19 @@
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
+                <div class="mb-4">
+                    {{ form.first_name.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.first_name.id_for_label }}">
+                        First Name
+                    </label>
+                    {% render_field form.first_name class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %}
+                </div>
+                <div class="mb-4">
+                    {{ form.last_name.errors }}
+                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.last_name.id_for_label }}">
+                        Last Name
+                    </label>
+                    {% render_field form.last_name class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %}                </div>
                 <div class="mb-4">
                     {{ form.profile_image.errors }}
                     <label class="block mb-2 font-bold text-gray-700" for="{{ form.profile_image.id_for_label }}">

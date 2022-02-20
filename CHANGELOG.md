@@ -15,6 +15,14 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 ## [Unreleased]
 
+## [0.2.0] - 2022-02-11
+### Changed
+- Only registered users can now submit projects.
+- We will now slowly move away from the "Maker" model towards users being the makers.
+
+### Removed
+- Removed Support Button for now.
+
 ## [0.1.4] - 2022-02-11
 ### Added
 - Added support for Django_q

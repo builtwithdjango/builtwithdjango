@@ -24,7 +24,7 @@
         <a href="{% url 'projects' %}">back to all projects</a>
     </p>
     <div class="flex flex-col justify-center max-w-5xl mx-auto my-10 space-y-2">
-        {% if user == object.maker.user %}
+        {% if user == object.maker.user or user == object.logged_in_maker %}
             <div>
                 <a href="{% url 'project_update' object.slug %}"
                    class="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">

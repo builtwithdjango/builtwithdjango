@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 {% load markdown_extras %}
 {% block content %}
-    {% if user == object.maker.user %}
+    {% if user == object.maker.user or user == object.logged_in_maker %}
         <div class="max-w-5xl mx-auto my-10">
             <div class="px-6 pt-6 overflow-hidden bg-white rounded-lg shadow">
                 <form method="post" enctype="multipart/form-data">
@@ -51,7 +52,7 @@
                                     Twitter URL (Optional)
                                 </label>
                                 <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    {{ form.twitter_url }}
+                                  {% render_field form.twitter_url class="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm" placeholder="https://twitter.com/rasulkireev" %}
                                 </div>
                             </div>
                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -61,7 +62,7 @@
                                     Github URL (Optional)
                                 </label>
                                 <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    {{ form.github_url }}
+                                  {% render_field form.github_url class="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm" placeholder="https://github.com/rasulkireev" %}
                                 </div>
                             </div>
                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">

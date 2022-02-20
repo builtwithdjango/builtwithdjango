@@ -210,7 +210,15 @@
                                 </div>
                             </div>
                             <div>
-                                {% if site.maker.first_name or site.maker.last_name %}
+                                {% if site.logged_in_maker %}
+                                  <a href="#" class="text-sm font-semibold text-gray-700">
+                                    {% if site.logged_in_maker.first_name and site.logged_in_maker.last_name %}
+                                      by {{ site.logged_in_maker.first_name }} {{ site.logged_in_maker.last_name }}
+                                    {% else %}
+                                    {{ site.logged_in_maker }}
+                                    {% endif %}
+                                  </a>
+                                {% elif site.maker.first_name or site.maker.last_name %}
                                     <a href="{{ site.maker.get_absolute_url }}"
                                        class="text-sm font-semibold text-gray-700 hover:underline hover:text-gray-900">
                                         by

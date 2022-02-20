@@ -8,7 +8,8 @@
     <meta property="og:title" content="Built with Django" />
     <meta property="og:url" content="https://{{ request.get_host }}/projects/" />
     <meta property="og:description" content="Collection of cool projects people built with Django" />
-    <meta name="og:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
+    <meta property="og:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:creator" content="@rasulkireev" />
     <meta name="twitter:site" content="@rasulkireev" />
     <meta name="twitter:title" content="Built with Django" />
@@ -28,7 +29,8 @@
                   action="{% url 'newsletter_home' %}"
                   method="post"
                   enctype="multipart/form-data">
-                {% csrf_token %} {{ newsletter_form.non_field_errors }}
+                {% csrf_token %}
+                {{ newsletter_form.non_field_errors }}
                 <div class="flex flex-row items-center">
                     <div class="flex flex-col">
                         <div class="flex flex-row item-center">
@@ -266,7 +268,15 @@
                             </div>
                         </div>
                         <div>
-                            {% if site.maker.first_name or site.maker.last_name %}
+                            {% if site.logged_in_maker %}
+                              <a href="#" class="text-sm font-semibold text-gray-700">
+                                {% if site.logged_in_maker.first_name and site.logged_in_maker.last_name %}
+                                  by {{ site.logged_in_maker.first_name }} {{ site.logged_in_maker.last_name }}
+                                {% else %}
+                                {{ site.logged_in_maker }}
+                                {% endif %}
+                              </a>
+                            {% elif site.maker.first_name or site.maker.last_name %}
                                 <a href="{{ site.maker.get_absolute_url }}"
                                    class="text-sm font-semibold text-gray-700 hover:underline hover:text-gray-900">
                                     by

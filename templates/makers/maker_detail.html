@@ -8,7 +8,7 @@
     <meta property="og:title" content="{{ object.first_name }} {{ object.last_name }} builds with Django" />
     <meta property="og:url" content="https://{{ request.get_host }}/makers/{{ object.slug }}/" />
     <meta property="og:description" content="{{ object.first_name }} {{ object.last_name }} builds with Django" />
-    <meta name="og:image" content="{% get_media_prefix %}{{ object.maker_profile_image }}" />
+    <meta property="og:image" content="{% get_media_prefix %}{{ object.maker_profile_image }}" />
     {% if object.twitter_handle %}
         <meta name="twitter:creator" content="@{{ object.twitter_handle }}" />
         <meta name="twitter:site" content="@{{ object.twitter_handle }}" />

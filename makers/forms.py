@@ -31,6 +31,21 @@ class ClaimAccountForm(ModelForm):
         fields = ("user",)
 
 
+class AddMaker(ModelForm):
+    class Meta:
+        model = Maker
+        fields = [
+            "first_name",
+            "last_name",
+            "maker_email",
+            "maker_profile_image",
+            "twitter_handle",
+            "github_handle",
+            "indiehackers",
+            "personal_website",
+        ]
+
+
 class MakerUpdateViewForm(ModelForm):
     # maker_profile_image = forms.ImageField(required=False, widget=forms.FileInput)
     remove_photo = forms.BooleanField(required=False)

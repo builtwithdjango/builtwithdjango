@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
@@ -6,7 +5,8 @@ from django.views.generic import CreateView, DetailView, UpdateView
 from django_filters.views import FilterView
 from django_q.tasks import async_task
 
-from newsletter.views import NewsletterSignupForm
+from newsletter.forms import NewsletterSignupForm
+from users.forms import CustomUserCreationForm
 
 from .filters import ProjectFilter
 from .forms import AddComment, AddProject, ProjectUpdateViewForm
@@ -49,11 +49,17 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
         Thanks for submitting your project! I'll let you know when it is up on the site!
     """
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["registration_form"] = CustomUserCreationForm
+
+        return context
+
     def form_valid(self, form):
+        form.instance.logged_in_maker = self.request.user
         self.object = form.save()
-        if settings.ENVIRONMENT == "prod":
-            async_task(save_screenshot, self.object.title, hook=screenshot_saved)
-            async_task(notify_of_new_project, self.object)
+        async_task(save_screenshot, self.object.title, hook=screenshot_saved)
+        async_task(notify_of_new_project, self.object)
         return super(ProjectCreateView, self).form_valid(form)
 
 
@@ -79,8 +85,7 @@ class CommentCreateView(CreateView):
         form.instance.author = self.request.user
         form.instance.project = Project.objects.get(slug=self.kwargs["slug"])
         self.object = form.save()
-        if settings.ENVIRONMENT == "prod":
-            async_task(notify_owner_of_new_comment, self.object)
-            async_task(notify_admins_of_comment, self.object)
+        async_task(notify_owner_of_new_comment, self.object)
+        async_task(notify_admins_of_comment, self.object)
 
         return super(CommentCreateView, self).form_valid(form)

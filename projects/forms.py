@@ -1,5 +1,3 @@
-from django.core.mail import send_mail
-from django.db import transaction
 from django.forms import ModelForm
 
 from .models import Comment, Project
@@ -9,29 +7,15 @@ class AddProject(ModelForm):
     def __init__(self, *args, **kwargs):
         super(AddProject, self).__init__(*args, **kwargs)
 
-        for fieldname in [
-            "title",
-            "user_email",
-            "short_description",
-            "url",
-        ]:
-            self.fields[fieldname].help_text = None
-            self.fields[fieldname].widget.attrs.update(
-                {
-                    "class": "block appearance-none w-full bg-white border border-solid border-grey-light \
-                              hover:border-grey px-2 py-2 rounded shadow"
-                }
-            )
-
-        self.fields["url"].widget.attrs.update({"placeholder": "https://test.com"})
-
     class Meta:
         model = Project
         fields = [
             "title",
-            "user_email",
             "short_description",
             "url",
+            "twitter_url",
+            "github_url",
+            "technology_suggestions_by_user",
         ]
 
 
@@ -62,8 +46,6 @@ class ProjectUpdateViewForm(ModelForm):
 
         for fieldname in [
             "short_description",
-            "twitter_url",
-            "github_url",
             "sale_link",
         ]:
             self.fields[fieldname].help_text = None

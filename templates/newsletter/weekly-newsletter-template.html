@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: rgb(0, 0, 0);">
-    <head>
-        <title></title>
-    </head>
     <body>
         <div style="margin-bottom: 30px;">
             <h1 style="font-size: 36px; margin: 10px 0 5px 0; padding:0;">
@@ -20,17 +17,19 @@
             </p>
         </div>
         <div style="padding: 20px 30px; background-color: rgba(236, 253, 245, 1); margin-bottom: 15px;">
-            <h2>News</h2>
-            <hr>
+            <h2>News and Updates</h2>
+            <hr />
             <div style="margin: 10px 0 5px 0; padding:0; font-size: 14px;">
-                <p>
-                    Lorem impus lorem impus lorem impus lorem impus lorem impus lorem.
-                </p>
+                <ul style="padding: 0px;">
+                  <li style="padding-bottom: 10px;">
+                      Lorem impus lorem impus lorem impus lorem impus lorem impus lorem.
+                  </li>
+                </ul>
             </div>
         </div>
         <div style="padding: 20px 30px; background-color: rgba(236, 253, 245, 1); margin-bottom: 15px;">
             <h2>Projects</h2>
-            <hr>
+            <hr />
             {% for project in projects %}
                 <div style="margin: 20px 0;">
                     <p style="margin: 10px 0 5px 0; padding:0; font-size: 14px;">
@@ -54,7 +53,7 @@
         </div>
         <div style="padding: 20px 30px; background-color: rgba(236, 253, 245, 1); margin-bottom: 15px;">
             <h2>Jobs</h2>
-            <hr>
+            <hr />
             {% for job in jobs %}
                 <div style="margin: 20px 0;">
                     <p style="margin: 10px 0 5px 0; padding:0; font-size: '{% if job.paid %}'15'{% else %}'14'{% endif %}'px;">
@@ -74,7 +73,7 @@
         </div>
         <div style="padding: 20px 30px; background-color: rgba(236, 253, 245, 1); margin-bottom: 15px;">
             <h2>Podcast Episodes</h2>
-            <hr>
+            <hr />
             {% for episode in podcast_episodes %}
                 <div style="margin: 20px 0;">
                     <p style="margin: 10px 0 5px 0; padding:0; font-size: 14px;">
@@ -92,7 +91,7 @@
         </div>
         <div style="padding: 20px 30px; background-color: rgba(236, 253, 245, 1); margin-bottom: 15px;">
             <h2>End Note</h2>
-            <hr>
+            <hr />
             <div style="margin: 10px 0 5px 0; padding:0; font-size: 14px;">
                 <p>
                     If you stumble upon any cool Django projects please let me know.
@@ -126,5 +125,6 @@
                 EmailOctopus
             </a>
             .
+        </p>
         </body>
     </html>
