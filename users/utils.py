@@ -3,21 +3,6 @@ from django.utils.text import slugify
 
 from users.models import CustomUser
 
-
-def retroactively_assign_slug():
-    users = CustomUser.objects.all()
-
-    for user in users:
-        if user.slug is None or 1:
-            print(f"Updating slug for {user.username}")
-            user.slug = slugify(user.username)
-            user.save()
-            print(f"New slug {user.slug} is saved.")
-        continue
-
-
-retroactively_assign_slug()
-
 # run with `poetry run python manage.py shell < users/utils.py`
 
 
