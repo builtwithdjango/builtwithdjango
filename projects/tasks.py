@@ -20,7 +20,7 @@ def save_screenshot(project_title):
 
 def notify_of_new_project(instance):
     message = f"""
-      {instance.user_email} submitted a project ({instance.title} - {instance.url}).
+      {instance.logged_in_maker} submitted a project ({instance.title} - {instance.url}).
     """
     send_mail(
         "New Project Submission",
@@ -34,7 +34,7 @@ def notify_of_new_project(instance):
 def notify_owner_of_new_comment(instance):
     try:
         project_instance = Project.objects.get(title=instance.project.title)
-        project_owner_email = project_instance.maker.user.email
+        project_owner_email = project_instance.logged_in_maker.email
     except AttributeError:
         project_owner_email = "rasul@builtwithdjango.com"
 

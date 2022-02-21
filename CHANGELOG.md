@@ -20,6 +20,11 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 - Only registered users can now submit projects.
 - We will now slowly move away from the "Maker" model towards users being the makers.
 
+### Added
+- Added a bunch of fields to users model.
+
+### Fixed
+- Fixed the email that gets sent to me when someone submits a project.
 ### Removed
 - Removed Support Button for now.
 
