@@ -15,14 +15,6 @@ class CustomUserAdmin(UserAdmin):
                 "fields": (
                     "profile_image",
                     "referred_by",
-                    "slug",
-                    "make_public",
-                    "twitter_handle",
-                    "github_handle",
-                    "indiehackers_handle",
-                    "personal_website",
-                    "interviewed",
-                    "short_bio",
                 )
             },
         ),
