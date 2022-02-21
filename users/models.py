@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20, blank=True)
     slug = AutoSlugField(populate_from="username", always_update=True, editable=True)
+    make_public = models.BooleanField(default=True)
 
     # Social
     twitter_handle = models.CharField(max_length=20, blank=True)
