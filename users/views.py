@@ -13,13 +13,19 @@ from .models import CustomUser
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy("login")
-    template_name = "registration/signup.html"
+    template_name = "account/signup.html"
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(SignUpView, self).get_context_data(**kwargs)
         context["newsletter_form"] = NewsletterSignupForm
+        context["referrer"] = self.request.GET.get("r")
+        context["hello"] = "hellooooooooo"
 
         return context
+
+    def get_initial(self):
+        initial_base = super(ProfileUpdateForm, self).get_initial()
+        initial_base["referred_by"] = CustomUser.objects.get(username=self.request.POST.get("r"))
 
 
 class CustomLoginView(LoginView):
