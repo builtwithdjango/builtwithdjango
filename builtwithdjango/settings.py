@@ -264,6 +264,7 @@ Q_CLUSTER = {
     "timeout": 90,
     "retry": 120,
     "workers": 4,
+    "max_attempts": 2,
 }
 
 # Screenshot API
