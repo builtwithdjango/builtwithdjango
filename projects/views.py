@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Count, Q
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView
 from django_filters.views import FilterView
@@ -18,8 +19,28 @@ from .tasks import notify_admins_of_comment, notify_of_new_project, notify_owner
 class ProjectListView(FilterView):
     model = Project
     template_name = "projects/all_projects.html"
-    queryset = Project.objects.filter(published=True).order_by("-updated_date")
     filterset_class = ProjectFilter
+
+    def get_queryset(self):
+        queryset = Project.objects.filter(published=True).order_by("-updated_date")
+
+        if self.request.GET.get("order_by"):
+            ordering = self.request.GET.get("order_by")
+
+            if ordering == "like":
+                queryset = (
+                    Project.objects.filter(published=True)
+                    .annotate(like__count=Count(ordering, filter=Q(like__like=True)))
+                    .order_by(f"-{ordering}__count")
+                )
+            elif ordering == "comments":
+                queryset = (
+                    Project.objects.filter(published=True).annotate(Count(ordering)).order_by(f"-{ordering}__count")
+                )
+            else:
+                queryset = Project.objects.filter(published=True).order_by("-updated_date")
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

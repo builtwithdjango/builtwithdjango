@@ -1,9 +1,9 @@
-import django_filters
+from django_filters import FilterSet
 
 from .models import Project
 
 
-class ProjectFilter(django_filters.FilterSet):
+class ProjectFilter(FilterSet):
     def __init__(self, *args, **kwargs):
         super(ProjectFilter, self).__init__(*args, **kwargs)
 
