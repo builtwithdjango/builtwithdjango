@@ -15,6 +15,10 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 ## [Unreleased]
 
+## [0.2.0] - 2022-04-07
+### Added
+- Ability to sort projects based on # of likes and comments.
+
 ## [0.2.0] - 2022-02-11
 ### Changed
 - Only registered users can now submit projects.
