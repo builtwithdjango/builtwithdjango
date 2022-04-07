@@ -30,7 +30,7 @@
                       src="{% get_media_prefix %}{{ object.company.logo }}"
                       alt="{{ object.company }} Logo"/>
               {% elif object.company_logo %}
-                <img class="w-8 h-8 rounded-full"
+                <img class="w-24 h-24 rounded-full"
                     src="https://res.cloudinary.com/built-with-django/{{ object.company_logo }}"
                     alt="{{ object.company_name }}" />
               {% endif %}
