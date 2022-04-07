@@ -62,9 +62,11 @@
             {% for job in object_list %}
                 <div class=" relative flex items-center px-6 py-5 space-x-3 {% if job.paid %} bg-yellow-300 border-yellow-300 hover:bg-yellow-400 hover:border-yellow-400 {% else %} bg-white border-gray-300 hover:bg-gray-100 hover:border-gray-400 {% endif %} border border-solid rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 ">
                     <div class="flex-shrink-0">
+                        {% if job.company.logo %}
                         <img class="w-16 h-16 rounded-full"
                              src="{% get_media_prefix %}{{ job.company.logo }}"
                              alt="{{ job.company }} Logo"/>
+                        {% endif %}
                     </div>
                     <div class="flex-1 min-w-0">
                         <a href="{{ job.get_absolute_url }}" class="focus:outline-none">
