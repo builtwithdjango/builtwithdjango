@@ -261,6 +261,10 @@
                                 <img class="w-10 h-10 rounded-full"
                                      src="{% get_media_prefix %}{{ job.company.logo }}"
                                      alt="{{ job.company.name }} Logo" />
+                                {% elif job.company_logo %}
+                                <img class="w-8 h-8 rounded-full"
+                                     src="https://res.cloudinary.com/built-with-django/{{ job.company_logo }}"
+                                     alt="{{ job.company_name }}" />
                                 {% endif %}
                             </div>
                             <div class="flex-1 min-w-0">
