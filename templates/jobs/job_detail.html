@@ -25,15 +25,21 @@
     <div class="max-w-3xl mx-auto my-10">
         <div class="flex flex-col items-center mt-10 prose md:mx-auto lg:prose-lg">
             <div class="flex-shrink-0">
-                <img class="w-24 h-24 rounded-full"
-                     src="{% get_media_prefix %}{{ job.company.logo }}"
-                     alt="{{ job.company }} Logo"/>
+              {% if object.company.logo %}
+              <img class="w-24 h-24 rounded-full"
+                     src="{% get_media_prefix %}{{ object.company.logo }}"
+                     alt="{{ object.company }} Logo"/>
+              {% endif %}
             </div>
             <h1 class="text-center">
                 {{ object.title }} @
-                <a href="{{ object.company.project.get_absolute_url }}">
-                    {{ object.company.name }}
-                </a>
+                {% if object.company.name %}
+                  <a href="{{ object.company.project.get_absolute_url }}">
+                      {{ object.company.name }}
+                  </a>
+                {% elif object.company_name %}
+                  <span>{{ object.company_name }}</span>
+                {% endif %}
             </h1>
         </div>
         <div class="flex justify-center mt-10">
