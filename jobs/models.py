@@ -1,4 +1,6 @@
 from autoslug import AutoSlugField
+from cloudinary.models import CloudinaryField
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
@@ -29,6 +31,14 @@ class Job(models.Model):
 
     # User Submitted
     company_name = models.CharField(max_length=100, blank=True)
+    company_logo = CloudinaryField(
+        "Image",
+        overwrite=True,
+        resource_type="image",
+        folder=f"user-profile-image-{settings.ENVIRONMENT}",
+        blank=True,
+        null=True,
+    )
 
     approved = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
