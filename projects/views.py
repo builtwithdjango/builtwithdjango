@@ -30,8 +30,9 @@ class ProjectListView(FilterView):
             if ordering == "like":
                 queryset = (
                     Project.objects.filter(published=True)
-                    .annotate(like__count=Count(ordering, filter=Q(like__like=True)))
-                    .order_by(f"-{ordering}__count")
+                    # need like_count as an alias for comlex query
+                    # https://stackoverflow.com/questions/39375339/django-complex-annotations-require-an-alias-what-is-alias-here
+                    .annotate(like__count=Count("like", filter=Q(like__like=True))).order_by(f"-like__count")
                 )
             elif ordering == "comments":
                 queryset = (
