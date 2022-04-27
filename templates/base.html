@@ -27,11 +27,16 @@
             <meta name="twitter:description" content="Collection of cool projects people built with Django"/>
             <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
         {% endblock meta %}
+       
         <!-- CSS -->
         <!-- CSS refresh solution from https://stackoverflow.com/a/56987021/6020165 -->
         <link rel="stylesheet" href="{% static 'bundles/main.css' %}?{% now 'U' %}"/>
         <link rel="stylesheet"
               href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"/>
+        
+        <link rel="stylesheet"
+              href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
         <script async defer data-domain="builtwithdjango.com" src="https://plausible.io/js/plausible.js"></script>
 
