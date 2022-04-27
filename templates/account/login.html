@@ -17,10 +17,10 @@
                     </a>
                 </p>
             </div>
-            <form class="mt-8 space-y-6" method="POST">
+            <form class="mt-8 space-y-6" method="post">
                 {% csrf_token %}
                 {{ form.non_field_errors | safe }}
-                <input type="hidden" name="remember" value="true">
+                <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-sm">
                     <div>
                         {{ form.login.errors | safe }}

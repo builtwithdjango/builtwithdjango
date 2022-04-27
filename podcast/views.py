@@ -1,7 +1,8 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import DetailView, ListView
+
+from newsletter.views import NewsletterSignupForm
 
 from .models import Episode
-from newsletter.views import NewsletterSignupForm
 
 
 class EpisodeListView(ListView):

@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Project, Maker
+
+from .models import Maker, Project
 
 
 class ProjectsSerializer(serializers.ModelSerializer):

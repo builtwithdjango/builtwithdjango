@@ -1,11 +1,6 @@
 from django.urls import path
 
-from .views import (
-    ClaimAccountView,
-    MakerDetailView,
-    MakerListView,
-    MakerUpdateView,
-)
+from .views import ClaimAccountView, MakerDetailView, MakerListView, MakerUpdateView
 
 urlpatterns = [
     path("", MakerListView.as_view(), name="makers"),

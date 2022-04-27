@@ -7,11 +7,11 @@ repos:
     -   id: trailing-whitespace
 
 - repo: https://github.com/psf/black
-  rev: 21.7b0
+  rev: 22.3.0
   hooks:
   - id: black
     exclude: ^migrations/
-    language_version: python3.7
+    language_version: python3.8
 
 - repo: https://github.com/pycqa/isort
   rev: 5.8.0

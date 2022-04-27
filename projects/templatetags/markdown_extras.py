@@ -1,9 +1,8 @@
 # from Will Vincent tutorial -> https://learndjango.com/tutorials/django-markdown-tutorial
 
+import markdown as md
 from django import template
 from django.template.defaultfilters import stringfilter
-
-import markdown as md
 
 register = template.Library()
 
