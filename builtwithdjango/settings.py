@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "cloudinary",
     "widget_tweaks",
     "django_q",
+    "webpack_boilerplate",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
