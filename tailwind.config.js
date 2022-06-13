@@ -2,9 +2,10 @@ module.exports = {
   content: [
     './templates/**/*.html',
   ],
-  // safelist: [
-  //   {pattern: /(bg|text)-(.*)-(.*)/}
-  // ],
+  // https://nexxai.dev/tell-purgecss-to-ignore-purging-all-tailwind-colours/
+  safelist: [
+    {pattern: /(bg|text)-(.*)-(.*)/}
+  ],
   theme: {
     extend: {
       maxWidth: {
