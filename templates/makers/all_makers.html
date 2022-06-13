@@ -7,12 +7,12 @@
     <meta property="og:title" content="Coolest Django Makers!" />
     <meta property="og:url" content="https://{{ request.get_host }}/projects/makers/" />
     <meta property="og:description" content="Coolest Django makers!" />
-    <meta property="og:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
+    <meta property="og:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
     <meta name="twitter:creator" content="@rasulkireev" />
     <meta name="twitter:site" content="@rasulkireev" />
     <meta name="twitter:title" content="Coolest Django Makers!" />
     <meta name="twitter:description" content="Coolest Django makers!" />
-    <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
+    <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
 {% endblock meta %}
 {% block content %}
     <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
@@ -160,7 +160,7 @@
     "@type": "WebSite",
     "name": "Built with Django | Makers",
     "description": "Coolest Django makers!",
-    "thumbnailUrl": "https://{{ request.get_host }}{% static 'images/logo.png' %}",
+    "thumbnailUrl": "https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}",
     "url": "https://{{ request.get_host }}/",
     "author": {
       "@type": "Person",

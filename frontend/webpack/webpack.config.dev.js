@@ -1,7 +1,6 @@
 const Path = require("path");
 const Webpack = require("webpack");
 const { merge } = require("webpack-merge");
-const StylelintPlugin = require("stylelint-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 
@@ -16,7 +15,6 @@ module.exports = merge(common, {
     publicPath: "http://localhost:9091/",
   },
   devServer: {
-    hot: true,
     host: "0.0.0.0",
     port: 9091,
     headers: {
@@ -25,23 +23,21 @@ module.exports = merge(common, {
     devMiddleware: {
       writeToDisk: true,
     },
+    watchFiles: [
+      Path.join(__dirname, '../../**/*.py'),
+      Path.join(__dirname, '../../templates/**/*.html'),
+    ],
   },
   plugins: [
     new Webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development"),
-    }),
-    new StylelintPlugin({
-      files: Path.resolve(__dirname, "../src/**/*.s?(a|c)ss"),
     }),
     new ESLintPlugin({
       extensions: "js",
       emitWarning: true,
       files: Path.resolve(__dirname, "../src"),
     }),
-    new MiniCssExtractPlugin({
-      filename: "css/[name].css",
-      chunkFilename: "css/[id].css",
-    }),
+    new MiniCssExtractPlugin(),
   ],
   module: {
     rules: [
@@ -53,9 +49,11 @@ module.exports = merge(common, {
         test: /\.js$/,
         include: Path.resolve(__dirname, "../src"),
         loader: "babel-loader",
+        exclude: /node_modules/
       },
       {
-        test: /\.s?css$/i,
+        test: /\.css$/,
+        exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -65,7 +63,6 @@ module.exports = merge(common, {
             },
           },
           "postcss-loader",
-          "sass-loader",
         ],
       },
     ],

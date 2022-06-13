@@ -1,12 +1,12 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = [ "nav" ]
+    static targets = [ "nav" ];
 
     shownav() {
-        const element = this.navTarget
+        const element = this.navTarget;
         if (element.classList.contains('hidden')) {
-            element.classList.remove("hidden")
+            element.classList.remove("hidden");
         } else {
             element.classList.add("hidden");
         }
