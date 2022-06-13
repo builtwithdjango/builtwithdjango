@@ -1,14 +1,14 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus";
 import {enter, leave} from 'el-transition';
 
 export default class extends Controller {
-    static targets = [ "projectId", "numberOfLikes", "currentUser", "modalButton", "modal" ]
+    static targets = [ "projectId", "numberOfLikes", "currentUser", "modalButton", "modal" ];
 
     // load all likes
     connect () {
-      const projectId = this.projectIdTarget.value
-      const currentUserId = this.currentUserTarget.value
-      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+      const projectId = this.projectIdTarget.value;
+      const currentUserId = this.currentUserTarget.value;
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
       const axios = require('axios');
       axios({
@@ -22,35 +22,35 @@ export default class extends Controller {
       .then(function(response) {
         const arrayWithUsersWithLikes = response.data.filter(like => like.like == true);
         const arrayOfLikedUserIds = arrayWithUsersWithLikes.map(user => user.author);
-        document.getElementById(`${projectId}_likes`).innerHTML = arrayWithUsersWithLikes.length
+        document.getElementById(`${projectId}_likes`).innerHTML = arrayWithUsersWithLikes.length;
 
         if (arrayWithUsersWithLikes.length > 0 && arrayOfLikedUserIds.includes(Number(currentUserId))) {
-          document.getElementById(`${projectId}_heart`).classList.add('text-red-600')
-          document.getElementById(`${projectId}_heart`).classList.add('las')
-          document.getElementById(`${projectId}_heart`).classList.add('la-heart')
-          document.getElementById(`${projectId}_heart`).classList.add('block')
+          document.getElementById(`${projectId}_heart`).classList.add('text-red-600');
+          document.getElementById(`${projectId}_heart`).classList.add('las');
+          document.getElementById(`${projectId}_heart`).classList.add('la-heart');
+          document.getElementById(`${projectId}_heart`).classList.add('block');
         }
         else {
-          document.getElementById(`${projectId}_heart`).classList.add('lar')
-          document.getElementById(`${projectId}_heart`).classList.add('la-heart')
-          document.getElementById(`${projectId}_heart`).classList.add('block')
+          document.getElementById(`${projectId}_heart`).classList.add('lar');
+          document.getElementById(`${projectId}_heart`).classList.add('la-heart');
+          document.getElementById(`${projectId}_heart`).classList.add('block');
         }
       })
-      .catch(error => console.log(error))
+      .catch(error => console.log(error));
     }
 
     // Handle liking
     modify() {
-      const projectId = this.projectIdTarget.value
-      const currentUserId = this.currentUserTarget.value
-      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-      const numberOfLikes = Number(document.getElementById(`${projectId}_likes`).textContent)
+      const projectId = this.projectIdTarget.value;
+      const currentUserId = this.currentUserTarget.value;
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      const numberOfLikes = Number(document.getElementById(`${projectId}_likes`).textContent);
 
       // get the like info for the clicked project
       const axios = require('axios');
       axios.get(`/api/v1/like?author=${this.currentUserTarget.value}&project=${this.projectIdTarget.value}`)
         .then(function (response) {
-          var data = response.data
+          var data = response.data;
 
           // if there is no like action happened before we need to create one
           if (data.length == 0) {
@@ -67,15 +67,15 @@ export default class extends Controller {
                 "like": true
               }
             })
-            .then(function(response) {
-              document.getElementById(`${projectId}_likes`).textContent = numberOfLikes + 1
-              document.getElementById(`${projectId}_likes`).removeAttribute("class")
-              document.getElementById(`${projectId}_heart`).classList.add('text-red-600')
-              document.getElementById(`${projectId}_heart`).classList.add('las')
-              document.getElementById(`${projectId}_heart`).classList.add('la-heart')
+            .then(function() {
+              document.getElementById(`${projectId}_likes`).textContent = numberOfLikes + 1;
+              document.getElementById(`${projectId}_likes`).removeAttribute("class");
+              document.getElementById(`${projectId}_heart`).classList.add('text-red-600');
+              document.getElementById(`${projectId}_heart`).classList.add('las');
+              document.getElementById(`${projectId}_heart`).classList.add('la-heart');
             })
             .catch(function(error) {
-              console.log(error)
+              console.log(error);
             });
           }
           // if the like is currently of, turn it on
@@ -89,35 +89,35 @@ export default class extends Controller {
               }
             })
             .then(function (response) {
-              const id = response.data[0].id
+              const id = response.data[0].id;
               const data = {
                 "author": Number(currentUserId),
                 "project": Number(projectId),
                 "like": true
-              }
+              };
               const headers = {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken,
-              }
+              };
               axios({
                 method: 'put',
                 url: `/api/v1/like/${id}/`,
                 headers,
                 data
               })
-              .then(function(response) {
-                document.getElementById(`${projectId}_likes`).innerHTML = ""
-                document.getElementById(`${projectId}_likes`).innerHTML = `${numberOfLikes + 1}`
-                document.getElementById(`${projectId}_heart`).removeAttribute("class")
-                document.getElementById(`${projectId}_heart`).classList.add('text-red-600')
-                document.getElementById(`${projectId}_heart`).classList.add('las')
-                document.getElementById(`${projectId}_heart`).classList.add('la-heart')
+              .then(function() {
+                document.getElementById(`${projectId}_likes`).innerHTML = "";
+                document.getElementById(`${projectId}_likes`).innerHTML = `${numberOfLikes + 1}`;
+                document.getElementById(`${projectId}_heart`).removeAttribute("class");
+                document.getElementById(`${projectId}_heart`).classList.add('text-red-600');
+                document.getElementById(`${projectId}_heart`).classList.add('las');
+                document.getElementById(`${projectId}_heart`).classList.add('la-heart');
               })
               .catch(function(error) {
-                console.log(error)
+                console.log(error);
               });
             })
-            .catch()
+            .catch();
           }
           // if the like is on, turn it of
           else {
@@ -130,7 +130,7 @@ export default class extends Controller {
               }
             })
             .then(function (response) {
-              const id = response.data[0].id
+              const id = response.data[0].id;
               axios({
                 method: 'put',
                 url: `/api/v1/like/${id}/`,
@@ -144,27 +144,27 @@ export default class extends Controller {
                   "like": false
                 }
               })
-              .then(function(response) {
-                document.getElementById(`${projectId}_likes`).textContent = numberOfLikes - 1
-                document.getElementById(`${projectId}_heart`).removeAttribute("class")
-                document.getElementById(`${projectId}_heart`).classList.add('lar')
-                document.getElementById(`${projectId}_heart`).classList.add('la-heart')
+              .then(function() {
+                document.getElementById(`${projectId}_likes`).textContent = numberOfLikes - 1;
+                document.getElementById(`${projectId}_heart`).removeAttribute("class");
+                document.getElementById(`${projectId}_heart`).classList.add('lar');
+                document.getElementById(`${projectId}_heart`).classList.add('la-heart');
               })
               .catch(function(error) {
-                console.log(error)
+                console.log(error);
               });
             })
-            .catch()
+            .catch();
           }
-        })
+        });
     }
 
     // Handle liking for unauthenticated user
     toggleModal() {
       if(this.modalTarget.classList.contains('hidden')) {
-        enter(this.modalTarget)
+        enter(this.modalTarget);
       } else {
-        leave(this.modalTarget)
+        leave(this.modalTarget);
       }
     }
 }

@@ -9,11 +9,11 @@
     <meta name="twitter:site" content="@builtwithdjango" />
     <meta name="twitter:title" content="Django Jobs" />
     <meta name="twitter:description" content="Best jobs for best Django Developers!"/>
-    <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
+    <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
     <meta property="og:title" content="Django Jobs" />
     <meta property="og:url" content="https://{{ request.get_host }}/jobs/" />
     <meta property="og:description" content="Best jobs for best Django Developers!"/>
-    <meta property="og:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
+    <meta property="og:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
 {% endblock meta %}
 {% block content %}
     <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
@@ -146,7 +146,7 @@
     "about": "Job Board",
     "description": "Best jobs for best Django Developers!",
     "abstract": "Best jobs for best Django Developers!",
-    "thumbnailUrl": "https://{{ request.get_host }}{% static 'images/logo.png' %}",
+    "thumbnailUrl": "https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}",
     "url": "https://{{ request.get_host }}/jobs/",
     "author": {
       "@type": "Person",

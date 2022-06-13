@@ -1,17 +1,11 @@
 module.exports = {
-  purge: {
-    content: [
-      './assets/js/*.js',
-      './assets/js/**/*.js',
-      './templates/*.html',
-      './templates/**/*.html',
-      './**/forms.py'
-    ],
-    options: {
-      // https://nexxai.dev/tell-purgecss-to-ignore-purging-all-tailwind-colours/
-      safelist: [/(bg|text)-(.*)-(.*)/]
-    }
-  },
+  content: [
+    './templates/**/*.html',
+  ],
+  // https://nexxai.dev/tell-purgecss-to-ignore-purging-all-tailwind-colours/
+  safelist: [
+    {pattern: /(bg|text)-(.*)-(.*)/}
+  ],
   theme: {
     extend: {
       maxWidth: {
@@ -19,7 +13,6 @@ module.exports = {
       }
     },
   },
-  variants: {},
   plugins: [
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms'),

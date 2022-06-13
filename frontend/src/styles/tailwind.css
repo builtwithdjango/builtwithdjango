@@ -1,0 +1,24 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+[data-turbo-preview] body {
+  opacity: 0.5;
+}
+.turbo-progress-bar {
+  @apply bg-blue-500;
+
+  height: 5px;
+}
+
+@layer components {
+  .btn-blue {
+    @apply inline-flex items-center;
+    @apply px-4 py-2;
+    @apply font-semibold rounded-lg shadow-md;
+    @apply text-white bg-blue-500;
+    @apply hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+  }
+}

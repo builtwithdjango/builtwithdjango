@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "cloudinary",
     "widget_tweaks",
     "django_q",
+    "webpack_boilerplate",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
@@ -173,14 +174,15 @@ else:
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "assets/"),
+    os.path.join(BASE_DIR, "frontend/build"),
 ]
 
 WEBPACK_LOADER = {
     "DEFAULT": {
         "BUNDLE_DIR_NAME": "bundles/",
         "STATS_FILE": os.path.join(BASE_DIR, "webpack-stats.json"),
-    }
+    },
+    "MANIFEST_FILE": os.path.join(BASE_DIR, "frontend/build/manifest.json"),
 }
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"

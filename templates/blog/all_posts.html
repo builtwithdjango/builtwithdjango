@@ -14,7 +14,7 @@
     <meta property="og:description" content="Articles about Django"/>
     <meta name="twitter:title" content="Built with Django | Blog" />
     <meta name="twitter:description" content="Articles about Django"/>
-    <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'images/logo.png' %}" />
+    <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
 {% endblock meta %}
 {% block content %}
     <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
@@ -117,7 +117,7 @@
     "about": "Blog",
     "description": "Articles about Django",
     "abstract": "Articles about Django",
-    "thumbnailUrl": "https://{{ request.get_host }}{% static 'images/logo.png' %}",
+    "thumbnailUrl": "https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}",
     "url": "https://{{ request.get_host }}/blog/",
     "author": {
       "@type": "Person",
