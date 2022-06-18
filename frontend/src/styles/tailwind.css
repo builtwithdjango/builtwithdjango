@@ -1,8 +1,10 @@
+@import "pygments-default.css";
+
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
+
+
 
 [data-turbo-preview] body {
   opacity: 0.5;

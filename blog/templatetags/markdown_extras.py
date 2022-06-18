@@ -6,8 +6,14 @@ from django.template.defaultfilters import stringfilter
 
 register = template.Library()
 
+extension_configs = {"markdown.extensions.codehilite": {"guess_lang": False}}
+
 
 @register.filter()
 @stringfilter
 def markdown(value):
-    return md.markdown(value, extensions=["markdown.extensions.fenced_code"])
+    return md.markdown(
+        value,
+        extensions=["markdown.extensions.codehilite", "markdown.extensions.fenced_code"],
+        extension_configs=extension_configs,
+    )
