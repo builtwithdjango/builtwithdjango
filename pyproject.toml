@@ -29,7 +29,7 @@ exclude = '''
 
 [tool.djlint]
 profile = "django"
-ignore = "H006,H023,H031,H021,H005,H030,H020,H016"
+ignore = "H006,H023,H031,H021,H005,H030,H020,H016,D018"
 exclude = "support.html"
 
 [tool.isort]
@@ -71,7 +71,7 @@ pylint = "^2.5.3"
 pre-commit = "^2.6.0"
 pylint-django = "^2.2.0"
 flake8 = "^3.9.2"
-djlint = "^0.2.9"
+djlint = "^1.2.0"
 
 [build-system]
 requires = ["poetry>=0.12"]

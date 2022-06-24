@@ -6,7 +6,9 @@ from django.template.defaultfilters import stringfilter
 
 register = template.Library()
 
-extension_configs = {"markdown.extensions.codehilite": {"guess_lang": False}}
+extension_configs = {
+    "markdown.extensions.codehilite": {"css_class": "codehilite", "linenums": False, "guess_lang": False}
+}
 
 
 @register.filter()

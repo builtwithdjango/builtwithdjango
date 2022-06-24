@@ -9,7 +9,7 @@
 .codehilite .cm { color: #408080; font-style: italic } /* Comment.Multiline */
 .codehilite .cp { color: #BC7A00 } /* Comment.Preproc */
 .codehilite .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
-.codehilite .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.codehilite .c1 { color: #00ff00; font-style: italic } /* Comment.Single */
 .codehilite .cs { color: #408080; font-style: italic } /* Comment.Special */
 .codehilite .gd { color: #A00000 } /* Generic.Deleted */
 .codehilite .ge { font-style: italic } /* Generic.Emph */

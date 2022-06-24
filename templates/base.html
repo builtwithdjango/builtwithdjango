@@ -1,6 +1,6 @@
 {% load webpack_loader static %}
-{% load static %}
 {% load cloudinary %}
+
 <html lang="en">
     <head>
         <!-- Required meta tags -->
@@ -124,10 +124,10 @@
                     <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                         {% if user.is_authenticated %}
                             <!-- Profile dropdown -->
-                            <div x-data="{ isOpen: false }" class="relative ml-3">
+                            <div data-controller="dropdown" class="relative ml-3">
                                 <div>
                                     <button type="button"
-                                            @click="isOpen = !isOpen"
+                                            data-action="dropdown#toggle click@window->dropdown#hide"
                                             class="flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                                             id="user-menu-button"
                                             aria-expanded="false"
@@ -144,13 +144,13 @@
                                         {% endif %}
                                     </button>
                                 </div>
-                                <div x-show="isOpen"
-                                     x-transition:enter="transition ease-out duration-100"
-                                     x-transition:enter-start="transform opacity-0 scale-95"
-                                     x-transition:enter-end="transform opacity-100 scale-100"
-                                     x-transition:leave="transition ease-in duration-75"
-                                     x-transition:leave-start="transform opacity-100 scale-100"
-                                     x-transition:leave-end="transform opacity-0 scale-95"
+                                <div data-dropdown-target="menu"
+                                     data-transition-enter-active="transition ease-out duration-100"
+                                     data-transition-enter-from="transform opacity-0 scale-95"
+                                     data-transition-enter-to="transform opacity-100 scale-100"
+                                     data-transition-leave-active="transition ease-in duration-75"
+                                     data-transition-leave-from="transform opacity-100 scale-100"
+                                     data-transition-leave-to="transform opacity-0 scale-95"
                                      class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                      role="menu"
                                      aria-orientation="vertical"
@@ -159,18 +159,21 @@
                                     <!-- Active: "bg-gray-100", Not Active: "" -->
                                     <p class="block px-4 py-2 text-sm text-gray-700"
                                        role="menuitem"
+                                       data-action="dropdown#toggle"
                                        tabindex="-1"
                                        id="user-menu-item-0">{{ user.username }}</p>
                                     <!-- Active: "bg-gray-100", Not Active: "" -->
                                     <a href="{% url 'update-profile' %}"
                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300"
                                        role="menuitem"
+                                       data-action="dropdown#toggle"
                                        tabindex="-1"
                                        id="user-menu-item-0">Update Profile</a>
                                     <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a> -->
                                     <a href="{% url 'account_logout' %}"
                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300"
                                        role="menuitem"
+                                       data-action="dropdown#toggle"
                                        tabindex="-1"
                                        id="user-menu-item-2">Sign out</a>
                                 </div>

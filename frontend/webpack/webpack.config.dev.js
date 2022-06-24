@@ -1,6 +1,7 @@
 const Path = require("path");
 const Webpack = require("webpack");
 const { merge } = require("webpack-merge");
+const StylelintPlugin = require("stylelint-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 
@@ -32,12 +33,18 @@ module.exports = merge(common, {
     new Webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development"),
     }),
+    new StylelintPlugin({
+      files: Path.resolve(__dirname, "../src/**/*.s?(a|c)ss"),
+    }),
     new ESLintPlugin({
       extensions: "js",
       emitWarning: true,
       files: Path.resolve(__dirname, "../src"),
     }),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "css/[name].css",
+      chunkFilename: "css/[id].css",
+    }),
   ],
   module: {
     rules: [
@@ -49,11 +56,9 @@ module.exports = merge(common, {
         test: /\.js$/,
         include: Path.resolve(__dirname, "../src"),
         loader: "babel-loader",
-        exclude: /node_modules/
       },
       {
-        test: /\.css$/,
-        exclude: /node_modules/,
+        test: /\.s?css$/i,
         use: [
           MiniCssExtractPlugin.loader,
           {
