@@ -70,7 +70,7 @@
                 Apply for this position
             </a>
         </div>
-        <div class="w-full py-6 mt-10 border-t-2 border-b border-gray-300 border-solid-2">
+        <div class="w-full py-6 my-10 border-t border-b border-gray-300 border-solid-2">
             {% if object.location %}
                 <p class="text-lg text-gray-800">
                     Location:
@@ -87,8 +87,8 @@
                     </b>
                 </p>
             {% endif %}
-            <p class="text-base text-gray-800">
-                Job posted {{ object.created_datetime|timesince }} ago
+            <p class="text-lg text-gray-800">
+                Job Posted: <b>{{ object.created_datetime|timesince }} ago</b>
             </p>
         </div>
         <div class="prose md:prose-lg">
