@@ -3,19 +3,19 @@
 {% load markdown_extras %}
 {% load humanize %}
 {% block meta %}
-    <title>{{ object.title }} @ {{ object.company.name }}</title>
+    <title>{{ object.title }} @ {{ object.company_name }}</title>
     <link rel="canonical" href="https://{{ request.get_host }}/jobs/{{ object.pk }}/{{ object.slug }}" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:creator" content="@rasulkireev" />
     <meta name="twitter:site" content="@builtwithdjango" />
     <meta property="og:url" content="https://{{ request.get_host }}/jobs/{{ object.pk }}/{{ object.slug }}" />
 
-    {% if object.company.name %}
-      <meta name="description" content="{{ object.company.name }} is looking for a {{ object.title }}" />
-      <meta name="twitter:title" content="{{ object.title }} @ {{ object.company.name }}" />
-      <meta property="og:title" content="{{ object.title }} @ {{ object.company.name }}" />
-      <meta name="twitter:description" content="{{ object.company.name }} is looking for a {{ object.title }}" />
-      <meta property="og:description" content="{{ object.company.name }} is looking for a {{ object.title }}" />
+    {% if object.company_name %}
+      <meta name="description" content="{{ object.company_name }} is looking for a {{ object.title }}" />
+      <meta name="twitter:title" content="{{ object.title }} @ {{ object.company_name }}" />
+      <meta property="og:title" content="{{ object.title }} @ {{ object.company_name }}" />
+      <meta name="twitter:description" content="{{ object.company_name }} is looking for a {{ object.title }}" />
+      <meta property="og:description" content="{{ object.company_name }} is looking for a {{ object.title }}" />
     {% elif object.company_name %}
       <meta name="description" content="{{ object.company_name }} is looking for a {{ object.title }}" />
       <meta name="twitter:title" content="{{ object.title }} @ {{ object.company_name }}" />
@@ -54,9 +54,9 @@
             </div>
             <h1 class="text-center">
                 {{ object.title }} @
-                {% if object.company.name %}
+                {% if object.company_name %}
                   <a href="{{ object.company.project.get_absolute_url }}">
-                      {{ object.company.name }}
+                      {{ object.company_name }}
                   </a>
                 {% elif object.company_name %}
                   <span>{{ object.company_name }}</span>
@@ -116,17 +116,16 @@
   "title":"{{ object.title }}",
   "jobLocation": {
     "@type": "Place",
-    "address": "{{ object.location }}"
+    "address": "{% if object.remote %}Remote{% else %}{{ object.location }}{% endif %}"
   },
-  "description": "{{ object.company.name }} is looking for a {{ object.title }}",
+  "description": "{{ object.company_name }} is looking for a {{ object.title }}",
   "datePosted": "{{ object.created_datetime }}",
   "employmentType": "full-time",
   "url": "{{ object.listing_url }}",
   "directApply": true,
-  "experienceRequirements": "{{ object.details }}",
   "hiringOrganization": {
     "@type": "Organization",
-    "name": "{{ object.company.name }}"
+    "name": "{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}"
   }
 }
     </script>
