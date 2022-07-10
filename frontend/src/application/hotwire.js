@@ -8,7 +8,7 @@ import Dropdown from 'stimulus-dropdown';
 
 // Turbo
 window.document.addEventListener("DOMContentLoaded", function () {
-  window.console.log("dom ready 1");
+  window.console.log("DOMContentLoaded");
 });
 
 document.addEventListener('turbo:load', function () {

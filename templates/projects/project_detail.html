@@ -72,12 +72,12 @@
                 <div data-controller="like"
                      class="flex flex-row p-1 border border-gray-300 border-solid rounded-lg hover:border-gray-600 hover:bg-gray-200">
                     <input type="hidden" data-like-target="projectId" value={{ object.id }} />
-                    <input type="hidden" data-target="like.currentUser" value={{ user.id }} />
+                    <input type="hidden" data-like-target="currentUser" value={{ user.id }} />
                     {% csrf_token %}
                     {% if user.is_authenticated %}
                         <button data-action="click->
                             like#modify" class="flex flex-row items-center text-xl">
-                            <span data-target="like.numberOfLikes" id="{{ object.id }}_likes"></span>
+                            <span data-like-target="numberOfLikes" id="{{ object.id }}_likes"></span>
                             <i id="{{ object.id }}_heart"></i>
                         </button>
                     {% else %}
@@ -86,7 +86,7 @@
                             class="flex flex-row items-center text-xl"
                             data-like-target="modalButton"
                             >
-                            <span data-target="like.numberOfLikes" id="{{ object.id }}_likes"></span>
+                            <span data-like-target="numberOfLikes" id="{{ object.id }}_likes"></span>
                             <i id="{{ object.id }}_heart"></i>
                         </button>
                         <div data-like-target="modal"
@@ -258,76 +258,7 @@
                 <h2 class="mb-4 text-2xl font-semibold text-black ">
                     Jobs
                 </h2>
-                <div class="grid grid-cols-1 gap-4 mb-10 sm:grid-cols-2">
-                    {% for job in object.company.jobs.all %}
-                        <div class=" relative flex items-center px-6 py-5 space-x-3 {% if job.paid %} bg-yellow-300 border-yellow-300 hover:bg-yellow-400 hover:border-yellow-400 {% else %} bg-white border-gray-300 hover:bg-gray-100 hover:border-gray-400 {% endif %} border border-solid rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 ">
-                            <div class="flex-shrink-0">
-                              {% if job.company.logo %}
-                                <img class="w-16 h-16 rounded-full"
-                                      src="{% get_media_prefix %}{{ job.company.logo }}"
-                                      alt="{{ job.company.name }} Logo"/>
-                              {% elif job.company_logo %}
-                                <img class="w-16 h-16 rounded-full"
-                                      src="https://res.cloudinary.com/built-with-django/{{ job.company_logo }}"
-                                      alt="{{ job.company_name }}" />
-                              {% endif %}
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <a href="{{ job.get_absolute_url }}" class="focus:outline-none">
-                                    <span class="absolute inset-0" aria-hidden="true"></span>
-                                    <p class="text-lg font-medium text-gray-900">
-                                        {{ job.title }}
-                                    </p>
-                                    <div class="flex items-center space-x-1">
-                                        <p class="flex items-center text-sm text-gray-500">
-                                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                                                 xmlns="http://www.w3.org/2000/svg"
-                                                 viewBox="0 0 20 20"
-                                                 fill="currentColor"
-                                                 aria-hidden="true">
-                                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
-                                            </svg>
-                                            {% if object.company.name %}
-                                              {{ job.company.name }}
-                                            {% elif object.company_name %}
-                                              {{ job.company_name }}
-                                            {% endif %}
-                                        </p>
-                                        <p class="flex items-center text-sm text-gray-500">
-                                            <!-- Heroicon name: solid/location-marker -->
-                                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                                                 xmlns="http://www.w3.org/2000/svg"
-                                                 viewBox="0 0 20 20"
-                                                 fill="currentColor"
-                                                 aria-hidden="true">
-                                                <path fill-rule="evenodd"
-                                                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                                      clip-rule="evenodd"/>
-                                            </svg>
-                                            {{ job.location | truncatechars:15 }}
-                                        </p>
-                                    </div>
-                                    <div class="flex items-center space-x-1">
-                                        <p class="flex items-center text-sm text-gray-500">
-                                            <!-- Heroicon name: solid/location-marker -->
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                 class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                                                 fill="none"
-                                                 viewBox="0 0 24 24"
-                                                 stroke="currentColor">
-                                                <path stroke-linecap="round"
-                                                      stroke-linejoin="round"
-                                                      stroke-width="2"
-                                                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                            </svg>
-                                            posted {{ job.created_datetime|timesince }} ago
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+                {% include "components/jobs-grid.html" with jobs=object.company.jobs.all %}
             </div>
         {% endif %}
         {% if object.podcast_episodes.all %}
@@ -379,65 +310,9 @@
                     </button>
                 </div>
             </div>
-            <div>
-                {% if user.is_authenticated %}
-                    <form x-show="isShowing"
-                          action="{% url 'project_comment' object.slug %}"
-                          method="post"
-                          class="mx-6 my-2">
-                        {% csrf_token %}
-                        {{ comment_form.comment }}
-                        <button type="submit"
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent border-solid rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Post Comment
-                        </button>
-                    </form>
-                {% else %}
-                    <div x-show="isShowing" class="mx-6 my-4">
-                        <p>
-                            To comment on this project please
-                            <a href="{% url 'account_signup' %}"
-                               class="font-medium text-green-600 hover:text-green-500">
-                                signup
-                            </a>
-                            or
-                            <a href="{% url 'account_login' %}"
-                               class="font-medium text-green-600 hover:text-green-500">
-                                login
-                            </a>
-                            .
-                        </p>
-                    </div>
-                {% endif %}
-            </div>
-            <ul class="divide-y divide-gray-200">
-                {% for comment in object.comments.all %}
-                    <li class="flex items-start px-6 py-4">
-                        {% if comment.author.profile_image %}
-                            <img class="w-10 h-10 mt-2 rounded-full"
-                                 src="https://res.cloudinary.com/built-with-django/{{ comment.author.profile_image }}"
-                                 alt="{{ comment.author.username }}" />
-                        {% else %}
-                            <img class="w-10 h-10 mt-2 rounded-full"
-                                 src="https://avatars.dicebear.com/api/gridy/{{ comment.author.username }}.svg"
-                                 alt="" />
-                        {% endif %}
-                        <div class="ml-3">
-                            <p class="font-medium">
-                                <span class="text-sm text-gray-900">{{ comment.author }}</span>
-                                {% if object.maker.user == comment.author %}
-                                    <span>⭐</span>
-                                {% endif %}
-                                -
-                                <span class="text-sm text-gray-600">{{ comment.created_date|timesince }} ago</span>
-                            </p>
-                            <div class="prose">
-                                {{ comment | markdown | safe }}
-                            </div>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
+
+            {% include "projects/components/comments.html" %}
+
         </div>
     </div>
 {% endblock content %}

@@ -176,13 +176,13 @@
                                 {% csrf_token %}
                                 {% if user.is_authenticated %}
                                     <button data-action="click->like#modify" class="flex items-center">
-                                        <span data-target="like.numberOfLikes" id="{{ site.id }}_likes"></span>
+                                        <span data-like-target="numberOfLikes" id="{{ site.id }}_likes"></span>
                                         <i id="{{ site.id }}_heart"></i>
                                     </button>
                                 {% else %}
                                     <button data-action="click->
                                         like#toggleModal" data-like-target="modalButton" class="flex items-center">
-                                        <span data-target="like.numberOfLikes" id="{{ site.id }}_likes"></span>
+                                        <span data-like-target="numberOfLikes" id="{{ site.id }}_likes"></span>
                                         <i id="{{ site.id }}_heart"></i>
                                     </button>
                                     <div data-like-target="modal"
