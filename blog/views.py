@@ -1,10 +1,12 @@
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView, ListView
+from django_q.tasks import async_task
 
 from newsletter.forms import NewsletterSignupForm
 
 from .forms import CreateCommentForm
 from .models import Comment, Post
+from .tasks import notify_admin_of_guide_comment
 
 
 class PostListView(ListView):
@@ -43,5 +45,6 @@ class CommentCreateView(CreateView):
         form.instance.author = self.request.user
         form.instance.post = Post.objects.get(slug=self.kwargs["slug"])
         self.object = form.save()
+        async_task(notify_admin_of_guide_comment, self.object)
 
         return super(CommentCreateView, self).form_valid(form)
