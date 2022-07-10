@@ -1,8 +1,10 @@
-from django.views.generic import DetailView, ListView
+from django.urls import reverse
+from django.views.generic import CreateView, DetailView, ListView
 
 from newsletter.forms import NewsletterSignupForm
 
-from .models import Post
+from .forms import CreateCommentForm
+from .models import Comment, Post
 
 
 class PostListView(ListView):
@@ -24,5 +26,22 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["newsletter_form"] = NewsletterSignupForm
+        context["comment_form"] = CreateCommentForm
 
         return context
+
+
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CreateCommentForm
+    template_name = "blog/create-guide-comment.html"
+
+    def get_success_url(self):
+        return reverse("post", kwargs={"slug": self.object.post.slug})
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post = Post.objects.get(slug=self.kwargs["slug"])
+        self.object = form.save()
+
+        return super(CommentCreateView, self).form_valid(form)

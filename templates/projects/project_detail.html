@@ -189,23 +189,11 @@
                 </div>
             </div>
         {% endif %}
+
         <!-- Comments -->
-        <div x-data="{ isShowing: false }" class="overflow-hidden bg-white rounded-md shadow">
-            <div class="flex flex-row items-center space-x-2 border-b border-gray-200 border-solid">
-                <h2 class="flex py-4 pl-6 text-2xl font-semibold">
-                    Comments
-                </h2>
-                <div>
-                    <button @click="isShowing=!isShowing" class="inline-block bg-green-500 rounded-full">
-                        <i class="p-2 text-white las la-plus"></i>
-                    </button>
-                </div>
-            </div>
+        {% include "components/comments.html" with object=object object_type="project_comment" comments=object.comments.all %}
 
-            {% include "projects/components/comments.html" %}
-
-        </div>
-    </div>
+      </div>
 {% endblock content %}
 {% block schema %}
     <script type="application/ld+json">

@@ -33,7 +33,7 @@
     <div data-controller="exit-intent" data-action="mouseout@document->exit-intent#openModal">
     {# djlint:on #}
 
-        <div class="max-w-3xl p-8 mx-auto my-10 bg-white rounded-lg">
+        <div class="max-w-3xl p-8 mx-auto mt-10 bg-white rounded-lg">
             <div class="prose md:prose-lg">
                 <h1>{{ object.title }}</h1>
                 <div>
@@ -120,7 +120,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+          </div>
+          <div class="max-w-3xl mx-auto my-6">
+            {% include "components/comments.html" with object=object object_type="create_guide_comment" comments=object.guide_comments.all %}
+          </div>
     </div>
 {% endblock content %}
 {% block schema %}
