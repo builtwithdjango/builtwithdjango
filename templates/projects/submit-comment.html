@@ -1,8 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-    <form action method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Add</button>
-    </form>
+
+<turbo-frame id="create_project_comment">
+  <form
+    x-show="isShowing"
+    action="{{ request.path }}"
+    method="post"
+    class="mx-6 my-2"
+  >
+    {% csrf_token %}
+    {{ form.comment }}
+
+    <button type="submit"
+            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent border-solid rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Post Comment
+    </button>
+
+  </form>
+</turbo-frame>
+
 {% endblock content %}

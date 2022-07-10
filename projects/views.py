@@ -2,9 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Count, Q
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django_filters.views import FilterView
 from django_q.tasks import async_task
+from turbo_response.views import TurboCreateView
 
 from newsletter.forms import NewsletterSignupForm
 from users.forms import CustomUserCreationForm
@@ -95,19 +96,28 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("project", kwargs={"slug": self.object.slug})
 
 
-class CommentCreateView(CreateView):
+class CommentListView(DetailView):
+    model = Project
+    template_name = "projects/list_project_comments.html"
+
+
+class CommentCreateView(TurboCreateView):
     model = Comment
     form_class = AddComment
     template_name = "projects/submit-comment.html"
 
     def get_success_url(self):
-        return reverse("project", kwargs={"slug": self.object.project.slug})
+        # return redirect_303("project", slug=self.object.project.slug)
+        return reverse("project_comment", kwargs={"slug": self.object.project.slug})
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         form.instance.project = Project.objects.get(slug=self.kwargs["slug"])
         self.object = form.save()
+
         async_task(notify_owner_of_new_comment, self.object)
         async_task(notify_admins_of_comment, self.object)
 
+        # return TurboFrame(self.request.turbo.frame).template('projects/submit-comment.html', {}).response(self.request)
         return super(CommentCreateView, self).form_valid(form)
+        # return redirect_303("project", slug=self.object.project.slug)
