@@ -70,6 +70,8 @@ INSTALLED_APPS = [
     "cloudinary",
     "widget_tweaks",
     "django_q",
+    "turbo",
+    "turbo_response",
     "webpack_boilerplate",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
@@ -85,6 +87,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "turbo_response.middleware.TurboMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
