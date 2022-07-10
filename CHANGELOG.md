@@ -15,7 +15,11 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 ## [Unreleased]
 
-## [0.2.0] - 2022-04-07
+## [0.4.0] - 2022-07-10
+### Added
+- Ability to comment on guides.
+
+## [0.3.0] - 2022-04-07
 ### Added
 - Ability to sort projects based on # of likes and comments.
 
