@@ -42,7 +42,6 @@ DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -216,6 +215,8 @@ ANYMAIL = {
     "MAILGUN_SENDER_DOMAIN": "mg.builtwithdjango.com",
 }
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+
+
 DEFAULT_FROM_EMAIL = "rasul@builtwithdjango.com"
 SERVER_EMAIL = "error@builtwithdjango.com"
 
