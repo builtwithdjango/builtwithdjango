@@ -1,10 +1,21 @@
 {% load static %}
 {% load markdown_extras %}
 
+<div x-data="{ isShowing: false }" class="overflow-hidden bg-white rounded-md">
+  <div class="flex flex-row items-center space-x-2 border-b border-gray-200 border-solid">
+      <h2 class="flex py-4 pl-6 text-2xl font-semibold">
+          Comments
+      </h2>
+      <div>
+          <button @click="isShowing=!isShowing" class="inline-block bg-green-500 rounded-full">
+              <i class="p-2 text-white las la-plus"></i>
+          </button>
+      </div>
+  </div>
 <div>
   {% if user.is_authenticated %}
       <form x-show="isShowing"
-            action="{% url 'project_comment' object.slug %}"
+            action="{% url object_type object.slug %}"
             method="post"
             class="mx-6 my-2">
           {% csrf_token %}
@@ -34,7 +45,7 @@
 </div>
 
 <ul class="divide-y divide-gray-200">
-  {% for comment in object.comments.all %}
+  {% for comment in comments %}
       <li class="flex items-start px-6 py-4">
           {% if comment.author.profile_image %}
               <img class="w-10 h-10 mt-2 rounded-full"
@@ -61,3 +72,4 @@
       </li>
   {% endfor %}
 </ul>
+</div>

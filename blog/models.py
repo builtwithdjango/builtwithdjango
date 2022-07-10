@@ -43,3 +43,16 @@ class Tag(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+
+class Comment(TimeStampedModel):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="guide_comments")
+    comment = models.TextField()
+    approved = models.BooleanField(default=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="guide_comments")
+
+    def __str__(self):
+        return self.comment
+
+    def get_absolute_url(self):
+        return reverse("post", args=[self.project.slug])
