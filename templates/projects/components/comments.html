@@ -1,0 +1,63 @@
+{% load static %}
+{% load markdown_extras %}
+
+<div>
+  {% if user.is_authenticated %}
+      <form x-show="isShowing"
+            action="{% url 'project_comment' object.slug %}"
+            method="post"
+            class="mx-6 my-2">
+          {% csrf_token %}
+          {{ comment_form.comment }}
+          <button type="submit"
+                  class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent border-solid rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Post Comment
+          </button>
+      </form>
+  {% else %}
+      <div x-show="isShowing" class="mx-6 my-4">
+          <p>
+              To comment on this project please
+              <a href="{% url 'account_signup' %}"
+                 class="font-medium text-green-600 hover:text-green-500">
+                  signup
+              </a>
+              or
+              <a href="{% url 'account_login' %}"
+                 class="font-medium text-green-600 hover:text-green-500">
+                  login
+              </a>
+              .
+          </p>
+      </div>
+  {% endif %}
+</div>
+
+<ul class="divide-y divide-gray-200">
+  {% for comment in object.comments.all %}
+      <li class="flex items-start px-6 py-4">
+          {% if comment.author.profile_image %}
+              <img class="w-10 h-10 mt-2 rounded-full"
+                   src="https://res.cloudinary.com/built-with-django/{{ comment.author.profile_image }}"
+                   alt="{{ comment.author.username }}" />
+          {% else %}
+              <img class="w-10 h-10 mt-2 rounded-full"
+                   src="https://avatars.dicebear.com/api/gridy/{{ comment.author.username }}.svg"
+                   alt="" />
+          {% endif %}
+          <div class="ml-3">
+              <p class="font-medium">
+                  <span class="text-sm text-gray-900">{{ comment.author }}</span>
+                  {% if object.maker.user == comment.author %}
+                      <span>⭐</span>
+                  {% endif %}
+                  -
+                  <span class="text-sm text-gray-600">{{ comment.created_date|timesince }} ago</span>
+              </p>
+              <div class="prose">
+                  {{ comment | markdown | safe }}
+              </div>
+          </div>
+      </li>
+  {% endfor %}
+</ul>
