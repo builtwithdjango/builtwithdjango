@@ -383,7 +383,7 @@
                     </button>
                 </div>
             </div>
-            <div>
+            <div data-controller="comments">
                 {% if user.is_authenticated %}
                     <turbo-frame id="create_project_comment" src="{% url 'project_comment' object.slug %}"></turbo-frame>
                 {% else %}
