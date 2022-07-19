@@ -1,0 +1,36 @@
+<div class="my-4 overflow-hidden bg-white rounded-lg shadow">
+  <div class="px-4 py-5 sm:p-6">
+      <p class="text-3xl font-semibold text-gray-800">
+          Built with Django
+      </p>
+      <p class="mb-5 text-2xl text-gray-600">
+          Sign up to learn about coolest Django Projects, Makers, Jobs and Giveaways before anyone else.
+      </p>
+      <form class="flex flex-row items-center"
+            action="{% url 'newsletter_home' %}"
+            method="post"
+            enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ newsletter_form.non_field_errors }}
+          <div class="flex flex-row items-center">
+              <div class="flex flex-col">
+                  <div class="flex flex-row item-center">
+                      <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
+                      <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300"
+                              type="submit">
+                          Submit
+                      </button>
+                  </div>
+              </div>
+          </div>
+        </form>
+        {% if user.is_superuser %}
+        <div>
+          <a class="inline-flex items-center px-4 py-2 text-base font-medium text-green-700 bg-green-200 border border-transparent border-solid rounded-md hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+             href="{% url 'get-weekly-template' %}">
+              Get Weekly Email
+          </a>
+        </div>
+      {% endif %}
+  </div>
+</div>

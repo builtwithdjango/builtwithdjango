@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
@@ -26,6 +27,30 @@ class Post(TimeStampedModel):
     )
 
     unsplashID = models.CharField(max_length=40, blank=True)
+
+    icon = CloudinaryField(
+        "Image",
+        overwrite=True,
+        resource_type="image",
+        folder=f"blog-post-icon-{settings.ENVIRONMENT}",
+        blank=True,
+        null=True,
+    )
+
+    BEGINNER = "BEGINNER"
+    INTERMEDIATE = "INTERMEDIATE"
+    ADVANCED = "ADVANCED"
+    DIFFICULTY_LEVEL = [
+        (BEGINNER, "BEGINNER"),
+        (INTERMEDIATE, "INTERMEDIATE"),
+        (ADVANCED, "ADVANCED"),
+    ]
+
+    level = models.CharField(
+        max_length=15,
+        choices=DIFFICULTY_LEVEL,
+        default=BEGINNER,
+    )
 
     class Meta:
         ordering = ("-created",)
