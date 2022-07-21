@@ -4,11 +4,11 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<div class="flex flex-row items-center justify-between mt-10 mb-20 bg-white sm:mt-12 md:mt-16 xl:mt-28 lg:mt-20">
-    <div class="sm:text-center lg:text-left">
+<div class="flex flex-col items-center justify-between mt-10 mb-20 bg-white md:flex-row sm:mt-12 md:mt-16 xl:mt-28 lg:mt-20">
+    <div class="mb-20 md:mb-0 sm:text-center lg:text-left">
       <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-        <span class="block xl:inline">Learn</span>
-        <span class="block text-green-600 xl:inline">Django</span>
+        <span class="md:block xl:inline">Learn</span>
+        <span class="text-green-600 md:block xl:inline">Django</span>
       </h1>
       <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">Learn to bring your project and business ideas to life with Django. Get inspired by others.</p>
       <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
@@ -113,7 +113,7 @@
       </div>
       <div class="mt-10 space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10 lg:mt-0 lg:col-span-2">
         {% for guide in guides %}
-        <a href="#" class="flex h-full bg-white border border-gray-100 rounded-md shadow group">
+        <a href="{% url 'post' guide.slug %}" class="flex bg-white border border-gray-100 rounded-md shadow group">
             <div class="flex items-center flex-shrink-0 p-4 bg-gray-100 lg:p-4">
               <!-- Heroicon name: outline/globe-alt -->
               <img class="flex-shrink-0 w-8 h-8 mx-auto lg:h-16 lg:w-16"
@@ -126,6 +126,41 @@
             </div>
         </a>
         {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="my-10 overflow-hidden bg-white">
+  <div class="relative max-w-6xl px-4 py-12 mx-auto sm:px-6 lg:px-8">
+    <svg class="absolute top-0 transform -translate-x-1/2 right-full -translate-y-3/4 lg:left-full lg:right-auto lg:-translate-x-2/3 lg:translate-y-1/4" width="404" height="784" fill="none" viewBox="0 0 404 784" aria-hidden="true">
+      <defs>
+        <pattern id="8b1b5f72-e944-4457-af67-0c6d15a99f38" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
+        </pattern>
+      </defs>
+      <rect width="404" height="784" fill="url(#8b1b5f72-e944-4457-af67-0c6d15a99f38)" />
+    </svg>
+
+    <div class="relative lg:grid lg:grid-cols-3 lg:gap-x-8">
+      <div class="mt-10 space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10 lg:mt-0 lg:col-span-2">
+        {% for project in projects %}
+        <a href="{% url 'project' project.slug %}" class="flex flex-col justify-start bg-white border-solid rounded shadow border-1">
+          <div class="border-b border-gray-300 border-solid rounded-t-lg">
+            <!-- Heroicon name: outline/globe-alt -->
+            <img class="object-cover object-left-top w-full h-auto border-0 rounded-t"
+            src="{% get_media_prefix %}{{ project.homepage_screenshot }}"
+            alt="{{ project.title }} | Screenshot" />
+          </div>
+          <div class="flex-auto h-full p-4 border-b border-gray-300 border-solid">
+            <p class="text-base font-medium text-gray-900">{{ project.title }}</p>
+            <p class="mt-2 text-sm text-gray-500">{{ project.short_description }}</p>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      <div class="lg:col-span-1">
+        <h2 class="text-3xl font-extrabold tracking-tight text-right text-gray-900 sm:text-4xl">Latest Django Projects</h2>
       </div>
     </div>
   </div>

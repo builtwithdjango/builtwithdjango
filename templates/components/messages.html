@@ -1,27 +1,23 @@
 {% if messages %}
-<div class="p-4 my-4 border border-green-500 border-solid rounded-md bg-green-50">
-    <div class="flex">
-        <div class="flex-shrink-0">
-            <!-- Heroicon name: solid/check-circle -->
-            <svg class="w-5 h-5 text-green-400"
-                 xmlns="http://www.w3.org/2000/svg"
-                 viewBox="0 0 20 20"
-                 fill="currentColor"
-                 aria-hidden="true">
-                <path fill-rule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clip-rule="evenodd"/>
-            </svg>
-        </div>
-        <div class="ml-3">
-            <div class="text-sm text-green-700">
-                {% for message in messages %}
-                    <p>
-                        {{ message }}
-                    </p>
-                {% endfor %}
-            </div>
-        </div>
+<div data-controller="reveal" data-reveal-target="item" class="relative bg-green-600">
+  <div class="px-3 py-3 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="pr-16 sm:text-center sm:px-16">
+    {% for message in messages %}
+      <p class="font-medium text-white">
+        <span class="md:hidden"> {{ message }} </span>
+        <span class="hidden md:inline"> {{ message }} </span>
+      </p>
+    {% endfor %}
     </div>
+    <div class="absolute inset-y-0 right-0 flex items-start pt-1 pr-1 sm:pt-1 sm:pr-2 sm:items-start">
+      <button data-action="click->reveal#hide" type="button" class="flex p-2 rounded-md hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-white">
+        <span class="sr-only">Dismiss</span>
+        <!-- Heroicon name: outline/x -->
+        <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
 </div>
 {% endif %}

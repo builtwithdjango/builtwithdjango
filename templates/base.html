@@ -52,6 +52,7 @@
     </head>
 
     <body>
+        {% include "components/messages.html" with messages=messages %}
         <nav x-data="{ isOn: false }">
             <div class="max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
                 <div class="relative flex items-center justify-between h-24">
