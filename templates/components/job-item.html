@@ -1,0 +1,69 @@
+{% load static %}
+{% load humanize %}
+
+<div class="relative flex items-center px-4 py-3 space-x-3 {% if job.paid %} bg-yellow-300 border-yellow-300 hover:bg-yellow-400 hover:border-yellow-400 {% else %} bg-white border-gray-300 hover:bg-gray-100 hover:border-gray-400 {% endif %} border-y-2 border-solid">
+  <div class="flex-shrink-0">
+      {% if job.company.logo %}
+      <img class="w-16 h-16 rounded-full"
+           src="{% get_media_prefix %}{{ job.company.logo }}"
+           alt="{{ job.company.name }} Logo" />
+      {% elif job.company_logo %}
+      <img class="w-16 h-16 rounded-full"
+           src="https://res.cloudinary.com/built-with-django/{{ job.company_logo }}"
+           alt="{{ job.company_name }}" />
+      {% endif %}
+  </div>
+  <div class="flex-1 min-w-0">
+      <a href="{{ job.get_absolute_url }}" class="focus:outline-none">
+          <span class="absolute inset-0" aria-hidden="true"></span>
+          <p class="text-xl font-semibold text-gray-900">
+              {{ job.title }}
+          </p>
+          <div class="flex items-center mb-2 space-x-1">
+              <p class="text-lg text-gray-600">
+                  {% if job.company.name %}
+                    {{ job.company.name }}
+                  {% elif job.company_name %}
+                    {{ job.company_name }}
+                  {% endif %}
+              </p>
+            </div>
+            <div class="flex flex-row justify-between">
+              <div class="flex items-center space-x-4">
+                <p class="flex items-center text-sm text-gray-500">
+                    <!-- Heroicon name: solid/location-marker -->
+                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true">
+                        <path fill-rule="evenodd"
+                              d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                    {{ job.location | truncatechars:15 }}
+                </p>
+                {% if job.min_yearly_salary %}
+                <p class="flex items-center text-sm text-gray-500">
+                  ${{ job.min_yearly_salary | intcomma }} - ${{ job.max_yearly_salary | intcomma }}
+                </p>
+                {% endif %}
+              </div>
+                <p class="flex items-center text-sm text-gray-500">
+                    <!-- Heroicon name: solid/location-marker -->
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    posted {{ job.created_datetime|timesince }} ago
+                </p>
+            </div>
+      </a>
+  </div>
+</div>

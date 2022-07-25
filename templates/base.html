@@ -225,11 +225,11 @@
                                             aria-haspopup="true">
                                         <span class="sr-only">Open user menu</span>
                                         {% if user.profile_image %}
-                                            <img class="w-8 h-8 rounded-full"
+                                            <img class="w-12 h-12 rounded-full"
                                                  src="https://res.cloudinary.com/built-with-django/{{ user.profile_image }}"
                                                  alt="{{ user.username }}" />
                                         {% else %}
-                                            <img class="w-8 h-8 rounded-full"
+                                            <img class="w-12 h-12 rounded-full"
                                                  src="https://avatars.dicebear.com/api/gridy/{{ user.username }}.svg"
                                                  alt="{{ user.username }}" />
                                         {% endif %}
