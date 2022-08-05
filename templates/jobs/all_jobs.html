@@ -19,17 +19,8 @@
 {% endblock meta %}
 
 {% block content %}
-
-    <div class="flex justify-start sm:mb-0">
-        <a type="button"
-           href="{% url 'post_job' %}"
-           class="inline-flex items-center px-4 py-2 mb-4 text-base font-medium text-green-700 bg-green-200 border border-transparent border-solid rounded-md hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-            Post a Job ($100)
-        </a>
-    </div>
-
     {% if object_list %}
-    <div class="max-w-3xl px-4 py-6 mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:py-8">
+    <div class="mx-auto lg:py-8">
       <div class="grid items-start grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-8">
         <div class="grid grid-cols-1 gap-4 lg:col-span-4">
           <div class="grid grid-cols-1 border border-gray-200 border-solid rounded-lg shadow lg:col-span-3">
@@ -40,16 +31,15 @@
                       Django Jobs
                     </h1>
                     <p class="mt-1 text-sm text-gray-500">
-                      Get the best Django Jobs delivered directly to your mailbox
+                      The best Django jobs on the Market
                     </p>
                   </div>
-                  <div class="mt-4 ml-4 sm:flex-shrink-0">
-                    <form class="sm:flex" action="{% url 'newsletter_home' %}" method="post" enctype="multipart/form-data">
-                      {% csrf_token %} {{ newsletter_form.non_field_errors }}
-                      <label for="email-address" class="sr-only">Email address</label>
-                      {% render_field newsletter_form.user_email id="email-address" name="email-address" type="email" autocomplete="email" required=True class="w-full px-5 py-3 placeholder-gray-500 border-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white" placeholder="Enter your email" %}
-                      <button type="submit" class="flex items-center justify-center w-full px-5 py-3 mt-3 text-base font-medium text-white bg-green-500 border border-transparent rounded-md shadow hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white sm:mt-0 sm:ml-3 sm:w-auto sm:flex-shrink-0">Sign up</button>
-                    </form>
+                  <div>
+                    <a type="button"
+                       href="{% url 'post_job' %}"
+                       class="flex items-center justify-center w-full px-5 py-3 mt-3 text-base font-medium text-white bg-green-500 border border-transparent rounded-md shadow hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white sm:mt-0 sm:ml-3 sm:w-auto sm:flex-shrink-0">
+                        Post a Job
+                    </a>
                   </div>
               </div>
             </div>
@@ -70,6 +60,8 @@
             </p>
         </div>
     {% endif %}
+
+    {% include "components/newsletter.html" with newsletter_form=newsletter_form %}
 
 {% endblock content %}
 

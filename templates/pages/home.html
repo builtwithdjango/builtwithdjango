@@ -145,6 +145,9 @@
     </svg>
 
     <div class="relative lg:grid lg:grid-cols-3 lg:gap-x-8">
+      <div class="order-last lg:col-span-1">
+        <h2 class="text-3xl font-extrabold tracking-tight text-right text-gray-900 sm:text-4xl">Latest Django Projects</h2>
+      </div>
       <div class="mt-10 space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10 lg:mt-0 lg:col-span-2">
         {% for project in projects %}
         <a href="{% url 'project' project.slug %}" class="flex flex-col justify-start bg-white border-solid rounded shadow border-1">
@@ -160,9 +163,6 @@
           </div>
         </a>
         {% endfor %}
-      </div>
-      <div class="lg:col-span-1">
-        <h2 class="text-3xl font-extrabold tracking-tight text-right text-gray-900 sm:text-4xl">Latest Django Projects</h2>
       </div>
     </div>
   </div>

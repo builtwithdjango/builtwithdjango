@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block meta %}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@rasulkireev" />
@@ -19,6 +20,10 @@
 {% endblock meta %}
 
 {% block content %}
+    <h2 class="my-10 text-2xl font-bold leading-7 text-center text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+      Built with Django Podcast
+    </h2>
+
     <div class="grid grid-cols-1 gap-6 mb-10 lg:grid-cols-3 md:grid-cols-2">
         {% for episode in object_list %}
             <article class="flex flex-col justify-start bg-white border border-solid rounded shadow">
@@ -41,6 +46,7 @@
     {% endfor %}
 </div>
 {% include "components/newsletter.html" with newsletter_form=newsletter_form %}
+
 {% endblock content %}
 
 {% block schema %}

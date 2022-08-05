@@ -51,28 +51,3 @@ class CustomLoginForm(LoginForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.error_class = DivErrorList
-
-        self.fields["login"].widget.attrs.update(
-            {
-                "placeholder": "Username",
-                "class": """
-                    relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500
-                    border border-solid border-gray-300 rounded-none appearance-none rounded-t-md
-                    focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm
-                """,
-            }
-        )
-        self.fields["password"].widget.attrs.update(
-            {
-                "placeholder": "Password",
-                "class": """
-                    relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500
-                    border border-solid border-gray-300 rounded-none appearance-none rounded-b-md
-                    focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm
-                """,
-            }
-        )
-
-    # def login(self, *args, **kwargs):
-    #     # You must return the original result.
-    #     return super(CustomLoginForm, self).login(*args, **kwargs)

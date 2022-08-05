@@ -15,6 +15,10 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 ## [Unreleased]
 
+## [0.4.1] - 2022-07-10
+### Added
+- Complete Redesign
+
 ## [0.4.0] - 2022-07-10
 ### Added
 - Ability to comment on guides.

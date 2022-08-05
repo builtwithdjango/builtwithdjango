@@ -270,7 +270,7 @@
                                 </div>
                             </div>
                         {% else %}
-                            <div class="flex-shrink-0 space-x-2">
+                            <div class="flex-row flex-shrink-0 hidden space-x-2 md:flex">
                                 <a href="{% url 'account_signup' %}"
                                    class="relative inline-flex items-center px-3 py-2 text-lg font-medium text-white bg-green-700 border border-transparent border-solid rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-green-500">
                                     <span>Sign up</span>
@@ -287,19 +287,26 @@
             <div :class="{'block': isOn, 'hidden': !isOn }" class="sm:hidden" id="mobile-menu">
                 <div class="px-2 pt-2 pb-3 space-y-1">
                     <a href="{% url 'projects' %}"
-                       class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                       class="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-700 hover:text-white"
                        key="Projects">Projects</a>
                     <a href="{% url 'jobs' %}"
-                       class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                       class="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-700 hover:text-white"
                        key="Jobs">Jobs</a>
                     <a href="{% url 'blog' %}"
-                       class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                       class="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-700 hover:text-white"
                        key="Blog">Blog</a>
                     <a href="{% url 'podcast_episodes' %}"
-                       class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                       class="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-700 hover:text-white"
                        key="Podcast">Podcast</a>
-                    </div>
+                      <a href="{% url 'account_login' %}"
+                       class="block px-3 py-2 text-base font-medium text-center text-gray-700 border-2 border-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                       key="Login">Login</a>
+                    <a href="{% url 'account_signup' %}"
+                       class="block px-3 py-2 text-base font-medium text-center text-white bg-green-700 rounded-md hover:bg-green-800"
+                       key="Signup">Sign Up</a>
+
                 </div>
+            </div>
         </nav>
 
         <div class="max-w-6xl px-2 mx-auto sm:px-6 lg:px-8">
