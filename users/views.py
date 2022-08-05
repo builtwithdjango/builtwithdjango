@@ -3,11 +3,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
+from django_q.tasks import async_task
 
 from newsletter.views import NewsletterSignupForm
 
 from .forms import CustomLoginForm, CustomUserCreationForm, CustomUserUpdateForm
 from .models import CustomUser
+from .tasks import notify_of_new_user
 
 
 class SignUpView(CreateView):
@@ -20,6 +22,12 @@ class SignUpView(CreateView):
         context["newsletter_form"] = NewsletterSignupForm
 
         return context
+
+    def form_valid(self, form):
+        self.object = form.save()
+        async_task(notify_of_new_user, self.object)
+
+        return super(SignUpView, self).form_valid(form)
 
 
 class CustomLoginView(LoginView):

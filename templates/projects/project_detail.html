@@ -143,15 +143,6 @@
                 </div>
             </div>
         {% endif %}
-        <!-- Jobs -->
-        {% if object.company.jobs.all %}
-            <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
-                <h2 class="mb-4 text-2xl font-semibold text-black ">
-                    Jobs
-                </h2>
-                {% include "components/jobs-grid.html" with jobs=object.company.jobs.all %}
-            </div>
-        {% endif %}
         {% if object.podcast_episodes.all %}
             <div class="px-6 py-4 overflow-hidden bg-white rounded-lg shadow">
                 <h2 class="text-2xl font-semibold text-black">

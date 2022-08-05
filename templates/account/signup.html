@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% load socialaccount %}
+{% load widget_tweaks %}
+
 {% block title %}
     Sign Up
 {% endblock title %}
+
 {% block content %}
     <div class="flex items-center justify-center px-4 py-12 my-4 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8">
@@ -17,24 +20,24 @@
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-sm">
                     <div>
-                        {{ form.username.errors | safe }}
-                        <label for="id_username" class="sr-only">Username</label>
-                        {{ form.username }}
+                      {{ form.username.errors | safe }}
+                      <label for="username" class="sr-only">Username</label>
+                      {% render_field form.username placeholder="Username" id="username" name="username" type="text" autocomplete="username" required=True class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" %}
                     </div>
                     <div>
-                        {{ form.email.errors | safe }}
-                        <label for="id_email" class="sr-only">Username</label>
-                        {{ form.email }}
+                      {{ form.email.errors | safe }}
+                      <label for="email" class="sr-only">Username</label>
+                      {% render_field form.email id="email" name="email" placeholder="Email" type="email" autocomplete="email" required="True" class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" %}
                     </div>
                     <div>
-                        {{ form.password1.errors | safe }}
-                        <label for="id_password1" class="sr-only">Password</label>
-                        {{ form.password1 }}
+                      {{ form.password1.errors | safe }}
+                      <label for="id_password1" class="sr-only">Password</label>
+                      {% render_field form.password1 id="password1" name="password1" placeholder="Password" type="password" autocomplete="current-password" required="True" class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" %}
                     </div>
                     <div>
-                        {{ form.password2.errors | safe }}
-                        <label for="id_password2" class="sr-only">Password</label>
-                        {{ form.password2 }}
+                      {{ form.password2.errors | safe }}
+                      <label for="password2" class="sr-only">Password</label>
+                      {% render_field form.password2 id="password2" name="password2" type="password" autocomplete="current-password" required="True" class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Cofirm Password" %}
                     </div>
                 </div>
                 <div>
@@ -62,7 +65,7 @@
                         <div class="w-full border-t border-gray-300 border-solid"></div>
                     </div>
                     <div class="relative flex justify-center text-sm">
-                        <span class="px-2 text-gray-500 bg-gray-100">Or continue with</span>
+                        <span class="px-2 text-gray-500 bg-white">Or continue with</span>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-3 mt-6">

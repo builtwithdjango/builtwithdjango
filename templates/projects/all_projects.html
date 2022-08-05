@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load widget_tweaks %}
+
 {% block meta %}
     <title>Built with Django</title>
     <meta name="description" content="Collection of cool projects people built with Django" />
@@ -16,42 +17,13 @@
     <meta name="twitter:description" content="Collection of cool projects people built with Django" />
     <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
 {% endblock meta %}
+
 {% block content %}
-    <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
-        <div class="px-4 py-5 sm:p-6">
-            <p class="text-3xl font-semibold text-gray-800">
-                Django Case Studies
-            </p>
-            <p class="mb-5 text-2xl text-gray-600">
-                Get successful Django project interviews every week.
-            </p>
-            <form class="flex flex-row items-center"
-                  action="{% url 'newsletter_home' %}"
-                  method="post"
-                  enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ newsletter_form.non_field_errors }}
-                <div class="flex flex-row items-center">
-                    <div class="flex flex-col">
-                        <div class="flex flex-row item-center">
-                            <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
-                            <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300"
-                                    type="submit">
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            {% if messages %}
-                {% for message in messages %}
-                    <p class="inline-block p-2 text-green-700 bg-green-200 border border-green-700 border-solid rounded ">
-                        {{ message }}
-                    </p>
-                {% endfor %}
-            {% endif %}
-        </div>
-    </div>
+
+    <h2 class="my-10 text-2xl font-bold leading-7 text-center text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+      Django Projects
+    </h2>
+
     <div>
         <div class="flex items-center justify-between pb-4 sm:mb-0">
             <div class="flex items-center justify-start space-x-2">
@@ -125,7 +97,7 @@
                 <div class="flex flex-col justify-start bg-white border-solid rounded shadow border-1">
                     <div class="border-b border-gray-300 border-solid rounded-t-lg">
                         <a href="{% url 'project' site.slug %}">
-                            <img class="object-cover object-left-top w-full h-auto border-0 rounded-t "
+                            <img class="object-cover object-left-top w-full h-auto border-0 rounded-t"
                                  src="{% get_media_prefix %}{{ site.homepage_screenshot }}"
                                  alt="{{ site.title }} | Screenshot"/>
                         </a>
@@ -140,51 +112,29 @@
                     </div>
                     <div class="flex items-center justify-between px-4 py-2">
                         <div>
-                            <a class="inline-block bg-gray-200 rounded-full hover:border hover:border-solid hover:border-gray-700 hover:bg-gray-400"
+                            <a class="inline-block p-2 text-xl bg-gray-200 border border-gray-200 rounded-lg hover:bg-gray-300"
                                href="{{ site.url }}?ref={{ request.get_host }}"
                                target="_blank">
-                                <i class="p-2 las la-link">
-                                </i
-                                >
+                                <i class="las la-link"></i>
                             </a>
                             {% if site.github_url %}
-                                <a class="inline-block bg-gray-200 rounded-full hover:border hover:border-solid hover:border-gray-700 hover:bg-gray-400"
+                                <a class="inline-block p-2 text-xl bg-gray-200 border border-gray-200 rounded-lg hover:bg-gray-300"
                                    href="{{ site.github_url }}?ref={{ request.get_host }}"
                                    target="_blank">
-                                    <i class="p-2 lab la-github">
-                                    </i
-                                    >
+                                    <i class="lab la-github"></i>
                                 </a>
                             {% endif %}
                             {% if site.twitter_url %}
-                                <a class="inline-block bg-gray-200 rounded-full hover:border hover:border-solid hover:border-gray-700 hover:bg-gray-400"
+                                <a class="inline-block p-2 text-xl bg-gray-200 border border-gray-200 rounded-lg hover:bg-gray-300"
                                    href="{{ site.twitter_url }}?ref={{ request.get_host }}"
                                    target="_blank">
-                                    <i class="p-2 lab la-twitter"></i>
+                                    <i class="lab la-twitter"></i>
                                 </a>
                             {% endif %}
                         </div>
 
                         {% include "components/project-likes.html" with site=site %}
 
-                        <div>
-                            {% if site.logged_in_maker %}
-                              <a href="#" class="text-sm font-semibold text-gray-700">
-                                {% if site.logged_in_maker.first_name and site.logged_in_maker.last_name %}
-                                  by {{ site.logged_in_maker.first_name }} {{ site.logged_in_maker.last_name }}
-                                {% else %}
-                                {{ site.logged_in_maker }}
-                                {% endif %}
-                              </a>
-                            {% elif site.maker.first_name or site.maker.last_name %}
-                                <a href="{{ site.maker.get_absolute_url }}"
-                                   class="text-sm font-semibold text-gray-700 hover:underline hover:text-gray-900">
-                                    by
-                                    {% if site.maker.first_name %}{{ site.maker.first_name }}{% endif %}
-                                    {% if site.maker.last_name %}{{ site.maker.last_name }}{% endif %}
-                                </a>
-                            {% endif %}
-                        </div>
                     </div>
                 </div>
             {% endfor %}

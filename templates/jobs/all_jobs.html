@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
+{% load widget_tweaks %}
+
 {% block meta %}
     <title>Django Jobs</title>
     <meta name="description" content="Best jobs for best Django Developers!"/>
@@ -15,41 +17,9 @@
     <meta property="og:description" content="Best jobs for best Django Developers!"/>
     <meta property="og:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
 {% endblock meta %}
+
 {% block content %}
-    <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
-        <div class="px-4 py-5 sm:p-6">
-            <p class="text-3xl font-semibold text-gray-800">
-                Django Jobs
-            </p>
-            <p class="mb-5 text-2xl text-gray-600">
-                Subscribe to receive the freshest Django Jobs every week.
-            </p>
-            <form class="flex flex-row items-center"
-                  action="{% url 'newsletter_home' %}"
-                  method="post"
-                  enctype="multipart/form-data">
-                {% csrf_token %} {{ newsletter_form.non_field_errors }}
-                <div class="flex flex-row items-center">
-                    <div class="flex flex-col">
-                        <div class="flex flex-row item-center">
-                            <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
-                            <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300"
-                                    type="submit">
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            {% if messages %}
-                {% for message in messages %}
-                    <p class="inline-block p-2 text-green-700 bg-green-200 border border-green-700 border-solid rounded ">
-                        {{ message }}
-                    </p>
-                {% endfor %}
-            {% endif %}
-        </div>
-    </div>
+
     <div class="flex justify-start sm:mb-0">
         <a type="button"
            href="{% url 'post_job' %}"
@@ -58,7 +28,48 @@
         </a>
     </div>
 
-    {% include "components/jobs-grid.html" with jobs=object_list %}
+    {% if object_list %}
+    <div class="max-w-3xl px-4 py-6 mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:py-8">
+      <div class="grid items-start grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-8">
+        <div class="grid grid-cols-1 gap-4 lg:col-span-4">
+          <div class="grid grid-cols-1 border border-gray-200 border-solid rounded-lg shadow lg:col-span-3">
+            <div class="px-4 py-5 bg-white border-b border-gray-200 rounded-t-lg sm:px-6">
+              <div class="flex flex-wrap items-center justify-between -mt-2 -ml-4 sm:flex-nowrap">
+                  <div class="mt-4 ml-4">
+                    <h1 class="text-2xl font-semibold leading-6 text-gray-900">
+                      Django Jobs
+                    </h1>
+                    <p class="mt-1 text-sm text-gray-500">
+                      Get the best Django Jobs delivered directly to your mailbox
+                    </p>
+                  </div>
+                  <div class="mt-4 ml-4 sm:flex-shrink-0">
+                    <form class="sm:flex" action="{% url 'newsletter_home' %}" method="post" enctype="multipart/form-data">
+                      {% csrf_token %} {{ newsletter_form.non_field_errors }}
+                      <label for="email-address" class="sr-only">Email address</label>
+                      {% render_field newsletter_form.user_email id="email-address" name="email-address" type="email" autocomplete="email" required=True class="w-full px-5 py-3 placeholder-gray-500 border-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white" placeholder="Enter your email" %}
+                      <button type="submit" class="flex items-center justify-center w-full px-5 py-3 mt-3 text-base font-medium text-white bg-green-500 border border-transparent rounded-md shadow hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white sm:mt-0 sm:ml-3 sm:w-auto sm:flex-shrink-0">Sign up</button>
+                    </form>
+                  </div>
+              </div>
+            </div>
+            <ul class="list-none divide-y divide-gray-200">
+              {% for job in object_list %}
+                  {% include "components/job-item.html" with job=job %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+        <div class="flex justify-center mx-auto my-10">
+            <p class="text-3xl md:text-4xl">
+                There are currently no jobs available...
+                <span class="font-bold">that we know of</span>
+            </p>
+        </div>
+    {% endif %}
 
 {% endblock content %}
 

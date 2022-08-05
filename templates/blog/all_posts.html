@@ -16,98 +16,65 @@
     <meta name="twitter:description" content="Articles about Django"/>
     <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
 {% endblock meta %}
+
 {% block content %}
-    <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
-        <div class="px-4 py-5 sm:p-6">
-            <p class="text-3xl font-semibold text-gray-800">
-                Built with Django Blog
-            </p>
-            <p class="mb-5 text-2xl text-gray-600">
-                Get the latest posts and tutorials in your inbox.
-            </p>
-            <form class="flex flex-row items-center"
-                  action="{% url 'newsletter_home' %}"
-                  method="post"
-                  enctype="multipart/form-data">
-                {% csrf_token %} {{ newsletter_form.non_field_errors }}
-                <div class="flex flex-row items-center">
-                    <div class="flex flex-col">
-                        <div class="flex flex-row item-center">
-                            <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
-                            <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300"
-                                    type="submit">
-                                Submit
-                            </button>
+
+    <h2 class="my-10 text-2xl font-bold leading-7 text-center text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+      Django Guides
+    </h2>
+
+    <div class="relative max-w-6xl mx-auto">
+        <div class="divide-y divide-gray-200">
+            <div class="grid grid-cols-1 gap-6 mb-10 md:grid-cols-2">
+                {% for guide in object_list %}
+                <div class="flex bg-white border border-gray-100 rounded-md shadow group">
+                    <div class="flex items-center flex-shrink-0 p-4 bg-gray-100 lg:p-4">
+                      <!-- Heroicon name: outline/globe-alt -->
+                      <img class="flex-shrink-0 w-8 h-8 mx-auto lg:h-16 lg:w-16"
+                          src="https://res.cloudinary.com/built-with-django/{{ guide.icon }}"
+                          alt="" />
+                    </div>
+                    <div class="flex flex-col justify-between flex-1 p-6 bg-white">
+                      <div class="flex-1">
+                        <a href="{% url 'post' guide.slug %}" class="block">
+                          <p class="text-xl font-semibold text-gray-900">{{ guide.title }}</p>
+                          <p class="mt-2 text-sm text-gray-500">{{ guide.description | truncatechars:300 | markdown | safe }}</p>
+                        </a>
+                      </div>
+                      <div class="flex items-center mt-6">
+                        <div class="flex-shrink-0">
+                            <a href="#">
+                                <span class="sr-only">{{ guide.author.username }}</span>
+                                {% if guide.author.profile_image %}
+                                    <img class="w-8 h-8 rounded-full"
+                                         src="https://res.cloudinary.com/built-with-django/{{ guide.author.profile_image }}"
+                                         alt="{{ guide.author.username }}" />
+                                {% else %}
+                                    <img class="w-8 h-8 rounded-full"
+                                         src="https://avatars.dicebear.com/api/gridy/{{ guide.author.username }}.svg"
+                                         alt="{{ guide.author.username }}" />
+                                {% endif %}
+                            </a>
                         </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">
+                                <a href="#" class="hover:underline">{{ guide.author.username }}</a>
+                            </p>
+                            <div class="flex space-x-1 text-sm text-gray-500">
+                                <time datetime="{{ guide.modified | date:'Y-m-d' }}">
+                                {{ guide.modified | date:"N j, Y" }}
+                                </time>
+                            </div>
+                        </div>
+                      </div>
                     </div>
                 </div>
-            </form>
-            {% if messages %}
-                {% for message in messages %}
-                    <p class="inline-block p-2 text-green-700 bg-green-200 border border-green-700 border-solid rounded ">
-                        {{ message }}
-                    </p>
-                {% endfor %}
-            {% endif %}
-        </div>
-    </div>
-    <div class="relative mx-auto max-w-7xl">
-        <div class="divide-y divide-gray-200">
-            <div class="grid max-w-lg gap-5 mx-auto mt-12 lg:grid-cols-3 lg:max-w-none">
-                {% for post in object_list %}
-                    <div class="flex flex-col overflow-hidden rounded-lg shadow-lg">
-                        <a href="{% url 'post' post.slug %}" class="flex-shrink-0">
-                            <img class="object-cover w-full h-48"
-                                 src="https://source.unsplash.com/{{ post.unsplashID }}/auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                 alt="" />
-                        </a>
-                        <div class="flex flex-col justify-between flex-1 p-6 bg-white">
-                            <div class="flex-1">
-                                <p class="text-sm font-medium text-indigo-600">
-                                    <a href="#" class="hover:underline">Tutorial</a>
-                                </p>
-                                <a href="{% url 'post' post.slug %}" class="block mt-2">
-                                    <p class="text-xl font-semibold text-gray-900">
-                                        {{ post.title }}
-                                    </p>
-                                    <p class="mt-3 text-base text-gray-500">
-                                        {{ post.description | truncatechars:300 | markdown | safe }}
-                                    </p>
-                                </a>
-                            </div>
-                            <div class="flex items-center mt-6">
-                                <div class="flex-shrink-0">
-                                    <a href="#">
-                                        <span class="sr-only">{{ post.author.username }}</span>
-                                        {% if post.author.profile_image %}
-                                            <img class="w-8 h-8 rounded-full"
-                                                 src="https://res.cloudinary.com/built-with-django/{{ post.author.profile_image }}"
-                                                 alt="{{ post.author.username }}" />
-                                        {% else %}
-                                            <img class="w-8 h-8 rounded-full"
-                                                 src="https://avatars.dicebear.com/api/gridy/{{ post.author.username }}.svg"
-                                                 alt="{{ post.author.username }}" />
-                                        {% endif %}
-                                    </a>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-900">
-                                        <a href="#" class="hover:underline">{{ post.author.username }}</a>
-                                    </p>
-                                    <div class="flex space-x-1 text-sm text-gray-500">
-                                        <time datetime="{{ post.modified | date:"Y-m-d" }}">
-                                        {{ post.modified | date:"N j, Y" }}
-                                        </time>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 {% endfor %}
             </div>
         </div>
     </div>
 {% endblock content %}
+
 {% block schema %}
     <script type="application/ld+json">
   {
