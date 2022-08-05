@@ -1,28 +1,17 @@
-<div class="my-4 overflow-hidden bg-white rounded-lg shadow">
-  <div class="px-4 py-5 sm:p-6">
-      <p class="text-3xl font-semibold text-gray-800">
-          Built with Django
-      </p>
-      <p class="mb-5 text-2xl text-gray-600">
-          Sign up to learn about coolest Django Projects, Makers, Jobs and Giveaways before anyone else.
-      </p>
-      <form class="flex flex-row items-center"
-            action="{% url 'newsletter_home' %}"
-            method="post"
-            enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ newsletter_form.non_field_errors }}
-          <div class="flex flex-row items-center">
-              <div class="flex flex-col">
-                  <div class="flex flex-row item-center">
-                      <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
-                      <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300"
-                              type="submit">
-                          Submit
-                      </button>
-                  </div>
-              </div>
-          </div>
+{% load widget_tweaks %}
+<div class="bg-white">
+  <div class="max-w-6xl py-12 mx-auto lg:py-16">
+    <div class="px-6 py-6 bg-green-700 rounded-lg md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
+      <div class="xl:w-0 xl:flex-1">
+        <h2 class="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Want updates on the latest jobs and guides?</h2>
+        <p class="max-w-3xl mt-3 text-lg leading-6 text-green-200">Sign up for our newsletter to stay up to date.</p>
+      </div>
+      <div class="mt-8 sm:w-full sm:max-w-md xl:mt-0 xl:ml-8">
+        <form class="sm:flex" action="{% url 'newsletter_home' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %} {{ newsletter_form.non_field_errors }}
+          <label for="email-address" class="sr-only">Email address</label>
+          {% render_field newsletter_form.user_email id="email-address" name="email-address" type="email" autocomplete="email" required=True class="w-full px-5 py-3 placeholder-gray-500 border-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white" placeholder="Enter your email" %}
+          <button type="submit" class="flex items-center justify-center w-full px-5 py-3 mt-3 text-base font-medium text-white bg-green-500 border border-transparent rounded-md shadow hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white sm:mt-0 sm:ml-3 sm:w-auto sm:flex-shrink-0">Sign up</button>
         </form>
         {% if user.is_superuser %}
         <div>
@@ -31,6 +20,8 @@
               Get Weekly Email
           </a>
         </div>
-      {% endif %}
+        {% endif %}
+      </div>
+    </div>
   </div>
 </div>
