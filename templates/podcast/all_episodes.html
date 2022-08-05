@@ -20,7 +20,6 @@
 {% endblock meta %}
 
 {% block content %}
-
     <h2 class="my-10 text-2xl font-bold leading-7 text-center text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
       Built with Django Podcast
     </h2>
@@ -43,28 +42,9 @@
                         {{ episode.details }}
                     </p>
                 </div>
-                <!--
-<footer class="flex items-center justify-between px-4 py-2">
-              <div>
-                <p class="text-sm font-semibold text-gray-700">
-                  {% if episode.maker %}{{ episode.maker.all | join:" and " }} on{% endif %}
-                  {% for project in episode.project.all %}
-                    {{ project.title }}
-                    {% if not forloop.last %}and{% endif %}
-                  {% endfor %}
-                  </p>
-              </div>
-              <div>
-                {% if episode.project %}
-                  <p class="text-sm font-semibold text-gray-700"></p>
-                {% endif %}
-              </div>
-            </footer>
-            -->
         </article>
     {% endfor %}
 </div>
-
 {% include "components/newsletter.html" with newsletter_form=newsletter_form %}
 
 {% endblock content %}
