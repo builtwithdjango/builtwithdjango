@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block meta %}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@rasulkireev" />
@@ -17,42 +18,13 @@
           content="Built with Django Podcast is an awesome way to catch up with best makers and best practices in the Django community."/>
     <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
 {% endblock meta %}
+
 {% block content %}
-    <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
-        <div class="px-4 py-5 sm:p-6">
-            <p class="text-3xl font-semibold text-gray-800">
-                Built with Django Podcast
-            </p>
-            <p class="mb-5 text-2xl text-gray-600">
-                Get the latest interviews with best Django developers, as soon as they
-                come out.
-            </p>
-            <form class="flex flex-row items-center"
-                  action="{% url 'newsletter_home' %}"
-                  method="post"
-                  enctype="multipart/form-data">
-                {% csrf_token %} {{ newsletter_form.non_field_errors }}
-                <div class="flex flex-row items-center">
-                    <div class="flex flex-col">
-                        <div class="flex flex-row item-center">
-                            <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
-                            <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300"
-                                    type="submit">
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            {% if messages %}
-                {% for message in messages %}
-                    <p class="inline-block p-2 text-green-700 bg-green-200 border border-green-700 border-solid rounded ">
-                        {{ message }}
-                    </p>
-                {% endfor %}
-            {% endif %}
-        </div>
-    </div>
+
+    <h2 class="my-10 text-2xl font-bold leading-7 text-center text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+      Built with Django Podcast
+    </h2>
+
     <div class="grid grid-cols-1 gap-6 mb-10 lg:grid-cols-3 md:grid-cols-2">
         {% for episode in object_list %}
             <article class="flex flex-col justify-start bg-white border border-solid rounded shadow">
@@ -92,7 +64,11 @@
         </article>
     {% endfor %}
 </div>
+
+{% include "components/newsletter.html" with newsletter_form=newsletter_form %}
+
 {% endblock content %}
+
 {% block schema %}
     <script type="application/ld+json">
   {

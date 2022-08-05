@@ -59,7 +59,7 @@
   "headline": "{{ object.title }}",
   "about": "Django",
   "abstract": "{{ object.description }}",
-  "articleBody": "{{ object.content }}",
+  "articleBody": "{% autoescape on %}{{ object.content }}{% endautoescape %}",
   "image": "https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}",
   "thumbnailUrl": "https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}",
   "dateCreated": "{{ object.created }}",
