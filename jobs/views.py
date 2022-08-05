@@ -61,6 +61,11 @@ class ThankYouView(TemplateView):
 
 
 @csrf_exempt
+def create_paypal_checkout_session(request, pk):
+    return
+
+
+@csrf_exempt
 def create_checkout_session(request, pk):
     stripe.api_key = settings.STRIPE_SECRET_KEY
     checkout_session = stripe.checkout.Session.create(
