@@ -86,6 +86,7 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
 
 
 class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = "account_login"
     model = Project
     form_class = ProjectUpdateViewForm
     template_name = "projects/project_detail_update.html"

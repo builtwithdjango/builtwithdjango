@@ -14,6 +14,7 @@ class CustomUserAdmin(UserAdmin):
             {
                 "fields": (
                     "profile_image",
+                    "subscription_level",
                     "referred_by",
                     "slug",
                     "make_public",

@@ -27,6 +27,7 @@ class MakerDetailView(DetailView):
 
 
 class MakerUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = "account_login"
     model = Maker
     template_name = "makers/maker_detail_update.html"
     form_class = MakerUpdateViewForm
@@ -37,6 +38,7 @@ class MakerUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class ClaimAccountView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    login_url = "account_login"
     model = Maker
     template_name = "makers/claim_account.html"
     form_class = ClaimAccountForm
