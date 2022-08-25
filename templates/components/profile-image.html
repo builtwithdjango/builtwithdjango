@@ -1,0 +1,9 @@
+{% if user.profile_image %}
+<img class="w-{{ size | default:12 }} h-{{ size | default:12 }} rounded-full {% if user.subscription_level == 'PRO' %} border-4 border-yellow-300 {% endif %}"
+     src="https://res.cloudinary.com/built-with-django/{{ user.profile_image }}"
+     alt="{{ user.username }}" />
+{% else %}
+<img class="w-{{ size | default:12 }} h-{{ size | default:12 }} rounded-full {% if user.subscription_level == 'PRO' %} border-4 border-yellow-300 {% endif %}"
+     src="https://avatars.dicebear.com/api/gridy/{{ user.username }}.svg"
+     alt="{{ user.username }}" />
+{% endif %}

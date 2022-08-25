@@ -47,15 +47,7 @@
 <ul class="divide-y divide-gray-200">
   {% for comment in comments %}
       <li class="flex items-start px-6 py-4">
-          {% if comment.author.profile_image %}
-              <img class="w-10 h-10 mt-2 rounded-full"
-                   src="https://res.cloudinary.com/built-with-django/{{ comment.author.profile_image }}"
-                   alt="{{ comment.author.username }}" />
-          {% else %}
-              <img class="w-10 h-10 mt-2 rounded-full"
-                   src="https://avatars.dicebear.com/api/gridy/{{ comment.author.username }}.svg"
-                   alt="" />
-          {% endif %}
+          {% include "components/profile-image.html" with user=comment.author %}
           <div class="ml-3">
               <p class="font-medium">
                   <span class="text-sm text-gray-900">{{ comment.author }}</span>

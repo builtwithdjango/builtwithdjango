@@ -45,15 +45,7 @@
                         <div class="flex-shrink-0">
                             <a href="#">
                                 <span class="sr-only">{{ guide.author.username }}</span>
-                                {% if guide.author.profile_image %}
-                                    <img class="w-8 h-8 rounded-full"
-                                         src="https://res.cloudinary.com/built-with-django/{{ guide.author.profile_image }}"
-                                         alt="{{ guide.author.username }}" />
-                                {% else %}
-                                    <img class="w-8 h-8 rounded-full"
-                                         src="https://avatars.dicebear.com/api/gridy/{{ guide.author.username }}.svg"
-                                         alt="{{ guide.author.username }}" />
-                                {% endif %}
+                                {% include "components/profile-image.html" with user=guide.author size=8 %}
                             </a>
                         </div>
                         <div class="ml-3">

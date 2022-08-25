@@ -1,6 +1,7 @@
 backup-dbs/
 *.sqlite3
 *.lock
+.kolo/
 package-lock.json
 
 # Byte-compiled / optimized / DLL files

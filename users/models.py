@@ -37,5 +37,18 @@ class CustomUser(AbstractUser):
         null=True,
     )
 
+    FREE = "FREE"
+    PRO = "PRO"
+    SUBSCRIPTION_LEVEL = [
+        (FREE, "FREE"),
+        (PRO, "PRO"),
+    ]
+
+    subscription_level = models.CharField(
+        max_length=15,
+        choices=SUBSCRIPTION_LEVEL,
+        default=FREE,
+    )
+
     class Meta:
         db_table = "auth_user"

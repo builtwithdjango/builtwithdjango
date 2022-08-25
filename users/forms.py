@@ -25,26 +25,20 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class CustomUserUpdateForm(UserChangeForm):
-    referred_by_username = forms.CharField()
-
-    def __init__(self, *args, **kwargs):
-        super(CustomUserUpdateForm, self).__init__(*args, **kwargs)
-
-        self.fields["referred_by_username"].widget.attrs.update(
-            {
-                "class": "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
-            }
-        )
-
     class Meta:
         model = get_user_model()
         fields = (
             "first_name",
             "last_name",
+            "personal_website",
             "profile_image",
             "referred_by",
+            "twitter_handle",
+            "github_handle",
+            "indiehackers_handle",
+            "email",
+            "make_public",
         )
-        widgets = {"profile_image": ImageWidget}
 
 
 class CustomLoginForm(LoginForm):
