@@ -104,10 +104,8 @@
   </div>
 </div>
 
-  <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD"></script>
-
+  <script src="https://api-m.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD"></script>
   <script>
-
     function getCookie(name) {
 		    var cookieValue = null;
 		    if (document.cookie && document.cookie !== '') {
@@ -153,11 +151,11 @@
         },
 
         onInit: function(data, actions)  {
-          // console.log(`Init: ${JSON.stringify(data)}`)
+          console.log(`Init: ${JSON.stringify(data)}`)
         },
 
         onError: function (err) {
-          // console.log(err)
+          console.log(err)
           // For example, redirect to a specific error page
           // window.location.href = "/your-error-page-here";
         },
@@ -166,7 +164,7 @@
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(orderData) {
                 // Successful capture! For demo purposes:
-                // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                 completeOrder(data)
                 window.location.href = "{% url 'update-profile' %}"
             });
