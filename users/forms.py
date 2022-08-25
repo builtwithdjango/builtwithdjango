@@ -39,6 +39,7 @@ class CustomUserUpdateForm(UserChangeForm):
             "email",
             "make_public",
         )
+        widgets = {"profile_image": ImageWidget}
 
 
 class CustomLoginForm(LoginForm):
