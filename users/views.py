@@ -74,9 +74,9 @@ def complete_upgrade_transaction(request):
     body = json.loads(request.body)
     print(f"BODY: {body}")
 
-    # current_user = request.user
-    # current_user.subscription_level = "PRO"
-    # current_user.save()
+    current_user = request.user
+    current_user.subscription_level = "PRO"
+    current_user.save()
 
     messages.success(request, "Upgrade was successful!")
 
