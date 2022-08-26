@@ -104,7 +104,7 @@
   </div>
 </div>
 
-  <script src="https://api-m.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD"></script>
+  <script src="{{ PAYPAL_HOST }}/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD"></script>
   <script>
     function getCookie(name) {
 		    var cookieValue = null;
@@ -138,14 +138,15 @@
 	 	}
 
     paypal.Buttons({
-
         // Set up the transaction
         createOrder: function(data, actions) {
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: '100'
-                    }
+                        value: "100",
+                        currency_code: "USD"
+                    },
+                    description: "PRO Subscription for Built with Django"
                 }]
             });
         },
@@ -164,9 +165,9 @@
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(orderData) {
                 // Successful capture! For demo purposes:
-                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                 completeOrder(data)
                 window.location.href = "{% url 'update-profile' %}"
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
             });
         }
 

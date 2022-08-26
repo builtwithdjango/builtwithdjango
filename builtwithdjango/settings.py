@@ -204,6 +204,12 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "home"
 # Paypal
 PAYPAL_CLIENT_ID = env("PAYPAL_CLIENT_ID")
 
+if DEBUG:
+    PAYPAL_HOST = "https://www.paypal.com"
+else:
+    PAYPAL_HOST = "https://api-m.paypal.com"
+
+
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],

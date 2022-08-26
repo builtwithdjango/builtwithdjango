@@ -66,6 +66,7 @@ class ProfileUpgrade(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["PAYPAL_CLIENT_ID"] = settings.PAYPAL_CLIENT_ID
+        context["PAYPAL_HOST"] = settings.PAYPAL_HOST
 
         return context
 
