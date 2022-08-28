@@ -3,6 +3,7 @@ from cloudinary.models import CloudinaryField
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from model_utils.models import TimeStampedModel
 
 
 class CustomUser(AbstractUser):
@@ -52,3 +53,13 @@ class CustomUser(AbstractUser):
 
     class Meta:
         db_table = "auth_user"
+
+
+class PaddleWebhook(TimeStampedModel):
+    alert_name = models.CharField(max_length=40, blank=True)
+    payload = models.JSONField(default=None, null=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["created"]),
+        ]

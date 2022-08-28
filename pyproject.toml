@@ -30,7 +30,6 @@ django-q = "^1.3.9"
 python-webpack-boilerplate = "^1.0.0"
 Pygments = "^2.12.0"
 kolo = "^1.7.0"
-dj-paddle = "^0.1.2"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"

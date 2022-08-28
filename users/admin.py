@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import CustomUser
+from .models import CustomUser, PaddleWebhook
 
 
 class CustomUserAdmin(UserAdmin):
@@ -31,3 +31,15 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+class PaddleWebhookAdmin(admin.ModelAdmin):
+    list_display = [
+        "created",
+        "alert_name",
+        "payload",
+    ]
+    model = PaddleWebhook
+
+
+admin.site.register(PaddleWebhook, PaddleWebhookAdmin)

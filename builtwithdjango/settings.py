@@ -70,7 +70,6 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "django_q",
     "webpack_boilerplate",
-    "djpaddle",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
@@ -109,7 +108,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "djpaddle.context_processors.vendor_id",
             ],
         },
     },
@@ -276,10 +274,11 @@ Q_CLUSTER = {
 SCREENSHOT_API_KEY = env("SCREENSHOT_API_KEY")
 
 # Paddle
-DJPADDLE_SANDBOX = True
-DJPADDLE_VENDOR_ID = env("DJPADDLE_VENDOR_ID")
-DJPADDLE_API_KEY = env("DJPADDLE_API_KEY")
-DJPADDLE_PUBLIC_KEY = """-----BEGIN PUBLIC KEY-----
+PADDLE_USER_AGENT = env("PADDLE_USER_AGENT")
+PADDLE_SANDBOX = env("PADDLE_SANDBOX")
+PADDLE_VENDOR_ID = env("PADDLE_VENDOR_ID")
+PADDLE_API_KEY = env("PADDLE_API_KEY")
+PADDLE_PUBLIC_KEY = """-----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAoLacgZw7a0e5h/5SqY5B
 bGO4Qvh5ebo970nBmhgOiJoSl3L04yklhsx3JAnyCdAnoSBNUxM1/kVIELe2gLmC
 Fm3V1PvYO1JsNvif/ZVv0C1uMJAGVlrdGKcz9vQpvK+xaUf7owkNRUN5P0x0HA1v
