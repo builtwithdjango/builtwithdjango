@@ -80,7 +80,7 @@
                       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                     </svg>
                   </div>
-                  <p class="ml-3 text-sm text-gray-700">Suggest topics for laerning</p>
+                  <p class="ml-3 text-sm text-gray-700">Suggest topics for learning</p>
                 </li>
 
               </ul>
@@ -94,7 +94,15 @@
             </div>
             <div class="mt-6">
               <div class="rounded-md shadow">
-                <div id="paypal-button-container"></div>
+                <a href="#"
+                   data-success="{% url 'update-profile' %}"
+                   data-product="34185"
+                   data-theme="none"
+                   data-email="{{ user.email }}"
+                   class="paddle_button flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
+                >
+                   Get Access
+                </a>
               </div>
             </div>
           </div>
@@ -104,7 +112,12 @@
   </div>
 </div>
 
-  <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD"></script>
+<script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+<script type="text/javascript">
+  Paddle.Environment.set('sandbox');
+  Paddle.Setup({ vendor: {{ PADDLE_VENDOR_ID }} });
+</script>
+
   <script>
     function getCookie(name) {
 		    var cookieValue = null;

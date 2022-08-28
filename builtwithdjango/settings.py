@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "django_q",
     "webpack_boilerplate",
+    "djpaddle",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
@@ -108,6 +109,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "djpaddle.context_processors.vendor_id",
             ],
         },
     },
@@ -272,3 +274,22 @@ Q_CLUSTER = {
 
 # Screenshot API
 SCREENSHOT_API_KEY = env("SCREENSHOT_API_KEY")
+
+# Paddle
+DJPADDLE_SANDBOX = True
+DJPADDLE_VENDOR_ID = env("DJPADDLE_VENDOR_ID")
+DJPADDLE_API_KEY = env("DJPADDLE_API_KEY")
+DJPADDLE_PUBLIC_KEY = """-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAoLacgZw7a0e5h/5SqY5B
+bGO4Qvh5ebo970nBmhgOiJoSl3L04yklhsx3JAnyCdAnoSBNUxM1/kVIELe2gLmC
+Fm3V1PvYO1JsNvif/ZVv0C1uMJAGVlrdGKcz9vQpvK+xaUf7owkNRUN5P0x0HA1v
+uXRsO2amaLjiqNqW0toJV0BJbx5AaJfAskcdlkPPlv3B0VTLNJTvFNCcR/g1fi4G
+V6KQNdcHC0UEx1Cu3yPzKZbN0nsj7hZSLdsqpnjgX1Z0w1+lM2W8EElUCr8Q216M
++HKx6z0w7FJiP8MqxIWAlpdZ0RPQiTowKILhqsRYRKZh1hvvfX4MHG1nTLOo3ESm
+R8kf05hPkYQGZ7FNdsiyz1nqqm9RSTYoBjSxy5PfoIucviRAYfEkV0DTqrIC/Bgo
+gLLSFSa1feqEOBk0tmXTi010OCGs4riEybATdNN0VS0Ar/pPsKQGgeoVsGOrqHHH
+cRca3TGDXeeRI4q8z4/YzW3TDWGF2piH5oCrOVnUl3zXIcdEBo3FPqplDymXBMBS
+EavXtA1/2ok/MFrD/3JQxlDmpn8M9HlpqHGtNrBsdtthGTnfHMdnFcZDzfLmFyAn
+1/kPN5c2ovSh6v7nVMzafLjJaXpLbQecnUQnT4QaCTq9GavRrWJuFslB0Z5CwDRs
+9Oj67CPHax6VE0Ld635rx4ECAwEAAQ==
+-----END PUBLIC KEY-----"""

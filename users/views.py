@@ -1,12 +1,16 @@
 import json
+from urllib import parse
 
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponse
+from django.http.response import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, TemplateView, UpdateView
 from django_q.tasks import async_task
 
@@ -66,7 +70,7 @@ class ProfileUpgrade(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["PAYPAL_CLIENT_ID"] = settings.PAYPAL_CLIENT_ID
-        context["PAYPAL_HOST"] = settings.PAYPAL_HOST
+        context["PADDLE_VENDOR_ID"] = settings.PADDLE_VENDOR_ID
 
         return context
 
@@ -82,3 +86,12 @@ def complete_upgrade_transaction(request):
     messages.success(request, "Upgrade was successful!")
 
     return redirect("update-profile")
+
+
+@csrf_exempt
+def accept_paddle_webhook(request):
+    data = parse.parse_qs(request.body.decode("utf-8"), keep_blank_values=True)
+    pretty = json.dumps(data, indent=4, sort_keys=True)
+    print(pretty)
+
+    return HttpResponse(status=200)
