@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import CustomUser
+from .models import CustomUser, PayPalTransaction
 
 
 class CustomUserAdmin(UserAdmin):
@@ -31,3 +31,15 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+class PayPalTransactionAdmin(admin.ModelAdmin):
+    list_display = [
+        "created",
+        "user",
+        "payload",
+    ]
+    model = PayPalTransaction
+
+
+admin.site.register(PayPalTransaction, PayPalTransactionAdmin)
