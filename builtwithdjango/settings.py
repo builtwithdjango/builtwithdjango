@@ -203,12 +203,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "home"
 
 # Paypal
 PAYPAL_CLIENT_ID = env("PAYPAL_CLIENT_ID")
-
-if DEBUG:
-    PAYPAL_HOST = "https://www.paypal.com"
-else:
-    PAYPAL_HOST = "https://api-m.paypal.com"
-
+PAYPAL_WEBHOOK_SECRET = env("PAYPAL_WEBHOOK_SECRET")
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],

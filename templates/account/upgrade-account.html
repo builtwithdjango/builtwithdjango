@@ -124,16 +124,22 @@
 		var csrftoken = getCookie('csrftoken');
 
 
-    function completeOrder(data){
+    function completeOrder(transactionData, orderData){
 	 		var url = "{% url 'upgrade-complete' %}"
+      let completeData = {
+        "user": "{{ user.username }}",
+        ...transactionData,
+        ...orderData
+      }
 
 	 		fetch(url, {
-	 			method:'POST',
+	 			method:"POST",
 	 			headers:{
-	 				'Content-type':'application/json',
-	 				'X-CSRFToken':csrftoken,
+	 				"Content-type":"application/json",
+	 				"X-CSRFToken":csrftoken,
+          "Paypal-Secret": "{{PAYPAL_WEBHOOK_SECRET}}",
 	 			},
-	 			body:JSON.stringify(data)
+	 			body:JSON.stringify(completeData)
 	 		})
 	 	}
 
@@ -157,21 +163,14 @@
 
         onError: function (err) {
           console.log(err)
-          // For example, redirect to a specific error page
-          // window.location.href = "/your-error-page-here";
         },
 
-        // Finalize the transaction
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(orderData) {
-                // Successful capture! For demo purposes:
-                completeOrder(data)
+                completeOrder(data, orderData)
                 window.location.href = "{% url 'update-profile' %}"
-                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
             });
         }
-
-
     }).render('#paypal-button-container');
   </script>
 
