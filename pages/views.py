@@ -71,3 +71,7 @@ class ConfirmEmail(SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("request-nft")
     success_message = "Thanks for confirming your email! You will receive your NFT shortly."
     slug_field = "wallet_public_key"
+
+
+class TermsOfService(TemplateView):
+    template_name = "pages/terms-of-service.html"
