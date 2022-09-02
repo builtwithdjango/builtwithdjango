@@ -33,7 +33,7 @@ urlpatterns = (
         path("", include("pages.urls")),
         path("projects/", include("projects.urls")),
         path("api/v1/", include("api.urls")),
-        path("jobs/", include("jobs.urls")),
+        # path("jobs/", include("jobs.urls")),
         path("makers/", include("makers.urls")),
         path("blog/", include("blog.urls")),
         path("newsletter/", include("newsletter.urls")),
