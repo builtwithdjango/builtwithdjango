@@ -23,7 +23,7 @@ from djstripe.models import Customer
 from newsletter.views import NewsletterSignupForm
 
 from .forms import CustomLoginForm, CustomUserCreationForm, CustomUserUpdateForm
-from .models import CustomUser, PayPalTransaction
+from .models import CustomUser
 from .tasks import notify_of_new_user
 
 stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
