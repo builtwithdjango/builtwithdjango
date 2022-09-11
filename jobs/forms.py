@@ -24,25 +24,6 @@ class PostJob(ModelForm):
                 }
             )
 
-    def save(self):
-        instance = super(PostJob, self).save()
-
-        @transaction.on_commit
-        def send_notification():
-            message = f"""
-            Someone submitted a new job.
-            Instance: {instance}
-          """
-            send_mail(
-                "New Job Submission",
-                message,
-                "rasul@builtwithdjango.com",
-                ["rasul@builtwithdjango.com"],
-                fail_silently=False,
-            )
-
-        return instance
-
     class Meta:
         model = Job
         fields = [

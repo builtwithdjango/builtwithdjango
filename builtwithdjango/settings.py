@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "django_q",
     "webpack_boilerplate",
+    "djstripe",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",
@@ -201,10 +202,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = "home"
 ACCOUNT_LOGOUT_REDIRECT_URL = "home"
 
-# Paypal
-PAYPAL_CLIENT_ID = env("PAYPAL_CLIENT_ID")
-PAYPAL_WEBHOOK_SECRET = env("PAYPAL_WEBHOOK_SECRET")
-
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
@@ -245,10 +242,15 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET = True
 
 # Stripe
-STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY")
-STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
-STRIPE_ENDPOINT_SECRET = env("STRIPE_ENDPOINT_SECRET")
-POST_JOB_PRODUCT_ID = env("POST_JOB_PRODUCT_ID")
+STRIPE_LIVE_SECRET_KEY = env("STRIPE_LIVE_SECRET_KEY")
+STRIPE_TEST_SECRET_KEY = env("STRIPE_TEST_SECRET_KEY")
+STRIPE_LIVE_MODE = False  # Change to True in production
+DJSTRIPE_WEBHOOK_VALIDATION = "retrieve_event"
+DJSTRIPE_USE_NATIVE_JSONFIELD = True
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
+
+JOBS_WEBHOOK_SECRET = env("JOBS_WEBHOOK_SECRET")
+JOBS_PRICE_ID = env("JOBS_PRICE_ID")
 
 # Cloudinary
 cloudinary.config(

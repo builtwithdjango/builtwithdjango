@@ -33,13 +33,14 @@ urlpatterns = (
         path("", include("pages.urls")),
         path("projects/", include("projects.urls")),
         path("api/v1/", include("api.urls")),
-        # path("jobs/", include("jobs.urls")),
+        path("jobs/", include("jobs.urls")),
         path("makers/", include("makers.urls")),
         path("blog/", include("blog.urls")),
         path("newsletter/", include("newsletter.urls")),
         path("podcast/", include("podcast.urls")),
         path("users/", include("allauth.urls")),
         path("users/", include("users.urls")),
+        path("stripe/", include("djstripe.urls", namespace="djstripe")),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

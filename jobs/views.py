@@ -7,12 +7,19 @@ from django.http.response import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
+from django_q.tasks import async_task
+from djstripe import settings as djstripe_settings
+from djstripe.models import Price
 
 from newsletter.views import NewsletterSignupForm
 
 from .forms import PostJob
 from .models import Job
+from .tasks import notify_of_new_job
+
+stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
 
 
 class JobListView(ListView):
@@ -49,6 +56,12 @@ class JobCreateView(CreateView):
     def get_success_url(self):
         return reverse("stripe_checkout_session", kwargs={"pk": self.object.id})
 
+    def form_valid(self, form):
+        form.instance.logged_in_maker = self.request.user
+        self.object = form.save()
+        async_task(notify_of_new_job, self.object)
+        return super(JobCreateView, self).form_valid(form)
+
 
 class ThankYouView(TemplateView):
     template_name = "jobs/post-job-thank-you.html"
@@ -60,44 +73,39 @@ class ThankYouView(TemplateView):
         return context
 
 
-@csrf_exempt
-def create_paypal_checkout_session(request, pk):
-    return
-
-
-@csrf_exempt
 def create_checkout_session(request, pk):
-    stripe.api_key = settings.STRIPE_SECRET_KEY
     checkout_session = stripe.checkout.Session.create(
         success_url=request.build_absolute_uri(reverse_lazy("job_thank_you")) + "?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url=request.build_absolute_uri(reverse_lazy("job_thank_you")) + "?status=failed",
+        cancel_url=request.build_absolute_uri(reverse_lazy("home")) + "?status=failed",
         mode="payment",
         line_items=[
             {
                 "quantity": 1,
-                "price": settings.POST_JOB_PRODUCT_ID,
+                "price": settings.JOBS_PRICE_ID,
             }
         ],
+        automatic_tax={"enabled": True},
         metadata={"pk": pk},
     )
+
     return redirect(checkout_session.url, code=303)
 
 
 @csrf_exempt
+@require_POST
 def webhook(request):
     payload = request.body
     sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
     event = None
+
     try:
-        event = stripe.Webhook.construct_event(payload, sig_header, settings.STRIPE_ENDPOINT_SECRET)
+        event = stripe.Webhook.construct_event(payload, sig_header, settings.JOBS_WEBHOOK_SECRET)
     except ValueError as e:
         # Invalid payload
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError as e:
         # Invalid signature
         return HttpResponse(status=400)
-    except:
-        return
 
     if event.type == "checkout.session.completed":
         job_id = event["data"]["object"]["metadata"]["pk"]
@@ -105,6 +113,8 @@ def webhook(request):
         job.paid = True
         job.approved = True
         job.save()
-        return JsonResponse({"event": event})
+        print(f"Good Event: {event}")
     else:
-        print("Unhandled event type {}".format(event.type))
+        print(f"Bad Event: {event}")
+
+    return HttpResponse(status=200)
