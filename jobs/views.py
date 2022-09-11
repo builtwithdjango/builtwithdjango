@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 
 import stripe
 from django.conf import settings
+from django.contrib import messages
 from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.shortcuts import redirect
@@ -114,6 +115,7 @@ def webhook(request):
         job.approved = True
         job.save()
         print(f"Good Event: {event}")
+        messages.success(request, "Thanks for submitting a job!")
     else:
         print(f"Bad Event: {event}")
 
