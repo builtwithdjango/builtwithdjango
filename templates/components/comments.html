@@ -55,7 +55,13 @@
                       <span>⭐</span>
                   {% endif %}
                   -
-                  <span class="text-sm text-gray-600">{{ comment.created_date|timesince }} ago</span>
+                  <span class="text-sm text-gray-600">
+                    {% if comment.created_date %}
+                      {{ comment.created_date|timesince }}
+                    {% else %}
+                      {{ comment.created|timesince }}
+                    {% endif %} ago
+                  </span>
               </p>
               <div class="prose">
                   {{ comment | markdown | safe }}
