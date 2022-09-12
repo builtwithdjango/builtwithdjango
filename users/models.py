@@ -53,13 +53,3 @@ class CustomUser(AbstractUser):
 
     class Meta:
         db_table = "auth_user"
-
-
-class PayPalTransaction(TimeStampedModel):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    payload = models.JSONField(default=None, null=True)
-
-    class Meta:
-        indexes = [
-            models.Index(fields=["created"]),
-        ]

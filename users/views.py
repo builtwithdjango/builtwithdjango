@@ -2,6 +2,7 @@ import datetime as dt
 import json
 from secrets import compare_digest
 
+import stripe
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,15 +13,20 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, TemplateView, UpdateView
 from django_q.tasks import async_task
+from djstripe import settings as djstripe_settings
+from djstripe.models import Customer
 
 from newsletter.views import NewsletterSignupForm
 
 from .forms import CustomLoginForm, CustomUserCreationForm, CustomUserUpdateForm
-from .models import CustomUser, PayPalTransaction
+from .models import CustomUser
 from .tasks import notify_of_new_user
+
+stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
 
 
 class SignUpView(CreateView):
@@ -69,44 +75,47 @@ class ProfileUpgrade(LoginRequiredMixin, TemplateView):
     login_url = "account_login"
     template_name = "account/upgrade-account.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["PAYPAL_CLIENT_ID"] = settings.PAYPAL_CLIENT_ID
-        context["PAYPAL_WEBHOOK_SECRET"] = settings.PAYPAL_WEBHOOK_SECRET
 
-        return context
-
-
-@require_POST
-def complete_upgrade_transaction(request):
-    given_token = request.headers.get("Paypal-Secret", "")
-    if not compare_digest(given_token, settings.PAYPAL_WEBHOOK_SECRET):
-        return HttpResponseForbidden(
-            "Incorrect Paypal token",
-            content_type="text/plain",
-        )
-
-    payload = json.loads(request.body)
-
-    given_user = payload["user"]
-    if not compare_digest(given_user, request.user.username):
-        return HttpResponseForbidden(
-            "Incorrect User",
-            content_type="text/plain",
-        )
-
-    PayPalTransaction.objects.filter(created__lte=timezone.now() - dt.timedelta(days=7)).delete()
-
-    PayPalTransaction.objects.create(
-        created=timezone.now(),
-        user=request.user,
-        payload=payload,
+def create_checkout_session(request, pk):
+    checkout_session = stripe.checkout.Session.create(
+        customer_email=request.user.email,
+        success_url=request.build_absolute_uri(reverse_lazy("update-profile")) + "?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url=request.build_absolute_uri(reverse_lazy("update-profile")) + "?status=failed",
+        mode="payment",
+        line_items=[
+            {
+                "quantity": 1,
+                "price": settings.USER_UPGRADE_PRICE_ID,
+            }
+        ],
+        automatic_tax={"enabled": True},
+        metadata={"pk": pk},
     )
 
-    current_user = request.user
-    current_user.subscription_level = "PRO"
-    current_user.save()
+    return redirect(checkout_session.url, code=303)
 
-    messages.success(request, "Upgrade was successful!")
 
-    return redirect("update-profile")
+@csrf_exempt
+@require_POST
+def webhook(request):
+    payload = request.body
+    sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(payload, sig_header, settings.USER_UPGRADE_WEBHOOK_SECRET)
+    except ValueError as e:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return HttpResponse(status=400)
+
+    if event.type == "checkout.session.completed":
+        user_id = event["data"]["object"]["metadata"]["pk"]
+
+        current_user = CustomUser.objects.get(pk=user_id)
+        current_user.subscription_level = "PRO"
+        current_user.save()
+
+    return HttpResponse(status=200)

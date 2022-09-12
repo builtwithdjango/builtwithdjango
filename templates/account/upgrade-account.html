@@ -94,7 +94,7 @@
             </div>
             <div class="mt-6">
               <div class="rounded-md shadow">
-                <a href="#" class="flex items-center justify-center px-5 py-3 text-base font-medium text-white bg-gray-800 border border-transparent rounded-md hover:bg-gray-900">Get Access</a>
+                <a href="{% url 'user_upgrade_checkout_session' pk=user.id %}" class="flex items-center justify-center px-5 py-3 text-base font-medium text-white bg-gray-800 border border-transparent rounded-md hover:bg-gray-900">Get Access</a>
               </div>
             </div>
           </div>
@@ -103,75 +103,5 @@
     </div>
   </div>
 </div>
-
-  <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD"></script>
-  <script>
-    function getCookie(name) {
-		    var cookieValue = null;
-		    if (document.cookie && document.cookie !== '') {
-		        var cookies = document.cookie.split(';');
-		        for (var i = 0; i < cookies.length; i++) {
-		            var cookie = cookies[i].trim();
-		            // Does this cookie string begin with the name we want?
-		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-		                break;
-		            }
-		        }
-		    }
-		    return cookieValue;
-		}
-		var csrftoken = getCookie('csrftoken');
-
-
-    function completeOrder(transactionData, orderData){
-	 		var url = "{% url 'upgrade-complete' %}"
-      let completeData = {
-        "user": "{{ user.username }}",
-        ...transactionData,
-        ...orderData
-      }
-
-	 		fetch(url, {
-	 			method:"POST",
-	 			headers:{
-	 				"Content-type":"application/json",
-	 				"X-CSRFToken":csrftoken,
-          "Paypal-Secret": "{{PAYPAL_WEBHOOK_SECRET}}",
-	 			},
-	 			body:JSON.stringify(completeData)
-	 		})
-	 	}
-
-    paypal.Buttons({
-        // Set up the transaction
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    amount: {
-                        value: "100",
-                        currency_code: "USD"
-                    },
-                    description: "PRO Subscription for Built with Django"
-                }]
-            });
-        },
-
-        onInit: function(data, actions)  {
-          console.log(`Init: ${JSON.stringify(data)}`)
-        },
-
-        onError: function (err) {
-          console.log(err)
-        },
-
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(function(orderData) {
-                completeOrder(data, orderData)
-                window.location.href = "{% url 'update-profile' %}"
-            });
-        }
-    }).render('#paypal-button-container');
-  </script>
 
 {% endblock content %}
