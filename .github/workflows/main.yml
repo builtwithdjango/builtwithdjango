@@ -36,7 +36,7 @@ jobs:
           sudo git fetch --all
           sudo git reset --hard origin/master
 
-    - name: Install dependencies
+    - name: Install Python dependencies
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.DO_HOST }}
@@ -63,6 +63,7 @@ jobs:
           source ./venv/bin/activate
           python manage.py migrate
           python manage.py collectstatic --noinput
+          python manage.py djstripe_sync_models
 
     - name: Restart Server
       uses: appleboy/ssh-action@master
