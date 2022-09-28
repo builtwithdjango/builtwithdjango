@@ -208,12 +208,14 @@ REST_FRAMEWORK = {
 }
 
 ANYMAIL = {
-    # (exact settings here depend on your ESP...)
     "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),
     "MAILGUN_SENDER_DOMAIN": "mg.builtwithdjango.com",
 }
-EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
+    EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
 DEFAULT_FROM_EMAIL = "rasul@builtwithdjango.com"
 SERVER_EMAIL = "error@builtwithdjango.com"
@@ -239,7 +241,6 @@ ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_LOGOUT_ON_GET = True
 
 # Stripe
 STRIPE_LIVE_SECRET_KEY = env("STRIPE_LIVE_SECRET_KEY")
