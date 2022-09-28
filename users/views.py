@@ -3,6 +3,8 @@ import json
 from secrets import compare_digest
 
 import stripe
+from allauth.account.models import EmailAddress
+from allauth.account.utils import send_email_confirmation
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -70,6 +72,17 @@ class ProfileUpdateForm(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user = self.request.user
+        emailaddress = EmailAddress.objects.get_for_user(user, user.email)
+        email_verified = emailaddress.verified
+
+        context["email_verified"] = email_verified
+
+        return context
+
 
 class ProfileUpgrade(LoginRequiredMixin, TemplateView):
     login_url = "account_login"
@@ -119,3 +132,10 @@ def webhook(request):
         current_user.save()
 
     return HttpResponse(status=200)
+
+
+def resend_email_confirmation_email(request):
+    user = request.user
+    send_email_confirmation(request, user, user.email)
+
+    return redirect("update-profile")
