@@ -6,27 +6,13 @@ from model_utils.models import TimeStampedModel
 
 
 class Post(TimeStampedModel):
-    DRAFT = "DR"
-    PUBLISHED = "PB"
-    PUBLISH_STATUS = [
-        (DRAFT, "DRAFT"),
-        (PUBLISHED, "PUBLISHED"),
-    ]
-
     title = models.CharField(max_length=250)
     description = models.TextField(blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="post")
     slug = models.SlugField(max_length=250)
     tags = models.ManyToManyField("Tag", related_name="post", blank=True)
-    content = models.TextField()
-
-    status = models.CharField(
-        max_length=3,
-        choices=PUBLISH_STATUS,
-        default=DRAFT,
-    )
-
     unsplashID = models.CharField(max_length=40, blank=True)
+    content = models.TextField()
 
     icon = CloudinaryField(
         "Image",
@@ -35,6 +21,33 @@ class Post(TimeStampedModel):
         folder=f"blog-post-icon-{settings.ENVIRONMENT}",
         blank=True,
         null=True,
+    )
+
+    DRAFT = "DR"
+    PUBLISHED = "PB"
+    PUBLISH_STATUS = [
+        (DRAFT, "DRAFT"),
+        (PUBLISHED, "PUBLISHED"),
+    ]
+    status = models.CharField(
+        max_length=3,
+        choices=PUBLISH_STATUS,
+        default=DRAFT,
+    )
+
+    TUTORIAL = "TUTORIAL"
+    INTERVIEW = "INTERVIEW"
+    UPDATE = "UPDATE"
+    DIFFICULTY_LEVEL = [
+        (TUTORIAL, "TUTORIAL"),
+        (INTERVIEW, "INTERVIEW"),
+        (UPDATE, "UPDATE"),
+    ]
+
+    type = models.CharField(
+        max_length=15,
+        choices=DIFFICULTY_LEVEL,
+        default=TUTORIAL,
     )
 
     BEGINNER = "BEGINNER"
