@@ -41,24 +41,6 @@
                           <p class="mt-2 text-sm text-gray-500">{{ guide.description | truncatechars:300 | markdown | safe }}</p>
                         </a>
                       </div>
-                      <div class="flex items-center mt-6">
-                        <div class="flex-shrink-0">
-                            <a href="#">
-                                <span class="sr-only">{{ guide.author.username }}</span>
-                                {% include "components/profile-image.html" with user=guide.author size=8 %}
-                            </a>
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-sm font-medium text-gray-900">
-                                <a href="#" class="hover:underline">{{ guide.author.username }}</a>
-                            </p>
-                            <div class="flex space-x-1 text-sm text-gray-500">
-                                <time datetime="{{ guide.modified | date:'Y-m-d' }}">
-                                {{ guide.modified | date:"N j, Y" }}
-                                </time>
-                            </div>
-                        </div>
-                      </div>
                     </div>
                 </div>
                 {% endfor %}
