@@ -12,7 +12,7 @@ from .tasks import notify_admin_of_guide_comment
 class PostListView(ListView):
     model = Post
     template_name = "blog/all_posts.html"
-    queryset = Post.objects.all()
+    queryset = Post.objects.filter(type="TUTORIAL")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
