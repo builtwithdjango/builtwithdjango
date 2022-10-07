@@ -188,8 +188,11 @@ SITE_ID = 1
 if not DEBUG:
     sentry_sdk.init(dsn=env("dsn"), integrations=[DjangoIntegration()])
 
+# Newsletters
 EMAILOCTOPUS_API = env("EMAILOCTOPUS_API")
 OCTO_LIST_ID = env("OCTO_LIST_ID")
+REVUE_API_TOKEN = env("REVUE_API_TOKEN")
+
 
 INTERNAL_IPS = [
     "127.0.0.1",

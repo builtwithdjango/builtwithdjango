@@ -11,6 +11,7 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
+from django_q.tasks import async_task
 
 from jobs.models import Job
 from podcast.models import Episode
@@ -18,6 +19,7 @@ from projects.models import Project
 
 from .forms import NewsletterSignupForm, getWeeklyTemplateForm
 from .models import Emails
+from .tasks import add_email_to_revue
 
 
 class NewsletterSignupView(SuccessMessageMixin, CreateView):
@@ -29,19 +31,8 @@ class NewsletterSignupView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
+        async_task(add_email_to_revue, self.object)
 
-        emailoctopus_api_key = settings.EMAILOCTOPUS_API
-        list_id = settings.OCTO_LIST_ID
-
-        data = {
-            "api_key": emailoctopus_api_key,
-            "email_address": self.object.user_email,
-        }
-
-        r = requests.post(
-            f"https://emailoctopus.com/api/1.5/lists/{list_id}/contacts",
-            data=data,
-        )
         messages.success(self.request, "Thanks for subscribing!")
 
         return HttpResponseRedirect(reverse_lazy("home"))
@@ -57,15 +48,9 @@ def getWeeklyTemplateView(request):
     if form.is_valid():
         days = form.cleaned_data["days"]
         filter_date = datetime.today() - timedelta(days=days)
-        projects = Project.objects.filter(
-            created_date__gte=filter_date
-        ).filter(published=True)
-        jobs = Job.objects.filter(created_datetime__gte=filter_date).filter(
-            approved=True
-        )
-        podcast_episodes = Episode.objects.filter(
-            created_datetime__gte=filter_date
-        )
+        projects = Project.objects.filter(created_date__gte=filter_date).filter(published=True)
+        jobs = Job.objects.filter(created_datetime__gte=filter_date).filter(approved=True)
+        podcast_episodes = Episode.objects.filter(created_datetime__gte=filter_date)
         context = {
             "projects": projects,
             "jobs": jobs,
@@ -73,9 +58,7 @@ def getWeeklyTemplateView(request):
         }
         send_mail(
             "Weekly Email Template",
-            render_to_string(
-                "newsletter/weekly-newsletter-template.html", context
-            ),
+            render_to_string("newsletter/weekly-newsletter-template.html", context),
             "rasul@builtwithdjango.com",
             ["rasul@builtwithdjango.com"],
         )
