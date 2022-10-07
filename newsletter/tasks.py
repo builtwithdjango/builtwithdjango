@@ -13,6 +13,8 @@ def add_email_to_revue(email, double_opt_in=True):
         headers={"Authorization": f"Token {settings.REVUE_API_TOKEN}"},
         json=data,
     )
-    print(f"Done. Status: {r.status_code}")
+    print(f"Done")
+    print(f"Status: {r.status_code}")
+    print(f"JSON: {r.json()}")
 
     return r.json()
