@@ -31,7 +31,7 @@ class NewsletterSignupView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        async_task(add_email_to_revue, self.object.user_email)
+        r_json = async_task(add_email_to_revue, self.object.user_email)
 
         messages.success(self.request, "Thanks for subscribing!")
 
