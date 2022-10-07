@@ -7,6 +7,14 @@ class CommentInline(admin.TabularInline):
     model = Comment
 
 
-admin.site.register(Post)
-admin.site.register(Tag)
 admin.site.register(Comment)
+
+
+class PostAdmin(admin.ModelAdmin):
+    list_display = ("title", "created", "modified")
+
+
+admin.site.register(Post, PostAdmin)
+
+
+admin.site.register(Tag)
