@@ -1,17 +1,18 @@
-from allauth.account.signals import email_confirmed
+from allauth.account.signals import email_confirmed, user_signed_up
 from django.core.mail import send_mail
 from django.dispatch import receiver
 
 from newsletter.tasks import add_email_to_revue
 
 
-def notify_of_new_user(instance):
+@receiver(user_signed_up)
+def notify_of_new_user(sender, **kwargs):
     message = f"""
-      We have a new user.
-      Instance: {instance}
+      Sender: {sender}
+      We have a new user: {kwargs["user"]}
     """
     send_mail(
-        "New User",
+        f"New User: {kwargs['user']}",
         message,
         "rasul@builtwithdjango.com",
         ["rasul@builtwithdjango.com"],
