@@ -11,12 +11,7 @@ admin.site.register(Comment)
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = (
-        "owner",
-        "google_place_id",
-        "name",
-        "min_rating",
-    )
+    list_display = ("title", "created", "modified")
 
 
 admin.site.register(Post, PostAdmin)
