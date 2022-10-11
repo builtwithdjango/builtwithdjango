@@ -23,7 +23,7 @@ from .sitemaps import sitemaps
 
 urlpatterns = (
     [
-        path("admin/", admin.site.urls),
+        path(f"{settings.ADMIN_URL}", admin.site.urls),
         path(
             "sitemap.xml",
             sitemap,
