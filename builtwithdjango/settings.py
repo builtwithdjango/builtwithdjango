@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     "django_q",
     "webpack_boilerplate",
     "djstripe",
+    "robots",
     "pages.apps.PagesConfig",
     "projects.apps.ProjectsConfig",
     "jobs.apps.JobsConfig",

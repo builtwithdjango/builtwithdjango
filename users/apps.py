@@ -6,4 +6,4 @@ class UsersConfig(AppConfig):
 
     def ready(self):
         print(self)
-        from . import signals
+        from . import tasks

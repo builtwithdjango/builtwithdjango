@@ -24,12 +24,6 @@ from .sitemaps import sitemaps
 urlpatterns = (
     [
         path(f"{settings.ADMIN_URL}", admin.site.urls),
-        path(
-            "sitemap.xml",
-            sitemap,
-            {"sitemaps": sitemaps},
-            name="django.contrib.sitemaps.views.sitemap",
-        ),
         path("", include("pages.urls")),
         path("projects/", include("projects.urls")),
         path("api/v1/", include("api.urls")),
@@ -41,6 +35,13 @@ urlpatterns = (
         path("users/", include("allauth.urls")),
         path("users/", include("users.urls")),
         path("stripe/", include("djstripe.urls", namespace="djstripe")),
+        path(
+            "sitemap.xml",
+            sitemap,
+            {"sitemaps": sitemaps},
+            name="django.contrib.sitemaps.views.sitemap",
+        ),
+        path("robots.txt", include("robots.urls")),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

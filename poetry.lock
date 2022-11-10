@@ -438,6 +438,14 @@ six = ">=1.9.0"
 with_social = ["django-allauth (>=0.25.0)"]
 
 [[package]]
+name = "django-robots"
+version = "5.0"
+description = "Robots exclusion application for Django, complementing Sitemaps."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
 name = "django-taggit"
 version = "1.5.1"
 description = "django-taggit is a reusable Django application for simple tagging."
@@ -1227,7 +1235,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "db95da1f94b8e503b25c74141c1928ac53b2ab45760a6c8f6e959f76ee54844e"
+content-hash = "e9aa21d164e4a294a6dfc3e3f97deb76e5be2d4c6969bfb6291e4709fb982512"
 
 [metadata.files]
 ansicon = [
@@ -1469,6 +1477,9 @@ django-q = [
 ]
 django-rest-auth = [
     {file = "django-rest-auth-0.9.5.tar.gz", hash = "sha256:f11e12175dafeed772f50d740d22caeab27e99a3caca24ec65e66a8d6de16571"},
+]
+django-robots = [
+    {file = "django-robots-5.0.tar.gz", hash = "sha256:f5817975a9e3b082440a81396111d8a6671b54f6aa11349847554bd1beebd959"},
 ]
 django-taggit = [
     {file = "django-taggit-1.5.1.tar.gz", hash = "sha256:e5bb62891f458d55332e36a32e19c08d20142c43f74bc5656c803f8af25c084a"},

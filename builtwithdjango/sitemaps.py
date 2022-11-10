@@ -1,5 +1,3 @@
-from datetime import datetime, timedelta
-
 from django.contrib import sitemaps
 from django.contrib.sitemaps import GenericSitemap
 from django.urls import reverse
