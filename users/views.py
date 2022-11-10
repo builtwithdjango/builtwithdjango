@@ -115,6 +115,8 @@ def webhook(request):
     sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
     event = None
 
+    print(f"Users Payload: {payload}")
+
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, settings.USER_UPGRADE_WEBHOOK_SECRET)
     except ValueError as e:

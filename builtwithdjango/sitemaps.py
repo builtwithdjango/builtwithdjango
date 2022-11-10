@@ -4,6 +4,7 @@ from django.contrib import sitemaps
 from django.contrib.sitemaps import GenericSitemap
 from django.urls import reverse
 
+from blog.models import Post
 from jobs.models import Job
 from podcast.models import Episode
 from projects.models import Project
@@ -23,13 +24,10 @@ class StaticViewSitemap(sitemaps.Sitemap):
         return [
             "home",
             "submit_project",
-            "support",
             "projects",
             "podcast_episodes",
             "jobs",
-            "job_thank_you",
             "post_job",
-            "makers",
         ]
 
     def location(self, item):
@@ -63,5 +61,9 @@ sitemaps = {
     "podcast": GenericSitemap(
         {"queryset": Episode.objects.all(), "date_field": "created_datetime"},
         priority=0.8,
+    ),
+    "blog": GenericSitemap(
+        {"queryset": Post.objects.all(), "date_field": "created_datetime"},
+        priority=0.85,
     ),
 }
