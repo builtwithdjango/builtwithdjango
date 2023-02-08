@@ -19,7 +19,7 @@ from projects.models import Project
 
 from .forms import NewsletterSignupForm, getWeeklyTemplateForm
 from .models import Emails
-from .tasks import add_email_to_revue
+from .tasks import add_email_to_buttondown
 
 
 class NewsletterSignupView(SuccessMessageMixin, CreateView):
@@ -31,7 +31,7 @@ class NewsletterSignupView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        r_json = async_task(add_email_to_revue, self.object.user_email)
+        r_json = async_task(add_email_to_buttondown, self.object.user_email, tag="newsletter")
 
         messages.success(self.request, "Thanks for subscribing!")
 

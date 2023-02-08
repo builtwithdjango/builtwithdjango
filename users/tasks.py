@@ -2,7 +2,7 @@ from allauth.account.signals import email_confirmed, user_signed_up
 from django.core.mail import send_mail
 from django.dispatch import receiver
 
-from newsletter.tasks import add_email_to_revue
+from newsletter.tasks import add_email_to_buttondown
 
 
 @receiver(user_signed_up)
@@ -22,4 +22,4 @@ def notify_of_new_user(sender, **kwargs):
 
 @receiver(email_confirmed)
 def email_confirmation_callback(sender, **kwargs):
-    add_email_to_revue(kwargs["email_address"], double_opt_in=False)
+    add_email_to_buttondown(kwargs["email_address"], tag="user")
