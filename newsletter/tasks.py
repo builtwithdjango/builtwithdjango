@@ -11,8 +11,8 @@ def add_email_to_buttondown(email, tag):
         "tags": [tag],
     }
     r = requests.post(
-        f"https://www.getrevue.co/api/v2/subscribers",
-        headers={"Authorization": f"Token {settings.REVUE_API_TOKEN}"},
+        f"https://api.buttondown.email/v1/subscribers",
+        headers={"Authorization": f"Token {settings.BUTTONDOWN_API_TOKEN}"},
         json=data,
     )
 
