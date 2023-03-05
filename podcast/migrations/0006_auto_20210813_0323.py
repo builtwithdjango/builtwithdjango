@@ -11,7 +11,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="episode", name="details", field=models.TextField(blank=True),
+            model_name="episode",
+            name="details",
+            field=models.TextField(blank=True),
         ),
         migrations.AlterField(
             model_name="episode",
@@ -19,9 +21,13 @@ class Migration(migrations.Migration):
             field=models.TextField(blank=True),
         ),
         migrations.AlterField(
-            model_name="episode", name="show_notes", field=models.TextField(blank=True),
+            model_name="episode",
+            name="show_notes",
+            field=models.TextField(blank=True),
         ),
         migrations.AlterField(
-            model_name="episode", name="transcript", field=models.TextField(blank=True),
+            model_name="episode",
+            name="transcript",
+            field=models.TextField(blank=True),
         ),
     ]

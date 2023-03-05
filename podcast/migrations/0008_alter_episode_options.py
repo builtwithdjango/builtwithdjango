@@ -11,6 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name="episode", options={"ordering": ["created_datetime"]},
+            name="episode",
+            options={"ordering": ["created_datetime"]},
         ),
     ]

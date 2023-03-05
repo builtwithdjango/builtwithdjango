@@ -11,6 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name="job", options={"ordering": ["-created_datetime"]},
+            name="job",
+            options={"ordering": ["-created_datetime"]},
         ),
     ]

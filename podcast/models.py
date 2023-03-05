@@ -15,12 +15,8 @@ class Episode(models.Model):
     show_notes = models.TextField(blank=True)
     transcript = models.TextField(blank=True)
 
-    maker = models.ManyToManyField(
-        "makers.Maker", related_name="podcast_episodes", blank=True
-    )
-    project = models.ManyToManyField(
-        "projects.Project", related_name="podcast_episodes", blank=True
-    )
+    maker = models.ManyToManyField("makers.Maker", related_name="podcast_episodes", blank=True)
+    project = models.ManyToManyField("projects.Project", related_name="podcast_episodes", blank=True)
 
     class Meta:
         ordering = ["-created_datetime"]

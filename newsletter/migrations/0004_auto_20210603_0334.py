@@ -10,6 +10,12 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="emails", name="created_date",),
-        migrations.RemoveField(model_name="emails", name="updated_date",),
+        migrations.RemoveField(
+            model_name="emails",
+            name="created_date",
+        ),
+        migrations.RemoveField(
+            model_name="emails",
+            name="updated_date",
+        ),
     ]

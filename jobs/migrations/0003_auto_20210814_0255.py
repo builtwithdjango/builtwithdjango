@@ -11,28 +11,44 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="company", old_name="company_email", new_name="email",
+            model_name="company",
+            old_name="company_email",
+            new_name="email",
         ),
         migrations.RenameField(
-            model_name="company", old_name="company_logo", new_name="logo",
+            model_name="company",
+            old_name="company_logo",
+            new_name="logo",
         ),
         migrations.RenameField(
-            model_name="company", old_name="company_name", new_name="name",
+            model_name="company",
+            old_name="company_name",
+            new_name="name",
         ),
         migrations.RenameField(
-            model_name="company", old_name="company_url", new_name="url",
+            model_name="company",
+            old_name="company_url",
+            new_name="url",
         ),
         migrations.RenameField(
-            model_name="job", old_name="job_listing_url", new_name="listing_url",
+            model_name="job",
+            old_name="job_listing_url",
+            new_name="listing_url",
         ),
         migrations.RenameField(
-            model_name="job", old_name="job_location", new_name="location",
+            model_name="job",
+            old_name="job_location",
+            new_name="location",
         ),
         migrations.RenameField(
-            model_name="job", old_name="job_salary", new_name="salary",
+            model_name="job",
+            old_name="job_salary",
+            new_name="salary",
         ),
         migrations.RenameField(
-            model_name="job", old_name="job_title", new_name="title",
+            model_name="job",
+            old_name="job_title",
+            new_name="title",
         ),
         migrations.AddField(
             model_name="job",

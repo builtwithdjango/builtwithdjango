@@ -14,15 +14,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="episode",
             name="maker",
-            field=models.ManyToManyField(
-                blank=True, related_name="podcast_episodes", to="projects.Maker"
-            ),
+            field=models.ManyToManyField(blank=True, related_name="podcast_episodes", to="projects.Maker"),
         ),
         migrations.AlterField(
             model_name="episode",
             name="project",
-            field=models.ManyToManyField(
-                blank=True, related_name="podcast_episodes", to="projects.Project"
-            ),
+            field=models.ManyToManyField(blank=True, related_name="podcast_episodes", to="projects.Project"),
         ),
     ]

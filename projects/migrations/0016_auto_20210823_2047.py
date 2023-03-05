@@ -59,8 +59,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="project",
             name="slug",
-            field=autoslug.fields.AutoSlugField(
-                always_update=True, editable=False, populate_from="title"
-            ),
+            field=autoslug.fields.AutoSlugField(always_update=True, editable=False, populate_from="title"),
         ),
     ]
