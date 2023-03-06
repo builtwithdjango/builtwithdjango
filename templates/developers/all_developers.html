@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="overflow-hidden bg-white border border-gray-300 rounded-md">
+  <ul role="list" class="divide-y divide-gray-300">
+    {% for developer in object_list %}
+    <li class="px-6 py-4">
+      {% include "components/profile-image.html" %}
+      <p>{{ developer.user.first_name }} {{ developer.user.last_name }}</p>
+      <!-- Your content -->
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock content %}

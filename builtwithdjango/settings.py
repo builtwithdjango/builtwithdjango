@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     "newsletter.apps.NewsletterConfig",
     "users.apps.UsersConfig",
     "api.apps.ApiConfig",
+    "developers.apps.DevelopersConfig",
 ]
 
 MIDDLEWARE = [
@@ -280,3 +281,25 @@ Q_CLUSTER = {
 
 # Screenshot API
 SCREENSHOT_API_KEY = env("SCREENSHOT_API_KEY")
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "root": {"level": "INFO", "handlers": ["console"]},
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "app",
+            "level": "INFO",
+        },
+    },
+    "loggers": {
+        "django": {"handlers": ["console"], "level": "INFO", "propagate": True},
+    },
+    "formatters": {
+        "app": {
+            "format": ("%(asctime)s [%(levelname)-8s] " "(%(module)s.%(funcName)s) %(message)s"),
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+}

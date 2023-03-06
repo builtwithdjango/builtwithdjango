@@ -49,6 +49,7 @@ kolo = "^1.7.0"
 dj-stripe = "^2.7"
 django-robots = "^5.0"
 django-taggit = "^3.1.0"
+pytz = "^2022.7.1"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
