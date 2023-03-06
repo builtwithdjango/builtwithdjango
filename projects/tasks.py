@@ -1,3 +1,5 @@
+import logging
+
 import requests
 from django.conf import settings
 from django.core.files.base import ContentFile
@@ -5,14 +7,24 @@ from django.core.mail import send_mail
 
 from .models import Project
 
+logger = logging.getLogger(__file__)
+
 
 def save_screenshot(project_title):
     project = Project.objects.get(title=project_title)
-    r = requests.get(
-        f"https://shot.screenshotapi.net/screenshot?token={settings.SCREENSHOT_API_KEY}&url={project.url}"
-    ).json()
-    image = requests.get(r["screenshot"], stream=True)
-    file = ContentFile(image.content)
+
+    image_url = (
+        f"https://api.screenshotmachine.com?key={settings.SCREENSHOT_API_KEY}&url={project.url}&dimension=1680x876"
+    )
+    response = requests.get(image_url)
+
+    logger.info(f"Getting info from {image_url}.")
+
+    if response.status_code == 200:
+        file = ContentFile(response.content)
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
+
     project.homepage_screenshot.save(f"{project.title}.png", file, save=True)
     project.published = True
     project.save()
