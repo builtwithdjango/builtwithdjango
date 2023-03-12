@@ -20,9 +20,6 @@ class CustomUser(AbstractUser):
         null=True,
     )
 
-    # Visibility
-    make_public = models.BooleanField(default=True)
-
     # Social
     twitter_handle = models.CharField(max_length=20, blank=True)
     github_handle = models.CharField(max_length=20, blank=True)
@@ -30,6 +27,7 @@ class CustomUser(AbstractUser):
     personal_website = models.URLField(blank=True)
 
     # Additional
+    make_public = models.BooleanField(default=True)
     interviewed = models.BooleanField(default=False)
     referred_by = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -39,6 +37,7 @@ class CustomUser(AbstractUser):
         related_name="referee",
     )
 
+    # Plans
     FREE = "FREE"
     PRO = "PRO"
     SUBSCRIPTION_LEVEL = [
@@ -50,6 +49,7 @@ class CustomUser(AbstractUser):
         choices=SUBSCRIPTION_LEVEL,
         default=FREE,
     )
+    has_active_django_devs_subscription = models.BooleanField(default=False)
 
     class Meta:
         db_table = "auth_user"

@@ -28,90 +28,225 @@
 </div>
 {% endif %}
 
+  <section class="mb-4" aria-labelledby="available-plans">
+    <div class="shadow sm:overflow-hidden sm:rounded-md">
+      <div class="px-4 py-6 bg-white sm:p-6">
+        <div class="md:grid md:grid-cols-3 md:gap-6">
+          <div class="md:col-span-1">
+            <h3 class="text-base font-semibold leading-6 text-gray-900">Available Plans</h3>
+            <p class="mt-1 text-sm text-gray-500">These are the plans and purchases available to "Built with Django" users.</p>
+          </div>
+          <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
+            <div class="grid grid-cols-4 gap-6 mt-6">
+              <div class="col-span-4 md:col-span-2">
+                <div class="w-full max-w-md mx-auto overflow-hidden bg-white rounded shadow">
+                  <div class="max-w-md mx-auto">
+                    <div class="p-4 sm:p-6">
+                      <p class="mb-1 text-lg font-semibold leading-7 text-gray-700">General User Upgrade</p>
+                      {% if object.subscription_level == "FREE" %}
+                        <p class="font-semibold">$100</p>
+                        <p class="mt-6 prose text-gray-500">
+                          This plan is for general users who would like to support the site and get access to <a href="{% url 'upgrade-profile' %}">Pro features</a>.
+                        </p>
+                        <a href="{% url 'user_upgrade_checkout_session' pk=user.id %}" class="block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-yellow-400 rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80">
+                            Purchase
+                        </a>
+                        <a href="{% url 'upgrade-profile' %}" class="block mt-1.5 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] hover:bg-[#F2ECE7] hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80">
+                            Detailed Pricing
+                        </a>
+                      {% else %}
+                        <p class="mt-6 prose text-gray-500">
+                        You are the best 🎉🎉🎉 Thank you for supporting the development of "Built with Django".
+                        </p>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-span-4 md:col-span-2">
+                <div class="w-full max-w-md mx-auto overflow-hidden bg-white rounded shadow">
+                    <div class="max-w-md mx-auto">
+                      <div class="p-4 sm:p-6">
+                        <p class="mb-1 text-lg font-semibold leading-7 text-gray-700">Django Developers Access</p>
+                        {% if object.has_active_django_devs_subscription %}
+                          <p class="mt-6 prose text-gray-500">
+                            Thanks for subscribing! You should be able to see all <a href="{% url 'developers' %}">Django Developers</a> now.
+                          </p>
+                        {% else %}
+                        <div class="flex flex-row">
+                          <p class="font-semibold">$299 / month</p>
+                        </div>
+                        <p class="mt-6 prose text-gray-500">If you are a business looking for good quality <a href="{% url 'developers' %}">Django Developers</a>, this is for you.</p>
+                          <a href="{% url 'checkout-django-devs' %}" class="block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-yellow-400 rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80">
+                              Subscribe
+                          </a>
+                        <a href="#" class="block mt-1.5 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] hover:bg-[#F2ECE7] hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80">
+                              Detailed Pricing
+                        </a>
+                        {% endif %}
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section aria-labelledby="personal-information">
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.non_field_errors }}
       <div class="shadow sm:overflow-hidden sm:rounded-md">
         <div class="px-4 py-6 bg-white sm:p-6">
-          <div>
-            <h2 id="personal-information" class="text-lg font-medium leading-6 text-gray-900">Personal Information</h2>
+          <div class="md:grid md:grid-cols-3 md:gap-6">
+            <div class="md:col-span-1">
+              <h3 class="text-base font-semibold leading-6 text-gray-900">Personal Information</h3>
+              <p class="mt-1 text-sm text-gray-500">This info can be useful to share if you want to be discovered by other makers</p>
+            </div>
+            <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
+              <div class="grid grid-cols-4 gap-6">
+                <div class="col-span-4 sm:col-span-2">
+                  {{ form.first_name.errors }}
+                  <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
+                  {% render_field form.first_name name="first-name" id="first-name" autocomplete="cc-given-name" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                </div>
+                <div class="col-span-4 sm:col-span-2">
+                  {{ form.last_name.errors }}
+                  <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
+                  {% render_field form.last_name name="last-name" id="last-name" autocomplete="cc-family-name" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                </div>
+                <div class="col-span-4 sm:col-span-2">
+                  {{ form.email.errors }}
+                  <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
+                  {% render_field form.email name="email-address" id="email-address" autocomplete="email" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                </div>
+                <div class="col-span-4 sm:col-span-1">
+                  {{ form.twitter_handle.errors }}
+                  <label for="{{ form.twitter_handle.id_for_label }}" class="block text-sm font-medium text-gray-700"> Twitter Handle </label>
+                  {% render_field form.twitter_handle type="text" placeholder="cool_dude" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                </div>
+                <div class="col-span-4 sm:col-span-1">
+                  {{ form.github_handle.errors }}
+                  <label for="{{ form.github_handle.id_for_label }}" class="block text-sm font-medium text-gray-700"> Github Handle </label>
+                  {% render_field form.github_handle type="text" placeholder="cool_dude" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                </div>
+                <div class="col-span-4 sm:col-span-2">
+                  {{ form.personal_website.errors }}
+                  <label for="{{ form.personal_website.id_for_label }}" class="block text-sm font-medium text-gray-700"> Website </label>
+                  <div class="flex mt-1 rounded-md shadow-sm">
+                    {% render_field form.personal_website type="text" class="flex-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="https://www.co0l-dude.com" %}
+                  </div>
+                </div>
+                <div class="col-span-4 sm:col-span-1">
+                  {{ form.indiehackers_handle.errors }}
+                  <label for="{{ form.indiehackers_handle.id_for_label }}" class="block text-sm font-medium text-gray-700"> Indiehackers Handle </label>
+                  {% render_field form.indiehackers_handle type="text" placeholder="cool_dude" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                </div>
+                <div class="col-span-4 sm:col-span-1">
+                  <label class="block text-sm font-medium text-gray-700"> Photo </label>
+                  <div class="flex items-center mt-1">
+                    <span class="inline-block w-10 h-10 overflow-hidden bg-gray-100 rounded-full">
+                      {% include "components/profile-image.html" with size=10 %}
+                    </span>
+                    {{ form.profile_image.errors }}
+                    <label class="px-3 py-2 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" for="{{ form.profile_image.id_for_label }}">
+                        Change
+                    </label>
+                    {% render_field form.profile_image class="hidden" %}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="grid grid-cols-4 gap-6 mt-6">
-            <div class="col-span-4 sm:col-span-2">
-              {{ form.first_name.errors }}
-              <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
-              {% render_field form.first_name name="first-name" id="first-name" autocomplete="cc-given-name" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
-            </div>
+        </div>
+        <div class="px-4 py-3 text-right bg-gray-50 sm:px-6">
+          <button type="submit" class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-gray-800 border border-transparent rounded-md shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2">Save</button>
+        </div>
+      </div>
+    </form>
+  </section>
 
-            <div class="col-span-4 sm:col-span-2">
-              {{ form.last_name.errors }}
-              <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
-              {% render_field form.last_name name="last-name" id="last-name" autocomplete="cc-family-name" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
-            </div>
-
-            <div class="col-span-4 sm:col-span-2">
-              {{ form.email.errors }}
-              <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
-              {% render_field form.email name="email-address" id="email-address" autocomplete="email" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
-            </div>
-
-            <div class="col-span-4 sm:col-span-1">
-              {{ form.twitter_handle.errors }}
-              <label for="{{ form.twitter_handle.id_for_label }}" class="block text-sm font-medium text-gray-700"> Twitter Handle </label>
-              {% render_field form.twitter_handle type="text" placeholder="cool_dude" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
-            </div>
-
-            <div class="col-span-4 sm:col-span-1">
-              {{ form.github_handle.errors }}
-              <label for="{{ form.github_handle.id_for_label }}" class="block text-sm font-medium text-gray-700"> Github Handle </label>
-              {% render_field form.github_handle type="text" placeholder="cool_dude" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
-            </div>
-
-            <div class="col-span-4 sm:col-span-2">
-              {{ form.personal_website.errors }}
-              <label for="{{ form.personal_website.id_for_label }}" class="block text-sm font-medium text-gray-700"> Website </label>
-              <div class="flex mt-1 rounded-md shadow-sm">
-                {% render_field form.personal_website type="text" class="flex-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="https://www.co0l-dude.com" %}
-              </div>
-            </div>
-
-            <div class="col-span-4 sm:col-span-1">
-              {{ form.indiehackers_handle.errors }}
-              <label for="{{ form.indiehackers_handle.id_for_label }}" class="block text-sm font-medium text-gray-700"> Indiehackers Handle </label>
-              {% render_field form.indiehackers_handle type="text" placeholder="cool_dude" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
-            </div>
-
-            <div class="col-span-4 sm:col-span-1">
-              <label class="block text-sm font-medium text-gray-700"> Photo </label>
-              <div class="flex items-center mt-1">
-                <span class="inline-block w-10 h-10 overflow-hidden bg-gray-100 rounded-full">
-                  {% include "components/profile-image.html" with size=10 %}
-                </span>
-                {{ form.profile_image.errors }}
-                <label class="px-3 py-2 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" for="{{ form.profile_image.id_for_label }}">
-                    Change
-                </label>
-                {% render_field form.profile_image class="hidden" %}
-              </div>
-            </div>
-
-            <div class="col-span-4 p-4 mb-4 border-2 rounded-md sm:col-span-1">
-              <p class="block mb-2 font-bold text-gray-700">
-                  Subcriprion Level
+  <section aria-labelledby="developer-profile">
+    <form method="post" action="{% url 'update_developer' current_developer.id %}">
+      {% csrf_token %}
+      {{ developer_form.non_field_errors }}
+      <div class="shadow sm:overflow-hidden sm:rounded-md">
+        <div class="px-4 py-6 bg-white sm:p-6">
+          <div class="md:grid md:grid-cols-3 md:gap-6">
+            <div class="md:col-span-1">
+              <h3 class="text-base font-semibold leading-6 text-gray-900">Developer Profile</h3>
+              <p class="mt-1 text-sm text-gray-500">
+                This info will be displayed on your Django Developer Profile. Please make sure
+                to fill out the "Personal Information" block above if you doing a Django Developer profile.
               </p>
-              <div class="flex items-center mt-1">
-                <p>{{ object.subscription_level }}</p>
-                {% if object.subscription_level == "FREE" %}
-                <a href="{% url 'upgrade-profile' %}"
-                    class="px-3 py-2 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                Upgrade</a>
-                {% endif %}
+            </div>
+            <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
+              <div class="grid grid-cols-4 gap-6 mt-6">
+                <div class="col-span-4">
+                  <div class="relative flex items-start">
+                    {{ developer_form.looking_for_a_job.errors }}
+                    <div class="flex items-center h-6">
+                      {% render_field developer_form.looking_for_a_job name="looking-for-a-job" id="looking-for-a-job" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-600" %}
+                    </div>
+                    <div class="ml-3">
+                      <label for="looking-for-a-job" class="text-sm font-medium leading-6 prose text-gray-900">Display Profile on <a href="{% url 'developers' %}">Django Developers</a></label>
+                      {% comment %} <p class="text-sm text-gray-500">This setting will display your profile in Django Devs section.</p> {% endcomment %}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-span-4">
+                  <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+                  {{ developer_form.title.errors }}
+                  {% render_field developer_form.title name="title" id="title" placeholder="Passionate Senior Django Developer with over 6 years of experience | React, DRF" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                </div>
+                <div class="col-span-4">
+                  {{ developer_form.description.errors }}
+                  <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                  {% render_field developer_form.description name="description" rows=10 id="description" rows="4" class="block w-full px-3 py-2 mt-1 rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6" %}
+                  <p class="mt-2 text-sm text-gray-500">This will show up as you main description. Write whatever you want here, except for any personal identifieable information. Also, all links and images will be removed.</p>
+                  <p class="mt-2 text-sm italic text-gray-400">Hint: Use Markdown</p>
+                </div>
+                <div class="col-span-4 sm:col-span-2">
+                  {{ developer_form.status.errors }}
+                  <label for="status" class="block text-sm font-medium text-gray-700"> Status </label>
+                  {% render_field developer_form.status id="status" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                </div>
+                <div class="col-span-4 sm:col-span-2">
+                  {{ developer_form.role.errors }}
+                  <label for="role" class="block text-sm font-medium text-gray-700"> Experience </label>
+                  {% render_field developer_form.role id="role" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                </div>
+                <div class="col-span-4 sm:col-span-2">
+                  {{ developer_form.location.errors }}
+                  <label for="{{ developer_form.location.id_for_label }}" class="block text-sm font-medium text-gray-700"> Location </label>
+                  {% render_field developer_form.location type="text" placeholder="New York, USA" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                </div>
+                <div class="col-span-4 sm:col-span-2">
+                  {{ developer_form.timezone.errors }}
+                  <label for="{{ developer_form.timezone.id_for_label }}" class="block text-sm font-medium text-gray-700"> Timezone </label>
+                  {% render_field developer_form.timezone type="text" placeholder="New York, USA" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                </div>
+                <div class="col-span-4 sm:col-span-2">
+                  {{ developer_form.salary_expectation.errors }}
+                  <label for="{{ developer_form.salary_expectation.id_for_label }}" class="block text-sm font-medium text-gray-700"> Salary Expectation </label>
+                  <div class="grid grid-cols-4 gap-1">
+                    {% render_field developer_form.salary_expectation class="col-span-2 px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                    {% render_field developer_form.salary_cadence class="col-span-1 px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:outline-none focus:ring-gray-900 sm:text-sm" %}
+                  </div>
+                </div>
+                <div class="col-span-4">
+                  {{ developer_form.custom_capacity_field.errors }}
+                  <label for="{{ developer_form.custom_capacity_field.id_for_label }}" class="block text-sm font-medium text-gray-700"> Capacity </label>
+                  {% render_field developer_form.custom_capacity_field class="rounded" %}
+                </div>
+
               </div>
             </div>
-
           </div>
 
         </div>

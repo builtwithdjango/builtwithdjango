@@ -1,20 +1,15 @@
-import datetime as dt
-import json
-from secrets import compare_digest
+import logging
 
 import stripe
 from allauth.account.models import EmailAddress
 from allauth.account.utils import send_email_confirmation
 from django.conf import settings
-from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.transaction import atomic, non_atomic_requests
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, TemplateView, UpdateView
@@ -22,6 +17,8 @@ from django_q.tasks import async_task
 from djstripe import settings as djstripe_settings
 from djstripe.models import Customer
 
+from developers.forms import UpdateDeveloperForm
+from developers.models import Developer
 from newsletter.views import NewsletterSignupForm
 
 from .forms import CustomLoginForm, CustomUserCreationForm, CustomUserUpdateForm
@@ -29,6 +26,7 @@ from .models import CustomUser
 from .tasks import notify_of_new_user
 
 stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
+logger = logging.getLogger(__file__)
 
 
 class SignUpView(CreateView):
@@ -72,14 +70,34 @@ class ProfileUpdateForm(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
+    def get_initial(self):
+        initial = super().get_initial()
+        user = self.request.user
+        developer, created = Developer.objects.get_or_create(user=user)
+        Customer.get_or_create(subscriber=user)
+        initial["looking_for_a_job"] = developer.looking_for_a_job
+        initial["title"] = developer.title
+        initial["description"] = developer.description
+        initial["status"] = developer.status
+        initial["role"] = developer.role
+        initial["location"] = developer.location
+        initial["timezone"] = developer.timezone
+        initial["salary_expectation"] = developer.salary_expectation
+        initial["salary_cadence"] = developer.salary_cadence
+        initial["custom_capacity_field"] = developer.capacity.split(",")
+        return initial
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         user = self.request.user
         emailaddress = EmailAddress.objects.get_for_user(user, user.email)
         email_verified = emailaddress.verified
+        developer, created = Developer.objects.get_or_create(user=user)
 
         context["email_verified"] = email_verified
+        context["current_developer"] = developer
+        context["developer_form"] = UpdateDeveloperForm(initial=self.get_initial())
 
         return context
 

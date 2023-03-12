@@ -23,7 +23,6 @@ class CustomUserAdmin(UserAdmin):
                     "indiehackers_handle",
                     "personal_website",
                     "interviewed",
-                    "short_bio",
                 )
             },
         ),

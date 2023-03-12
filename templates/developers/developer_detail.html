@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+{% load static %}
+{% load markdown_extras %}
+{% load humanize %}
+
+{% block content %}
+
+<main class="flex-1">
+  <div class="py-8 xl:py-10">
+    <div class="max-w-3xl px-4 mx-auto sm:px-6 lg:px-8 xl:grid xl:max-w-5xl xl:grid-cols-3">
+      <div class="xl:col-span-2 xl:border-r xl:border-gray-200 xl:pr-8">
+        <div>
+          <div>
+            <div class="md:flex md:items-end md:space-x-4 xl:border-b xl:pb-6">
+              {% include "components/profile-image.html" with user=object.user size=20 %}
+              <h1 class="text-2xl font-bold text-gray-900">{{ object.title }}</h1>
+              <div class="flex mt-4 space-x-3 md:mt-0">
+                {% if user == object.user %}
+                <a href="{% url 'update-profile' %}" class="inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                  <svg class="-ml-0.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
+                  </svg>
+                  Edit
+                </a>
+                {% endif %}
+                {% comment %} <button type="button" class="inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="-ml-0.5 h-5 w-5 text-gray-400" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
+                  </svg>
+                  Hire Me
+                </button> {% endcomment %}
+              </div>
+            </div>
+
+            <aside class="mt-8 xl:hidden">
+              <h2 class="sr-only">Details</h2>
+              <div class="space-y-5">
+                {% include "components/developer-status.html" with title=True developer=object %}
+              </div>
+              <div class="py-6 mt-6 space-y-8 border-t border-b border-gray-200">
+                <div>
+                  <h2 class="text-sm font-medium text-gray-500">Expereince</h2>
+                  <ul role="list" class="mt-3 space-y-3">
+                    <li class="flex justify-start">
+                      <div class="text-sm font-medium text-gray-900">Eduardo Benz</div>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h2 class="text-sm font-medium text-gray-500">Tags</h2>
+                  <ul role="list" class="mt-2 leading-8">
+                    <li class="inline">
+                      <a href="#" class="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        <div class="absolute flex items-center justify-center flex-shrink-0">
+                          <span class="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden="true"></span>
+                        </div>
+                        <div class="ml-3 text-xs font-semibold text-gray-900">Bug</div>
+                      </a>
+                    </li>
+                    <li class="inline">
+                      <a href="#" class="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        <div class="absolute flex items-center justify-center flex-shrink-0">
+                          <span class="h-1.5 w-1.5 rounded-full bg-indigo-500" aria-hidden="true"></span>
+                        </div>
+                        <div class="ml-3 text-xs font-semibold text-gray-900">Accessibility</div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </aside>
+
+            <div class="py-3 xl:pt-6 xl:pb-0">
+              <h2 class="sr-only">Description</h2>
+              <div class="prose max-w-none">
+                <p>{{ object.description | markdown | safe }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="hidden xl:block xl:pl-8">
+        <h2 class="sr-only">Details</h2>
+        <div class="space-y-2">
+          {% include "components/developer-status.html" with text_size="sm" title=True developer=object %}
+          <div class="flex items-center space-x-2">
+            <span class="text-sm font-medium text-gray-700">
+              Experience:
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+            </svg>
+            <span class="text-sm font-medium text-gray-700">
+              {{ object.get_role_display }}
+            </span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="text-sm font-medium text-gray-700">
+              Salary Expecation:
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span class="text-sm font-medium text-gray-700">
+              ${{ object.salary_expectation | intcomma }} / {{ object.get_salary_cadence_display }}
+            </span>
+          </div>
+          <div>
+            <span class="text-sm font-medium text-gray-700">
+              Capacity:
+            </span>
+            <ul role="list" class="mt-3 ml-3 space-y-3">
+              {% for item in developer_capacity %}
+              <li class="flex items-center space-x-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span class="text-sm font-medium text-gray-700">
+                  {% if item == "PTC" %}
+                    Part-time Contractor
+                  {% elif item == "FTC" %}
+                    Full-time Contractor
+                  {% elif item == "PTE" %}
+                    Part-time Employee
+                  {% elif item == "FTE" %}
+                    Full-time Employee
+                  {% endif %}
+                  </span>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <div class="py-6 mt-6 space-y-2 border-t border-gray-200">
+          {% if user.has_active_django_devs_subscription or user == object.user %}
+            <div class="flex items-center space-x-2">
+              <span class="text-sm font-medium text-gray-700">
+                Name:
+              </span>
+              <span class="text-sm font-medium text-gray-700">
+                {{ object.user.first_name }} {{ object.user.last_name }}
+              </span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-sm font-medium text-gray-700">
+                Email:
+              </span>
+              <span class="text-sm font-medium text-gray-700">
+                {{ object.user.email }}
+              </span>
+            </div>
+            <div>
+              <span class="text-sm font-medium text-gray-700">
+                Social Links:
+              </span>
+              <ul role="list" class="mt-3 ml-3 space-y-3 prose">
+                    {% if object.user.twitter_handle %}
+                    <li class="flex items-center space-x-1">
+                      <i class="lab la-lg la-twitter"></i>
+                      <a href="https://twitter.com/{{ object.user.twitter_handle }}" class="text-sm font-medium text-gray-700">
+                        Twitter
+                      </a>
+                    </li>
+                    {% endif %}
+                    {% if object.user.github_handle %}
+                    <li class="flex items-center space-x-1">
+                      <i class="lab la-lg la-github"></i>
+                      <a href="https://github.com/{{ object.user.github_handle }}" class="text-sm font-medium text-gray-700">
+                        Github
+                      </a>
+                    </li>
+                    {% endif %}
+                    {% if object.user.personal_website %}
+                    <li class="flex items-center space-x-1">
+                      <i class="las la-lg la-link"></i>
+                      <a href="{{ object.user.personal_website }}" class="text-sm font-medium text-gray-700">
+                        Personal Website
+                      </a>
+                    </li>
+                    {% endif %}
+              </ul>
+            </div>
+          {% else %}
+            <a class="block w-full px-10 py-6 text-center border-2 border-gray-300 border-dashed rounded-lg group bg-gray-50 hover:border-gray-400" href="/pricing">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <span class="block mt-2 text-sm font-medium text-gray-600">Private information</span>
+              <span class="block mt-2 text-sm text-gray-500">Information that is only visible with a business subscription.</span>
+            </a>
+          {% endif %}
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</main>
+
+{% endblock content %}

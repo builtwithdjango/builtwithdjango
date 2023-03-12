@@ -184,19 +184,19 @@
                                 >
                                   <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                     <div class="relative grid gap-6 px-5 py-6 bg-white sm:gap-8 sm:p-8">
-                                      <a href="{% url 'jobs' %}" class="block p-3 -m-3 rounded-md hover:bg-gray-50">
+                                      <a href="{% url 'jobs' %}" class="block p-3 -m-4 rounded-md hover:bg-gray-50">
                                         <div class="flex flex-row space-x-3">
                                           <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 text-2xl text-white bg-green-500 rounded-md sm:h-12 sm:w-12">
                                             <i class="las la-briefcase"></i>
                                           </div>
                                           <div>
                                             <p class="text-base font-medium text-gray-900">Django Job Board</p>
-                                            <p class="mt-1 text-sm text-gray-500">Find your next Django job.</p>
+                                            <p class="mt-1 text-sm text-gray-500">Find the Django job of your dreams!</p>
                                           </div>
                                         </div>
                                       </a>
 
-                                      <a href="{% url 'podcast_episodes' %}" class="block p-3 -m-3 rounded-md hover:bg-gray-50">
+                                      <a href="{% url 'podcast_episodes' %}" class="block p-3 -m-4 rounded-md hover:bg-gray-50">
                                         <div class="flex flex-row space-x-3">
                                           <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 text-2xl text-white bg-green-500 rounded-md sm:h-12 sm:w-12">
                                             <i class="las la-microphone-alt"></i>
@@ -207,6 +207,19 @@
                                           </div>
                                         </div>
                                       </a>
+
+                                      <a href="{% url 'developers' %}" class="block p-3 -m-4 rounded-md hover:bg-gray-50">
+                                        <div class="flex flex-row space-x-3">
+                                          <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 text-2xl text-white bg-green-500 rounded-md sm:h-12 sm:w-12">
+                                            <i class="las la-running"></i>
+                                          </div>
+                                          <div>
+                                            <p class="text-base font-medium text-gray-900">Django Developers</p>
+                                            <p class="mt-1 text-sm text-gray-500">Hire the best Django Developers this world has to offer.</p>
+                                          </div>
+                                        </div>
+                                      </a>
+
                                     </div>
                                   </div>
                                 </div>
@@ -292,6 +305,9 @@
                     <a href="{% url 'podcast_episodes' %}"
                        class="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-700 hover:text-white"
                        key="Podcast">Podcast</a>
+                    <a href="{% url 'developers' %}"
+                       class="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-700 hover:text-white"
+                       key="Developers">Developers</a>
                       <a href="{% url 'account_login' %}"
                        class="block px-3 py-2 text-base font-medium text-center text-gray-700 border-2 border-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
                        key="Login">Login</a>
