@@ -38,6 +38,8 @@ class Migration(migrations.Migration):
                 ("personal_website", models.URLField(blank=True)),
                 ("interviewed", models.BooleanField(default=False)),
             ],
-            options={"db_table": "project_maker",},
+            options={
+                "db_table": "project_maker",
+            },
         ),
     ]

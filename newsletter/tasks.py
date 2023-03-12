@@ -11,7 +11,6 @@ def add_email_to_buttondown(email, tag):
         "tags": [tag],
         "referrer_url": "https://builtwithdjango.com",
     }
-
     # if tag == "user":
     #     data["subscriber_type"] = "regular"
 

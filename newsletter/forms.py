@@ -15,9 +15,7 @@ class NewsletterSignupForm(ModelForm):
                     "class": "block appearance-none w-full bg-white border border-solid border-grey-light hover:border-grey px-2 py-2 rounded-l-lg shadow"
                 }
             )
-            self.fields[fieldname].widget.attrs[
-                "placeholder"
-            ] = "email@mail.com"
+            self.fields[fieldname].widget.attrs["placeholder"] = "email@mail.com"
 
     class Meta:
         model = Emails

@@ -20,9 +20,13 @@
 {% endblock meta %}
 
 {% block content %}
-    <h2 class="my-10 text-2xl font-bold leading-7 text-center text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
-      Built with Django Podcast
-    </h2>
+
+    <div class="px-6 py-20 bg-white sm:py-24 lg:px-8">
+      <div class="max-w-2xl mx-auto text-center">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Built with Django Podcast</h1>
+        <p class="mt-6 text-lg leading-8 prose text-gray-600">Insights from the Best Django Developers</p>
+      </div>
+    </div>
 
     <div class="grid grid-cols-1 gap-6 mb-10 lg:grid-cols-3 md:grid-cols-2">
         {% for episode in object_list %}

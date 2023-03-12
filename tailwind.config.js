@@ -4,7 +4,9 @@ module.exports = {
   ],
   // https://nexxai.dev/tell-purgecss-to-ignore-purging-all-tailwind-colours/
   safelist: [
-    {pattern: /(bg|text)-(.*)-(.*)/}
+    {pattern: /(bg|text)-(.*)-(.*)/},
+    {pattern: /(w)-(.*)/},
+    {pattern: /(h)-(.*)/},
   ],
   theme: {
     extend: {

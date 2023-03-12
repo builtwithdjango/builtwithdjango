@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     "newsletter.apps.NewsletterConfig",
     "users.apps.UsersConfig",
     "api.apps.ApiConfig",
+    "developers.apps.DevelopersConfig",
 ]
 
 MIDDLEWARE = [
@@ -124,10 +125,7 @@ WSGI_APPLICATION = "builtwithdjango.wsgi.application"
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
+    "default": env.db_url(),
 }
 
 
@@ -257,12 +255,6 @@ DJSTRIPE_WEBHOOK_VALIDATION = "retrieve_event"
 DJSTRIPE_USE_NATIVE_JSONFIELD = True
 DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
 
-JOBS_WEBHOOK_SECRET = env("JOBS_WEBHOOK_SECRET")
-JOBS_PRICE_ID = env("JOBS_PRICE_ID")
-
-USER_UPGRADE_WEBHOOK_SECRET = env("USER_UPGRADE_WEBHOOK_SECRET")
-USER_UPGRADE_PRICE_ID = env("USER_UPGRADE_PRICE_ID")
-
 # Cloudinary
 cloudinary.config(
     cloud_name=env("CLOUDINARY_CLOUD_NAME"), api_key=env("CLOUDINARY_API_KEY"), api_secret=env("CLOUDINARY_API_SECRET")
@@ -280,3 +272,25 @@ Q_CLUSTER = {
 
 # Screenshot API
 SCREENSHOT_API_KEY = env("SCREENSHOT_API_KEY")
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "root": {"level": "INFO", "handlers": ["console"]},
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "app",
+            "level": "INFO",
+        },
+    },
+    "loggers": {
+        "django": {"handlers": ["console"], "level": "INFO", "propagate": True},
+    },
+    "formatters": {
+        "app": {
+            "format": ("%(asctime)s [%(levelname)-8s] " "(%(module)s.%(funcName)s) %(message)s"),
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+}

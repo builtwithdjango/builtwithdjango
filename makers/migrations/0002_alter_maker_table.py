@@ -10,5 +10,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterModelTable(name="maker", table=None,),
+        migrations.AlterModelTable(
+            name="maker",
+            table=None,
+        ),
     ]

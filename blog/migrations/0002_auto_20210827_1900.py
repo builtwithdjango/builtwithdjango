@@ -60,8 +60,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="post",
             name="tags",
-            field=models.ManyToManyField(
-                blank=True, related_name="post", to="blog.Tag"
-            ),
+            field=models.ManyToManyField(blank=True, related_name="post", to="blog.Tag"),
         ),
     ]

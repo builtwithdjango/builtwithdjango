@@ -31,8 +31,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="project",
             name="technologies",
-            field=models.ManyToManyField(
-                blank=True, null=True, related_name="project", to="projects.Technology"
-            ),
+            field=models.ManyToManyField(blank=True, null=True, related_name="project", to="projects.Technology"),
         ),
     ]

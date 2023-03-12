@@ -19,30 +19,28 @@
 {% endblock meta %}
 
 {% block content %}
+
+    <div class="px-6 py-20 bg-white sm:py-24 lg:px-8">
+      <div class="max-w-2xl mx-auto text-center">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Django Jobs</h1>
+        <p class="mt-6 text-lg leading-8 prose text-gray-600">Advertize your jobs to the best Django Developers out there.</p>
+      </div>
+      <div class="flex flex-wrap items-center justify-between mt-8 sm:flex-nowrap">
+          <div class="mx-auto">
+            <a type="button"
+                href="{% url 'post_job' %}"
+                class="flex items-center justify-center w-full px-5 py-3 mt-3 text-base font-medium text-white bg-green-500 border border-transparent rounded-md shadow hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white sm:mt-0 sm:ml-3 sm:w-auto sm:flex-shrink-0">
+                Post a Job
+            </a>
+          </div>
+      </div>
+    </div>
+
     {% if object_list %}
     <div class="mx-auto lg:py-8">
       <div class="grid items-start grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-8">
         <div class="grid grid-cols-1 gap-4 lg:col-span-4">
           <div class="grid grid-cols-1 border border-gray-200 border-solid rounded-lg shadow lg:col-span-3">
-            <div class="px-4 py-5 bg-white border-b border-gray-200 rounded-t-lg sm:px-6">
-              <div class="flex flex-wrap items-center justify-between -mt-2 -ml-4 sm:flex-nowrap">
-                  <div class="mt-4 ml-4">
-                    <h1 class="text-2xl font-semibold leading-6 text-gray-900">
-                      Django Jobs
-                    </h1>
-                    <p class="mt-1 text-sm text-gray-500">
-                      The best Django jobs on the Market
-                    </p>
-                  </div>
-                  <div>
-                    <a type="button"
-                       href="{% url 'post_job' %}"
-                       class="flex items-center justify-center w-full px-5 py-3 mt-3 text-base font-medium text-white bg-green-500 border border-transparent rounded-md shadow hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white sm:mt-0 sm:ml-3 sm:w-auto sm:flex-shrink-0">
-                        Post a Job
-                    </a>
-                  </div>
-              </div>
-            </div>
             <ul class="list-none divide-y divide-gray-200">
               {% for job in object_list %}
                   {% include "components/job-item.html" with job=job %}

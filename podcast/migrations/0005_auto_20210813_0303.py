@@ -11,10 +11,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="episode", name="show_notes", field=models.TextField(),
+            model_name="episode",
+            name="show_notes",
+            field=models.TextField(),
         ),
         migrations.AlterField(
-            model_name="episode", name="slug", field=models.SlugField(unique=True),
+            model_name="episode",
+            name="slug",
+            field=models.SlugField(unique=True),
         ),
         migrations.AlterField(
             model_name="episode",
@@ -22,6 +26,8 @@ class Migration(migrations.Migration):
             field=models.ImageField(upload_to="podcast_episode_thumbnail/"),
         ),
         migrations.AlterField(
-            model_name="episode", name="transcript", field=models.TextField(),
+            model_name="episode",
+            name="transcript",
+            field=models.TextField(),
         ),
     ]

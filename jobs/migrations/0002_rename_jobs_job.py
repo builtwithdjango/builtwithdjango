@@ -10,5 +10,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameModel(old_name="Jobs", new_name="Job",),
+        migrations.RenameModel(
+            old_name="Jobs",
+            new_name="Job",
+        ),
     ]
