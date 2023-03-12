@@ -1,8 +1,10 @@
 from datetime import datetime, timedelta
+from functools import partial
 
 import stripe
 from django.conf import settings
 from django.contrib import messages
+from django.db import transaction
 from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.shortcuts import redirect
@@ -11,8 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 from django_q.tasks import async_task
-from djstripe import settings as djstripe_settings
-from djstripe.models import Price
+from djstripe import models, settings as djstripe_settings
 
 from newsletter.views import NewsletterSignupForm
 
@@ -75,6 +76,8 @@ class ThankYouView(TemplateView):
 
 
 def create_checkout_session(request, pk):
+    price_id = models.Price.objects.get(nickname="job").id
+
     checkout_session = stripe.checkout.Session.create(
         success_url=request.build_absolute_uri(reverse_lazy("job_thank_you")) + "?session_id={CHECKOUT_SESSION_ID}",
         cancel_url=request.build_absolute_uri(reverse_lazy("home")) + "?status=failed",
@@ -82,43 +85,25 @@ def create_checkout_session(request, pk):
         line_items=[
             {
                 "quantity": 1,
-                "price": settings.JOBS_PRICE_ID,
+                "price": price_id,
             }
         ],
+        allow_promotion_codes=True,
         automatic_tax={"enabled": True},
-        metadata={"pk": pk},
+        metadata={"pk": pk, "price_id": price_id},
     )
 
     return redirect(checkout_session.url, code=303)
 
 
-@csrf_exempt
-@require_POST
-def webhook(request):
-    payload = request.body
-    sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
-    event = None
-
-    print(f"Jobs Payload: {payload}")
-
-    try:
-        event = stripe.Webhook.construct_event(payload, sig_header, settings.JOBS_WEBHOOK_SECRET)
-    except ValueError as e:
-        # Invalid payload
-        return HttpResponse(status=400)
-    except stripe.error.SignatureVerificationError as e:
-        # Invalid signature
-        return HttpResponse(status=400)
-
+def process_job_webhook(event):
     if event.type == "checkout.session.completed":
-        job_id = event["data"]["object"]["metadata"]["pk"]
-        job = Job.objects.get(pk=job_id)
-        job.paid = True
-        job.approved = True
-        job.save()
-        print(f"Good Event: {event}")
-        messages.success(request, "Thanks for submitting a job!")
-    else:
-        print(f"Bad Event: {event}")
+        transaction.on_commit(partial(update_job_to_paid, event))
 
-    return HttpResponse(status=200)
+
+def update_job_to_paid(event):
+    job_id = event.data["object"]["metadata"]["pk"]
+    job = Job.objects.get(pk=job_id)
+    job.paid = True
+    job.approved = True
+    job.save()

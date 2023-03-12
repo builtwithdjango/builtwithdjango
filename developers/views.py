@@ -95,19 +95,19 @@ def create_checkout_session(request):
         ],
         mode="subscription",
         allow_promotion_codes=True,
+        automatic_tax={"enabled": True},
         success_url=request.build_absolute_uri(reverse_lazy("update-profile")) + "?session_id={CHECKOUT_SESSION_ID}",
         cancel_url=request.build_absolute_uri(reverse_lazy("update-profile")) + "?status=failed",
-        metadata={f"user_id": user.id},
+        metadata={f"user_id": user.id, "price_id": price_id},
     )
 
     return redirect(checkout_session.url, code=303)
 
 
-@webhooks.handler("checkout.session.completed")
-def successfull_payment_webhook(event, **kwargs):
+def process_django_devs_webhook(event):
     if event.type == "checkout.session.completed":
         subscription_id = event.data["object"]["subscription"]
-        logger.info(f"Subscription ID: {subscription_id}")
+        logger.info(f"Updating Subsctiprion ID: {subscription_id}")
         models.Subscription.sync_from_stripe_data(stripe.Subscription.retrieve(subscription_id))
 
         transaction.on_commit(partial(update_django_dev_subscription_flag, event))
@@ -121,3 +121,13 @@ def update_django_dev_subscription_flag(event):
     user = CustomUser.objects.get(id=user_id)
     user.has_active_django_devs_subscription = True
     user.save()
+
+
+def create_customer_portal_session(request):
+    customer = models.Customer.objects.get(subscriber=request.user)
+    session = stripe.billing_portal.Session.create(
+        customer=customer.id,
+        return_url=request.build_absolute_uri(reverse_lazy("update-profile")),
+    )
+
+    return redirect(session.url)

@@ -72,6 +72,15 @@
                           <p class="mt-6 prose text-gray-500">
                             Thanks for subscribing! You should be able to see all <a href="{% url 'developers' %}">Django Developers</a> now.
                           </p>
+                          <form method="post" class="mt-4 mb-0" action="{% url 'create-customer-portal-session' %}">
+                            {% csrf_token %}
+                            <button
+                              class="inline-flex items-center px-3 py-2 text-white bg-green-600 border-2 border-transparent rounded-md hover:bg-green-700"
+                              type="submit"
+                            >
+                              Manage Subscription
+                            </button>
+                          </form>
                         {% else %}
                         <div class="flex flex-row">
                           <p class="font-semibold">$299 / month</p>
