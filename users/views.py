@@ -118,9 +118,6 @@ def create_checkout_session(request, pk):
     checkout_session = stripe.checkout.Session.create(
         payment_method_types=["card"],
         customer=customer.id,
-        customer_update={
-            "address": "auto",
-        },
         success_url=request.build_absolute_uri(reverse_lazy("update-profile")) + "?session_id={CHECKOUT_SESSION_ID}",
         cancel_url=request.build_absolute_uri(reverse_lazy("update-profile")) + "?status=failed",
         mode="payment",
@@ -132,6 +129,9 @@ def create_checkout_session(request, pk):
         ],
         allow_promotion_codes=True,
         automatic_tax={"enabled": True},
+        customer_update={
+            "address": "auto",
+        },
         metadata={"pk": pk, "price_id": price_id},
     )
 

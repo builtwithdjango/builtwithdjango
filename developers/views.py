@@ -96,6 +96,9 @@ def create_checkout_session(request):
         mode="subscription",
         allow_promotion_codes=True,
         automatic_tax={"enabled": True},
+        customer_update={
+            "address": "auto",
+        },
         success_url=request.build_absolute_uri(reverse_lazy("update-profile")) + "?session_id={CHECKOUT_SESSION_ID}",
         cancel_url=request.build_absolute_uri(reverse_lazy("update-profile")) + "?status=failed",
         metadata={f"user_id": user.id, "price_id": price_id},

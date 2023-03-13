@@ -90,6 +90,9 @@ def create_checkout_session(request, pk):
         ],
         allow_promotion_codes=True,
         automatic_tax={"enabled": True},
+        customer_update={
+            "address": "auto",
+        },
         metadata={"pk": pk, "price_id": price_id},
     )
 
