@@ -27,7 +27,7 @@ stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
 class JobListView(ListView):
     model = Job
     template_name = "jobs/all_jobs.html"
-    filter_date = datetime.today() - timedelta(days=1000)
+    filter_date = datetime.today() - timedelta(days=60)
     queryset = Job.objects.filter(approved=True, created_datetime__gte=filter_date).order_by(
         "-paid", "-created_datetime"
     )[:30]
