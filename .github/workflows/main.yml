@@ -63,7 +63,7 @@ jobs:
           source ./venv/bin/activate
           python manage.py migrate
           python manage.py collectstatic --noinput
-          python manage.py djstripe_sync_models
+          # python manage.py djstripe_sync_models
 
     - name: Restart Server
       uses: appleboy/ssh-action@master

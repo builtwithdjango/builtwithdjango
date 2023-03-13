@@ -58,7 +58,7 @@ def getWeeklyTemplateView(request):
         }
         send_mail(
             "Weekly Email Template",
-            render_to_string("newsletter/weekly-newsletter-template.html", context),
+            render_to_string("newsletter/weekly-newsletter-template.md", context),
             "rasul@builtwithdjango.com",
             ["rasul@builtwithdjango.com"],
         )
