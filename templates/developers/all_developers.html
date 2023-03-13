@@ -20,11 +20,20 @@
 
 {% block content %}
 <div class="px-6 py-20 bg-white lg:px-8">
-<div class="max-w-2xl mx-auto text-center">
-  <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Django Developers</h1>
-  <p class="mt-6 text-lg leading-8 prose text-gray-600">Hire the best Django Developers this world has to offer.</p>
-  <p class="text-lg leading-8 prose text-gray-600">This page is influnced by <a href="https://masilotti.com">Joe Masilotti's</a> <a href="https://railsdevs.com">RailsDevs.</a></p>
-</div>
+  <div class="max-w-2xl mx-auto text-center">
+    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Django Developers</h1>
+    <p class="mt-6 text-lg leading-8 prose text-gray-600">Hire the best Django Developers this world has to offer.</p>
+    <p class="text-lg leading-8 prose text-gray-600">This page is influnced by <a href="https://masilotti.com">Joe Masilotti's</a> <a href="https://railsdevs.com">RailsDevs.</a></p>
+  </div>
+  <div class="flex flex-wrap items-center justify-between mt-8 sm:flex-nowrap">
+      <div class="mx-auto">
+        <a type="button"
+            href="{% url 'update-profile' %}"
+            class="flex items-center justify-center w-full px-5 py-3 mt-3 text-base font-medium text-white bg-green-500 border border-transparent rounded-md shadow hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white sm:mt-0 sm:ml-3 sm:w-auto sm:flex-shrink-0">
+            Create Your Profile
+        </a>
+      </div>
+  </div>
 </div>
 
 <div class="overflow-hidden bg-white border border-gray-300 rounded-md">
