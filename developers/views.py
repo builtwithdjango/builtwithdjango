@@ -3,11 +3,12 @@ from functools import partial
 
 import stripe
 from allauth.account.models import EmailAddress
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView, UpdateView
+from django.views.generic import DetailView, ListView, TemplateView, UpdateView
 from djstripe import models, settings as djstripe_settings, webhooks
 
 from users.models import CustomUser
@@ -77,6 +78,11 @@ class DeveloperDetailView(DetailView):
             context["developer_capacity"] = self.object.capacity.split(",")
 
         return context
+
+
+class DeveloperPricingView(LoginRequiredMixin, TemplateView):
+    login_url = "account_login"
+    template_name = "developers/pricing-details.html"
 
 
 def create_checkout_session(request):

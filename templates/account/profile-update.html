@@ -48,10 +48,10 @@
                         <p class="mt-6 prose text-gray-500">
                           This plan is for general users who would like to support the site and get access to <a href="{% url 'upgrade-profile' %}">Pro features</a>.
                         </p>
-                        <a href="{% url 'user_upgrade_checkout_session' pk=user.id %}" class="block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-yellow-400 rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80">
+                        <a href="{% url 'user_upgrade_checkout_session' pk=user.id %}" class="block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-yellow-400 rounded hover:bg-yellow-500">
                             Purchase
                         </a>
-                        <a href="{% url 'upgrade-profile' %}" class="block mt-1.5 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] hover:bg-[#F2ECE7] hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80">
+                        <a href="{% url 'upgrade-profile' %}" class="block mt-1.5 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded hover:bg-gray-200">
                             Detailed Pricing
                         </a>
                       {% else %}
@@ -86,10 +86,10 @@
                           <p class="font-semibold">$299 / month</p>
                         </div>
                         <p class="mt-6 prose text-gray-500">If you are a business looking for good quality <a href="{% url 'developers' %}">Django Developers</a>, this is for you.</p>
-                          <a href="{% url 'checkout-django-devs' %}" class="block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-yellow-400 rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80">
+                          <a href="{% url 'checkout-django-devs' %}" class="block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-yellow-400 rounded hover:bg-yellow-500">
                               Subscribe
                           </a>
-                        <a href="#" class="block mt-1.5 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] hover:bg-[#F2ECE7] hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80">
+                        <a href="{% url 'developers-pricing' %}" class="block mt-1.5 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded hover:bg-gray-200">
                               Detailed Pricing
                         </a>
                         {% endif %}
