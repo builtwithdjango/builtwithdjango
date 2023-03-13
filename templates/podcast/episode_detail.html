@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load markdown_extras %}
+
 {% block meta %}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@rasulkireev" />
@@ -16,6 +17,7 @@
     <meta name="twitter:description" content="{{ object.details }}" />
     <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.thumbnail.url }}" />
 {% endblock meta %}
+
 {% block content %}
     <p class="mt-4 text-blue-700">
         ←
@@ -60,6 +62,7 @@
         {% endif %}
     </div>
 {% endblock content %}
+
 {% block schema %}
     <script type="application/ld+json">
 {

@@ -2,8 +2,23 @@
 {% load static %}
 {% load markdown_extras %}
 
-{% block content %}
+{% block meta %}
+    <title>Django Developers</title>
+    <meta name="description" content="Hire the best Django Developers this world has to offer!"/>
+    <link rel="canonical" href="https://{{ request.get_host }}/developers/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@rasulkireev" />
+    <meta name="twitter:site" content="@builtwithdjango" />
+    <meta name="twitter:title" content="Django Developers" />
+    <meta name="twitter:description" content="Hire the best Django Developers this world has to offer!"/>
+    <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
+    <meta property="og:title" content="Django Jobs" />
+    <meta property="og:url" content="https://{{ request.get_host }}/developers/" />
+    <meta property="og:description" content="Hire the best Django Developers this world has to offer!"/>
+    <meta property="og:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
+{% endblock meta %}
 
+{% block content %}
 <div class="px-6 py-20 bg-white lg:px-8">
 <div class="max-w-2xl mx-auto text-center">
   <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Django Developers</h1>
@@ -13,33 +28,53 @@
 </div>
 
 <div class="overflow-hidden bg-white border border-gray-300 rounded-md">
-<ul role="list" class="divide-y divide-gray-300">
-  {% for developer in object_list %}
-  <li>
-    <a class="flex px-6 py-4 space-x-4 bg-white hover:bg-gray-50 sm:space-x-8" href="{% url 'developer' developer.id %}">
-      <div class="flex items-center justify-center shrink-0">{% include "components/profile-image.html" with user=developer.user size=40 %}</div>
-      <div class="self-start flex-1 min-w-0 space-y-3">
-        <div class="flex items-baseline">
-          <h2 class="text-xl font-medium text-gray-900 sm:text-xl line-clamp-2 break-word" title="{{ developer.title }}">{{ developer.title }}</h2>
-          <div class="flex-row-reverse items-center hidden ml-auto text-gray-400 sm:inline-flex shrink-0">
-              <div class="flex items-center space-x-2">
-                {% include "components/developer-status.html" with developer=developer %}
-              </div>
+  <ul role="list" class="divide-y divide-gray-300">
+    {% for developer in object_list %}
+    <li>
+      <a class="flex px-6 py-4 space-x-4 bg-white hover:bg-gray-50 sm:space-x-8" href="{% url 'developer' developer.id %}">
+        <div class="flex items-center justify-center shrink-0">{% include "components/profile-image.html" with user=developer.user size=40 %}</div>
+        <div class="self-start flex-1 min-w-0 space-y-3">
+          <div class="flex items-baseline">
+            <h2 class="text-xl font-medium text-gray-900 sm:text-xl line-clamp-2 break-word" title="{{ developer.title }}">{{ developer.title }}</h2>
+            <div class="flex-row-reverse items-center hidden ml-auto text-gray-400 sm:inline-flex shrink-0">
+                <div class="flex items-center space-x-2">
+                  {% include "components/developer-status.html" with developer=developer %}
+                </div>
+            </div>
+          </div>
+          <div class="flex flex-col items-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+            {% comment %} Any special tags {% endcomment %}
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="space-y-4 text-lg text-gray-700 sm:text-base">
+              <p class="break-words line-clamp-3">{{ developer.description | truncatechars:400 }}</p>
+            </div>
           </div>
         </div>
-        <div class="flex flex-col items-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-          {% comment %} Any special tags {% endcomment %}
-        </div>
-        <div class="flex items-center justify-between">
-          <div class="space-y-4 text-lg text-gray-700 sm:text-base">
-            <p class="break-words line-clamp-3">{{ developer.description | truncatechars:400 }}</p>
-          </div>
-        </div>
-      </div>
-    </a>
-  </li>
-  {% endfor %}
-</ul>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
 </div>
-
 {% endblock content %}
+
+{% block schema %}
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Django Developers",
+    "about": "Reverse Job Board",
+    "description": "Hire the best Django Developers this world has to offer!",
+    "abstract": "Hire the best Django Developers this world has to offer!",
+    "thumbnailUrl": "https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}",
+    "url": "https://{{ request.get_host }}/developers/",
+    "author": {
+      "@type": "Person",
+      "givenName": "Rasul",
+      "familyName": "Kireev",
+      "url": "https://rasulkireev.com/"
+    }
+  }
+    </script>
+{% endblock schema %}

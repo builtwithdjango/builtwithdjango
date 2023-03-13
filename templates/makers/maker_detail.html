@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load markdown_extras %}
+
 {% block meta %}
     <title>Built with Django | {{ object.first_name }} {{ object.last_name }}</title>
     <meta name="description" content="{{ object.first_name }} {{ object.last_name }} builds with Django" />
@@ -20,6 +21,7 @@
     <meta name="twitter:description" content="{{ object.first_name }} {{ object.last_name }} builds with Django" />
     <meta name="twitter:image" content="{% get_media_prefix %}{{ object.maker_profile_image }}" />
 {% endblock meta %}
+
 {% block content %}
     <div class="max-w-5xl mx-auto">
         <div class="flex flex-col justify-center my-6 space-y-2">
@@ -134,6 +136,7 @@
         {% endif %}
     </div>
 {% endblock content %}
+
 {% block schema %}
     <script type="application/ld+json">
   {

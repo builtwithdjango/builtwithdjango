@@ -2,7 +2,21 @@
 {% load static %}
 {% load widget_tweaks %}
 
-{% block meta %}<title>Built with Django | Update Profile</title>{% endblock meta %}
+{% block meta %}
+    <title>Django Developers - Pricing</title>
+    <meta name="description" content="Subscription Pricing Details for Django Developers"/>
+    <link rel="canonical" href="https://{{ request.get_host }}/developers/pricing" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@rasulkireev" />
+    <meta name="twitter:site" content="@builtwithdjango" />
+    <meta name="twitter:title" content="Django Developers - Pricing" />
+    <meta name="twitter:description" content="Connect with hundreds of Django developers looking for their next job."/>
+    <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
+    <meta property="og:title" content="Django Developers - Pricing" />
+    <meta property="og:url" content="https://{{ request.get_host }}/developers/pricing" />
+    <meta property="og:description" content="Connect with hundreds of Django developers looking for their next job."/>
+    <meta property="og:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
+{% endblock meta %}
 
 {% block content %}
 
@@ -93,3 +107,24 @@
 </div>
 
 {% endblock content %}
+
+{% block schema %}
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Django Developers - Pricing",
+    "about": "Reverse Job Board",
+    "description": "Connect with hundreds of Django developers looking for their next job.",
+    "abstract": "Connect with hundreds of Django developers looking for their next job.",
+    "thumbnailUrl": "https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}",
+    "url": "https://{{ request.get_host }}/developers/pricing",
+    "author": {
+      "@type": "Person",
+      "givenName": "Rasul",
+      "familyName": "Kireev",
+      "url": "https://rasulkireev.com/"
+    }
+  }
+    </script>
+{% endblock schema %}
