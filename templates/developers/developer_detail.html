@@ -108,7 +108,7 @@
           </div>
         </div>
         <div class="py-6 mt-6 space-y-2 border-t border-gray-200">
-          {% if user.has_active_django_devs_subscription or user == object.user %}
+          {% comment %} {% if user.has_active_django_devs_subscription or user == object.user %} {% endcomment %}
             <div class="flex items-center space-x-2">
               <span class="text-sm font-medium text-gray-700">
                 Name:
@@ -156,7 +156,7 @@
                     {% endif %}
               </ul>
             </div>
-          {% else %}
+          {% comment %} {% else %}
             <a class="block w-full px-10 py-6 text-center border-2 border-gray-300 border-dashed rounded-lg group bg-gray-50 hover:border-gray-400" href="/pricing">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -164,7 +164,7 @@
               <span class="block mt-2 text-sm font-medium text-gray-600">Private information</span>
               <span class="block mt-2 text-sm text-gray-500">Information that is only visible with a business subscription.</span>
             </a>
-          {% endif %}
+          {% endif %} {% endcomment %}
         </div>
 
       </aside>
