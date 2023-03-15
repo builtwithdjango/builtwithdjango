@@ -61,7 +61,7 @@ sitemaps = {
         priority=0.8,
     ),
     "blog": GenericSitemap(
-        {"queryset": Post.objects.all(), "date_field": "created_datetime"},
+        {"queryset": Post.objects.all(), "date_field": "created"},
         priority=0.85,
     ),
 }
