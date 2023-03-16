@@ -12,7 +12,6 @@
         <link rel="apple-touch-icon" href="{% static 'vendors/favicon/logo.png' %}" />
         <link rel="icon" type="image/png" sizes="16x16 32x32 500x500" href="{% static 'vendors/favicon/logo.png' %}"/>
         <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
 
         {% block meta %}
             <title>Built with Django</title>
@@ -41,6 +40,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
         <script async defer data-domain="builtwithdjango.com" src="https://plausible.io/js/plausible.js"></script>
+        <script defer data-domain="builtwithdjango.com" src="https://plausible.rasulkireev.com/js/script.js"></script>
         {% javascript_pack 'hotwire' attrs='data-turbo-track="reload" defer' %}
 
         {% block extra_top_js %}
