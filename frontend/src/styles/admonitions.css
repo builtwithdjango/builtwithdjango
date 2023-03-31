@@ -1,0 +1,310 @@
+:root {
+  --md-default-fg-color: #000000de;
+  --md-default-fg-color--light: #0000008a;
+  --md-default-fg-color--lighter: #00000052;
+  --md-default-fg-color--lightest: #00000012;
+  --md-default-bg-color: #fff;
+  --md-default-bg-color--light: #ffffffb3;
+  --md-default-bg-color--lighter: #ffffff4d;
+  --md-default-bg-color--lightest: #ffffff1f;
+  --md-code-fg-color: #36464e;
+  --md-code-bg-color: #f5f5f5;
+  --md-code-bg-color--light: #f5f5f5b3;
+  --md-code-hl-color: #4287ff;
+  --md-code-hl-color--light: #4287ff1a;
+  --md-code-hl-number-color: #d52a2a;
+  --md-code-hl-special-color: #db1457;
+  --md-code-hl-function-color: #a846b9;
+  --md-code-hl-constant-color: #6e59d9;
+  --md-code-hl-keyword-color: #3f6ec6;
+  --md-code-hl-string-color: #1c7d4d;
+  --md-code-hl-name-color: var(--md-code-fg-color);
+  --md-code-hl-operator-color: var(--md-default-fg-color--light);
+  --md-code-hl-punctuation-color: var(--md-default-fg-color--light);
+  --md-code-hl-comment-color: var(--md-default-fg-color--light);
+  --md-code-hl-generic-color: var(--md-default-fg-color--light);
+  --md-code-hl-variable-color: var(--md-default-fg-color--light);
+  --md-typeset-color: var(--md-default-fg-color);
+  --md-typeset-a-color: var(--md-primary-fg-color);
+  --md-typeset-mark-color: #ffff0080;
+  --md-typeset-del-color: #f5503d26;
+  --md-typeset-ins-color: #0bd57026;
+  --md-typeset-kbd-color: #fafafa;
+  --md-typeset-kbd-accent-color: #fff;
+  --md-typeset-kbd-border-color: #b8b8b8;
+  --md-typeset-table-color: #0000001f;
+  --md-typeset-table-color--light: rgba(0,0,0,.035);
+  --md-admonition-fg-color: var(--md-default-fg-color);
+  --md-admonition-bg-color: var(--md-default-bg-color);
+  --md-warning-fg-color: #000000de;
+  --md-warning-bg-color: #ff9;
+  --md-footer-fg-color: #fff;
+  --md-footer-fg-color--light: #ffffffb3;
+  --md-footer-fg-color--lighter: #ffffff73;
+  --md-footer-bg-color: #000000de;
+  --md-footer-bg-color--dark: #00000052;
+  --md-shadow-z1: 0 0.2rem 0.5rem #0000000d,0 0 0.05rem #0000001a;
+  --md-shadow-z2: 0 0.2rem 0.5rem #0000001a,0 0 0.05rem #00000040;
+  --md-shadow-z3: 0 0.2rem 0.5rem #0003,0 0 0.05rem #00000059;
+}
+
+/*! CSS Used from: https://squidfunk.github.io/mkdocs-material/assets/stylesheets/main.f49c7df4.min.css */
+
+*,:after,:before {
+	box-sizing: inherit;
+}
+
+@media (prefers-reduced-motion) {
+	*,:after,:before {
+		transition: none!important;
+	}
+}
+
+.admonition {
+	background-color: var(--md-admonition-bg-color);
+	border: .05rem solid #448aff;
+	border-radius: .2rem;
+	box-shadow: var(--md-shadow-z1);
+	color: var(--md-admonition-fg-color);
+	display: flow-root;
+	font-size: 1rem;
+	padding: 0 .6rem;
+	page-break-inside: avoid;
+}
+
+@media print {
+	.admonition {
+		box-shadow: none;
+	}
+}
+
+.admonition>* {
+	box-sizing: border-box;
+}
+
+.admonition>:last-child {
+	margin-bottom: .6rem;
+}
+
+.admonition-title {
+  padding: .4rem 1rem;
+	background-color: #448aff1a;
+	margin: 0 -.6rem 0 -.6rem !important;
+}
+
+
+.admonition.note {
+	border-color: #448aff;
+}
+
+.note>.admonition-title {
+	background-color: #448aff1a;
+}
+
+.note>.admonition-title:before {
+	background-color: #448aff;
+	-webkit-mask-image: var(--md-admonition-icon--note);
+	mask-image: var(--md-admonition-icon--note);
+}
+
+.note>.admonition-title:after {
+	color: #448aff;
+}
+
+.admonition.abstract {
+	border-color: #00b0ff;
+}
+
+.abstract>.admonition-title {
+	background-color: #00b0ff1a;
+}
+
+.abstract>.admonition-title:before {
+	background-color: #00b0ff;
+	-webkit-mask-image: var(--md-admonition-icon--abstract);
+	mask-image: var(--md-admonition-icon--abstract);
+}
+
+.abstract>.admonition-title:after {
+	color: #00b0ff;
+}
+
+.admonition.info {
+	border-color: #00b8d4;
+}
+
+.info>.admonition-title {
+	background-color: #00b8d41a;
+}
+
+.info>.admonition-title:before {
+	background-color: #00b8d4;
+	-webkit-mask-image: var(--md-admonition-icon--info);
+	mask-image: var(--md-admonition-icon--info);
+}
+
+.info>.admonition-title:after {
+	color: #00b8d4;
+}
+
+.admonition.tip {
+	border-color: #00bfa5;
+}
+
+.tip>.admonition-title {
+	background-color: #00bfa51a;
+}
+
+.tip>.admonition-title:before {
+	background-color: #00bfa5;
+	-webkit-mask-image: var(--md-admonition-icon--tip);
+	mask-image: var(--md-admonition-icon--tip);
+}
+
+.tip>.admonition-title:after {
+	color: #00bfa5;
+}
+
+.admonition.success {
+	border-color: #00c853;
+}
+
+.success>.admonition-title {
+	background-color: #00c8531a;
+}
+
+.success>.admonition-title:before {
+	background-color: #00c853;
+	-webkit-mask-image: var(--md-admonition-icon--success);
+	mask-image: var(--md-admonition-icon--success);
+}
+
+.success>.admonition-title:after {
+	color: #00c853;
+}
+
+.admonition.question {
+	border-color: #64dd17;
+}
+
+.question>.admonition-title {
+	background-color: #64dd171a;
+}
+
+.question>.admonition-title:before {
+	background-color: #64dd17;
+	-webkit-mask-image: var(--md-admonition-icon--question);
+	mask-image: var(--md-admonition-icon--question);
+}
+
+.question>.admonition-title:after {
+	color: #64dd17;
+}
+
+.admonition.warning {
+	border-color: #ff9100;
+}
+
+.warning>.admonition-title {
+	background-color: #ff91001a;
+}
+
+.warning>.admonition-title:before {
+	background-color: #ff9100;
+	-webkit-mask-image: var(--md-admonition-icon--warning);
+	mask-image: var(--md-admonition-icon--warning);
+}
+
+.warning>.admonition-title:after {
+	color: #ff9100;
+}
+
+.admonition.failure {
+	border-color: #ff5252;
+}
+
+.failure>.admonition-title {
+	background-color: #ff52521a;
+}
+
+.failure>.admonition-title:before {
+	background-color: #ff5252;
+	-webkit-mask-image: var(--md-admonition-icon--failure);
+	mask-image: var(--md-admonition-icon--failure);
+}
+
+.failure>.admonition-title:after {
+	color: #ff5252;
+}
+
+.admonition.danger {
+	border-color: #ff1744;
+}
+
+.danger>.admonition-title {
+	background-color: #ff17441a;
+}
+
+.danger>.admonition-title:before {
+	background-color: #ff1744;
+	-webkit-mask-image: var(--md-admonition-icon--danger);
+	mask-image: var(--md-admonition-icon--danger);
+}
+
+.danger>.admonition-title:after {
+	color: #ff1744;
+}
+
+.admonition.bug {
+	border-color: #f50057;
+}
+
+.bug>.admonition-title {
+	background-color: #f500571a;
+}
+
+.bug>.admonition-title:before {
+	background-color: #f50057;
+	-webkit-mask-image: var(--md-admonition-icon--bug);
+	mask-image: var(--md-admonition-icon--bug);
+}
+
+.bug>.admonition-title:after {
+	color: #f50057;
+}
+
+.admonition.example {
+	border-color: #7c4dff;
+}
+
+.example>.admonition-title {
+	background-color: #7c4dff1a;
+}
+
+.example>.admonition-title:before {
+	background-color: #7c4dff;
+	-webkit-mask-image: var(--md-admonition-icon--example);
+	mask-image: var(--md-admonition-icon--example);
+}
+
+.example>.admonition-title:after {
+	color: #7c4dff;
+}
+
+.admonition.quote {
+	border-color: #9e9e9e;
+}
+
+.quote>.admonition-title {
+	background-color: #9e9e9e1a;
+}
+
+.quote>.admonition-title:before {
+	background-color: #9e9e9e;
+	-webkit-mask-image: var(--md-admonition-icon--quote);
+	mask-image: var(--md-admonition-icon--quote);
+}
+
+.quote>.admonition-title:after {
+	color: #9e9e9e;
+}

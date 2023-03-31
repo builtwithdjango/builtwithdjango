@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load markdown_extras %}
+
 {% block meta %}
     <title>{{ object.title }}</title>
     <link rel="canonical" href="https://{{ request.get_host }}/blog/{{ object.slug }}" />
@@ -36,7 +37,7 @@
         <div class="max-w-3xl p-10 mx-auto mt-10 bg-white border border-gray-200 border-solid rounded-lg shadow">
             <div class="prose md:prose-lg">
                 <h1>{{ object.title }}</h1>
-                <div>
+                <div class="blog-post">
                     {{ object.content | markdown | safe }}
                 </div>
             </div>
