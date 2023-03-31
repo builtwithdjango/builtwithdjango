@@ -37,7 +37,7 @@
         <div class="max-w-3xl p-10 mx-auto mt-10 bg-white border border-gray-200 border-solid rounded-lg shadow">
             <div class="prose md:prose-lg">
                 <h1>{{ object.title }}</h1>
-                <div class="md-typeset">
+                <div>
                     {{ object.content | markdown | safe }}
                 </div>
             </div>
