@@ -16,6 +16,11 @@ extension_configs = {
 def markdown(value):
     return md.markdown(
         value,
-        extensions=["markdown.extensions.codehilite", "markdown.extensions.fenced_code"],
+        extensions=[
+            "markdown.extensions.codehilite",
+            "markdown.extensions.fenced_code",
+            "markdown.extensions.toc",
+            "markdown.extensions.admonition",
+        ],
         extension_configs=extension_configs,
     )

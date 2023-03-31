@@ -4,18 +4,18 @@
 {% load humanize %}
 
 {% block meta %}
-    <title>Django Developers - {{ object.title }}</title>
-    <meta name="description" content="{{ object.title }}"/>
+    <title>{{ object.title }}</title>
+    <meta name="description" content="{{ object.desciprition }}"/>
     <link rel="canonical" href="https://{{ request.get_host }}/developers/{{ object.id }}" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:creator" content="@rasulkireev" />
     <meta name="twitter:site" content="@builtwithdjango" />
-    <meta name="twitter:title" content="Django Developers - {{ object.title }}" />
+    <meta name="twitter:title" content="{{ object.title }}" />
     <meta name="twitter:description" content="{{ object.description }}"/>
     <meta name="twitter:image" content="https://res.cloudinary.com/built-with-django/{{ object.user.profile_image }}" />
-    <meta property="og:title" content="Django Developers - {{ object.title }}" />
+    <meta property="og:title" content="{{ object.title }}" />
     <meta property="og:url" content="https://{{ request.get_host }}/developers/{{ object.id }}" />
-    <meta property="og:description" content="{{ object.title }}"/>
+    <meta property="og:description" content="{{ object.description }}"/>
     <meta property="og:image" content="https://res.cloudinary.com/built-with-django/{{ object.user.profile_image }}" />
 {% endblock meta %}
 
@@ -178,7 +178,7 @@
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Django Deverloper - {{ object.title }}",
+    "name": "{{ object.title }}",
     "description": "{{ object.description }}",
     "thumbnailUrl": "https://res.cloudinary.com/built-with-django/{{ object.user.profile_image }}",
     "url": "https://{{ request.get_host }}/developers/{{ object.id }}"

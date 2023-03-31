@@ -73,7 +73,7 @@ def notify_admins_of_comment(instance):
     send_mail(
         f"New Comment on project {instance.project.title}",
         message,
-        "rasul@builtwithdjango.com",
+        "bill@microsoft.com",
         ["rasul@builtwithdjango.com"],
         fail_silently=False,
     )

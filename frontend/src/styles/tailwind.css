@@ -1,4 +1,5 @@
 @import "pygments-default.css";
+@import "admonitions.css";
 
 @tailwind base;
 @tailwind components;
