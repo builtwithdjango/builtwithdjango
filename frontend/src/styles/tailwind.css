@@ -1,5 +1,6 @@
 @import "pygments-default.css";
 @import "admonitions.css";
+@import "blog-post.css";
 
 @tailwind base;
 @tailwind components;
