@@ -45,7 +45,7 @@ class SignUpView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        async_task(notify_of_new_user, self.object)
+        # async_task(notify_of_new_user, self.object)
 
         return super(SignUpView, self).form_valid(form)
 
