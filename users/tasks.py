@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from newsletter.tasks import add_email_to_buttondown
 
 
-@receiver(user_signed_up)
+# @receiver(user_signed_up)
 def notify_of_new_user(sender, **kwargs):
     message = f"""
       Sender: {sender}

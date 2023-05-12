@@ -26,7 +26,6 @@ from newsletter.views import NewsletterSignupForm
 
 from .forms import CustomLoginForm, CustomUserCreationForm, CustomUserUpdateForm
 from .models import CustomUser
-from .tasks import notify_of_new_user
 
 stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
 logger = logging.getLogger(__file__)
@@ -42,12 +41,6 @@ class SignUpView(CreateView):
         context["newsletter_form"] = NewsletterSignupForm
 
         return context
-
-    def form_valid(self, form):
-        self.object = form.save()
-        # async_task(notify_of_new_user, self.object)
-
-        return super(SignUpView, self).form_valid(form)
 
 
 class CustomLoginView(LoginView):
@@ -76,7 +69,7 @@ class ProfileUpdateForm(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_initial(self):
         initial = super().get_initial()
         user = self.request.user
-        developer, created = Developer.objects.get_or_create(user=user)
+        developer, _ = Developer.objects.get_or_create(user=user)
         models.Customer.get_or_create(subscriber=user)
         initial["looking_for_a_job"] = developer.looking_for_a_job
         initial["title"] = developer.title
