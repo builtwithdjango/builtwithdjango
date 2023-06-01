@@ -11,6 +11,7 @@ def add_email_to_buttondown(email, tag):
         "tags": [tag],
         "referrer_url": "https://builtwithdjango.com",
     }
+    # This was my attempt to make registered users not need to verify email.
     # if tag == "user":
     #     data["subscriber_type"] = "regular"
 
@@ -18,6 +19,13 @@ def add_email_to_buttondown(email, tag):
         f"https://api.buttondown.email/v1/subscribers",
         headers={"Authorization": f"Token {settings.BUTTONDOWN_API_TOKEN}"},
         json=data,
-    )
+    ).json()
 
-    return r.json()
+    if r["code"] == "email_already_exists":
+        r = requests.patch(
+            f"https://api.buttondown.email/v1/subscribers/{str(email)}",
+            headers={"Authorization": f"Token {settings.BUTTONDOWN_API_TOKEN}"},
+            json=data,
+        ).json()
+
+    return r
