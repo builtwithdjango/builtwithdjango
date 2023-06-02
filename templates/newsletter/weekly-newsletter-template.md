@@ -4,11 +4,7 @@
 ## Projects
 
 {% for project in projects %}
-- [{{ project.title }}](https://builtwithdjango.com{{ project.get_absolute_url }})
-{% if project.maker %}
-by [{{ project.maker.first_name }} {{ project.maker.last_name }}](https://builtwithdjango.com{{ project.maker.get_absolute_url }}):
-{% endif %}
-{{ project.short_description }}
+- [{{ project.title }}](https://builtwithdjango.com{{ project.get_absolute_url }}) - {% if project.maker %}by [{{ project.maker.first_name }} {{ project.maker.last_name }}](https://builtwithdjango.com{{ project.maker.get_absolute_url }}):{% endif %} {{ project.short_description }}
 {% endfor %}
 
 ## Jobs
@@ -20,9 +16,9 @@ by [{{ project.maker.first_name }} {{ project.maker.last_name }}](https://builtw
 
 ## Podcast Episodes
 {% for episode in podcast_episodes %}
-- [{{ episode.title }}](https://builtwithdjango.com{{ episode.get_absolute_url }})
+  - [{{ episode.title }}](https://builtwithdjango.com{{ episode.get_absolute_url }})
 
-{{ episode.details }}
+  {{ episode.details }}
 {% endfor %}
 
 ## End Note
