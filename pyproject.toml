@@ -52,8 +52,6 @@ django-taggit = "^3.1.0"
 pytz = "^2022.7.1"
 psycopg2 = "^2.9.5"
 whitenoise = "^6.4.0"
-django-storages = "^1.13.2"
-boto3 = "^1.26.153"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
