@@ -1567,6 +1567,51 @@ setuptools = ">=16.0"
 wrapt = ">=1.0.0,<2.0.0"
 
 [[package]]
+name = "opentelemetry-instrumentation-django"
+version = "0.39b0"
+description = "OpenTelemetry Instrumentation for Django"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "opentelemetry_instrumentation_django-0.39b0-py3-none-any.whl", hash = "sha256:253e512310268a2f835f7a6353a527165207d7f4d7d636dcf5f5e96da0f5c69e"},
+    {file = "opentelemetry_instrumentation_django-0.39b0.tar.gz", hash = "sha256:24a49454a65dd4516d55db79374459d03da2b3ad3b395ac823613a649e17d8e3"},
+]
+
+[package.dependencies]
+opentelemetry-api = ">=1.12,<2.0"
+opentelemetry-instrumentation = "0.39b0"
+opentelemetry-instrumentation-wsgi = "0.39b0"
+opentelemetry-semantic-conventions = "0.39b0"
+opentelemetry-util-http = "0.39b0"
+
+[package.extras]
+asgi = ["opentelemetry-instrumentation-asgi (==0.39b0)"]
+instruments = ["django (>=1.10)"]
+test = ["opentelemetry-instrumentation-django[instruments]", "opentelemetry-test-utils (==0.39b0)"]
+
+[[package]]
+name = "opentelemetry-instrumentation-wsgi"
+version = "0.39b0"
+description = "WSGI Middleware for OpenTelemetry"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "opentelemetry_instrumentation_wsgi-0.39b0-py3-none-any.whl", hash = "sha256:1b0e2d5c68e09f13ebdee083de7777b3ea32b046a9544e8c083ddfe044b996f4"},
+    {file = "opentelemetry_instrumentation_wsgi-0.39b0.tar.gz", hash = "sha256:53a308183e58ce5303ecb88ad4c1ac83daa608855f06c848df2ef52d272de6ad"},
+]
+
+[package.dependencies]
+opentelemetry-api = ">=1.12,<2.0"
+opentelemetry-instrumentation = "0.39b0"
+opentelemetry-semantic-conventions = "0.39b0"
+opentelemetry-util-http = "0.39b0"
+
+[package.extras]
+test = ["opentelemetry-test-utils (==0.39b0)"]
+
+[[package]]
 name = "opentelemetry-proto"
 version = "1.18.0"
 description = "OpenTelemetry Python Proto"
@@ -1609,6 +1654,18 @@ python-versions = ">=3.7"
 files = [
     {file = "opentelemetry_semantic_conventions-0.39b0-py3-none-any.whl", hash = "sha256:0dd7a9dc0dfde2335f643705bba8f7c44182c797bc208b7601f0b8e8211cfd5c"},
     {file = "opentelemetry_semantic_conventions-0.39b0.tar.gz", hash = "sha256:06a9f198574e0dab6ebc072b59d89092cf9f115638a8a02157586769b6b7a69a"},
+]
+
+[[package]]
+name = "opentelemetry-util-http"
+version = "0.39b0"
+description = "Web util for OpenTelemetry"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "opentelemetry_util_http-0.39b0-py3-none-any.whl", hash = "sha256:587c3f8931b8a1e910a04fd736e8ff1386fe25c09dc92dc85104679112221483"},
+    {file = "opentelemetry_util_http-0.39b0.tar.gz", hash = "sha256:1a78e53e97c8f0b05216dbe4d93836ae5f5f94ba877003e56d065f089373f0ce"},
 ]
 
 [[package]]
@@ -2593,4 +2650,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "2b62a58a3af226fe981c61e54b7781b744e8c8e018d73613d38a3988da7c29c3"
+content-hash = "69abf86c66292f844e53a8994f280abb51e0d07aa9b18cc3b12b528fd2fa3f5c"

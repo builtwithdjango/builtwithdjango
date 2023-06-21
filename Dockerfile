@@ -16,6 +16,7 @@ COPY . .
 COPY --from=build /app/frontend/build/ ./frontend/build/
 
 RUN pip install --no-cache-dir -r requirements.txt
+RUN opentelemetry-bootstrap -a install
 
 EXPOSE 80
 
