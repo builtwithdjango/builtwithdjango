@@ -8,15 +8,17 @@ python manage.py qcluster &
 
 export DJANGO_SETTINGS_MODULE=builtwithdjango.settings
 export OTEL_SERVICE_NAME=builtwithdjango
-export OTEL_EXPORTER_OTLP_ENDPOINT=http://138.201.126.181:25418
+export OTEL_EXPORTER_OTLP_ENDPOINT=""
 
-opentelemetry-instrument \
-  --traces_exporter otlp_proto_http \
-  --metrics_exporter otlp_proto_http \
-  gunicorn \
-    -c deployment/gunicorn.config.py \
-    --bind 0.0.0.0:80 \
-    --workers 3 \
-    --threads 2 \
-    --reload \
-    builtwithdjango.wsgi:application
+gunicorn --bind 0.0.0.0:80 --workers 3 builtwithdjango.wsgi:application
+
+# opentelemetry-instrument \
+#   --traces_exporter otlp_proto_http \
+#   --metrics_exporter otlp_proto_http \
+#   gunicorn \
+#     -c deployment/gunicorn.config.py \
+#     --bind 0.0.0.0:80 \
+#     --workers 3 \
+#     --threads 2 \
+#     --reload \
+#     builtwithdjango.wsgi:application
