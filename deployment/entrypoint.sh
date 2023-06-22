@@ -9,8 +9,8 @@ python manage.py qcluster &
 echo "$(SIGNOZ_SERVICE_NAME)"
 
 export DJANGO_SETTINGS_MODULE=builtwithdjango.settings
-export OTEL_SERVICE_NAME=$(SIGNOZ_SERVICE_NAME)
-export OTEL_EXPORTER_OTLP_ENDPOINT=$(SIGNOZ_OTEL_COLLECTOR)
+export OTEL_SERVICE_NAME=builtwithdjango
+export OTEL_EXPORTER_OTLP_ENDPOINT=https://signoz-otel-collector-proxy.cr.lvtd.dev
 
 # gunicorn --bind 0.0.0.0:80 --workers 3 builtwithdjango.wsgi:application
 
