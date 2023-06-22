@@ -3,8 +3,9 @@ include builtwithdjango/.env
 export
 
 export DJANGO_SETTINGS_MODULE=builtwithdjango.settings
-export OTEL_SERVICE_NAME=bwd_local
+export OTEL_SERVICE_NAME=$(SIGNOZ_SERVICE_NAME)
 export OTEL_EXPORTER_OTLP_ENDPOINT=$(SIGNOZ_OTEL_COLLECTOR)
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 check-env:
 	echo $(DEBUG)
@@ -24,11 +25,9 @@ runprod:
   --traces_exporter otlp_proto_http \
   --metrics_exporter otlp_proto_http \
   gunicorn \
-    -c deployment/gunicorn.config.py \
+		-c deployment/gunicorn.config.py \
     --bind 0.0.0.0:80 \
     --workers 3 \
-    --threads 2 \
     --reload \
     builtwithdjango.wsgi:application
-
 .PHONY: runprod

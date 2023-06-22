@@ -8,9 +8,14 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
 
 def post_fork(server, worker):
+    server.log.info(f"Post Fork Started: {os.environ.get('OTEL_EXPORTER_OTLP_ENDPOINT')}")
     server.log.info("Worker spawned (pid: %s)", worker.pid)
 
-    resource = Resource.create(attributes={"service.name": "builtwithdjango"})
+    resource = Resource.create(
+        attributes={
+            "service.name": os.environ.get("SIGNOZ_SERVICE_NAME"),
+        }
+    )
 
     trace.set_tracer_provider(TracerProvider(resource=resource))
     span_processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=os.environ.get("OTEL_EXPORTER_OTLP_ENDPOINT")))
