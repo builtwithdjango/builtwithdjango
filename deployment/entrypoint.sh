@@ -6,8 +6,6 @@ python manage.py migrate
 
 python manage.py qcluster &
 
-echo "$(SIGNOZ_SERVICE_NAME)"
-
 export DJANGO_SETTINGS_MODULE=builtwithdjango.settings
 export OTEL_SERVICE_NAME=builtwithdjango
 export OTEL_EXPORTER_OTLP_ENDPOINT=https://signoz-otel-collector-proxy.cr.lvtd.dev
