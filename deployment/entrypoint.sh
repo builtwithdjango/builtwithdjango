@@ -10,14 +10,14 @@ export DJANGO_SETTINGS_MODULE=builtwithdjango.settings
 export OTEL_SERVICE_NAME=builtwithdjango
 export OTEL_EXPORTER_OTLP_ENDPOINT=https://signoz-otel-collector-proxy.cr.lvtd.dev
 
-# gunicorn --bind 0.0.0.0:80 --workers 3 builtwithdjango.wsgi:application
+gunicorn --bind 0.0.0.0:80 --workers 3 builtwithdjango.wsgi:application
 
-opentelemetry-instrument \
-  --traces_exporter otlp_proto_http \
-  --metrics_exporter otlp_proto_http \
-  gunicorn \
-    -c deployment/gunicorn.config.py \
-    --bind 0.0.0.0:80 \
-    --workers 3 \
-    --reload \
-    builtwithdjango.wsgi:application
+# opentelemetry-instrument \
+#   --traces_exporter otlp_proto_http \
+#   --metrics_exporter otlp_proto_http \
+#   gunicorn \
+#     -c deployment/gunicorn.config.py \
+#     --bind 0.0.0.0:80 \
+#     --workers 3 \
+#     --reload \
+#     builtwithdjango.wsgi:application
