@@ -10,7 +10,7 @@ def notify_admin_of_guide_comment(instance):
     send_mail(
         f"New Comment on post {instance.post.title}",
         message,
-        "rasul@builtwithdjango.com",
-        ["rasul@builtwithdjango.com"],
+        "Built with Django <rasul@builtwithdjango.com>",
+        ["Built with Django <rasul@builtwithdjango.com>"],
         fail_silently=False,
     )

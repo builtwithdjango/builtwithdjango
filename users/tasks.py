@@ -15,8 +15,8 @@ def notify_of_new_user(sender, **kwargs):
     send_mail(
         f"New User: {kwargs['user']}",
         message,
-        "rasul@builtwithdjango.com",
-        ["rasul@builtwithdjango.com"],
+        "Built with Django <rasul@builtwithdjango.com>",
+        ["Built with Django <rasul@builtwithdjango.com>"],
         fail_silently=False,
     )
 

@@ -37,8 +37,8 @@ def notify_of_new_project(instance):
     send_mail(
         "New Project Submission",
         message,
-        "rasul@builtwithdjango.com",
-        ["rasul@builtwithdjango.com"],
+        "Built with Django <rasul@builtwithdjango.com>",
+        ["Built with Django <rasul@builtwithdjango.com>"],
         fail_silently=False,
     )
 
@@ -48,7 +48,7 @@ def notify_owner_of_new_comment(instance):
         project_instance = Project.objects.get(title=instance.project.title)
         project_owner_email = project_instance.logged_in_maker.email
     except AttributeError:
-        project_owner_email = "rasul@builtwithdjango.com"
+        project_owner_email = "Built with Django <rasul@builtwithdjango.com>"
 
     message = f"""
       {instance.author} left a comment on your project ({instance.project.url} - {instance.project}).
@@ -58,7 +58,7 @@ def notify_owner_of_new_comment(instance):
     send_mail(
         "New Comment on your Project",
         message,
-        "rasul@builtwithdjango.com",
+        "Built with Django <rasul@builtwithdjango.com>",
         [project_owner_email],
         fail_silently=False,
     )
@@ -73,7 +73,7 @@ def notify_admins_of_comment(instance):
     send_mail(
         f"New Comment on project {instance.project.title}",
         message,
-        "rasul@builtwithdjango.com",
-        ["rasul@builtwithdjango.com"],
+        "Built with Django <rasul@builtwithdjango.com>",
+        ["Built with Django <rasul@builtwithdjango.com>"],
         fail_silently=False,
     )

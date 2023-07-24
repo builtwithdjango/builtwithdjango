@@ -43,7 +43,7 @@ class AddNftRequest(ModelForm):
             send_mail(
                 "Please confirm your email :)",
                 message,
-                "rasul@builtwithdjango.com",
+                "Built with Django <rasul@builtwithdjango.com>",
                 [f"{instance.email}"],
                 fail_silently=False,
             )
@@ -76,8 +76,8 @@ class ConfirmEmail(ModelForm):
             send_mail(
                 f"{instance.email} just approved his NFT request.",
                 message,
-                "rasul@builtwithdjango.com",
-                ["rasul@builtwithdjango.com"],
+                "Built with Django <rasul@builtwithdjango.com>",
+                ["Built with Django <rasul@builtwithdjango.com>"],
                 fail_silently=False,
             )
 

@@ -9,7 +9,7 @@ def notify_of_new_job(instance):
     send_mail(
         "New Job Submission",
         message,
-        "rasul@builtwithdjango.com",
-        ["rasul@builtwithdjango.com"],
+        "Built with Django <rasul@builtwithdjango.com>",
+        ["Built with Django <rasul@builtwithdjango.com>"],
         fail_silently=False,
     )

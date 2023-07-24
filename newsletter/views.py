@@ -59,8 +59,8 @@ def getWeeklyTemplateView(request):
         send_mail(
             "Weekly Email Template",
             render_to_string("newsletter/weekly-newsletter-template.md", context),
-            "rasul@builtwithdjango.com",
-            ["rasul@builtwithdjango.com"],
+            "Built with Django <rasul@builtwithdjango.com>",
+            ["Built with Django <rasul@builtwithdjango.com>"],
         )
         return redirect("home")
     return render(request, "newsletter/send-weekly-email.html", {"form": form})

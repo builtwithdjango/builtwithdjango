@@ -19,8 +19,8 @@ class ClaimAccountForm(ModelForm):
             send_mail(
                 "Account Claimed",
                 message,
-                "rasul@builtwithdjango.com",
-                ["rasul@builtwithdjango.com"],
+                "Built with Django <rasul@builtwithdjango.com>",
+                ["Built with Django <rasul@builtwithdjango.com>"],
                 fail_silently=False,
             )
 

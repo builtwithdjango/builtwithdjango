@@ -233,7 +233,7 @@ if DEBUG:
 else:
     EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
-DEFAULT_FROM_EMAIL = "rasul@builtwithdjango.com"
+DEFAULT_FROM_EMAIL = "Built with Django <rasul@builtwithdjango.com>"
 SERVER_EMAIL = "error@builtwithdjango.com"
 
 # Overriding the HTML of Built-In Widgets
