@@ -2,8 +2,9 @@
 {% load static %}
 {% load markdown_extras %}
 {% load humanize %}
+
 {% block meta %}
-    <title>{{ object.title }} @ {{ object.company_name }}</title>
+    <title>{{ object.title }} @ {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}</title>
     <link rel="canonical" href="https://{{ request.get_host }}/jobs/{{ object.pk }}/{{ object.slug }}" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:creator" content="@rasulkireev" />
@@ -11,17 +12,17 @@
     <meta property="og:url" content="https://{{ request.get_host }}/jobs/{{ object.pk }}/{{ object.slug }}" />
 
     {% if object.company_name %}
-      <meta name="description" content="{{ object.company_name }} is looking for a {{ object.title }}" />
-      <meta name="twitter:title" content="{{ object.title }} @ {{ object.company_name }}" />
-      <meta property="og:title" content="{{ object.title }} @ {{ object.company_name }}" />
-      <meta name="twitter:description" content="{{ object.company_name }} is looking for a {{ object.title }}" />
-      <meta property="og:description" content="{{ object.company_name }} is looking for a {{ object.title }}" />
+      <meta name="description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
+      <meta name="twitter:title" content="{{ object.title }} @ {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}" />
+      <meta property="og:title" content="{{ object.title }} @ {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}" />
+      <meta name="twitter:description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
+      <meta property="og:description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
     {% elif object.company_name %}
-      <meta name="description" content="{{ object.company_name }} is looking for a {{ object.title }}" />
-      <meta name="twitter:title" content="{{ object.title }} @ {{ object.company_name }}" />
-      <meta property="og:title" content="{{ object.title }} @ {{ object.company_name }}" />
-      <meta name="twitter:description" content="{{ object.company_name }} is looking for a {{ object.title }}" />
-      <meta property="og:description" content="{{ object.company_name }} is looking for a {{ object.title }}" />
+      <meta name="description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
+      <meta name="twitter:title" content="{{ object.title }} @ {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}" />
+      <meta property="og:title" content="{{ object.title }} @ {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}" />
+      <meta name="twitter:description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
+      <meta property="og:description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
     {% endif %}
 
     {% if object.company.logo %}
@@ -31,7 +32,6 @@
       <meta name="twitter:image" content="https://res.cloudinary.com/built-with-django/{{ object.company_logo }}" />
       <meta property="og:image" content="https://res.cloudinary.com/built-with-django/{{ object.company_logo }}" />
     {% endif %}
-
 {% endblock meta %}
 
 {% block content %}
@@ -49,17 +49,17 @@
               {% elif object.company_logo %}
                 <img class="w-24 h-24 rounded-full"
                     src="https://res.cloudinary.com/built-with-django/{{ object.company_logo }}"
-                    alt="{{ object.company_name }}" />
+                    alt="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}" />
               {% endif %}
             </div>
             <h1 class="text-center">
                 {{ object.title }} @
                 {% if object.company_name %}
                   <a href="{{ object.company.project.get_absolute_url }}">
-                      {{ object.company_name }}
+                      {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}
                   </a>
                 {% elif object.company_name %}
-                  <span>{{ object.company_name }}</span>
+                  <span>{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}</span>
                 {% endif %}
             </h1>
         </div>
@@ -118,7 +118,7 @@
     "@type": "Place",
     "address": "{% if object.remote %}Remote{% else %}{{ object.location }}{% endif %}"
   },
-  "description": "{{ object.company_name }} is looking for a {{ object.title }}",
+  "description": "{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}",
   "datePosted": "{{ object.created_datetime }}",
   "employmentType": "full-time",
   "url": "{{ object.listing_url }}",
