@@ -65,7 +65,6 @@ black = "^22.3.0"
 pylint = "^2.5.3"
 pre-commit = "^2.6.0"
 pylint-django = "^2.2.0"
-flake8 = "^3.9.2"
 djlint = "^1.2.0"
 kolo = "^1.7.0"
 
