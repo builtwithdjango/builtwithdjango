@@ -30,12 +30,12 @@ repos:
   hooks:
     - id: djlint-django
 
-- repo: local
+- repo: https://github.com/python-poetry/poetry
+  rev: '1.4.1'
   hooks:
-  - id: update-requirements-txt
-    name: update-requirements-txt
-    description: 'Generate requirements.txt based on poetry.lock'
-    entry: poetry
-    args: [export, --format, requirements.txt, --output, requirements.txt]
-    language: system
-    pass_filenames: false
+    - id: poetry-export
+      args: [
+        "-f", "requirements.txt",
+        "-o", "requirements.txt",
+        "--without-hashes"
+      ]
