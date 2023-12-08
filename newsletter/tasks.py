@@ -10,10 +10,10 @@ def add_email_to_buttondown(email, tag):
         "metadata": {"source": tag},
         "tags": [tag],
         "referrer_url": "https://builtwithdjango.com",
-        "subscriber_type": "subscriber.created",
+        "subscriber_type": "unactivated",
     }
     if tag == "user":
-        data["subscriber_type"] = "subscriber.confirmed"
+        data["subscriber_type"] = "regular"
 
     r = requests.post(
         f"https://api.buttondown.email/v1/subscribers",
