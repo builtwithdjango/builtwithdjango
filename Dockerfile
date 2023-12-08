@@ -8,7 +8,7 @@ RUN npm install
 RUN npm run build
 
 # Production stage
-FROM python:3.10
+FROM python:3.11
 
 WORKDIR /app
 
