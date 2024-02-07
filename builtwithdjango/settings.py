@@ -14,7 +14,9 @@ import os
 
 import cloudinary
 import environ
+import posthog
 import sentry_sdk
+from posthog.sentry.posthog_integration import PostHogIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env(
@@ -95,6 +97,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "posthog.sentry.django.PosthogDistinctIdMiddleware",
     "kolo.middleware.KoloMiddleware",
 ]
 
@@ -196,9 +199,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 # Sites
 SITE_ID = 1
 
-# Sentry Error Tracking
 if not DEBUG:
-    sentry_sdk.init(dsn=env("dsn"), integrations=[DjangoIntegration()])
+    sentry_sdk.init(dsn=env("dsn"), integrations=[DjangoIntegration(), PostHogIntegration()])
 
 # Newsletters
 EMAILOCTOPUS_API = env("EMAILOCTOPUS_API")
@@ -305,3 +307,10 @@ LOGGING = {
         },
     },
 }
+
+posthog.project_api_key = env("POSTHOG_API_KEY")
+posthog.host = "https://app.posthog.com"
+if DEBUG:
+    posthog.debug = True
+
+POSTHOG_DJANGO = {"distinct_id": lambda request: request.user and request.user.distinct_id}
