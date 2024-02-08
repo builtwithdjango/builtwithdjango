@@ -40,7 +40,7 @@
                 </header>
                 <div class="flex-auto h-full p-4">
                     <h2 class="mb-2 text-lg font-semibold text-gray-900">
-                        <a href="">{{ episode.title }}</a>
+                        <a href="{% url 'episode_details' episode.slug %}">{{ episode.title }}</a>
                     </h2>
                     <p class="text-sm leading-normal text-grey-700">
                         {{ episode.details }}
