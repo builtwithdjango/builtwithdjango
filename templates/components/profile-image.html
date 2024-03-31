@@ -4,6 +4,6 @@
      alt="{{ user.username }}" />
 {% else %}
 <img class="w-{{ size | default:12 }} h-{{ size | default:12 }} rounded-full {% if user.subscription_level == 'PRO' %} border-4 border-yellow-300 {% endif %}"
-     src="https://avatars.dicebear.com/api/gridy/{{ user.username }}.svg"
+     src="https://api.dicebear.com/7.x/pixel-art/svg?seed={{ user.username }}"
      alt="{{ user.username }}" />
 {% endif %}
