@@ -1,23 +1,44 @@
 #!/bin/sh
 
+# Default to server command if no arguments provided
+if [ $# -eq 0 ]; then
+    echo "No arguments provided. Defaulting to running the server."
+    server=true
+else
+    server=false
+fi
+
+# All commands before the conditional ones
+export DJANGO_SETTINGS_MODULE=builtwithdjango.settings
+export OTEL_EXPORTER_OTLP_ENDPOINT=https://signoz-otel-collector-proxy.cr.lvtd.dev
+export OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+
 python manage.py collectstatic --noinput
 python manage.py migrate
-# python manage.py djstripe_sync_models
+# Parse command-line arguments
+while getopts ":sw" option; do
+    case "${option}" in
+        s)  # Run server
+            server=true
+            ;;
+        w)  # Run worker
+            server=false
+            ;;
+        *)  # Invalid option
+            echo "Invalid option: -$OPTARG" >&2
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
 
-python manage.py qcluster &
-
-export DJANGO_SETTINGS_MODULE=builtwithdjango.settings
-export OTEL_SERVICE_NAME=builtwithdjango
-export OTEL_EXPORTER_OTLP_ENDPOINT=https://signoz-otel-collector-proxy.cr.lvtd.dev
-
-gunicorn --bind 0.0.0.0:80 --workers 3 builtwithdjango.wsgi:application
-
-# opentelemetry-instrument \
-#   --traces_exporter otlp_proto_http \
-#   --metrics_exporter otlp_proto_http \
-#   gunicorn \
-#     -c deployment/gunicorn.config.py \
-#     --bind 0.0.0.0:80 \
-#     --workers 3 \
-#     --reload \
-#     builtwithdjango.wsgi:application
+# If no valid option provided, default to server
+if [ "$server" = true ]; then
+    # python manage.py djstripe_sync_models
+    export OTEL_SERVICE_NAME=builtwithdjango_dev
+    export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_dev
+    opentelemetry-instrument uvicorn --host 0.0.0.0 --port 80 builtwithdjango.asgi:application
+else
+    export OTEL_SERVICE_NAME=builtwithdjango_dev_workers
+    export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_dev_workers
+    opentelemetry-instrument python manage.py qcluster
+fi
