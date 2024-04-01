@@ -3,6 +3,8 @@
 import os
 import sys
 
+from opentelemetry.instrumentation.django import DjangoInstrumentor
+
 
 def main():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "builtwithdjango.settings")
