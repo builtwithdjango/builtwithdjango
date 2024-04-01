@@ -200,7 +200,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 SITE_ID = 1
 
 if not DEBUG:
-    sentry_sdk.init(dsn=env("dsn"), integrations=[DjangoIntegration(), PostHogIntegration()])
+    sentry_sdk.init(dsn=env("dsn"), enable_tracing=True, integrations=[DjangoIntegration(), PostHogIntegration()])
 
 # Newsletters
 EMAILOCTOPUS_API = env("EMAILOCTOPUS_API")
