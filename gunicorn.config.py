@@ -13,5 +13,7 @@ def post_fork(server, worker):
     resource = Resource.create(attributes={"service.name": os.environ.get("OTEL_SERVICE_NAME")})
 
     trace.set_tracer_provider(TracerProvider(resource=resource))
-    span_processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=os.environ.get("OTEL_EXPORTER_OTLP_ENDPOINT")))
+    span_processor = BatchSpanProcessor(
+        OTLPSpanExporter(endpoint=f"{os.environ.get('OTEL_EXPORTER_OTLP_ENDPOINT')}/v1/traces")
+    )
     trace.get_tracer_provider().add_span_processor(span_processor)
