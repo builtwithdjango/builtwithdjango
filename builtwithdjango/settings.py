@@ -199,8 +199,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 # Sites
 SITE_ID = 1
 
-# if not DEBUG:
-#     sentry_sdk.init(dsn=env("dsn"), enable_tracing=True, integrations=[DjangoIntegration(), PostHogIntegration()])
+if ENVIRONMENT != "local":
+    sentry_sdk.init(
+        dsn=env("dsn"), traces_sample_rate=1.0, profiles_sample_rate=0.8, integrations=[PostHogIntegration()]
+    )
 
 # Newsletters
 EMAILOCTOPUS_API = env("EMAILOCTOPUS_API")
@@ -310,7 +312,7 @@ LOGGING = {
 
 posthog.project_api_key = env("POSTHOG_API_KEY")
 posthog.host = "https://app.posthog.com"
-if DEBUG:
+if ENVIRONMENT != "local":
     posthog.debug = True
 
 POSTHOG_DJANGO = {"distinct_id": lambda request: request.user and request.user.distinct_id}

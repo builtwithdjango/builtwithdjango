@@ -21,6 +21,11 @@ from django.urls import include, path
 
 from .sitemaps import sitemaps
 
+
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
+
 urlpatterns = (
     [
         path(f"{settings.ADMIN_URL}", admin.site.urls),
@@ -43,6 +48,7 @@ urlpatterns = (
             name="django.contrib.sitemaps.views.sitemap",
         ),
         path("robots.txt", include("robots.urls")),
+        path("sentry-debug/", trigger_error),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
