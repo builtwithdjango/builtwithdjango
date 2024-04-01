@@ -312,7 +312,7 @@ LOGGING = {
 
 posthog.project_api_key = env("POSTHOG_API_KEY")
 posthog.host = "https://app.posthog.com"
-if ENVIRONMENT != "local":
+if DEBUG:
     posthog.debug = True
 
 POSTHOG_DJANGO = {"distinct_id": lambda request: request.user and request.user.distinct_id}
