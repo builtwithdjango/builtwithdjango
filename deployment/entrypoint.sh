@@ -7,8 +7,8 @@ python manage.py migrate
 python manage.py qcluster &
 
 export DJANGO_SETTINGS_MODULE=builtwithdjango.settings
-export OTEL_SERVICE_NAME=builtwithdjango-dev
-export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango-dev
+export OTEL_SERVICE_NAME=builtwithdjango_dev
+export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_dev
 export OTEL_EXPORTER_OTLP_ENDPOINT=https://signoz-otel-collector-proxy.cr.lvtd.dev
 export OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
 
