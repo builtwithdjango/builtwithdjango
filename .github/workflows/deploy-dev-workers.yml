@@ -1,4 +1,4 @@
-name: Dev Deploy
+name: Dev Deploy Workers
 
 on: push
 
@@ -25,12 +25,13 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}-dev
+          file: Dockerfile.workers
+          tags: ghcr.io/${{ github.repository }}-workers-dev
 
       - name: Deploy to CapRover
         uses: caprover/deploy-from-github@main
         with:
             server: ${{ secrets.CAPROVER_SERVER }}
-            app: bwd-dev
-            token: '${{ secrets.DEV_APP_TOKEN }}'
-            image: ghcr.io/${{ github.repository }}-dev
+            app: bwd-workers-dev
+            token: '${{ secrets.DEV_WORKERS_APP_TOKEN }}'
+            image: ghcr.io/${{ github.repository }}

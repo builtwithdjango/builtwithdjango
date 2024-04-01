@@ -20,7 +20,6 @@ RUN opentelemetry-bootstrap -a install
 
 RUN python manage.py collectstatic --noinput
 RUN python manage.py migrate
-# RUN python manage.py djstripe_sync_models
 
 ENV DJANGO_SETTINGS_MODULE=builtwithdjango.settings
 ENV OTEL_RESOURCE_ATTRIBUTES=bwd_workers_dev
@@ -29,4 +28,4 @@ ENV OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
 
 EXPOSE 80
 
-CMD ["opentelemetry-instrument", "uvicorn", "builtwithdjango.asgi:application", "--host", "0.0.0.0", "--port", "80"]
+CMD ["opentelemetry-instrument", "python", "manage.py", "qcluster"]
