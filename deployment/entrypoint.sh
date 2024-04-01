@@ -36,7 +36,7 @@ if [ "$server" = true ]; then
     # python manage.py djstripe_sync_models
     export OTEL_SERVICE_NAME=builtwithdjango_dev
     export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_dev
-    opentelemetry-instrument uvicorn --host 0.0.0.0 --port 80 builtwithdjango.asgi:application
+    opentelemetry-instrument gunicorn builtwithdjango.asgi:application -k uvicorn.workers.UvicornWorker --host 0.0.0.0 --port 80
 else
     export OTEL_SERVICE_NAME=builtwithdjango_dev_workers
     export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_dev_workers
