@@ -10,8 +10,6 @@ fi
 
 # All commands before the conditional ones
 export DJANGO_SETTINGS_MODULE=builtwithdjango.settings
-export OTEL_SERVICE_NAME=builtwithdjango_dev
-export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_dev
 export OTEL_EXPORTER_OTLP_ENDPOINT=https://signoz-otel-collector-proxy.cr.lvtd.dev
 export OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
 
@@ -36,7 +34,11 @@ shift $((OPTIND - 1))
 # If no valid option provided, default to server
 if [ "$server" = true ]; then
     # python manage.py djstripe_sync_models
+    export OTEL_SERVICE_NAME=builtwithdjango_dev
+    export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_dev
     opentelemetry-instrument uvicorn --host 0.0.0.0 --port 80 builtwithdjango.asgi:application
 else
+    export OTEL_SERVICE_NAME=builtwithdjango_dev_workers
+    export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_dev_workers
     opentelemetry-instrument python manage.py qcluster
 fi
