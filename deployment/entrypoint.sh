@@ -34,11 +34,11 @@ shift $((OPTIND - 1))
 # If no valid option provided, default to server
 if [ "$server" = true ]; then
     # python manage.py djstripe_sync_models
-    export OTEL_SERVICE_NAME=builtwithdjango_dev
-    export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_dev
+    export OTEL_SERVICE_NAME=builtwithdjango${ENV:-dev}
+    export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango${ENV:-dev}
     opentelemetry-instrument gunicorn builtwithdjango.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:80 --workers 3
 else
-    export OTEL_SERVICE_NAME=builtwithdjango_dev_workers
-    export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_dev_workers
+    export OTEL_SERVICE_NAME="builtwithdjango_${ENV:-dev}_workers"
+    export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango${ENV:-dev}_workers
     opentelemetry-instrument python manage.py qcluster
 fi
