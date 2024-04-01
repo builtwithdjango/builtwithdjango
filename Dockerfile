@@ -25,5 +25,5 @@ ENV OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
 
 EXPOSE 80
 
-ENTRYPOINT [ ["deployment/entrypoint.sh"] ]
+ENTRYPOINT ["deployment/entrypoint.sh"]
 CMD ["opentelemetry-instrument", "uvicorn", "builtwithdjango.asgi:application", "--host", "0.0.0.0", "--port", "80"]
