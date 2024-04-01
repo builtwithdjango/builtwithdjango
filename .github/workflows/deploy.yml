@@ -1,4 +1,4 @@
-name: Prod Deploy
+name: Deploy Prod
 
 on:
   push:
@@ -27,6 +27,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
+          file: deployment/Dockerfile.server
           push: true
           tags: ghcr.io/${{ github.repository }}
 
