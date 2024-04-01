@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
@@ -27,7 +28,7 @@ stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
 class JobListView(ListView):
     model = Job
     template_name = "jobs/all_jobs.html"
-    filter_date = datetime.today() - timedelta(days=60)
+    filter_date = timezone.now() - timedelta(days=60)
     queryset = Job.objects.filter(approved=True, created_datetime__gte=filter_date).order_by(
         "-paid", "-created_datetime"
     )[:30]
