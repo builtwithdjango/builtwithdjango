@@ -25,5 +25,4 @@ ENV OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
 
 EXPOSE 80
 
-ENTRYPOINT ["deployment/entrypoint.sh"]
-CMD ["opentelemetry-instrument", "python", "manage.py", "qcluster"]
+CMD ["deployment/entrypoint.sh", "-w"]
