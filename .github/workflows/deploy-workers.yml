@@ -36,5 +36,5 @@ jobs:
         with:
             server: ${{ secrets.CAPROVER_SERVER }}
             app: bwd-workers
-            token: '${{ secrets.DEV_WORKERS_APP_TOKEN }}'
+            token: '${{ secrets.WORKERS_APP_TOKEN }}'
             image: ghcr.io/${{ github.repository }}-workers
