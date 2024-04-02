@@ -201,9 +201,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 SITE_ID = 1
 
 if ENVIRONMENT != "local":
-    sentry_sdk.init(
-        dsn=env("dsn"), traces_sample_rate=1.0, profiles_sample_rate=0.8, integrations=[PostHogIntegration()]
-    )
+    sentry_sdk.init(dsn=env("dsn"), integrations=[PostHogIntegration()])
 
 # Newsletters
 EMAILOCTOPUS_API = env("EMAILOCTOPUS_API")
