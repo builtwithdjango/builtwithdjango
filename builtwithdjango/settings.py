@@ -277,11 +277,11 @@ cloudinary.config(
 # django-q
 Q_CLUSTER = {
     "name": "builtwithdjango-q",
-    "orm": "default",
     "timeout": 90,
     "retry": 120,
     "workers": 4,
     "max_attempts": 2,
+    "redis": env("REDIS_URL"),
 }
 
 # Screenshot API
@@ -315,3 +315,17 @@ if DEBUG:
     posthog.debug = True
 
 POSTHOG_DJANGO = {"distinct_id": lambda request: request.user and request.user.distinct_id}
+
+if DEBUG:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        }
+    }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": env("REDIS_URL"),
+        }
+    }

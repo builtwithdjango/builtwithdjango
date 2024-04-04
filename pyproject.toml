@@ -62,6 +62,8 @@ opentelemetry-instrumentation-psycopg2 = "^0.45b0"
 sentry-sdk = "^1.44.0"
 django = "^5.0.3"
 django-q2 = "^1.6.2"
+redis = "^5.0.3"
+opentelemetry-instrumentation-redis = "^0.45b0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
