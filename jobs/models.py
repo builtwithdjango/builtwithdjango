@@ -15,7 +15,7 @@ class Job(models.Model):
 
     title = models.CharField(max_length=100)
     slug = AutoSlugField(populate_from="title", always_update=True, default="django-developer")
-    listing_url = models.URLField(unique=True)
+    listing_url = models.URLField()
     description = models.TextField(blank=True, null=True)
     email = models.EmailField(blank=True)
     min_yearly_salary = models.IntegerField(blank=True, null=True)
