@@ -53,6 +53,8 @@ def get_latest_jobs_from_tj_alerts():
 
         new_job = Job(
             submitted_datetime=job["submitted_datetime"],
+            created_datetime=job["submitted_datetime"],
+            updated_datetime=job["submitted_datetime"],
             source="gettjalerts.com",
             external_id=job["id"],
             title=title,
