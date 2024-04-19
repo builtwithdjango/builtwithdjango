@@ -9,7 +9,7 @@
            alt="{{ job.company.name }} Logo" />
       {% elif job.company_logo %}
       <img class="w-16 h-16 rounded-full"
-           src="https://res.cloudinary.com/built-with-django/{{ job.company_logo }}"
+           src="{{ job.company_logo.build_url }}"
            alt="{{ job.company_name }}" />
       {% endif %}
   </div>
@@ -30,8 +30,11 @@
             </div>
             <div class="flex flex-col justify-between space-y-4 md:space-y-0 md:flex-row">
               <div class="flex flex-col items-start space-y-4 md:space-y-0 md:space-x-4 md:items-center md:flex-row">
+                {% if not job.location and not job.min_yearly_salary %}
+                <p></p>
+                {% endif %}
+                {% if job.location %}
                 <p class="flex items-center text-sm text-gray-500">
-                    <!-- Heroicon name: solid/location-marker -->
                     <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
@@ -41,17 +44,20 @@
                               d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
                               clip-rule="evenodd"/>
                     </svg>
-                    {{ job.location | truncatechars:15 }}
+                    {{ job.location | truncatechars:100 }}
                 </p>
+                {% endif %}
                 {% if job.min_yearly_salary %}
                 <p class="flex items-center text-sm text-gray-500">
                   <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  {{ job.min_yearly_salary | intcomma }} - {{ job.max_yearly_salary | intcomma }}
+                  {% if job.min_yearly_salary %}{{ job.min_yearly_salary | intcomma }}{% endif %}
+                  {% if job.max_yearly_salary %}- {{ job.max_yearly_salary | intcomma }}{% endif %}
                 </p>
                 {% endif %}
               </div>
+              <div class="flex flex-col items-start space-y-4 md:space-y-0 md:space-x-4 md:items-center md:flex-row">
                 <p class="flex items-center text-sm text-gray-500">
                     <!-- Heroicon name: solid/location-marker -->
                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -66,6 +72,7 @@
                     </svg>
                     {{ job.created_datetime|timesince }} ago
                 </p>
+              </div>
             </div>
       </a>
   </div>
