@@ -329,3 +329,8 @@ else:
             "LOCATION": env("REDIS_URL"),
         }
     }
+
+TJ_ALERTS_HOST = "https://gettjalerts.com/api"
+TJ_ALERTS_API_KEY = env("TJ_ALERTS_API_KEY")
+
+HEALTHCHECKS_HOST = "https://healthchecks.cr.lvtd.dev/ping"
