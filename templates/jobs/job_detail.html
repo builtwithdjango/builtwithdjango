@@ -29,8 +29,8 @@
       <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}" />
       <meta property="og:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}" />
     {% elif object.company_logo %}
-      <meta name="twitter:image" content="https://res.cloudinary.com/built-with-django/{{ object.company_logo }}" />
-      <meta property="og:image" content="https://res.cloudinary.com/built-with-django/{{ object.company_logo }}" />
+      <meta name="twitter:image" content="{{ job.company_logo.build_url }}" />
+      <meta property="og:image" content="{{ job.company_logo.build_url }}" />
     {% endif %}
 {% endblock meta %}
 
@@ -48,7 +48,7 @@
                       alt="{{ object.company }} Logo"/>
               {% elif object.company_logo %}
                 <img class="w-24 h-24 rounded-full"
-                    src="https://res.cloudinary.com/built-with-django/{{ object.company_logo }}"
+                    src="{{ job.company_logo.build_url }}"
                     alt="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}" />
               {% endif %}
             </div>
@@ -65,7 +65,7 @@
         </div>
         <div class="flex justify-center mt-10">
             <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent border-solid rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-               href="{{ object.listing_url }}"
+               href="{{ object.listing_url }}?utm_source={{ request.get_host }}&ref={{ request.get_host }}"
                target="_blank">
                 Apply for this position
             </a>
