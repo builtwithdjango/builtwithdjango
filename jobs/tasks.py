@@ -50,8 +50,6 @@ def get_latest_jobs_from_tj_alerts():
 
         company_url = job["company_url"]
 
-        logger.info(f"submitted datetime: {job['submitted_datetime']}")
-
         new_job = Job(
             submitted_datetime=job["submitted_datetime"],
             created_datetime=job["submitted_datetime"],
