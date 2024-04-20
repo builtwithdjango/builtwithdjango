@@ -4,7 +4,6 @@ from urllib.parse import urlparse
 import cloudinary.uploader
 import requests
 from django.conf import settings
-from django.core.files.base import ContentFile
 from django.core.mail import send_mail
 
 from .models import Job
@@ -51,6 +50,8 @@ def get_latest_jobs_from_tj_alerts():
 
         company_url = job["company_url"]
 
+        logger.info(f"submitted datetime: {job['submitted_datetime']}")
+
         new_job = Job(
             submitted_datetime=job["submitted_datetime"],
             created_datetime=job["submitted_datetime"],
@@ -72,7 +73,6 @@ def get_latest_jobs_from_tj_alerts():
             domain_name = parsed_url.netloc
 
             try:
-
                 image_response = cloudinary.uploader.upload(
                     f"https://logo.clearbit.com/{domain_name}",
                     public_id=f"user-profile-image-{settings.ENVIRONMENT}/{domain_name}",

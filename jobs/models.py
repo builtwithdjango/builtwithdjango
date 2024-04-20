@@ -3,13 +3,14 @@ from cloudinary.models import CloudinaryField
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 
 class Job(models.Model):
-    created_datetime = models.DateTimeField(auto_now_add=True)
-    updated_datetime = models.DateTimeField(auto_now=True)
-
+    created_datetime = models.DateTimeField()
+    updated_datetime = models.DateTimeField()
     submitted_datetime = models.DateTimeField(blank=True, null=True)
+
     source = models.CharField(max_length=100, blank=True)
     external_id = models.CharField(max_length=100, blank=True)
 
@@ -55,6 +56,17 @@ class Job(models.Model):
 
     def get_absolute_url(self):
         return reverse("job_details", kwargs={"pk": self.id, "slug": self.slug})
+
+    def save(self, *args, **kwargs):
+        """On save, update timestamps"""
+
+        if not self.id and not self.created_datetime:
+            self.created_datetime = timezone.now()
+
+        if not self.updated_datetime:
+            self.updated_datetime = timezone.now()
+
+        return super(Job, self).save(*args, **kwargs)
 
 
 class Company(models.Model):
