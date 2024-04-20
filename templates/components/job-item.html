@@ -1,7 +1,11 @@
 {% load static %}
 {% load humanize %}
 
-<div class="relative flex items-center px-4 py-3 space-x-3 {% if job.paid %} bg-yellow-300 border-yellow-300 hover:bg-yellow-400 hover:border-yellow-400 {% else %} bg-white border-gray-300 hover:bg-gray-100 hover:border-gray-400 {% endif %} border-y-2 border-solid">
+<li class="
+    relative flex justify-between px-4 py-5 gap-x-6 hover:bg-gray-50 sm:px-6 items-center space-x-3
+    {% if job.paid %} bg-yellow-300 border-yellow-300 hover:bg-yellow-400 hover:border-yellow-400
+    {% else %} bg-white border-gray-300 hover:bg-gray-100 hover:border-gray-400 {% endif %}
+  ">
   <div class="flex-shrink-0">
       {% if job.company.logo %}
       <img class="w-16 h-16 rounded-full"
@@ -76,4 +80,4 @@
             </div>
       </a>
   </div>
-</div>
+</li>

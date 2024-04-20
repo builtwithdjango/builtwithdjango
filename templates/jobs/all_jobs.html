@@ -40,10 +40,10 @@
     <div class="mx-auto lg:py-8">
       <div class="grid items-start grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-8">
         <div class="grid grid-cols-1 gap-4 lg:col-span-4">
-          <div class="grid grid-cols-1 border border-gray-200 border-solid rounded-lg shadow lg:col-span-3">
-            <ul class="list-none divide-y divide-gray-200">
+          <div class="grid grid-cols-1 border border-gray-200 shadow sm:rounded-xl lg:col-span-3">
+            <ul role="list" class="overflow-hidden bg-white divide-y divide-gray-100 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
               {% for job in object_list %}
-                  {% include "components/job-item.html" with job=job %}
+                    {% include "components/job-item.html" with job=job %}
               {% endfor %}
             </ul>
           </div>
