@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load markdown_extras %}
+{% load url_utils %}
 
 {% block meta %}
     <title>{{ object.title }}</title>
@@ -47,8 +48,9 @@
           </div>
     </div>
 {% endblock content %}
+
 {% block schema %}
-    <script type="application/ld+json">
+<script type="application/ld+json">
 {
   "@context": "http://schema.org/",
   "@type": "BlogPosting",
@@ -60,12 +62,12 @@
   "headline": "{{ object.title }}",
   "about": "Django",
   "abstract": "{{ object.description }}",
-  "articleBody": "{% autoescape on %}{{ object.content }}{% endautoescape %}",
+  "articleBody": "{% autoescape on %}{{ object.content|safe|replace_quotes }}{% endautoescape %}",
   "image": "https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}",
   "thumbnailUrl": "https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}",
   "dateCreated": "{{ object.created }}",
   "datePublished": "{{ object.created }}",
-  "dateModified": "{{ object.modified }}",
+  "dateModified": "{{ object.modified }}"
 }
-    </script>
+</script>
 {% endblock schema %}

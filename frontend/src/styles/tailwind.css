@@ -6,11 +6,10 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 [data-turbo-preview] body {
   opacity: 0.5;
 }
+
 .turbo-progress-bar {
   @apply bg-blue-500;
 
