@@ -1,4 +1,5 @@
 backup-dbs/
+.idea/
 *.sqlite3
 *.lock
 .kolo/
