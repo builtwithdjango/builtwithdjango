@@ -21,7 +21,7 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["newsletter_form"] = NewsletterSignupForm
-        context["projects"] = Project.objects.filter(published=True)[:4]
+        context["projects"] = Project.objects.filter(published=True, active=True)[:4]
         context["guides"] = Post.objects.all()[:4]
         context["podcast_episodes"] = Episode.objects.all()[:3]
         context["jobs"] = Job.objects.filter(approved=True).order_by("-created_datetime")[:6]
