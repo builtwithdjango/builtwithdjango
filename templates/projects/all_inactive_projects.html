@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="px-6 py-20 bg-white sm:py-24 lg:px-8">
+      <div class="max-w-2xl mx-auto text-center">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Inactive Django Projects</h1>
+      </div>
+    </div>
+
+    <div>
+        <div class="grid grid-cols-1 gap-6 mb-10 lg:grid-cols-3 md:grid-cols-2">
+            {% for site in objects %}
+                <div class="flex flex-col justify-start bg-white border-solid rounded shadow border-1">
+                    <div class="border-b border-gray-300 border-solid rounded-t-lg">
+                        <a href="{% url 'project' site.slug %}">
+                            <img class="object-cover object-left-top w-full h-auto border-0 rounded-t"
+                                 src="{% get_media_prefix %}{{ site.homepage_screenshot }}"
+                                 alt="{{ site.title }} | Screenshot"/>
+                        </a>
+                    </div>
+                    <div class="flex-auto h-full p-4 border-b border-gray-300 border-solid">
+                        <h2 class="mb-2 text-lg font-semibold text-gray-900">
+                            <a href="{% url 'project' site.slug %}">{{ site.title }}</a>
+                        </h2>
+                        <p class="text-sm leading-normal text-grey-700">
+                            {{ site.short_description }}
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between px-4 py-2">
+                        <div>
+                            <a class="inline-block p-2 text-xl bg-gray-200 border border-gray-200 rounded-lg hover:bg-gray-300"
+                               href="{{ site.url }}?ref={{ request.get_host }}"
+                               target="_blank">
+                                <i class="las la-link"></i>
+                            </a>
+                            {% if site.github_url %}
+                                <a class="inline-block p-2 text-xl bg-gray-200 border border-gray-200 rounded-lg hover:bg-gray-300"
+                                   href="{{ site.github_url }}?ref={{ request.get_host }}"
+                                   target="_blank">
+                                    <i class="lab la-github"></i>
+                                </a>
+                            {% endif %}
+                            {% if site.twitter_url %}
+                                <a class="inline-block p-2 text-xl bg-gray-200 border border-gray-200 rounded-lg hover:bg-gray-300"
+                                   href="{{ site.twitter_url }}?ref={{ request.get_host }}"
+                                   target="_blank">
+                                    <i class="lab la-twitter"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+
+                        {% include "components/project-likes.html" with site=site %}
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
+{% block schema %}
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Projects Built with Django",
+    "description": "Collection of cool projects people built with Django",
+    "thumbnailUrl": "https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}",
+    "url": "https://{{ request.get_host }}/",
+    "author": {
+      "@type": "Person",
+      "givenName": "Rasul",
+      "familyName": "Kireev",
+      "url": "https://rasulkireev.com/"
+    }
+  }
+    </script>
+{% endblock schema %}

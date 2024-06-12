@@ -1,8 +1,8 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Count, Q
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django_filters.views import FilterView
 from django_q.tasks import async_task
 
@@ -46,6 +46,15 @@ class ProjectListView(FilterView):
         context["newsletter_form"] = NewsletterSignupForm
 
         return context
+
+
+class InactiveProjectListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = Project
+    template_name = "projects/all_inactive_projects.html"
+    queryset = Project.objects.filter(published=True, active=False)
+
+    def test_func(self):
+        return self.request.user.is_staff
 
 
 class ProjectDetailView(DetailView):

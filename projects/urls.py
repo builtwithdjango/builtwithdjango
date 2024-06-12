@@ -1,9 +1,17 @@
 from django.urls import path
 
-from .views import CommentCreateView, ProjectCreateView, ProjectDetailView, ProjectListView, ProjectUpdateView
+from .views import (
+    CommentCreateView,
+    InactiveProjectListView,
+    ProjectCreateView,
+    ProjectDetailView,
+    ProjectListView,
+    ProjectUpdateView,
+)
 
 urlpatterns = [
     path("", ProjectListView.as_view(), name="projects"),
+    path("inactive", InactiveProjectListView.as_view(), name="inactive-projects"),
     path("<slug:slug>", ProjectDetailView.as_view(), name="project"),
     path(
         "<slug:slug>/update",
