@@ -4,6 +4,7 @@ import requests
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.mail import send_mail
+from django_q.tasks import async_task
 
 from .models import Project
 
@@ -77,3 +78,20 @@ def notify_admins_of_comment(instance):
         ["Built with Django <rasul@builtwithdjango.com>"],
         fail_silently=False,
     )
+
+
+def check_all_projects():
+    projects = Project.objects.all()
+
+    for project in projects:
+        async_task(update_project_active_status, project.id, group="Check Project Active Status")
+
+
+def update_project_active_status(project_id):
+    project = Project.objects.get(id=project_id)
+
+    active = project.check_project_is_active()
+
+    if not active:
+        project.active = False
+        project.save(update_fields=["active"])
