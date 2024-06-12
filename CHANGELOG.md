@@ -13,11 +13,13 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 **Fixed** for any bug fixes.
 **Security** in case of vulnerabilities.
 
-## [Unreleased]
+## [0.4.2] - 2024-06-12
+### Added
+- Added a task to check if project is active.
 
 ## [0.4.1] - 2022-07-10
 ### Added
-- Complete Redesign
+- Complete Redesign.
 
 ## [0.4.0] - 2022-07-10
 ### Added
