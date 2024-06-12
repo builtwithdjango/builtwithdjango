@@ -95,3 +95,5 @@ def update_project_active_status(project_id):
     if not active:
         project.active = False
         project.save(update_fields=["active"])
+
+    return f"Project {project.title} is active: {active}"
