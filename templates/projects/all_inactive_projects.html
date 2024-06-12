@@ -11,7 +11,7 @@
 
     <div>
         <div class="grid grid-cols-1 gap-6 mb-10 lg:grid-cols-3 md:grid-cols-2">
-            {% for site in objects %}
+            {% for site in object_list %}
                 <div class="flex flex-col justify-start bg-white border-solid rounded shadow border-1">
                     <div class="border-b border-gray-300 border-solid rounded-t-lg">
                         <a href="{% url 'project' site.slug %}">
