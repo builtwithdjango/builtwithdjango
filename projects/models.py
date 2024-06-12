@@ -67,9 +67,9 @@ class Project(models.Model):
     def check_project_is_active(self):
         try:
             response = requests.get(self.url, timeout=7)
-            active = response.status_code == 200
+            self.active = response.status_code == 200
         except requests.RequestException:
-            active = False
+            self.active = False
 
         return self.active
 
