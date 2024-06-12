@@ -1,3 +1,4 @@
+import requests
 from autoslug import AutoSlugField
 from django.conf import settings
 from django.db import models
@@ -23,6 +24,7 @@ class Project(models.Model):
     large_company = models.BooleanField(default=False)
     type = models.CharField(max_length=50, blank=True)
     is_profitable = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
 
     # Optional Website Information
     is_open_source = models.BooleanField(default=False)
@@ -56,14 +58,23 @@ class Project(models.Model):
         blank=True,
     )
 
-    class Meta:
-        ordering = ["-date_added"]
-
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse("project", kwargs={"slug": self.slug})
+
+    def check_project_is_active(self):
+        try:
+            response = requests.get(self.url, timeout=7)
+            self.active = response.status_code == 200
+        except requests.RequestException:
+            self.active = False
+
+        return self.active
+
+    class Meta:
+        ordering = ["-date_added"]
 
 
 class Technology(models.Model):
