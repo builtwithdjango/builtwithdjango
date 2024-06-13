@@ -1,3 +1,5 @@
+import logging
+
 import requests
 from autoslug import AutoSlugField
 from django.conf import settings
@@ -5,6 +7,8 @@ from django.db import models
 from django.urls import reverse
 from model_utils.models import TimeStampedModel
 from taggit.managers import TaggableManager
+
+logger = logging.getLogger(__file__)
 
 
 class Project(models.Model):
@@ -68,7 +72,8 @@ class Project(models.Model):
         try:
             response = requests.get(self.url, timeout=7)
             self.active = response.status_code == 200
-        except requests.RequestException:
+        except (requests.RequestException, ConnectionError, requests.exceptions.ConnectTimeout) as e:
+            logger.error(f"check_project_is_active error: {e}")
             self.active = False
 
         return self.active
