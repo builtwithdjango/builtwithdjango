@@ -15,7 +15,7 @@
     <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
 {% endblock meta %}
 {% block content %}
-    <div class="my-4 overflow-hidden bg-white rounded-lg shadow">
+    <div class="overflow-hidden my-4 bg-white rounded-lg shadow">
         <div class="px-4 py-5 sm:p-6">
             <p class="text-3xl font-semibold text-gray-800">
                 Django Makers
@@ -43,7 +43,7 @@
         </div>
     </div>
     {% if messages %}
-        <div class="p-4 my-4 border border-green-500 border-solid rounded-md bg-green-50">
+        <div class="p-4 my-4 bg-green-50 rounded-md border border-green-500 border-solid">
             <div class="flex">
                 <div class="flex-shrink-0">
                     <!-- Heroicon name: solid/check-circle -->
@@ -72,22 +72,22 @@
     <div class="grid grid-cols-1 gap-4 mb-10 sm:grid-cols-4">
         {% for maker in object_list %}
             {% if maker.projects.all.count > 0 %}
-                <div class="relative flex items-center px-4 py-5 space-x-3 bg-white border border-gray-300 border-solid rounded-lg shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                <div class="flex relative items-center px-4 py-5 space-x-3 bg-white rounded-lg border border-gray-300 border-solid shadow-sm hover:bg-gray-100 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                     {% if user.is_authenticated and maker.maker_email == user.email and maker.user == None %}
-                        <form class="absolute bottom-0 right-0 p-2"
+                        <form class="absolute right-0 bottom-0 p-2"
                               action="{% url 'claim_account' maker.pk %}"
                               method="post">
                             {% csrf_token %}
                             <input class="hidden" type="text" value="{{ user.email }}" />
                             <button type="submit"
-                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-300">
+                                    class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium text-green-800 bg-green-100 rounded-full hover:bg-green-300">
                                 Claim
                             </button>
                         </form>
                     {% elif user == maker.user %}
-                        <div class="absolute bottom-0 right-0 p-2">
+                        <div class="absolute right-0 bottom-0 p-2">
                             <a href="{% url 'maker_update' maker.slug %}"
-                               class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-300">
+                               class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium text-green-800 bg-green-100 rounded-full hover:bg-green-300">
                                 Edit
                             </a>
                         </div>
@@ -116,7 +116,7 @@
                         {% else %}
                             <!-- get image gray sillhoutte -->
                             <img class="w-16 h-16 rounded-full"
-                                 src="https://avatars.dicebear.com/api/gridy/{{ maker.first_name }} {{ maker.last_name }}.svg"
+                                 src="https://api.dicebear.com/7.x/pixel-art/svg?seed={{ maker.first_name }} {{ maker.last_name }}"
                                  alt=""/>
                         {% endif %}
                         {% if maker.first_name or maker.last_name %}
