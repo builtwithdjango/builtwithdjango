@@ -1,10 +1,11 @@
 from django.urls import path
 
 from .feeds import LatestJobsFeed
-from .views import JobCreateView, JobDetailView, JobListView, ThankYouView, create_checkout_session
+from .views import AllJobListView, JobCreateView, JobDetailView, JobListView, ThankYouView, create_checkout_session
 
 urlpatterns = [
     path("", JobListView.as_view(), name="jobs"),
+    path("all", AllJobListView.as_view(), name="all_jobs"),
     path("<int:pk>/<slug:slug>", JobDetailView.as_view(), name="job_details"),
     path("new", JobCreateView.as_view(), name="post_job"),
     path("thank-you", ThankYouView.as_view(), name="job_thank_you"),

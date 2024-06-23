@@ -25,6 +25,17 @@ from .tasks import notify_of_new_job
 stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
 
 
+class AllJobListView(ListView):
+    model = Job
+    template_name = "jobs/all_jobs.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["newsletter_form"] = NewsletterSignupForm
+
+        return context
+
+
 class JobListView(ListView):
     model = Job
     template_name = "jobs/all_jobs.html"
