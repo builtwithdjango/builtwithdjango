@@ -38,6 +38,7 @@ urlpatterns = (
         path("newsletter/", include("newsletter.urls")),
         path("podcast/", include("podcast.urls")),
         path("developers/", include("developers.urls")),
+        path("tools/", include("tools.urls")),
         path("users/", include("allauth.urls")),
         path("users/", include("users.urls")),
         path("stripe/", include("djstripe.urls", namespace="djstripe")),
