@@ -27,6 +27,7 @@ class StaticViewSitemap(sitemaps.Sitemap):
             "podcast_episodes",
             "jobs",
             "post_job",
+            "generate_django_secret_page",
         ]
 
     def location(self, item):
