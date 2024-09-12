@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <title>Django HTML Formatter</title>
+    <meta name="description" content="Make your Django templates pretty in seconds."/>
+    <link rel="canonical" href="https://{{ request.get_host }}/tools/format-html/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@rasulkireev" />
+    <meta name="twitter:site" content="@builtwithdjango" />
+    <meta name="twitter:title" content="Django HTML Formatter" />
+    <meta name="twitter:description" content="Make your Django templates pretty in seconds."/>
+    <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
+    <meta property="og:title" content="Django HTML Formatter" />
+    <meta property="og:url" content="https://{{ request.get_host }}/tools/format-html/" />
+    <meta property="og:description" content="Make your Django templates pretty in seconds."/>
+    <meta property="og:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
+{% endblock meta %}
+
+{% block content %}
+<div data-controller="html-formatter" class="container px-4 py-8 mx-auto max-w-7xl">
+    <h1 class="mb-6 text-3xl font-bold text-center">HTML Formatter</h1>
+    <div class="flex flex-col gap-6 md:flex-row">
+        <div class="flex-1">
+            <h2 class="mb-2 text-xl font-semibold">Input HTML</h2>
+            <textarea
+                data-html-formatter-target="input"
+                placeholder="Enter your HTML here..."
+                class="p-3 w-full h-96 font-mono text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+            ></textarea>
+        </div>
+        <div class="relative flex-1">
+            <h2 class="mb-2 text-xl font-semibold">Formatted HTML</h2>
+            <textarea
+                data-html-formatter-target="result"
+                readonly
+                class="p-3 w-full h-96 font-mono text-sm bg-gray-50 rounded-md border border-gray-300"
+            ></textarea>
+            <button
+              type="button"
+              data-action="click->html-formatter#copy"
+              data-html-formatter-target="copyButton"
+              class="absolute right-2 bottom-2 px-3 py-1 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+            >
+              Copy
+            </button>
+        </div>
+    </div>
+    <div class="mt-6 text-center">
+        <button
+            type="button"
+            data-action="click->html-formatter#formatHTML"
+            data-html-formatter-target="submitButton"
+            class="px-6 py-2 font-semibold text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+            Format HTML
+        </button>
+    </div>
+</div>
+{% endblock content %}
+
+{% block schema %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Django HTML Formatter",
+        "description": "Make your Django templates pretty in seconds.",
+        "abstract": "Make your Django templates pretty in seconds.",
+        "thumbnailUrl": "https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}",
+        "url": "https://{{ request.get_host }}/tools/format-html/",
+        "author": {
+            "@type": "Person",
+            "givenName": "Rasul",
+            "familyName": "Kireev",
+            "url": "https://rasulkireev.com/"
+        },
+        "mainEntity": {
+            "@type": "WebApplication",
+            "name": "Django Secret Key Generator",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "All"
+        }
+    }
+    </script>
+{% endblock schema %}

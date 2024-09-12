@@ -28,6 +28,7 @@ class StaticViewSitemap(sitemaps.Sitemap):
             "jobs",
             "post_job",
             "generate_django_secret_page",
+            "format_html_view",
         ]
 
     def location(self, item):

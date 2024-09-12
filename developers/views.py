@@ -1,4 +1,3 @@
-import logging
 from functools import partial
 
 import stripe
@@ -11,12 +10,13 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView, UpdateView
 from djstripe import models, settings as djstripe_settings, webhooks
 
+from builtwithdjango.utils import get_builtwithdjango_logger
 from users.models import CustomUser
 
 from .forms import UpdateDeveloperForm
 from .models import Developer
 
-logger = logging.getLogger(__file__)
+logger = get_builtwithdjango_logger(__name__)
 stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
 
 

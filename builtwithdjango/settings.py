@@ -16,6 +16,7 @@ import cloudinary
 import environ
 import posthog
 import sentry_sdk
+import structlog
 from posthog.sentry.posthog_integration import PostHogIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 
@@ -291,24 +292,67 @@ SCREENSHOT_API_KEY = env("SCREENSHOT_API_KEY")
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "root": {"level": "INFO", "handlers": ["console"]},
+    "formatters": {
+        "json_formatter": {
+            "()": structlog.stdlib.ProcessorFormatter,
+            "processor": structlog.processors.JSONRenderer(),
+        },
+        "plain_console": {
+            "()": structlog.stdlib.ProcessorFormatter,
+            "processor": structlog.dev.ConsoleRenderer(),
+        },
+        "key_value": {
+            "()": structlog.stdlib.ProcessorFormatter,
+            "processor": structlog.processors.KeyValueRenderer(key_order=["timestamp", "level", "event", "logger"]),
+        },
+    },
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
-            "formatter": "app",
-            "level": "INFO",
+            "formatter": "plain_console",
+            "level": "DEBUG",
+        },
+        "json_console": {
+            "class": "logging.StreamHandler",
+            "formatter": "json_formatter",
+            "level": "DEBUG",
         },
     },
     "loggers": {
-        "django": {"handlers": ["console"], "level": "INFO", "propagate": True},
-    },
-    "formatters": {
-        "app": {
-            "format": ("%(asctime)s [%(levelname)-8s] " "(%(module)s.%(funcName)s) %(message)s"),
-            "datefmt": "%Y-%m-%d %H:%M:%S",
+        "django_structlog": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "builtwithdjango": {
+            "level": "DEBUG",
+            "handlers": ["console"],
+            "propagate": False,
         },
     },
 }
+
+structlog.configure(
+    processors=[
+        structlog.contextvars.merge_contextvars,
+        structlog.stdlib.filter_by_level,
+        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.stdlib.add_logger_name,
+        structlog.stdlib.add_log_level,
+        structlog.stdlib.PositionalArgumentsFormatter(),
+        structlog.processors.StackInfoRenderer(),
+        structlog.processors.format_exc_info,
+        structlog.processors.UnicodeDecoder(),
+        structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
+    ],
+    logger_factory=structlog.stdlib.LoggerFactory(),
+    cache_logger_on_first_use=True,
+)
+
+if ENVIRONMENT != "local":
+    LOGGING["loggers"]["builtwithdjango"]["level"] = env("DJANGO_LOG_LEVEL", default="INFO")
+    LOGGING["loggers"]["builtwithdjango"]["handlers"] = ["json_console"]
+    LOGGING["loggers"]["django_structlog"]["handlers"] = ["json_console"]
 
 posthog.project_api_key = env("POSTHOG_API_KEY")
 posthog.host = "https://app.posthog.com"

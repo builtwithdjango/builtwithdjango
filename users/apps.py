@@ -1,8 +1,8 @@
-import logging
-
 from django.apps import AppConfig
 
-logger = logging.getLogger(__file__)
+from builtwithdjango.utils import get_builtwithdjango_logger
+
+logger = get_builtwithdjango_logger(__name__)
 
 
 class UsersConfig(AppConfig):

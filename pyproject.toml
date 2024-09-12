@@ -65,6 +65,9 @@ redis = "^5.0.3"
 opentelemetry-instrumentation-redis = "^0.45b0"
 django-anymail = {extras = ["mailgun"], version = "^10.3"}
 ipython = "^8.23.0"
+djlint = "^1.35.2"
+structlog = "^24.4.0"
+django-structlog = "^8.1.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"

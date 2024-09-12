@@ -1,4 +1,3 @@
-import logging
 from functools import partial
 
 import stripe
@@ -18,6 +17,7 @@ from django.views.generic import CreateView, TemplateView, UpdateView
 from django_q.tasks import async_task
 from djstripe import models, settings as djstripe_settings, webhooks
 
+from builtwithdjango.utils import get_builtwithdjango_logger
 from developers.forms import UpdateDeveloperForm
 from developers.models import Developer
 from developers.views import process_django_devs_webhook
@@ -28,7 +28,7 @@ from .forms import CustomLoginForm, CustomUserCreationForm, CustomUserUpdateForm
 from .models import CustomUser
 
 stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
-logger = logging.getLogger(__file__)
+logger = get_builtwithdjango_logger(__name__)
 
 
 class SignUpView(CreateView):
