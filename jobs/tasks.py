@@ -1,4 +1,3 @@
-import logging
 from urllib.parse import urlparse
 
 import cloudinary.uploader
@@ -6,9 +5,11 @@ import requests
 from django.conf import settings
 from django.core.mail import send_mail
 
+from builtwithdjango.utils import get_builtwithdjango_logger
+
 from .models import Job
 
-logger = logging.getLogger(__file__)
+logger = get_builtwithdjango_logger(__name__)
 
 
 def notify_of_new_job(instance):

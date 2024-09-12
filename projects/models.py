@@ -1,5 +1,3 @@
-import logging
-
 import requests
 from autoslug import AutoSlugField
 from django.conf import settings
@@ -8,7 +6,9 @@ from django.urls import reverse
 from model_utils.models import TimeStampedModel
 from taggit.managers import TaggableManager
 
-logger = logging.getLogger(__file__)
+from builtwithdjango.utils import get_builtwithdjango_logger
+
+logger = get_builtwithdjango_logger(__name__)
 
 
 class Project(models.Model):

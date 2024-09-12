@@ -1,14 +1,14 @@
-import logging
-
 import requests
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.mail import send_mail
 from django_q.tasks import async_task
 
+from builtwithdjango.utils import get_builtwithdjango_logger
+
 from .models import Project
 
-logger = logging.getLogger(__file__)
+logger = get_builtwithdjango_logger(__name__)
 
 
 def save_screenshot(project_title):
