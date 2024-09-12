@@ -171,6 +171,46 @@
                                   class="inline-flex items-center px-3 py-2 text-lg font-medium text-gray-600 bg-white rounded-md group hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                   aria-expanded="false"
                                 >
+                                  <span>Tools</span>
+                                  <svg class="ml-2 w-5 h-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                  </svg>
+                                </button>
+
+                                <div data-dropdown-target="menu"
+                                  data-transition-enter-active="transition ease-out duration-200"
+                                  data-transition-enter-from="opacity-0 translate-y-1"
+                                  data-transition-enter-to="opacity-100 translate-y-0"
+                                  data-transition-leave-active="transition ease-in duration-150"
+                                  data-transition-leave-from="opacity-100 translate-y-0"
+                                  data-transition-leave-to="opacity-0 translate-y-1"
+                                  class="hidden absolute left-1/2 z-10 px-2 mt-3 w-screen max-w-xs transform -translate-x-1/2 sm:px-0"
+                                >
+                                  <div class="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5 shadow-lg">
+                                    <div class="grid relative gap-6 px-5 py-6 bg-white sm:gap-8 sm:p-8">
+                                      <a href="{% url 'generate_django_secret_page' %}" class="block p-3 -m-4 rounded-md hover:bg-gray-50">
+                                        <div class="flex flex-row space-x-3">
+                                          <div class="flex flex-shrink-0 justify-center items-center w-10 h-10 text-2xl text-white bg-green-500 rounded-md sm:h-12 sm:w-12">
+                                            <i class="las la-key"></i>
+                                          </div>
+                                          <div>
+                                            <p class="text-base font-medium text-gray-900">Generate Django Secret</p>
+                                            <p class="mt-1 text-sm text-gray-500">Quickest way to generate a Django Secret for your project!</p>
+                                          </div>
+                                        </div>
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div data-controller="dropdown" class="relative">
+                                <button
+                                  type="button"
+                                  data-action="dropdown#toggle click@window->dropdown#hide"
+                                  class="inline-flex items-center px-3 py-2 text-lg font-medium text-gray-600 bg-white rounded-md group hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                  aria-expanded="false"
+                                >
                                   <span>More</span>
                                   <svg class="ml-2 w-5 h-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -312,6 +352,9 @@
                     <a href="{% url 'developers' %}"
                        class="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-700 hover:text-white"
                        key="Developers">Developers</a>
+                    <a href="{% url 'generate_django_secret_page' %}"
+                       class="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-700 hover:text-white"
+                       key="Developers">Generate Django Secret Key</a>
                       <a href="{% url 'account_login' %}"
                        class="block px-3 py-2 text-base font-medium text-center text-gray-700 rounded-md border-2 border-gray-300 hover:bg-gray-700 hover:text-white"
                        key="Login">Login</a>
@@ -327,13 +370,34 @@
             {% block content %}{% endblock content %}
         </div>
 
-        <footer>
-            <a class="fixed bottom-0 left-0 z-10 px-2 py-1 font-semibold text-gray-900 no-underline bg-gray-200 rounded-tr border-t border-l border-white border-solid"
-               href="https://rasulkireev.com"
-               target="_blank">
-                <!-- <img class="inline w-4 align-middle rounded" src="https://github.com/account" alt="Rasul Kireev"/> -->
-                <p class="inline m-0 ml-1 text-sm font-normal align-middle">by Rasul</p>
-            </a>
+        <footer class="bg-white">
+          <a class="fixed bottom-0 left-0 z-10 px-2 py-1 font-semibold text-gray-900 no-underline bg-gray-200 rounded-tr border-t border-l border-white border-solid"
+             href="https://rasulkireev.com"
+             target="_blank">
+              <!-- <img class="inline w-4 align-middle rounded" src="https://github.com/account" alt="Rasul Kireev"/> -->
+              <p class="inline m-0 ml-1 text-sm font-normal align-middle">by Rasul</p>
+          </a>
+          <div class="px-6 py-12 mx-auto max-w-7xl md:flex md:items-center md:justify-between lg:px-8">
+            <div class="flex justify-center space-x-6 md:order-2">
+              <a href="https://x.com/builtwithdjango" class="text-gray-400 hover:text-gray-500">
+                <span class="sr-only">X</span>
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z" />
+                </svg>
+              </a>
+              <a href="https://github.com/builtwithdjango" class="text-gray-400 hover:text-gray-500">
+                <span class="sr-only">GitHub</span>
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            </div>
+            <div class="mt-8 md:order-1 md:mt-0">
+              <p class="text-xs leading-5 text-center text-gray-500">
+                &copy; 2024 <a href="https://lvtd.dev">LVTD, LLC</a>.
+              </p>
+            </div>
+          </div>
         </footer>
 
         {% block schema %}

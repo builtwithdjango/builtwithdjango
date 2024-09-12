@@ -26,7 +26,7 @@ repos:
       types: [pyi]
 
 - repo: https://github.com/Riverside-Healthcare/djLint
-  rev: v1.19.14
+  rev: v1.35.2
   hooks:
     - id: djlint-django
 
