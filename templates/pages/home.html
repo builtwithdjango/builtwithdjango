@@ -4,7 +4,7 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<div class="flex flex-col items-center justify-between mt-10 mb-20 bg-white md:flex-row sm:mt-12 md:mt-16 xl:mt-28 lg:mt-20">
+<div class="flex flex-col justify-between items-center mt-10 mb-20 bg-white md:flex-row sm:mt-12 md:mt-16 xl:mt-28 lg:mt-20">
     <div class="mb-20 md:mb-0 sm:text-center lg:text-left">
       <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
         <span class="md:block xl:inline">Learn</span>
@@ -14,11 +14,11 @@
       <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
         {% if user.is_authenticated == False %}
         <div class="rounded-md shadow">
-          <a href="{% url 'account_login' %}" class="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 md:py-4 md:text-lg md:px-10"> Get started </a>
+          <a href="{% url 'account_login' %}" class="flex justify-center items-center px-8 py-3 w-full text-base font-medium text-white bg-green-600 rounded-md border border-transparent hover:bg-green-700 md:py-4 md:text-lg md:px-10"> Get started </a>
         </div>
         {% endif %}
         <div class="mt-3 sm:mt-0 sm:ml-3">
-          <a href="{% url 'blog' %}" class="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-green-700 bg-green-100 border border-transparent rounded-md hover:bg-green-200 md:py-4 md:text-lg md:px-10"> Explore Lessons </a>
+          <a href="{% url 'blog' %}" class="flex justify-center items-center px-8 py-3 w-full text-base font-medium text-green-700 bg-green-100 rounded-md border border-transparent hover:bg-green-200 md:py-4 md:text-lg md:px-10"> Explore Lessons </a>
         </div>
       </div>
     </div>
@@ -98,9 +98,9 @@
   </div>
 </div>
 
-<div class="my-10 overflow-hidden bg-white">
-  <div class="relative max-w-6xl px-4 py-12 mx-auto sm:px-6 lg:px-8">
-    <svg class="absolute top-0 transform -translate-x-1/2 left-full -translate-y-3/4 lg:left-auto lg:right-full lg:translate-x-2/3 lg:translate-y-1/4" width="404" height="784" fill="none" viewBox="0 0 404 784" aria-hidden="true">
+<div class="overflow-hidden my-10 bg-white">
+  <div class="relative px-4 py-12 mx-auto max-w-6xl sm:px-6 lg:px-8">
+    <svg class="absolute top-0 left-full transform -translate-x-1/2 -translate-y-3/4 lg:left-auto lg:right-full lg:translate-x-2/3 lg:translate-y-1/4" width="404" height="784" fill="none" viewBox="0 0 404 784" aria-hidden="true">
       <defs>
         <pattern id="8b1b5f72-e944-4457-af67-0c6d15a99f38" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
           <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
@@ -115,14 +115,14 @@
       </div>
       <div class="mt-10 space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10 lg:mt-0 lg:col-span-2">
         {% for guide in guides %}
-        <a href="{% url 'post' guide.slug %}" class="flex bg-white border border-gray-100 rounded-md shadow group">
-            <div class="flex items-center flex-shrink-0 p-4 bg-gray-100 lg:p-4">
+        <a href="{% url 'post' guide.slug %}" class="flex bg-white rounded-md border border-gray-100 shadow group">
+            <div class="flex flex-shrink-0 items-center p-4 bg-gray-100 lg:p-4">
               <!-- Heroicon name: outline/globe-alt -->
-              <img class="flex-shrink-0 w-8 h-8 mx-auto lg:h-16 lg:w-16"
+              <img class="flex-shrink-0 mx-auto w-8 h-8 lg:h-16 lg:w-16"
                    src="https://res.cloudinary.com/built-with-django/{{ guide.icon }}"
                    alt="" />
             </div>
-            <div class="flex flex-col h-full p-4 lg:p-6">
+            <div class="flex flex-col p-4 h-full lg:p-6">
               <p class="text-base font-medium text-gray-900">{{ guide.title }}</p>
               <p class="mt-2 text-sm text-gray-500">{{ guide.description }}</p>
             </div>
@@ -133,9 +133,9 @@
   </div>
 </div>
 
-<div class="my-10 overflow-hidden bg-white">
-  <div class="relative max-w-6xl px-4 py-12 mx-auto sm:px-6 lg:px-8">
-    <svg class="absolute top-0 transform -translate-x-1/2 right-full -translate-y-3/4 lg:left-full lg:right-auto lg:-translate-x-2/3 lg:translate-y-1/4" width="404" height="784" fill="none" viewBox="0 0 404 784" aria-hidden="true">
+<div class="overflow-hidden my-10 bg-white">
+  <div class="relative px-4 py-12 mx-auto max-w-6xl sm:px-6 lg:px-8">
+    <svg class="absolute top-0 right-full transform -translate-x-1/2 -translate-y-3/4 lg:left-full lg:right-auto lg:-translate-x-2/3 lg:translate-y-1/4" width="404" height="784" fill="none" viewBox="0 0 404 784" aria-hidden="true">
       <defs>
         <pattern id="8b1b5f72-e944-4457-af67-0c6d15a99f38" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
           <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
@@ -150,14 +150,24 @@
       </div>
       <div class="mt-10 space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10 lg:mt-0 lg:col-span-2">
         {% for project in projects %}
-        <a href="{% url 'project' project.slug %}" class="flex flex-col justify-start bg-white border-solid rounded shadow border-1">
-          <div class="border-b border-gray-300 border-solid rounded-t-lg">
+        <a
+          href="{% url 'project' project.slug %}"
+          class="
+            flex flex-col justify-start bg-white rounded border-solid
+            {% if project.sponsored %}
+            border-4 border-yellow-500 shadow-2xl
+            {% else %}
+            shadow border-1
+            {% endif %}
+          "
+        >
+          <div class="border-b border-gray-300 border-solid">
             <!-- Heroicon name: outline/globe-alt -->
-            <img class="object-cover object-left-top w-full h-auto border-0 rounded-t"
+            <img class="object-cover object-left-top w-full h-auto {% if not project.sponsored %}rounded-t{% endif %} border-0"
             src="{% get_media_prefix %}{{ project.homepage_screenshot }}"
             alt="{{ project.title }} | Screenshot" />
           </div>
-          <div class="flex-auto h-full p-4 border-b border-gray-300 border-solid">
+          <div class="flex-auto p-4 h-full border-b border-gray-300 border-solid">
             <p class="text-base font-medium text-gray-900">{{ project.title }}</p>
             <p class="mt-2 text-sm text-gray-500">{{ project.short_description }}</p>
           </div>
