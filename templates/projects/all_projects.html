@@ -135,7 +135,12 @@
                     <div class="flex justify-between items-center px-4 py-2">
                         <div>
                             <a class="inline-block p-2 text-xl bg-gray-200 rounded-lg border border-gray-200 hover:bg-gray-300"
-                               href="{{ site.url }}?ref={{ request.get_host }}"
+                               href='
+                                {{ site.url }}
+                                ?ref={{ request.get_host }}
+                                &utm_source={{ request.get_host }}{{ request.path }}
+                                &utm_campaign={% now "F-Y" %}-{% if site.sponsored %}sponsored{% else %}unsponsored{% endif %}
+                              '
                                target="_blank">
                                 <i class="las la-link"></i>
                             </a>

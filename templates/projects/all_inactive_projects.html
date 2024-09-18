@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="px-6 py-20 bg-white sm:py-24 lg:px-8">
-      <div class="max-w-2xl mx-auto text-center">
+      <div class="mx-auto max-w-2xl text-center">
         <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Inactive Django Projects</h1>
       </div>
     </div>
@@ -12,15 +12,15 @@
     <div>
         <div class="grid grid-cols-1 gap-6 mb-10 lg:grid-cols-3 md:grid-cols-2">
             {% for site in object_list %}
-                <div class="flex flex-col justify-start bg-white border-solid rounded shadow border-1">
-                    <div class="border-b border-gray-300 border-solid rounded-t-lg">
+                <div class="flex flex-col justify-start bg-white rounded border-solid shadow border-1">
+                    <div class="rounded-t-lg border-b border-gray-300 border-solid">
                         <a href="{% url 'project' site.slug %}">
-                            <img class="object-cover object-left-top w-full h-auto border-0 rounded-t"
+                            <img class="object-cover object-left-top w-full h-auto rounded-t border-0"
                                  src="{% get_media_prefix %}{{ site.homepage_screenshot }}"
                                  alt="{{ site.title }} | Screenshot"/>
                         </a>
                     </div>
-                    <div class="flex-auto h-full p-4 border-b border-gray-300 border-solid">
+                    <div class="flex-auto p-4 h-full border-b border-gray-300 border-solid">
                         <h2 class="mb-2 text-lg font-semibold text-gray-900">
                             <a href="{% url 'project' site.slug %}">{{ site.title }}</a>
                         </h2>
@@ -28,22 +28,27 @@
                             {{ site.short_description }}
                         </p>
                     </div>
-                    <div class="flex items-center justify-between px-4 py-2">
+                    <div class="flex justify-between items-center px-4 py-2">
                         <div>
-                            <a class="inline-block p-2 text-xl bg-gray-200 border border-gray-200 rounded-lg hover:bg-gray-300"
-                               href="{{ site.url }}?ref={{ request.get_host }}"
+                            <a class="inline-block p-2 text-xl bg-gray-200 rounded-lg border border-gray-200 hover:bg-gray-300"
+                               href='
+                                {{ site.url }}
+                                ?ref={{ request.get_host }}
+                                &utm_source={{ request.get_host }}{{ request.path }}
+                                &utm_campaign={% now "F-Y" %}-{% if site.sponsored %}sponsored{% else %}unsponsored{% endif %}
+                               '
                                target="_blank">
                                 <i class="las la-link"></i>
                             </a>
                             {% if site.github_url %}
-                                <a class="inline-block p-2 text-xl bg-gray-200 border border-gray-200 rounded-lg hover:bg-gray-300"
+                                <a class="inline-block p-2 text-xl bg-gray-200 rounded-lg border border-gray-200 hover:bg-gray-300"
                                    href="{{ site.github_url }}?ref={{ request.get_host }}"
                                    target="_blank">
                                     <i class="lab la-github"></i>
                                 </a>
                             {% endif %}
                             {% if site.twitter_url %}
-                                <a class="inline-block p-2 text-xl bg-gray-200 border border-gray-200 rounded-lg hover:bg-gray-300"
+                                <a class="inline-block p-2 text-xl bg-gray-200 rounded-lg border border-gray-200 hover:bg-gray-300"
                                    href="{{ site.twitter_url }}?ref={{ request.get_host }}"
                                    target="_blank">
                                     <i class="lab la-twitter"></i>
