@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center p-2 mx-auto max-w-6xl">
     <div class="flex items-center">
       <div class="mx-4">
-        <a target="_blank" href='https://gettjalerts.com/?ref=builtwithdjango.com&utm_source=builtwithdjango.com&utm_campaign={% now "F-Y" %}'>
+        <a target="_blank" href='https://gettjalerts.com/?ref=builtwithdjango.com&utm_source={{ request.get_host }}{{ request.get_host }}{{ request.path }}&utm_campaign={% now "F-Y" %}'>
           <img
             src="https://gettjalerts.com/static/vendors/images/logo.30ee0b4843c5.png"
             alt="Tech Jobs Alerts"
@@ -11,7 +11,12 @@
         </a>
       </div>
       <div>
-        <p class="text-sm font-bold text-blue-500"><a target="_blank" href='https://gettjalerts.com/?ref=builtwithdjango.com&utm_source=builtwithdjango.com&utm_campaign={% now "F-Y" %}'>Tech Jobs Alerts</a></p>
+        <p class="text-sm font-bold text-blue-500">
+          <a target="_blank" href='https://gettjalerts.com/?ref=builtwithdjango.com&utm_source={{ request.get_host }}{{ request.path }}&utm_campaign={% now "F-Y" %}'>
+            Tech Jobs Alerts
+          </a>
+          <span class="text-sm text-gray-700">- Ad</span>
+        </p>
         <p class="text-xs text-gray-600">Get notified when the perfect job for you is available.</p>
       </div>
     </div>
@@ -26,7 +31,7 @@
 <div id="ad-container-desktop" class="hidden fixed right-4 bottom-4 z-50 w-80 bg-white rounded-lg border shadow-lg transition-all duration-500 ease-in-out lg:block">
   <div class="flex flex-row items-center">
     <div class="mx-4">
-      <a target="_blank" href='https://gettjalerts.com/?ref=builtwithdjango.com&utm_source=builtwithdjango.com&utm_campaign={% now "F-Y" %}'>
+      <a target="_blank" href='https://gettjalerts.com/?ref=builtwithdjango.com&utm_source={{ request.get_host }}{{ request.path }}&utm_campaign={% now "F-Y" %}'>
         <img
           src="https://gettjalerts.com/static/vendors/images/logo.30ee0b4843c5.png"
           alt="Tech Jobs Alerts"
@@ -35,10 +40,11 @@
       </a>
     </div>
     <div class="mr-4">
-      <p class="mb-1 text-lg font-bold text-blue-500"><a target="_blank" href='https://gettjalerts.com/?ref=builtwithdjango.com&utm_source=builtwithdjango.com&utm_campaign={% now "F-Y" %}'>Tech Jobs Alerts</a></p>
-      <p class="mb-2 text-sm text-gray-600">Get notified when the perfect job for you is available.</p>
+      <p class="mb-1 text-lg font-bold text-blue-500"><a target="_blank" href='https://gettjalerts.com/?ref=builtwithdjango.com&utm_source={{ request.get_host }}{{ request.path }}&utm_campaign={% now "F-Y" %}'>Tech Jobs Alerts</a></p>
+      <p class="text-sm text-gray-600">Get notified when the perfect job for you is available.</p>
     </div>
   </div>
+  <p class="absolute top-1 left-1 p-1 text-sm text-gray-500">Ad</p>
   <button class="absolute top-1 right-1 text-gray-500 close-ad hover:text-gray-700">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
