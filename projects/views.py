@@ -22,7 +22,7 @@ class ProjectListView(FilterView):
     filterset_class = ProjectFilter
 
     def get_queryset(self):
-        queryset = Project.objects.filter(published=True, active=True).order_by("-sponsored")
+        queryset = Project.objects.filter(published=True, active=True).order_by("-sponsored", "-updated_date")
 
         if self.request.GET.get("order_by"):
             ordering = self.request.GET.get("order_by")
