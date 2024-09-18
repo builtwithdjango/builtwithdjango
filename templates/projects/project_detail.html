@@ -57,7 +57,7 @@
                     {{ object.url }}
                     ?ref={{ request.get_host }}
                     &utm_source={{ request.get_host }}{{ request.path }}
-                    &utm_campaign={% now "F-Y" %}-{% if object.sponsored %}sponsored{% else %}unsponsored{% endif %}
+                    &utm_campaign=project-detail-{% now "F-Y" %}-{% if object.sponsored %}sponsored{% else %}unsponsored{% endif %}
                   '
                    target="_blank">
                     Visit Website

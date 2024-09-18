@@ -139,7 +139,7 @@
                                 {{ site.url }}
                                 ?ref={{ request.get_host }}
                                 &utm_source={{ request.get_host }}{{ request.path }}
-                                &utm_campaign={% now "F-Y" %}-{% if site.sponsored %}sponsored{% else %}unsponsored{% endif %}
+                                &utm_campaign=list-of-projects-{% now "F-Y" %}-{% if site.sponsored %}sponsored{% else %}unsponsored{% endif %}
                               '
                                target="_blank">
                                 <i class="las la-link"></i>
