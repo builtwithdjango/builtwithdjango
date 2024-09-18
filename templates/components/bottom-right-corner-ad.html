@@ -1,0 +1,125 @@
+<div id="ad-container-mobile" class="fixed bottom-0 left-0 z-50 w-full bg-white border shadow-lg transition-all duration-500 ease-in-out lg:hidden">
+  <div class="flex justify-between items-center p-2 mx-auto max-w-6xl">
+    <div class="flex items-center">
+      <div class="mx-4">
+        <a target="_blank" href='https://gettjalerts.com/?ref=builtwithdjango.com&utm_source=builtwithdjango.com&utm_campaign={% now "F-Y" %}'>
+          <img
+            src="https://gettjalerts.com/static/vendors/images/logo.30ee0b4843c5.png"
+            alt="Tech Jobs Alerts"
+            class="object-contain mr-2 w-8 h-8"
+          />
+        </a>
+      </div>
+      <div>
+        <p class="text-sm font-bold text-blue-500"><a target="_blank" href='https://gettjalerts.com/?ref=builtwithdjango.com&utm_source=builtwithdjango.com&utm_campaign={% now "F-Y" %}'>Tech Jobs Alerts</a></p>
+        <p class="text-xs text-gray-600">Get notified when the perfect job for you is available.</p>
+      </div>
+    </div>
+    <button class="ml-2 text-gray-500 close-ad hover:text-gray-700">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<div id="ad-container-desktop" class="hidden fixed right-4 bottom-4 z-50 w-80 bg-white rounded-lg border shadow-lg transition-all duration-500 ease-in-out lg:block">
+  <div class="flex flex-row items-center">
+    <div class="mx-4">
+      <a target="_blank" href='https://gettjalerts.com/?ref=builtwithdjango.com&utm_source=builtwithdjango.com&utm_campaign={% now "F-Y" %}'>
+        <img
+          src="https://gettjalerts.com/static/vendors/images/logo.30ee0b4843c5.png"
+          alt="Tech Jobs Alerts"
+          class="object-contain w-36 h-36"
+        />
+      </a>
+    </div>
+    <div class="mr-4">
+      <p class="mb-1 text-lg font-bold text-blue-500"><a target="_blank" href='https://gettjalerts.com/?ref=builtwithdjango.com&utm_source=builtwithdjango.com&utm_campaign={% now "F-Y" %}'>Tech Jobs Alerts</a></p>
+      <p class="mb-2 text-sm text-gray-600">Get notified when the perfect job for you is available.</p>
+    </div>
+  </div>
+  <button class="absolute top-1 right-1 text-gray-500 close-ad hover:text-gray-700">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const adContainerMobile = document.getElementById('ad-container-mobile');
+    const adContainerDesktop = document.getElementById('ad-container-desktop');
+    const closeAdButtons = document.querySelectorAll('.close-ad');
+
+    function hideAd() {
+      if (window.innerWidth < 1024) {
+        adContainerMobile.style.transform = 'translateY(100%)';
+      } else {
+        adContainerDesktop.style.transform = 'scale(0.1) rotate(360deg)';
+        adContainerDesktop.style.opacity = '0';
+      }
+      setTimeout(() => {
+        adContainerMobile.style.display = 'none';
+        adContainerDesktop.style.display = 'none';
+      }, 500);
+
+      // Set a cookie to remember the ad was closed
+      const date = new Date();
+      date.setTime(date.getTime() + (24 * 60 * 60 * 1000)); // Set expiry to 24 hours
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = "adClosed=true;" + expires + ";path=/";
+    }
+
+    function showAd() {
+      if (window.innerWidth < 1024) {
+        adContainerMobile.style.display = 'block';
+        setTimeout(() => {
+          adContainerMobile.style.transform = 'translateY(0)';
+        }, 100);
+      } else {
+        adContainerDesktop.style.display = 'block';
+        setTimeout(() => {
+          adContainerDesktop.style.transform = 'scale(1) rotate(0deg)';
+          adContainerDesktop.style.opacity = '1';
+        }, 100);
+      }
+    }
+
+    closeAdButtons.forEach(button => {
+      button.addEventListener('click', hideAd);
+    });
+
+    // Check and show the ad when the page loads
+    if (document.cookie.indexOf("adClosed=true") === -1) {
+      showAd();
+    }
+
+    // Adjust layout on window resize
+    window.addEventListener('resize', () => {
+      if (document.cookie.indexOf("adClosed=true") === -1) {
+        if (window.innerWidth < 1024) {
+          adContainerDesktop.style.display = 'none';
+          showAd();
+        } else {
+          adContainerMobile.style.display = 'none';
+          showAd();
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  #ad-container-mobile, #ad-container-desktop {
+    display: none;
+  }
+  #ad-container-mobile {
+    transform: translateY(100%);
+    transition: transform 0.5s ease-in-out;
+  }
+  #ad-container-desktop {
+    transform-origin: bottom right;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  }
+</style>

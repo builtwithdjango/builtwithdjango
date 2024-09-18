@@ -202,7 +202,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 # Sites
 SITE_ID = 1
 
-if ENVIRONMENT != "local":
+if ENVIRONMENT == "prod":
     sentry_sdk.init(dsn=env("dsn"), integrations=[PostHogIntegration()])
 
 # Newsletters
@@ -349,7 +349,7 @@ structlog.configure(
     cache_logger_on_first_use=True,
 )
 
-if ENVIRONMENT != "local":
+if ENVIRONMENT == "prod":
     LOGGING["loggers"]["builtwithdjango"]["level"] = env("DJANGO_LOG_LEVEL", default="INFO")
     LOGGING["loggers"]["builtwithdjango"]["handlers"] = ["json_console"]
     LOGGING["loggers"]["django_structlog"]["handlers"] = ["json_console"]

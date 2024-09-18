@@ -22,7 +22,7 @@ class ProjectListView(FilterView):
     filterset_class = ProjectFilter
 
     def get_queryset(self):
-        queryset = Project.objects.filter(published=True, active=True)
+        queryset = Project.objects.filter(published=True, active=True).order_by("-sponsored")
 
         if self.request.GET.get("order_by"):
             ordering = self.request.GET.get("order_by")
@@ -32,12 +32,14 @@ class ProjectListView(FilterView):
                     queryset
                     # need like_count as an alias for comlex query
                     # https://stackoverflow.com/questions/39375339/django-complex-annotations-require-an-alias-what-is-alias-here
-                    .annotate(like__count=Count("like", filter=Q(like__like=True))).order_by(f"-like__count")
+                    .annotate(like__count=Count("like", filter=Q(like__like=True))).order_by(
+                        "-sponsored", f"-like__count"
+                    )
                 )
             elif ordering == "comments":
-                queryset = queryset.annotate(Count(ordering)).order_by(f"-{ordering}__count")
+                queryset = queryset.annotate(Count(ordering)).order_by("-sponsored", f"-{ordering}__count")
             else:
-                queryset = queryset.order_by("-updated_date")
+                queryset = queryset.order_by("-sponsored", "-updated_date")
 
         return queryset
 

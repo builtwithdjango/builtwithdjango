@@ -48,6 +48,7 @@ class Project(models.Model):
     technology_suggestions_by_user = models.TextField(blank=True)
 
     is_for_sale = models.BooleanField(default=False)
+    sponsored = models.BooleanField(default=False)
     sale_link = models.URLField(blank=True)
 
     # To remove
