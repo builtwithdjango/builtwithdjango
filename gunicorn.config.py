@@ -7,10 +7,6 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from requests.exceptions import ConnectionError, RequestException, SSLError
 
-from builtwithdjango.utils import get_builtwithdjango_logger
-
-logger = get_builtwithdjango_logger(__name__)
-
 
 def post_fork(server, worker):
     server.log.info("Worker spawned (pid: %s)", worker.pid)
@@ -23,8 +19,5 @@ def post_fork(server, worker):
             OTLPSpanExporter(endpoint=f"{os.environ.get('OTEL_EXPORTER_OTLP_ENDPOINT')}/v1/traces")
         )
         trace.get_tracer_provider().add_span_processor(span_processor)
-    except (RequestException, ConnectionError, SSLError) as e:
-        logger.warning(
-            "Failed to initialize OpenTelemetry exporter. Application will continue without telemetry.",
-            error=str(e),
-        )
+    except (RequestException, ConnectionError, SSLError):
+        pass
