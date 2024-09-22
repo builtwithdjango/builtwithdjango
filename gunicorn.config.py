@@ -9,11 +9,10 @@ from requests.exceptions import ConnectionError, RequestException, SSLError
 
 
 def post_fork(server, worker):
-    server.log.info("Worker spawned (pid: %s)", worker.pid)
+    server.log.info("post_fork: Worker spawned (pid: %s)", worker.pid)
 
-    resource = Resource.create(attributes={"service.name": os.environ.get("OTEL_SERVICE_NAME")})
-
-    trace.set_tracer_provider(TracerProvider(resource=resource))
+    # resource = Resource.create(attributes={"service.name": os.environ.get("OTEL_SERVICE_NAME")})
+    # trace.set_tracer_provider(TracerProvider(resource=resource))
     try:
         span_processor = BatchSpanProcessor(
             OTLPSpanExporter(endpoint=f"{os.environ.get('OTEL_EXPORTER_OTLP_ENDPOINT')}/v1/traces")
