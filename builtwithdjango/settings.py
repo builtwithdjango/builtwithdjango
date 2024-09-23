@@ -20,6 +20,8 @@ import structlog
 from posthog.sentry.posthog_integration import PostHogIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 
+from builtwithdjango.utils import before_send
+
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
@@ -203,7 +205,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 SITE_ID = 1
 
 if ENVIRONMENT == "prod":
-    sentry_sdk.init(dsn=env("dsn"), integrations=[PostHogIntegration()])
+    sentry_sdk.init(
+        dsn=env("dsn"),
+        integrations=[PostHogIntegration()],
+        before_send=before_send,
+    )
 
 # Newsletters
 EMAILOCTOPUS_API = env("EMAILOCTOPUS_API")
