@@ -19,4 +19,5 @@ def post_fork(server, worker):
         )
         trace.get_tracer_provider().add_span_processor(span_processor)
     except (RequestException, ConnectionError, SSLError):
+        print("[Otel] Catching Connection Error")
         pass
