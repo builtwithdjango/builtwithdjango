@@ -18,9 +18,6 @@ import posthog
 import sentry_sdk
 import structlog
 from posthog.sentry.posthog_integration import PostHogIntegration
-from sentry_sdk.integrations.django import DjangoIntegration
-
-from builtwithdjango.utils import before_send
 
 env = environ.Env(
     # set casting, default value
@@ -208,7 +205,6 @@ if ENVIRONMENT == "prod":
     sentry_sdk.init(
         dsn=env("dsn"),
         integrations=[PostHogIntegration()],
-        before_send=before_send,
     )
 
 # Newsletters
