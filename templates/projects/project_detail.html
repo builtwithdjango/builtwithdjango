@@ -14,10 +14,10 @@
     <meta property="og:title" content="{{ object.title }}" />
     <meta property="og:url" content="https://{{ request.get_host }}/projects/{{ object.slug }}" />
     <meta property="og:description" content="{{ object.short_description }}" />
-    <meta property="og:image" content="https://{{ request.get_host }}{{ object.homepage_screenshot.url }}" />
+    <meta property="og:image" content="{{ object.homepage_screenshot.url }}" />
     <meta name="twitter:title" content="{{ object.title }}" />
     <meta name="twitter:description" content="{{ object.short_description }}" />
-    <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.homepage_screenshot.url }}" />
+    <meta name="twitter:image" content="{{ object.homepage_screenshot.url }}" />
 {% endblock meta %}
 
 {% block content %}
