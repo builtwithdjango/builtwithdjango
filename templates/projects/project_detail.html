@@ -14,13 +14,13 @@
     <meta property="og:title" content="{{ object.title }}" />
     <meta property="og:url" content="https://{{ request.get_host }}/projects/{{ object.slug }}" />
     <meta property="og:description" content="{{ object.short_description }}" />
-    <meta property="og:image" content="https://osig.app/g?style=base&site=facebook&font=markerfelt&title={{ object.title }}&subtitle={{ object.description }}&eyebrow=Project&image_url={{ object.homepage_screenshot.url }}" />
+    <meta property="og:image" content="https://osig.app/g?style=base&site=facebook&font=markerfelt&title={{ object.title }}&subtitle={{ object.short_description }}&eyebrow=Project&image_url={{ object.homepage_screenshot.url }}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@rasulkireev" />
     <meta name="twitter:site" content="@builtwithdjango" />
     <meta name="twitter:title" content="{{ object.title }}" />
     <meta name="twitter:description" content="{{ object.description }}" />
-    <meta property="og:image" content="https://osig.app/g?style=base&site=x&font=markerfelt&title={{ object.title }}&subtitle={{ object.description }}&eyebrow=Project&image_url={{ object.homepage_screenshot.url }}" />
+    <meta property="og:image" content="https://osig.app/g?style=base&site=x&font=markerfelt&title={{ object.title }}&subtitle={{ object.short_description }}&eyebrow=Project&image_url={{ object.homepage_screenshot.url }}" />
 {% endblock meta %}
 
 {% block content %}
@@ -205,8 +205,8 @@
     "image": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.maker.maker_profile_image }}"
   },
   "name":"{{ object.title }}",
-  "thumbnailUrl": "https://osig.app/g?style=base&site=x&font=markerfelt&title={{ object.title }}&subtitle={{ object.description }}&eyebrow=Project&image_url={{ object.homepage_screenshot.url }}",
-  "image": "https://osig.app/g?style=base&site=x&font=markerfelt&title={{ object.title }}&subtitle={{ object.description }}&eyebrow=Project&image_url={{ object.homepage_screenshot.url }}",
+  "thumbnailUrl": "https://osig.app/g?style=base&site=x&font=markerfelt&title={{ object.title }}&subtitle={{ object.short_description }}&eyebrow=Project&image_url={{ object.homepage_screenshot.url }}",
+  "image": "https://osig.app/g?style=base&site=x&font=markerfelt&title={{ object.title }}&subtitle={{ object.short_description }}&eyebrow=Project&image_url={{ object.homepage_screenshot.url }}",
   "abstract": "{{ object.short_description }}"
 }
     </script>
