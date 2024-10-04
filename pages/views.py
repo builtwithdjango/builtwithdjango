@@ -31,8 +31,18 @@ class HomeView(TemplateView):
         return context
 
 
-class SupportRedirect(RedirectView):
-    url = "https://cryptip.to/builtwithdjango"
+class AdvertizeView(TemplateView):
+    template_name = "pages/advertize.html"
+
+
+class Support(TemplateView):
+    template_name = "pages/support.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["newsletter_form"] = NewsletterSignupForm
+
+        return context
 
 
 class DonateOneTimeView(TemplateView):

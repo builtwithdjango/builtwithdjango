@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <title>Support Built with Django</title>
+{% endblock meta %}
+
+{% block content %}
+
+<article class="mx-auto mt-10 prose lg:prose-xl">
+  <h1 class="text-center">Support Built with Django</h1>
+
+  <p>You can support this project by using one of the affiliate links below. These are always going to be projects I use and love! No "Bluehost" crap here!</p>
+
+  <ul>
+    <li>
+      <a href="https://buttondown.email/refer/rasulkireev">Buttondown</a>
+      - Email newsletter tool I use to send you this newsletter.
+    </li>
+    <li>
+      <a href="https://readwise.io/i/rasul">Readwise</a>
+      - Best reading software company out there. I you want to up your e-reading game, this is
+      definitely for you! It also so happens that I work for Readwise. Best company out there!
+    </li>
+    <li>
+      <a href="https://hetzner.cloud/?ref=Ju1ttKSG0Fn7">Hetzner</a>
+      - IMHO the best place to buy a VPS or a server for your projects.
+      I'll be doing a tutorial on how to use this in the future.
+    </li>
+    <li>
+      <a href="https://www.saaspegasus.com/?via=rasul">SaaS Pegasus</a>
+      - is one of the best (if not the best) ways to quickstart your Django Project.
+      If you have a business idea but don't want to set up all the boring stuff (Auth, Payments, Workers, etc.)
+      this is for you!
+    </li>
+  </ul>
+</article>
+
+{% include "components/newsletter.html" with newsletter_form=newsletter_form %}
+{% endblock content %}

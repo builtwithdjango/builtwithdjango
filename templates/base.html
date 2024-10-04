@@ -275,6 +275,30 @@
                                         </div>
                                       </a>
 
+                                      <a href="{% url 'advertize' %}" class="block p-3 -m-4 rounded-md hover:bg-gray-50">
+                                        <div class="flex flex-row space-x-3">
+                                          <div class="flex flex-shrink-0 justify-center items-center w-10 h-10 text-2xl text-white bg-green-500 rounded-md sm:h-12 sm:w-12">
+                                            <i class="las la-bullhorn"></i>
+                                          </div>
+                                          <div>
+                                            <p class="text-base font-medium text-gray-900">Advertize</p>
+                                            <p class="mt-1 text-sm text-gray-500">Let the Django Community know about your project.</p>
+                                          </div>
+                                        </div>
+                                      </a>
+
+                                      <a href="{% url 'support' %}" class="block p-3 -m-4 rounded-md hover:bg-gray-50">
+                                        <div class="flex flex-row space-x-3">
+                                          <div class="flex flex-shrink-0 justify-center items-center w-10 h-10 text-2xl text-white bg-green-500 rounded-md sm:h-12 sm:w-12">
+                                            <i class="las la-life-ring"></i>
+                                          </div>
+                                          <div>
+                                            <p class="text-base font-medium text-gray-900">Support</p>
+                                            <p class="mt-1 text-sm text-gray-500">Here are some ways you can support Built with Django.</p>
+                                          </div>
+                                        </div>
+                                      </a>
+
                                     </div>
                                   </div>
                                 </div>
@@ -369,6 +393,12 @@
                     <a href="{% url 'format_html_view' %}"
                        class="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-700 hover:text-white"
                        key="Developers">Django HTML Formatter</a>
+                    <a href="{% url 'advertize' %}"
+                       class="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-700 hover:text-white"
+                       key="Developers">Advertize your Project</a>
+                    <a href="{% url 'support' %}"
+                       class="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-700 hover:text-white"
+                       key="Developers">Support Built with Django</a>
                       <a href="{% url 'account_login' %}"
                        class="block px-3 py-2 text-base font-medium text-center text-gray-700 rounded-md border-2 border-gray-300 hover:bg-gray-700 hover:text-white"
                        key="Login">Login</a>
