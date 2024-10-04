@@ -12,11 +12,11 @@
     <meta name="twitter:site" content="@builtwithdjango" />
     <meta name="twitter:title" content="{{ object.title }}" />
     <meta name="twitter:description" content="{{ object.description }}" />
-    <meta name="twitter:image" content="https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}" />
+    <meta name="twitter:image" content="https://osig.app/g?style=base&site=x&font=markerfelt&title={{ object.title }}&subtitle={{ object.description }}&eyebrow=Article" />
     <meta property="og:title" content="{{ object.title }}" />
     <meta property="og:url" content="https://{{ request.get_host }}/blog/{{ object.slug }}" />
     <meta property="og:description" content="{{ object.description }}" />
-    <meta property="og:image" content="https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}" />
+    <meta property="og:image" content="https://osig.app/g?style=base&site=facebook&font=markerfelt&title={{ object.title }}&subtitle={{ object.description }}&eyebrow=Article" />
 {% endblock meta %}
 
 {% block style %}
@@ -35,7 +35,7 @@
     <div data-controller="exit-intent" data-action="mouseout@document->exit-intent#openModal">
     {# djlint:on #}
 
-        <div class="max-w-4xl p-10 mx-auto mt-10 bg-white border border-gray-200 border-solid rounded-lg shadow">
+        <div class="p-10 mx-auto mt-10 max-w-4xl bg-white rounded-lg border border-gray-200 border-solid shadow">
             <div class="prose md:prose-lg">
                 <h1>{{ object.title }}</h1>
                 <div class="blog-post">
@@ -43,7 +43,7 @@
                 </div>
             </div>
           </div>
-          <div class="max-w-3xl mx-auto my-6">
+          <div class="mx-auto my-6 max-w-3xl">
             {% include "components/comments.html" with object=object object_type="create_guide_comment" comments=object.guide_comments.all %}
           </div>
     </div>
@@ -63,8 +63,8 @@
   "about": "Django",
   "abstract": "{{ object.description }}",
   "articleBody": "{% autoescape on %}{{ object.content|safe|replace_quotes }}{% endautoescape %}",
-  "image": "https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}",
-  "thumbnailUrl": "https://ogi.sh?title={{ object.title }}&unsplashId={{ object.unsplashID }}",
+  "image": "https://osig.app/g?style=base&site=x&font=markerfelt&title={{ object.title }}&subtitle={{ object.description }}&eyebrow=Article",
+  "thumbnailUrl": "https://osig.app/g?style=base&site=x&font=markerfelt&title={{ object.title }}&subtitle={{ object.description }}&eyebrow=Article",
   "dateCreated": "{{ object.created }}",
   "datePublished": "{{ object.created }}",
   "dateModified": "{{ object.modified }}"

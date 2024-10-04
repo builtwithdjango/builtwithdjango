@@ -11,7 +11,7 @@ include = '\.pyi?$'
 
 [tool.djlint]
 profile = "django"
-ignore = "H006,H023,H031,H021,H005,H030,H020,H016,D018"
+ignore = "H006,H023,H031,H021,H005,H030,H020,H016,D018,H011"
 exclude = "support.html"
 
 [tool.isort]
