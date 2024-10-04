@@ -205,8 +205,8 @@
     "image": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.maker.maker_profile_image }}"
   },
   "name":"{{ object.title }}",
-  "thumbnailUrl": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.homepage_screenshot }}",
-  "image": "https://{{ request.get_host }}{% get_media_prefix %}{{ object.homepage_screenshot }}",
+  "thumbnailUrl": "https://osig.app/g?style=base&site=x&font=markerfelt&title={{ object.title }}&subtitle={{ object.description }}&eyebrow=Project&image_url{{ object.homepage_screenshot.url }}",
+  "image": "https://osig.app/g?style=base&site=x&font=markerfelt&title={{ object.title }}&subtitle={{ object.description }}&eyebrow=Project&image_url{{ object.homepage_screenshot.url }}",
   "abstract": "{{ object.short_description }}"
 }
     </script>
