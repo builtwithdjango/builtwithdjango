@@ -20,13 +20,13 @@
             <meta property="og:title" content="Built with Django" />
             <meta property="og:url" content="https://{{ request.get_host }}" />
             <meta property="og:description" content="Collection of cool projects people built with Django"/>
-            <meta property="og:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
-            <meta name="twitter:card" content="summary" />
+            <meta property="og:image" content="{{ og_image }}" />
+            <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:creator" content="@rasulkireev" />
             <meta name="twitter:site" content="@rasulkireev" />
             <meta name="twitter:title" content="Built with Django" />
             <meta name="twitter:description" content="Collection of cool projects people built with Django"/>
-            <meta name="twitter:image" content="https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}" />
+            <meta name="twitter:image" content="{{ og_image }}"/>
         {% endblock meta %}
 
         <!-- CSS -->
@@ -453,7 +453,7 @@
               "@type": "WebSite",
               "name": "Projects Built with Django",
               "description": "Collection of cool projects people built with Django",
-              "thumbnailUrl": "https://{{ request.get_host }}{% static 'vendors/images/logo.png' %}",
+              "thumbnailUrl": "https{{ og_image }}",
               "url": "https://{{ request.get_host }}",
               "author": {
                 "@type": "Person",

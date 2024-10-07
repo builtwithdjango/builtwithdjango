@@ -1,17 +1,13 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from functools import partial
 
 import stripe
-from django.conf import settings
-from django.contrib import messages
 from django.db import transaction
-from django.http import HttpResponse
-from django.http.response import JsonResponse
 from django.shortcuts import redirect
+from django.templatetags.static import static
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
+from django.utils.html import escape
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 from django_q.tasks import async_task
 from djstripe import models, settings as djstripe_settings
@@ -58,6 +54,29 @@ class JobDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["newsletter_form"] = NewsletterSignupForm
+
+        job = self.object
+        title = f"{job.company.name if job.company else job.company_name}"
+        description = job.title
+
+        # Ensure the company_logo URL is absolute
+        if job.company_logo:
+            image_url = self.request.build_absolute_uri(job.company_logo.url)
+        else:
+            # Fallback to a default image if no company logo is available
+            image_url = self.request.build_absolute_uri(static("vendors/images/default_company_logo.png"))
+
+        og_image_url = (
+            f"https://osig.app/g?"
+            f"site=x&"
+            f"title={title}&"
+            f"subtitle={description}&"
+            f"image_url={image_url}&"
+            f"font=helvetica&"
+            f"style=logo&"
+            f"key=dQrmHqDSY5"
+        )
+        context["og_image"] = og_image_url
 
         return context
 

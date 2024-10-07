@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
+from django.templatetags.static import static  # Add this import
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, RedirectView, TemplateView, UpdateView
 
@@ -27,6 +28,21 @@ class HomeView(TemplateView):
         context["guides"] = Post.objects.all()[:4]
         context["podcast_episodes"] = Episode.objects.all()[:3]
         context["jobs"] = Job.objects.filter(approved=True).order_by("-created_datetime")[:6]
+
+        title = "Built with Django"
+        description = "Learn to bring your project and business ideas to life with Django. Get inspired by others."
+        logo_url = self.request.build_absolute_uri(static("vendors/images/logo.png"))
+        og_image_url = (
+            f"https://osig.app/g?"
+            f"site=x&"
+            f"title={title}&"
+            f"subtitle={description}&"
+            f"image_url={logo_url}&"
+            f"font=markerfelt&"
+            f"style=logo&"
+            f"key=dQrmHqDSY5"
+        )
+        context["og_image"] = og_image_url
 
         return context
 

@@ -5,33 +5,21 @@
 
 {% block meta %}
     <title>{{ object.title }} @ {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}</title>
+    <meta name="description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
     <link rel="canonical" href="https://{{ request.get_host }}/jobs/{{ object.pk }}/{{ object.slug }}" />
-    <meta name="twitter:card" content="summary" />
+
+    <meta property="og:url" content="https://{{ request.get_host }}/jobs/{{ object.pk }}/{{ object.slug }}" />
+    <meta property="og:title" content="{{ object.title }} @ {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}" />
+    <meta property="og:description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
+    <meta property="og:image" content="{{ og_image }}" />
+    <meta property="og:image" content="{{ job.company_logo.build_url }}" />
+
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@rasulkireev" />
     <meta name="twitter:site" content="@builtwithdjango" />
-    <meta property="og:url" content="https://{{ request.get_host }}/jobs/{{ object.pk }}/{{ object.slug }}" />
-
-    {% if object.company_name %}
-      <meta name="description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
-      <meta name="twitter:title" content="{{ object.title }} @ {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}" />
-      <meta property="og:title" content="{{ object.title }} @ {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}" />
-      <meta name="twitter:description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
-      <meta property="og:description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
-    {% elif object.company_name %}
-      <meta name="description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
-      <meta name="twitter:title" content="{{ object.title }} @ {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}" />
-      <meta property="og:title" content="{{ object.title }} @ {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}" />
-      <meta name="twitter:description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
-      <meta property="og:description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
-    {% endif %}
-
-    {% if object.company.logo %}
-      <meta name="twitter:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}" />
-      <meta property="og:image" content="https://{{ request.get_host }}{{ object.company.logo.url }}" />
-    {% elif object.company_logo %}
-      <meta name="twitter:image" content="{{ job.company_logo.build_url }}" />
-      <meta property="og:image" content="{{ job.company_logo.build_url }}" />
-    {% endif %}
+    <meta name="twitter:title" content="{{ object.title }} @ {% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %}" />
+    <meta name="twitter:description" content="{% if object.company %}{{ object.company.name }}{% else %}{{ object.company_name }}{% endif %} is looking for a {{ object.title }}" />
+    <meta name="twitter:image" content="{{ og_image }}" />
 {% endblock meta %}
 
 {% block content %}
@@ -39,7 +27,7 @@
         ←
         <a href="{% url 'jobs' %}">back to all jobs</a>
     </p>
-    <div class="max-w-3xl mx-auto my-10">
+    <div class="mx-auto my-10 max-w-3xl">
         <div class="flex flex-col items-center mt-10 prose md:mx-auto lg:prose-lg">
             <div class="flex-shrink-0">
               {% if object.company.logo %}
@@ -64,13 +52,13 @@
             </h1>
         </div>
         <div class="flex justify-center mt-10">
-            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent border-solid rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 rounded-full border border-transparent border-solid shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                href="{{ object.listing_url }}?utm_source={{ request.get_host }}&ref={{ request.get_host }}"
                target="_blank">
                 Apply for this position
             </a>
         </div>
-        <div class="w-full py-6 my-10 border-t border-b border-gray-300 border-solid-2">
+        <div class="py-6 my-10 w-full border-t border-b border-gray-300 border-solid-2">
             {% if object.location %}
                 <p class="text-lg text-gray-800">
                     Location:
@@ -99,7 +87,7 @@
             {% endif %}
         </div>
         <div class="flex justify-center mt-10">
-            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 border border-transparent border-solid rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            <a class="inline-flex items-center px-6 py-3 text-xl font-light text-white bg-green-600 rounded-full border border-transparent border-solid shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                href="{{ object.listing_url }}?utm_source={{ request.get_host }}&ref={{ request.get_host }}"
                target="_blank">
                 Apply for this position
