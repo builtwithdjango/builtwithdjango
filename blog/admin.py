@@ -11,7 +11,7 @@ admin.site.register(Comment)
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("title", "created", "modified")
+    list_display = ("title", "created", "created", "modified")
 
 
 admin.site.register(Post, PostAdmin)
