@@ -64,7 +64,7 @@ class JobDetailView(DetailView):
             image_url = self.request.build_absolute_uri(job.company_logo.url)
         else:
             # Fallback to a default image if no company logo is available
-            image_url = self.request.build_absolute_uri(static("vendors/images/default_company_logo.png"))
+            image_url = self.request.build_absolute_uri(static("vendors/images/logo.png"))
 
         og_image_url = (
             f"https://osig.app/g?"
