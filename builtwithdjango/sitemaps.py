@@ -22,6 +22,7 @@ class StaticViewSitemap(sitemaps.Sitemap):
         """
         return [
             "home",
+            "uses",
             "submit_project",
             "projects",
             "podcast_episodes",

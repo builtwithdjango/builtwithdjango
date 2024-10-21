@@ -18,13 +18,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
+from django.views.generic import TemplateView
 
 from .sitemaps import sitemaps
-
-
-def trigger_error(request):
-    division_by_zero = 1 / 0
-
 
 urlpatterns = (
     [
@@ -41,6 +37,7 @@ urlpatterns = (
         path("tools/", include("tools.urls")),
         path("users/", include("allauth.urls")),
         path("users/", include("users.urls")),
+        path("uses", TemplateView.as_view(template_name="pages/uses.html"), name="uses"),
         path("stripe/", include("djstripe.urls", namespace="djstripe")),
         path(
             "sitemap.xml",
@@ -49,7 +46,6 @@ urlpatterns = (
             name="django.contrib.sitemaps.views.sitemap",
         ),
         path("robots.txt", include("robots.urls")),
-        path("sentry-debug/", trigger_error),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
