@@ -30,6 +30,7 @@
     <div>
         <div class="flex justify-between items-center pb-4 sm:mb-0">
             <div class="flex justify-start items-center space-x-2">
+
               <div data-controller="dropdown" class="inline-block relative text-left">
                   <div>
                       <button type="button"
@@ -88,6 +89,21 @@
                       </form>
                   </div>
               </div>
+
+              <div data-controller="search"
+                  data-search-url-value="/api/v1/search/projects/"
+                  class="relative">
+                <input type="text"
+                        data-search-target="input"
+                        data-action="input->search#onInput"
+                        placeholder="Search projects (Press '/' to focus)"
+                        class="block p-3 w-64 text-gray-900 bg-white rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                >
+                <div data-search-target="results"
+                      class="hidden overflow-hidden absolute left-0 z-10 mt-2 w-96 bg-white rounded-md shadow-lg">
+                </div>
+            </div>
+
             </div>
             <div>
                 <a type="button"
@@ -98,7 +114,7 @@
             </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mb-10 lg:grid-cols-3 md:grid-cols-2">
-            {% for site in filter.qs %}
+            {% for site in page_obj %}
                 <div
                   class="
                     flex flex-col justify-start bg-white rounded border-solid
@@ -160,6 +176,28 @@
                 </div>
             {% endfor %}
         </div>
+
+        {% if is_paginated %}
+        <div class="flex justify-center items-center mt-8 space-x-4">
+            {% if page_obj.has_previous %}
+                <a href="?{% if request.GET.order_by %}order_by={{ request.GET.order_by }}&{% endif %}{% if request.GET.is_open_source %}is_open_source={{ request.GET.is_open_source }}&{% endif %}page={{ page_obj.previous_page_number }}"
+                   class="px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 hover:bg-gray-50">
+                    Previous
+                </a>
+            {% endif %}
+
+            <span class="text-sm text-gray-700">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?{% if request.GET.order_by %}order_by={{ request.GET.order_by }}&{% endif %}{% if request.GET.is_open_source %}is_open_source={{ request.GET.is_open_source }}&{% endif %}page={{ page_obj.next_page_number }}"
+                   class="px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 hover:bg-gray-50">
+                    Next
+                </a>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 {% endblock content %}
 {% block schema %}
