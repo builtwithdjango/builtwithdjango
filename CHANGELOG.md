@@ -19,6 +19,9 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 - Project search functionality with autocomplete
 - Pagination for projects list page
 
+### Fixed
+- Visit Website button is correct vertically aligned.
+
 ## [0.4.3] - 2025-01-15
 ### Added
 - Testimonials on Ad pagee
