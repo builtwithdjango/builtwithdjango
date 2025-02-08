@@ -13,6 +13,12 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 **Fixed** for any bug fixes.
 **Security** in case of vulnerabilities.
 
+
+## [0.4.4] - 2025-02-08
+### Added
+- Project search functionality with autocomplete
+- Pagination for projects list page
+
 ## [0.4.3] - 2025-01-15
 ### Added
 - Testimonials on Ad pagee

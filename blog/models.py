@@ -8,7 +8,11 @@ from model_utils.models import TimeStampedModel
 class Post(TimeStampedModel):
     title = models.CharField(max_length=250)
     description = models.TextField(blank=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="post")
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="post",
+    )
     slug = models.SlugField(max_length=250)
     tags = models.ManyToManyField("Tag", related_name="post", blank=True)
     unsplashID = models.CharField(max_length=40, blank=True)

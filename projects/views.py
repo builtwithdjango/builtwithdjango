@@ -20,6 +20,7 @@ class ProjectListView(FilterView):
     model = Project
     template_name = "projects/all_projects.html"
     filterset_class = ProjectFilter
+    paginate_by = 12
 
     def get_queryset(self):
         queryset = Project.objects.filter(published=True, active=True).order_by("-sponsored", "-updated_date")
