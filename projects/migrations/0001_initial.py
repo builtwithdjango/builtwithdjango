@@ -2,17 +2,12 @@
 
 import autoslug.fields
 import django.db.models.deletion
-import taggit.managers
 from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
 
     initial = True
-
-    dependencies = [
-        ("taggit", "0003_taggeditem_add_unique_index"),
-    ]
 
     operations = [
         migrations.CreateModel(
@@ -101,16 +96,7 @@ class Migration(migrations.Migration):
                         to="projects.Maker",
                     ),
                 ),
-                (
-                    "tags",
-                    taggit.managers.TaggableManager(
-                        blank=True,
-                        help_text="A comma-separated list of tags.",
-                        through="taggit.TaggedItem",
-                        to="taggit.Tag",
-                        verbose_name="Tags",
-                    ),
-                ),
+                ("tags", models.TextField(blank=True, null=True)),
             ],
             options={
                 "ordering": ["-date_added"],
