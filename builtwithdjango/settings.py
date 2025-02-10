@@ -18,6 +18,7 @@ import posthog
 import sentry_sdk
 import structlog
 from posthog.sentry.posthog_integration import PostHogIntegration
+from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env(
     # set casting, default value
@@ -204,7 +205,16 @@ SITE_ID = 1
 if ENVIRONMENT == "prod":
     sentry_sdk.init(
         dsn=env("dsn"),
-        integrations=[PostHogIntegration()],
+        send_default_pii=True,
+        traces_sample_rate=1.0,
+        profiles_sample_rate=1.0,
+        integrations=[
+            PostHogIntegration(),
+            DjangoIntegration(
+                middleware_spans=True,
+                signals_spans=True,
+            ),
+        ],
     )
 
 # Newsletters
