@@ -1,11 +1,10 @@
 from django.urls import path
 
-from .views import CreateLikeProjectAPIView, UpdateLikeProjectAPIView, search_projects
-
-app_name = "api"
+from . import views
+from .views import CreateLikeProjectAPIView, UpdateLikeProjectAPIView
 
 urlpatterns = [
-    path("likes/", CreateLikeProjectAPIView.as_view(), name="likes"),
-    path("likes/<int:pk>/", UpdateLikeProjectAPIView.as_view(), name="like-detail"),
-    path("search/", search_projects, name="search"),
+    path("like/", CreateLikeProjectAPIView.as_view()),
+    path("like/<int:pk>/", UpdateLikeProjectAPIView.as_view()),
+    path("search/projects/", views.search_projects, name="api_search_projects"),
 ]
