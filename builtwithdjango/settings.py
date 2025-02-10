@@ -210,10 +210,10 @@ if ENVIRONMENT == "prod":
         profiles_sample_rate=1.0,
         integrations=[
             PostHogIntegration(),
-            DjangoIntegration(
-                middleware_spans=True,
-                signals_spans=True,
-            ),
+            # DjangoIntegration(
+            #     middleware_spans=True,
+            #     signals_spans=True,
+            # ),
         ],
     )
 
