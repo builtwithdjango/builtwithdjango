@@ -873,20 +873,6 @@ celery = ["celery (>=5.1)"]
 commands = ["django-extensions (>=1.4.9)"]
 
 [[package]]
-name = "django-taggit"
-version = "6.1.0"
-description = "django-taggit is a reusable Django application for simple tagging."
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "django_taggit-6.1.0-py3-none-any.whl", hash = "sha256:ab776264bbc76cb3d7e49e1bf9054962457831bd21c3a42db9138b41956e4cf0"},
-    {file = "django_taggit-6.1.0.tar.gz", hash = "sha256:c4d1199e6df34125dd36db5eb0efe545b254dec3980ce5dd80e6bab3e78757c3"},
-]
-
-[package.dependencies]
-Django = ">=4.1"
-
-[[package]]
 name = "django-widget-tweaks"
 version = "1.5.0"
 description = "Tweak the form field rendering in templates, not in python-level form definitions."
@@ -2985,4 +2971,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "57124feb33fc6ef9c84d7839be6d5c56ba5f2a37e75401c4db3febb93745a7d9"
+content-hash = "d5d8ab0119f25eba3adafd2e41d6054030d2c6a1882ba9a20b692b854521d628"

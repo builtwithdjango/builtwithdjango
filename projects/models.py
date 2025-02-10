@@ -4,7 +4,6 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from model_utils.models import TimeStampedModel
-from taggit.managers import TaggableManager
 
 from builtwithdjango.utils import get_builtwithdjango_logger
 
@@ -54,7 +53,6 @@ class Project(models.Model):
     # To remove
     additional_info = models.TextField(blank=True)
     requirements = models.TextField(blank=True)
-    tags = TaggableManager(blank=True)
     maker = models.ForeignKey(
         "makers.Maker",
         related_name="projects",

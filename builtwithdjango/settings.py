@@ -61,7 +61,6 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.humanize",
     "django.forms",
-    "taggit",
     "django_extensions",
     "django_component",
     "django_filters",

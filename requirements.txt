@@ -36,7 +36,6 @@ django-rest-auth[with-social]==0.9.5 ; python_version >= "3.11" and python_versi
 django-robots==5.0 ; python_version >= "3.11" and python_version < "4.0"
 django-storages==1.14.4 ; python_version >= "3.11" and python_version < "4.0"
 django-structlog==8.1.0 ; python_version >= "3.11" and python_version < "4.0"
-django-taggit==6.1.0 ; python_version >= "3.11" and python_version < "4.0"
 django-widget-tweaks==1.5.0 ; python_version >= "3.11" and python_version < "4.0"
 django==5.1.6 ; python_version >= "3.11" and python_version < "4.0"
 djangorestframework==3.15.2 ; python_version >= "3.11" and python_version < "4.0"
