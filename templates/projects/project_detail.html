@@ -45,6 +45,7 @@
                 </a>
             </div>
         {% endif %}
+
         <!-- Projects -->
         <div class="overflow-hidden p-6 bg-white rounded-lg shadow">
             <div class="overflow-hidden mb-2 bg-white rounded-lg divide-y divide-gray-200 shadow">
@@ -87,6 +88,7 @@
                 </div>
             {% endif %}
         </div>
+
         <!-- Author Card -->
         {% if object.maker.first_name %}
             <div class="overflow-hidden px-6 py-4 bg-white rounded-lg shadow">
@@ -133,6 +135,7 @@
                 </a>
             </div>
         {% endif %}
+
         <!-- Tech Stack Card-->
         {% if object.technologies.all %}
             <div class="overflow-hidden px-6 py-4 bg-white rounded-lg shadow">
@@ -148,6 +151,7 @@
                 </div>
             </div>
         {% endif %}
+
         {% if object.podcast_episodes.all %}
             <div class="overflow-hidden px-6 py-4 bg-white rounded-lg shadow">
                 <h2 class="text-2xl font-semibold text-black">
@@ -174,17 +178,23 @@
                 {% endfor %}
             </div>
         {% endif %}
+
         <!-- Additional Info Card-->
-        {% if object.additional_info %}
-            <div class="overflow-hidden px-6 py-4 bg-white rounded-lg shadow">
-                <h2 class="text-2xl font-semibold text-black">
-                    Additional Info
-                </h2>
-                <div class="prose">
-                    {{ object.additional_info | markdown | safe }}
-                </div>
+        <div class="overflow-hidden px-6 py-4 bg-white rounded-lg shadow">
+            {% if object.additional_info %}
+            <div class="prose">
+                <h2>Additional Info</h2>
+                <p>{{ object.additional_info | markdown | safe }}</p>
             </div>
-        {% endif %}
+            {% endif %}
+
+            {% if project.audience_analysis %}
+            <div class="prose">
+                <h2>Target Audience</h2>
+                <p>{{ project.audience_analysis.target_audience }}</p>
+            </div>
+            {% endif %}
+        </div>
 
         <!-- Comments -->
         {% include "components/comments.html" with object=object object_type="project_comment" comments=object.comments.all %}
