@@ -2,6 +2,7 @@ import requests
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.mail import send_mail
+from django.utils import timezone
 from django_q.tasks import async_task
 
 from builtwithdjango.utils import get_builtwithdjango_logger
@@ -28,7 +29,7 @@ def save_screenshot(project_title):
 
     project.homepage_screenshot.save(f"{project.title}.png", file, save=True)
     project.published = True
-    project.save()
+    project.save(update_fields=["published", "homepage_screenshot"])
 
 
 def notify_of_new_project(instance):
@@ -97,3 +98,59 @@ def update_project_active_status(project_id):
         project.save(update_fields=["active"])
 
     return f"Project {project.title} is active: {active}"
+
+
+def fetch_page_content(project_id):
+    """
+    Fetch page content using Jina Reader API and update the project model.
+    """
+    from projects.models import Project
+
+    try:
+        project = Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        logger.error(f"Project with ID {project_id} not found")
+        return False
+
+    try:
+        html_response = requests.get(project.url, timeout=30)
+        html_response.raise_for_status()
+        html_content = html_response.text
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error fetching HTML content: {str(e)}")
+        html_content = ""
+
+    jina_url = f"{settings.JINA_READER_BASE_URL}/{project.url}"
+    headers = {"Accept": "application/json", "Authorization": f"Bearer {settings.JINA_READER_API_KEY}"}
+
+    try:
+        response = requests.get(jina_url, headers=headers, timeout=30)
+        response.raise_for_status()
+
+        data = response.json().get("data", {})
+
+        project.page_title = data.get("title", "")
+        project.page_description = data.get("description", "")
+        project.page_content_markdown = data.get("content", "")
+        project.page_content_html = html_content
+        project.date_scraped = timezone.now()
+
+        project.save(
+            update_fields=[
+                "page_title",
+                "page_description",
+                "page_content_markdown",
+                "page_content_html",
+                "date_scraped",
+            ]
+        )
+
+        logger.info(f"Successfully fetched content for project: {project.title}")
+        return True
+
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error fetching content from Jina Reader API: {str(e)}")
+        return False
+    except Exception as e:
+        logger.error(f"Unexpected error while fetching page content: {str(e)}")
+        return False

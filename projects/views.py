@@ -13,7 +13,13 @@ from .filters import ProjectFilter
 from .forms import AddComment, AddProject, ProjectUpdateViewForm
 from .hooks import screenshot_saved
 from .models import Comment, Project
-from .tasks import notify_admins_of_comment, notify_of_new_project, notify_owner_of_new_comment, save_screenshot
+from .tasks import (
+    fetch_page_content,
+    notify_admins_of_comment,
+    notify_of_new_project,
+    notify_owner_of_new_comment,
+    save_screenshot,
+)
 
 
 class ProjectListView(FilterView):
@@ -90,8 +96,11 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         form.instance.logged_in_maker = self.request.user
         self.object = form.save()
+
         async_task(save_screenshot, self.object.title, hook=screenshot_saved)
         async_task(notify_of_new_project, self.object)
+        async_task(fetch_page_content, self.object.id)
+
         return super(ProjectCreateView, self).form_valid(form)
 
 

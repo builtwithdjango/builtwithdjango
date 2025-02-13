@@ -61,6 +61,14 @@ class Project(models.Model):
         blank=True,
     )
 
+    # AI Augmented Fields
+    date_scraped = models.DateTimeField(blank=True, null=True)
+
+    page_content_markdown = models.TextField(blank=True)
+    page_title = models.CharField(max_length=200, blank=True)
+    page_description = models.TextField(blank=True)
+    page_content_html = models.TextField(blank=True)
+
     def __str__(self):
         return self.title
 
