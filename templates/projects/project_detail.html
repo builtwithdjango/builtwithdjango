@@ -180,18 +180,53 @@
         {% endif %}
 
         <!-- Additional Info Card-->
-        <div class="overflow-hidden px-6 py-4 bg-white rounded-lg shadow">
+        <div class="rounded-lg prose-lg">
             {% if object.additional_info %}
-            <div class="prose">
+            <div class="-mt-10">
                 <h2>Additional Info</h2>
                 <p>{{ object.additional_info | markdown | safe }}</p>
             </div>
             {% endif %}
 
-            {% if project.audience_analysis %}
-            <div class="prose">
+            {% if project.content_summary %}
+            <div>
+                <h2>Summary</h2>
+                <p>{{ project.content_summary | markdown | safe }}</p>
+            </div>
+            {% endif %}
+
+            {% if project.target_audience %}
+            <div>
                 <h2>Target Audience</h2>
-                <p>{{ project.audience_analysis.target_audience }}</p>
+                <p>{{ project.target_audience }}</p>
+            </div>
+            {% endif %}
+
+            {% if project.key_features %}
+            <div>
+                <h2>Key Features</h2>
+                <p>{{ project.key_features | markdown | safe }}</p>
+            </div>
+            {% endif %}
+
+            {% if project.pain_points %}
+            <div>
+                <h2>Pain Points</h2>
+                <p>{{ project.pain_points | markdown | safe }}</p>
+            </div>
+            {% endif %}
+
+            {% if project.usage_instructions %}
+            <div>
+                <h2>Usage Instructions</h2>
+                <p>{{ project.usage_instructions | markdown | safe }}</p>
+            </div>
+            {% endif %}
+
+            {% if project.page_links %}
+            <div>
+                <h2>Links</h2>
+                <p>{{ project.page_links | markdown | safe }}</p>
             </div>
             {% endif %}
         </div>
