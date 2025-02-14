@@ -20,8 +20,8 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-    <div class="max-w-5xl mx-auto my-10">
-      <div class="px-6 pt-6 overflow-hidden bg-white rounded-lg shadow">
+    <div class="mx-auto my-10 max-w-5xl">
+      <div class="overflow-hidden px-6 pt-6 bg-white rounded-lg shadow">
           <form method="post" enctype="multipart/form-data">
               {% csrf_token %}
               {{ form.non_field_errors }}
@@ -37,7 +37,7 @@
                           Title
                       </label>
                       <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        {% render_field form.title class="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm" %}
+                        {% render_field form.title class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm" %}
                       </div>
                     </div>
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -47,7 +47,7 @@
                           URL
                       </label>
                       <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        {% render_field form.url class="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm" placeholder="https://example.com" %}
+                        {% render_field form.url class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm" placeholder="https://example.com" %}
                       </div>
                     </div>
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -57,7 +57,7 @@
                             Short Description
                         </label>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
-                          {% render_field form.short_description class="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm" %}
+                          {% render_field form.short_description class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm" %}
                             <p class="mt-2 text-sm text-gray-500">
                                 Write a few sentences about project (Up to 200 characters).
                             </p>
@@ -74,7 +74,7 @@
                               Twitter URL
                           </label>
                           <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            {% render_field form.twitter_url class="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm" placeholder="https://twitter.com/rasulkireev" %}
+                            {% render_field form.twitter_url class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm" placeholder="https://twitter.com/rasulkireev" %}
                           </div>
                       </div>
                       <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -84,7 +84,7 @@
                               Github URL
                           </label>
                           <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            {% render_field form.github_url class="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm" placeholder="https://github.com/rasulkireev" %}
+                            {% render_field form.github_url class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm" placeholder="https://github.com/rasulkireev" %}
                           </div>
                       </div>
                       <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -94,7 +94,7 @@
                               Technologies Used
                           </label>
                           <div class="mt-1 sm:mt-0 sm:col-span-2">
-                              {% render_field form.technology_suggestions_by_user class="block w-full max-w-lg border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" rows=6 %}
+                              {% render_field form.technology_suggestions_by_user class="block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" rows=6 %}
                               <p class="mt-2 text-sm text-gray-500">
                                   Please enter any technologies your site uses (e.g. TailwindCSS, Vuejs, React, or
                                   <b>
@@ -110,7 +110,7 @@
               <div class="pt-5">
                   <div class="flex justify-end">
                       <button type="submit"
-                              class="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                              class="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-green-600 rounded-md border border-transparent shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                           Submit
                       </button>
                   </div>
@@ -120,8 +120,8 @@
   </div>
     {% else %}
 
-    <div class="flex items-center justify-center px-4 py-12 my-4 sm:px-6 lg:px-8">
-      <div class="w-full max-w-md space-y-8">
+    <div class="flex justify-center items-center px-4 py-12 my-4 sm:px-6 lg:px-8">
+      <div class="space-y-8 w-full max-w-md">
           <div>
               <p class="mt-6 text-3xl font-extrabold text-center text-gray-900">
                   Before you can submit the project please
