@@ -28,7 +28,7 @@ def save_screenshot(project_title):
 
     project.homepage_screenshot.save(f"{project.title}.png", file, save=True)
     project.published = True
-    project.save(update_fields=["published", "homepage_screenshot"])
+    project.save()
 
 
 def notify_of_new_project(instance):
