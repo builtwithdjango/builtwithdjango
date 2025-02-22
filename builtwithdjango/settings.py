@@ -185,8 +185,6 @@ WEBPACK_LOADER = {
 }
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 AWS_S3_REGION_NAME = "eu-east-1"
 AWS_S3_ENDPOINT_URL = env("AWS_S3_ENDPOINT_URL")
@@ -194,6 +192,25 @@ AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = f"bwd-{ENVIRONMENT}"
 # AWS_S3_FILE_OVERWRITE = False
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "bucket_name": AWS_STORAGE_BUCKET_NAME,
+            "default_acl": "public-read",
+            "region_name": AWS_S3_REGION_NAME,
+            "endpoint_url": AWS_S3_ENDPOINT_URL,
+            "access_key": AWS_ACCESS_KEY_ID,
+            "secret_key": AWS_SECRET_ACCESS_KEY,
+            "querystring_auth": False,
+            "file_overwrite": False,
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
