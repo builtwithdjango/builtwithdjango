@@ -415,14 +415,19 @@
         </div>
 
         <footer class="bg-white">
-          <a class="fixed bottom-0 left-0 z-10 px-2 py-1 font-semibold text-gray-900 no-underline bg-gray-200 rounded-tr border-t border-l border-white border-solid"
-             href="https://rasulkireev.com"
-             target="_blank">
-              <!-- <img class="inline w-4 align-middle rounded" src="https://github.com/account" alt="Rasul Kireev"/> -->
-              <p class="inline m-0 ml-1 text-sm font-normal align-middle">by Rasul</p>
-          </a>
-          <div class="px-6 py-12 mx-auto max-w-7xl md:flex md:items-center md:justify-between lg:px-8">
-            <div class="flex justify-center space-x-6 md:order-2">
+          <div class="px-6 py-12 mx-auto max-w-7xl md:py-0 md:flex md:items-center md:justify-between lg:px-8">
+            <div class="mt-8 md:mt-0">
+              <p class="text-xs leading-5 text-center text-gray-500">
+                &copy; 2025 <a href="https://lvtd.dev">LVTD, LLC</a>.
+              </p>
+            </div>
+
+            <div class="scale-50">
+              <webring-css site="https://builtwithdjango.com"></webring-css>
+              <script src="https://djangowebring.com/static/webring.js"></script>
+            </div>
+
+            <div class="flex justify-center space-x-6">
               <a href="https://statushen.com/builtwithdjango" class="text-gray-400 hover:text-gray-500">
                 Status
               </a>
@@ -439,13 +444,15 @@
                 </svg>
               </a>
             </div>
-            <div class="mt-8 md:order-1 md:mt-0">
-              <p class="text-xs leading-5 text-center text-gray-500">
-                &copy; 2024 <a href="https://lvtd.dev">LVTD, LLC</a>.
-              </p>
-            </div>
           </div>
         </footer>
+
+        <a class="fixed bottom-0 left-0 z-10 px-2 py-1 font-semibold text-gray-900 no-underline bg-gray-200 rounded-tr border-t border-l border-white border-solid"
+           href="https://rasulkireev.com"
+           target="_blank">
+            <!-- <img class="inline w-4 align-middle rounded" src="https://github.com/account" alt="Rasul Kireev"/> -->
+            <p class="inline m-0 ml-1 text-sm font-normal align-middle">by Rasul</p>
+        </a>
 
         {% include "components/bottom-right-corner-ad.html" %}
 
