@@ -12,7 +12,7 @@ class LikeInline(admin.TabularInline):
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ["title", "logged_in_maker", "active", "published", "maker", "date_added"]
+    list_display = ["title", "logged_in_maker", "active", "published", "maker", "date_added", "might_be_spam"]
     inlines = [CommentInline, LikeInline]
 
 

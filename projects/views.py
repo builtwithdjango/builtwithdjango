@@ -29,7 +29,9 @@ class ProjectListView(FilterView):
     paginate_by = 12
 
     def get_queryset(self):
-        queryset = Project.objects.filter(published=True, active=True).order_by("-sponsored", "-updated_date")
+        queryset = Project.objects.filter(published=True, active=True, might_be_spam=False).order_by(
+            "-sponsored", "-updated_date"
+        )
 
         if self.request.GET.get("order_by"):
             ordering = self.request.GET.get("order_by")
@@ -60,7 +62,7 @@ class ProjectListView(FilterView):
 class InactiveProjectListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Project
     template_name = "projects/all_inactive_projects.html"
-    queryset = Project.objects.filter(published=True, active=False)
+    queryset = Project.objects.filter(published=True, active=False, might_be_spam=False)
 
     def test_func(self):
         return self.request.user.is_staff
