@@ -240,6 +240,10 @@ class Project(models.Model):
                 ]
             )
 
+            if result.data.might_be_spam:
+                self.published = False
+                self.save(update_fields=["published"])
+
             return True
 
         except Exception as e:
