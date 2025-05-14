@@ -54,25 +54,39 @@ async def create_tweet(project_id):
 
     @agent.system_prompt
     def previous_examples() -> str:
-        return """Below are some examples of tweets for other projects I did in the past:
+        return """Below are some examples of tweets for other projects I did in the past.
+        You can use them as a template to create a tweet for the project you are given.
         ---
+        New Project Alert 🚨
+
         Codeishot (@Codeish0t) is the one place to store, manage and share your code!
+
+        Check it out 👇
         https://builtwithdjango.com/projects/codeishot
         ---
+        Just added a new project to the directory.
+
         Apivault is a completely free and open source portal that contains all the public APIs available online, so you can get inspired for new projects!
         https://builtwithdjango.com/projects/apivault
         ---
         Check out Django TV by @webology 👀
         https://builtwithdjango.com/projects/django-tv
         ---
+        New project just landed ✈️
+
         PDF Deck makes it super easy to share your PDFs with a simple link 🔗
         https://builtwithdjango.com/projects/pdf-deck
         ---
+        New project was just added to the directory.
+
         Hovercode helps companies drive engagement and track results with dynamic (and pretty) QR codes
         https://builtwithdjango.com/projects/hovercode
         ---
         Check out this cool project by @anthonynsimon
+
         UseWebhook helps you capture and inspect webhooks from your browser. Forward to localhost, or replay requests from history.
+
+        👇
         https://builtwithdjango.com/projects/usewebhook
         ---
         New project :)
