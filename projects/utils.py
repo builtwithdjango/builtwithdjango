@@ -16,9 +16,7 @@ logger = get_builtwithdjango_logger(__name__)
 class TweetContent(BaseModel):
     """Model to structure the tweet content."""
 
-    tweet_text: str = Field(
-        description="A short, engaging tweet for a new Django project. Max 280 chars. Include relevant hashtags."
-    )
+    tweet_text: str = Field(description="A short, engaging tweet for a new Django project. Max 280 chars.")
 
 
 class ProjectContext(BaseModel):
