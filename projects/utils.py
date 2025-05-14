@@ -2,35 +2,18 @@ import os
 
 from asgiref.sync import sync_to_async
 from django.conf import settings
-from pydantic import BaseModel, Field
 from pydantic_ai import Agent, RunContext
 from twikit import Client
 
 from builtwithdjango.utils import get_builtwithdjango_logger
+from projects.schemas import ProjectContext, TweetContent
 
 from .models import Project
 
 logger = get_builtwithdjango_logger(__name__)
 
-
-class TweetContent(BaseModel):
-    """Model to structure the tweet content."""
-
-    tweet_text: str = Field(description="A short, engaging tweet for a new Django project. Max 280 chars.")
-
-
-class ProjectContext(BaseModel):
-    """Model to structure the project context."""
-
-    title: str = Field(description="The title of the project.")
-    short_description: str = Field(description="A very brief description of the project.")
-    url: str = Field(description="The URL of the project.")
-    is_open_source: bool = Field(description="Whether the project is open source.")
-    twitter_url: str = Field(description="The URL of the project's Twitter profile.")
-    target_audience: str = Field(description="The target audience of the project.")
-    content_summary: str = Field(description="A summary of the project's content.")
-    key_features: str = Field(description="The key features of the project.")
-    pain_points: str = Field(description="The pain points of the project.")
+# Global variable to store Twitter cookies in memory
+TWITTER_COOKIE_DICT = None
 
 
 async def create_tweet(project_id):
@@ -133,7 +116,9 @@ async def create_tweet(project_id):
 
 
 async def tweet_project(project_id):
+    global TWITTER_COOKIE_DICT
     logger.info(f"Starting tweet_project for project_id: {project_id}")
+
     try:
         project = await sync_to_async(Project.objects.get)(id=project_id)
     except Project.DoesNotExist:
@@ -144,15 +129,59 @@ async def tweet_project(project_id):
     logger.info(f"Tweet content created for project: {project.title}. Tweet: {tweet_text}")
 
     client = Client("en-US")
-    logger.info(f"Logging in to Twitter for project: {project.title}")
-    await client.login(
-        auth_info_1=settings.TWITTER_USERNAME,
-        auth_info_2=settings.TWITTER_EMAIL,
-        password=settings.TWITTER_PASSWORD,
-    )
-    logger.info(f"Logged in to Twitter for project: {project.title}")
-    logger.info(f"Creating tweet on Twitter for project: {project.title}")
-    await client.create_tweet(text=tweet_text)
-    logger.info(f"Tweet created on Twitter for project: {project.title}")
+    logged_in_successfully = False
+
+    if TWITTER_COOKIE_DICT:
+        logger.info(f"Attempting to use stored cookies for project: {project.title}")
+        try:
+            client.load_cookies(TWITTER_COOKIE_DICT)
+            # Verify cookie validity by fetching current user's info.
+            # For tweety-ns, client.get_user_info() with no args gets current user.
+            user_info = await client.get_user_info()
+            if user_info and user_info.id:
+                logger.info(f"Successfully validated stored cookies for user: {user_info.username}.")
+                logged_in_successfully = True
+            else:
+                logger.info("Stored cookies appear invalid or expired (no user info obtained). Clearing.")
+                TWITTER_COOKIE_DICT = None  # Invalidate stored cookies
+        except Exception as e:
+            logger.warning(f"Failed to validate stored cookies: {e}. Clearing stored cookies.")
+            TWITTER_COOKIE_DICT = None  # Invalidate stored cookies
+            # Re-initialize client to ensure a clean state before credential login
+            client = Client("en-US")
+
+    if not logged_in_successfully:
+        logger.info(f"Logging in to Twitter with credentials for project: {project.title}")
+        try:
+            await client.login(
+                auth_info_1=settings.TWITTER_USERNAME,
+                auth_info_2=settings.TWITTER_EMAIL,  # For tweety-ns, this is email if auth_info_1 is username
+                password=settings.TWITTER_PASSWORD,
+            )
+            TWITTER_COOKIE_DICT = client.get_cookies()  # Store the retrieved cookie dictionary
+            logger.info(f"Logged in with credentials. New cookies obtained and stored for project: {project.title}")
+            logged_in_successfully = True
+        except Exception as e:
+            logger.error(f"Failed to login to Twitter with credentials: {e}")
+            # Depending on desired behavior, you might re-raise or handle differently
+            raise RuntimeError(f"Failed to login to Twitter: {e}") from e
+
+    if logged_in_successfully:
+        logger.info(f"Creating tweet on Twitter for project: {project.title}")
+        try:
+            await client.create_tweet(text=tweet_text)
+            logger.info(f"Tweet created on Twitter for project: {project.title}")
+        except Exception as e:
+            logger.error(f"Failed to create tweet: {e}")
+            # If tweet fails due to auth, the cookie might be bad. Consider clearing it:
+            # if "authentication" in str(e).lower() or "auth" in str(e).lower():
+            #     logger.info("Tweet creation failed due to potential auth issue, clearing cookie.")
+            #     TWITTER_COOKIE_DICT = None
+            raise RuntimeError(f"Failed to create tweet: {e}") from e
+    else:
+        # This state should ideally not be reached if login failures raise exceptions
+        logger.error("Fatal: Not logged in after attempts, cannot create tweet.")
+        raise RuntimeError("Not logged in to Twitter, cannot create tweet.")
+
     logger.info(f"Finished tweet_project for project_id: {project_id}")
     return tweet_text
