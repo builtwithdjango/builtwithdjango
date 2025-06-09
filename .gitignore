@@ -1,4 +1,5 @@
 .cursor/
+.taskmaster/
 backup-dbs/
 .idea/
 *.sqlite3
@@ -149,3 +150,23 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Added by Task Master AI
+# Logs
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dev-debug.log
+# Environment variables
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+# OS specific
+# Task files
+tasks.json
+tasks/
