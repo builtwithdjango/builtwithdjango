@@ -37,7 +37,8 @@ def get_projects_block():
         else:
             maker = ""
 
-        block += f"- [{project.title}](https://builtwithdjango.com{project.get_absolute_url}) by {maker} - {project.short_description}\n"
+        maker_part = f" by {maker}" if maker else ""
+        block += f"- [{project.title}](https://builtwithdjango.com{project.get_absolute_url}){maker_part} - {project.short_description}\n"
 
     return block
 
@@ -53,12 +54,6 @@ def get_jobs_block():
         )
 
     return block
-
-
-def get_blog_posts_block():
-    # This I will get from my reader api account
-
-    return ""
 
 
 def get_top_links_block():
@@ -110,7 +105,7 @@ def get_latest_django_documents(limit: int = 10, days_back: int = 7) -> List[Dic
                     break
 
             except requests.exceptions.RequestException as e:
-                print(f"Error fetching documents: {e}")
+                logger.error("Error fetching documents", error=str(e))
                 break
 
         return all_documents
@@ -119,7 +114,7 @@ def get_latest_django_documents(limit: int = 10, days_back: int = 7) -> List[Dic
     updated_after = cutoff_date.isoformat()
     documents_with_django_tag = fetch_documents_with_tag(django_tag, updated_after)
     excluded_title_phrases = ["My Blog Posts"]
-    excluded_authors = {"Python Weekly", "Tech / Daily", "Django News"}
+    excluded_authors = {"Python Weekly", "Tech / Daily", "Django News", "TestDriven.io"}
 
     filtered_documents = []
     for doc in documents_with_django_tag:
@@ -131,6 +126,10 @@ def get_latest_django_documents(limit: int = 10, days_back: int = 7) -> List[Dic
         if author in excluded_authors:
             continue
 
+        source_url = doc.get("source_url", "")
+        if source_url.startswith("mailto:"):
+            continue
+
         filtered_documents.append(doc)
 
     filtered_documents.sort(key=lambda x: x.get("updated_at", ""), reverse=True)
@@ -138,12 +137,12 @@ def get_latest_django_documents(limit: int = 10, days_back: int = 7) -> List[Dic
     return filtered_documents[:limit]
 
 
-def get_top_links_block(limit: int = 10, days_back: int = 7):
+def get_blog_posts_block(limit: int = 10, days_back: int = 7):
     docs = get_latest_django_documents(limit=limit, days_back=days_back)
 
     block = ""
     for doc in docs:
-        block += f"- [{doc['title']}]({doc['url']}) by {doc['author']} - {doc['summary']}\n"
+        block += f"- [{doc['title']}]({doc['source_url']}) by {doc['author']} - {doc['summary']}\n"
 
     return block
 
@@ -154,8 +153,8 @@ def prepare_newsletter():
 
     newsletter += get_intro_block()
 
-    newsletter += "\n\n## News and Updates\n"
-    newsletter += get_news_and_updates_block()
+    # newsletter += "\n\n## News and Updates\n"
+    # newsletter += get_news_and_updates_block()
 
     newsletter += "\n\n## Projects\n"
     newsletter += get_projects_block()
@@ -166,8 +165,8 @@ def prepare_newsletter():
     newsletter += "\n\n## Blog Posts from the Community\n"
     newsletter += get_blog_posts_block()
 
-    newsletter += "\n\n## Top Links from Last Issue\n"
-    newsletter += get_top_links_block()
+    # newsletter += "\n\n## Top Links from Last Issue\n"
+    # newsletter += get_top_links_block()
 
     # newsletter += "\n\n## Django Changes\n"
     # newsletter += get_django_changes_block()
@@ -236,20 +235,3 @@ def generate_buttondown_newsletter_subject(body: str):
     subject = getattr(response, "text", None)
 
     return subject.strip()
-
-
-def send_buttondown_newsletter():
-    now = timezone.now()
-    nine_am_today = now.replace(hour=9, minute=0, second=0, microsecond=0)
-    publish_date = nine_am_today.isoformat()
-
-    body = prepare_newsletter()
-    subject = generate_buttondown_newsletter_subject(body)
-
-    url = "https://api.buttondown.com/v1/emails"
-    headers = {"Authorization": f"Token {settings.BUTTONDOWN_API_KEY}"}
-    data = {"subject": subject, "body": body, "publish_date": publish_date}
-
-    response = requests.post(url, headers=headers, json=data)
-
-    return "Success"
