@@ -1,0 +1,142 @@
+name: Claude Code Automated PR Creation
+
+on:
+  workflow_dispatch:
+    inputs:
+      instruction:
+        description: 'Instruction for Claude to execute'
+        required: true
+        type: string
+      branch_name:
+        description: 'Branch name for the PR (optional, will auto-generate if not provided)'
+        required: false
+        type: string
+        default: ''
+
+jobs:
+  claude-automated:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: read
+      id-token: write
+      actions: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate branch name
+        id: branch
+        run: |
+          if [ -n "${{ github.event.inputs.branch_name }}" ]; then
+            BRANCH_NAME="${{ github.event.inputs.branch_name }}"
+          else
+            # Generate branch name from instruction (first 50 chars, replace spaces with hyphens, lowercase)
+            INSTRUCTION="${{ github.event.inputs.instruction }}"
+            BRANCH_NAME="claude-$(echo "$INSTRUCTION" | head -c 50 | tr ' ' '-' | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]//g')-$(date +%s)"
+          fi
+          echo "name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
+      - name: Create and checkout feature branch
+        run: |
+          git config --global user.name 'claude-automated[bot]'
+          git config --global user.email 'claude-automated[bot]@users.noreply.github.com'
+          git checkout -b "${{ steps.branch.outputs.name }}"
+
+      - name: Create instruction file for Claude
+        run: |
+          echo "${{ github.event.inputs.instruction }}" > /tmp/claude_instruction.txt
+
+      - name: Run Claude Code
+        id: claude
+        uses: anthropics/claude-code-action@beta
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          mode: agent
+          max_turns: "5"
+          # Provide the instruction as a direct prompt so the agent has a concrete goal
+          direct_prompt: ${{ github.event.inputs.instruction }}
+          additional_permissions: |-
+            actions: read
+          custom_instructions: |-
+            You are running in an automated GitHub workflow.
+            The user has provided this instruction: "${{ github.event.inputs.instruction }}"
+
+            Please execute this instruction and make the necessary changes to the codebase.
+            Follow all project guidelines in CLAUDE.md.
+            After making changes, do not commit them - the workflow will handle that.
+
+            Be thorough and ensure your changes are complete and functional.
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected"
+          fi
+
+      - name: Commit changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git add .
+          git commit -m "🤖 Automated changes via Claude Code" \
+            -m "Instruction: ${{ github.event.inputs.instruction }}" \
+            -m "Generated with Claude Code automation"
+
+      - name: Push feature branch
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git push origin "${{ steps.branch.outputs.name }}"
+
+      - name: Create Pull Request
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const instruction = `${{ github.event.inputs.instruction }}`;
+            const branchName = `${{ steps.branch.outputs.name }}`;
+
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🤖 ${instruction}`,
+              head: branchName,
+              base: 'master',
+              body: [
+                '## Automated Changes via Claude Code',
+                '',
+                `**Instruction:** ${instruction}`,
+                '',
+                'This PR was automatically created by the Claude Code automation workflow.',
+                '',
+                '### Changes Made',
+                'Claude Code executed the provided instruction and made the necessary changes to implement the requested functionality.',
+                '',
+                '### Review Notes',
+                '- Please review all changes carefully before merging',
+                '- Test the changes in your development environment',
+                '- Verify that all tests pass and the application functions correctly',
+                '',
+                '---',
+                '*Generated automatically by Claude Code workflow*'
+              ].join('\n')
+            });
+
+            console.log(`Created PR #${pr.number}: ${pr.html_url}`);
+
+      - name: Output results
+        run: |
+          if [ "${{ steps.changes.outputs.has_changes }}" == "true" ]; then
+            echo "✅ Claude Code executed successfully and created a PR"
+            echo "Branch: ${{ steps.branch.outputs.name }}"
+          else
+            echo "ℹ️ Claude Code executed but no changes were made"
+          fi
