@@ -20,7 +20,7 @@ def add_email_to_buttondown(email, tag, ip_address=None):
 
     # Add IP address to metadata if provided
     if ip_address:
-        data["metadata"]["ip_address"] = ip_address
+        data["ip_address"] = ip_address
     if tag == "user":
         data["subscriber_type"] = "regular"
 
@@ -46,7 +46,6 @@ def add_email_to_buttondown(email, tag, ip_address=None):
         "response_text": r.text[:500] if r.text else None,  # Truncate long responses
     }
 
-    # Log the response
     logger.info("Buttondown API response", **log_context)
 
     # Return structured response
