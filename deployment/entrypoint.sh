@@ -10,11 +10,11 @@ fi
 
 # All commands before the conditional ones
 export DJANGO_SETTINGS_MODULE=builtwithdjango.settings
-export OTEL_EXPORTER_OTLP_ENDPOINT=https://signoz-otel-collector-proxy.cr.lvtd.dev
-export OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+export PROJECT_NAME=builtwithdjango
 
-python manage.py collectstatic --noinput
-python manage.py migrate
+# export OTEL_EXPORTER_OTLP_ENDPOINT=https://signoz-otel-collector-proxy.cr.lvtd.dev
+# export OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+
 # Parse command-line arguments
 while getopts ":sw" option; do
     case "${option}" in
@@ -33,12 +33,17 @@ shift $((OPTIND - 1))
 
 # If no valid option provided, default to server
 if [ "$server" = true ]; then
+    python manage.py collectstatic --noinput
+    python manage.py migrate
+
     # python manage.py djstripe_sync_models
-    export OTEL_SERVICE_NAME=builtwithdjango_${ENV:-dev}
-    export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_${ENV:-dev}
-    opentelemetry-instrument gunicorn builtwithdjango.wsgi:application --bind 0.0.0.0:80 --workers 3 --threads 2 --reload
+    # export OTEL_SERVICE_NAME=builtwithdjango_${ENV:-dev}
+    # export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_${ENV:-dev}
+    # opentelemetry-instrument gunicorn builtwithdjango.wsgi:application --bind 0.0.0.0:80 --workers 3 --threads 2 --reload
+    gunicorn builtwithdjango.wsgi:application --bind 0.0.0.0:80 --workers 3 --threads 2 --reload
 else
-    export OTEL_SERVICE_NAME="builtwithdjango_${ENV:-dev}_workers"
-    export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_${ENV:-dev}_workers
-    opentelemetry-instrument python manage.py qcluster
+    # export OTEL_SERVICE_NAME="builtwithdjango_${ENV:-dev}_workers"
+    # export OTEL_RESOURCE_ATTRIBUTES=service.name=builtwithdjango_${ENV:-dev}_workers
+    # opentelemetry-instrument python manage.py qcluster
+    python manage.py qcluster
 fi
