@@ -11,7 +11,7 @@ logger = get_builtwithdjango_logger(__name__)
 
 def add_email_to_buttondown(email, tag, ip_address=None):
     data = {
-        "email": str(email),
+        "email_address": str(email),
         "metadata": {"source": tag},
         "tags": [tag],
         "referrer_url": "https://builtwithdjango.com",
@@ -21,11 +21,11 @@ def add_email_to_buttondown(email, tag, ip_address=None):
     if ip_address:
         data["ip_address"] = ip_address
     if tag == "user":
-        data["subscriber_type"] = "regular"
+        data["type"] = "regular"
 
     r = requests.post(
         f"https://api.buttondown.email/v1/subscribers",
-        headers={"Authorization": f"Token {settings.BUTTONDOWN_API_TOKEN}"},
+        headers={"Authorization": f"Token {settings.BUTTONDOWN_API_TOKEN}", "X-API-Version": "2025-06-01"},
         json=data,
     )
 

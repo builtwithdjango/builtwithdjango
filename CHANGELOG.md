@@ -18,6 +18,10 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 ### Added
 - Support for getting ip address of user and passing it to buttondown
 - Support for logfire
+- Version usage for buttondown
+
+### Changed
+- buttondown api version we are using
 
 ### Removed
 - Usage of opentelemetry directly

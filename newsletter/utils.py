@@ -153,6 +153,16 @@ def prepare_newsletter():
 
     newsletter += get_intro_block()
 
+    # Sponsor block
+    newsletter += """
+<div style="border: 2px solid #006400; border-radius: 10px; padding: 0 15px 15px 15px; background-color: #f0fff0; margin: 40px 10px;">
+  <h2>Sponsors</h2>
+  <p>This issue is sponsored by <a href="https://www.coderabbit.ai?utm_source=build_with_django&utm_medium=email&utm_campaign=build_with_django_mar_2025">CodeRabbit</a> an AI Code Reviewer that provides context-aware feedback, refactoring suggestions and highlights code security issues.</p>
+  <p>In plain terms, you finally get a senior level developer reviewing your code! The best news is that it is completely free for any public repo! If you ask them nicely they might even give you more stuff for free.</p>
+  <p>I've been using it to develop my projects, including this one and I can't recommend it enough. At the very least, you should give it a try and judge for yourself.</p>
+</div>
+"""
+
     # newsletter += "\n\n## News and Updates\n"
     # newsletter += get_news_and_updates_block()
 

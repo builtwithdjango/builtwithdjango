@@ -1,6 +1,8 @@
 import os
 from collections import Counter
+from datetime import datetime
 
+import plotext as plt
 import requests
 
 # Get API key
@@ -143,3 +145,66 @@ top_dates = creation_date_counts.most_common(10)
 for date, count in top_dates:
     percentage = (count / total_subscribers * 100) if total_subscribers > 0 else 0
     print(f"{date:<15} {count:<10} {percentage:>8.1f}%")
+
+# Create bar chart for creation dates by month
+print("\n" + "=" * 60)
+print("SUBSCRIBER CREATION CHART BY MONTH")
+print("=" * 60)
+
+# Prepare data for plotting - sort by date chronologically
+sorted_months_chrono = sorted(creation_month_counts.items(), key=lambda x: x[0])
+
+# Extract dates and counts
+dates = [item[0] for item in sorted_months_chrono]
+counts = [item[1] for item in sorted_months_chrono]
+
+# Create the bar chart
+plt.bar(dates, counts)
+plt.title("Subscribers Created by Month")
+plt.xlabel("Month")
+plt.ylabel("Number of Subscribers")
+
+# Rotate x-axis labels for better readability
+plt.plotsize(120, 30)  # Make plot wider to accommodate date labels
+
+plt.show()
+
+# Also create a chart by year if there are multiple years
+if len(creation_year_counts) > 1:
+    print("\n" + "=" * 60)
+    print("SUBSCRIBER CREATION CHART BY YEAR")
+    print("=" * 60)
+
+    # Prepare data for yearly chart
+    sorted_years = sorted(creation_year_counts.items(), key=lambda x: x[0])
+    years = [item[0] for item in sorted_years]
+    year_counts = [item[1] for item in sorted_years]
+
+    plt.clear_figure()  # Clear previous plot
+    plt.bar(years, year_counts)
+    plt.title("Subscribers Created by Year")
+    plt.xlabel("Year")
+    plt.ylabel("Number of Subscribers")
+    plt.plotsize(80, 25)
+
+    plt.show()
+
+# Create chart for top creation dates (daily)
+print("\n" + "=" * 60)
+print("TOP 20 DAILY SUBSCRIBER CREATION CHART")
+print("=" * 60)
+
+# Get top 20 dates by subscriber count
+top_20_dates = creation_date_counts.most_common(20)
+top_dates_list = [item[0] for item in top_20_dates if item[0] not in ["None", "Invalid Date"]]
+top_counts_list = [item[1] for item in top_20_dates if item[0] not in ["None", "Invalid Date"]]
+
+if top_dates_list:
+    plt.clear_figure()  # Clear previous plot
+    plt.bar(top_dates_list, top_counts_list)
+    plt.title("Top 20 Days by Subscriber Creation")
+    plt.xlabel("Date")
+    plt.ylabel("Number of Subscribers")
+    plt.plotsize(140, 30)  # Make plot wider for date labels
+
+    plt.show()
