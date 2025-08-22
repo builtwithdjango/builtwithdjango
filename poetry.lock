@@ -2633,6 +2633,23 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=8.3.4)", "pytest-
 type = ["mypy (>=1.14.1)"]
 
 [[package]]
+name = "plotext"
+version = "5.3.2"
+description = "plotext plots directly on terminal"
+optional = false
+python-versions = ">=3.5"
+groups = ["main"]
+files = [
+    {file = "plotext-5.3.2-py3-none-any.whl", hash = "sha256:394362349c1ddbf319548cfac17ca65e6d5dfc03200c40dfdc0503b3e95a2283"},
+    {file = "plotext-5.3.2.tar.gz", hash = "sha256:52d1e932e67c177bf357a3f0fe6ce14d1a96f7f7d5679d7b455b929df517068e"},
+]
+
+[package.extras]
+completion = ["shtab"]
+image = ["pillow (>=8.4)"]
+video = ["ffpyplayer (>=4.3.5)", "opencv-python (>=4.5.5)", "pafy (>=0.5.5)", "pillow (>=8.4)", "youtube-dl (==2020.12.2)"]
+
+[[package]]
 name = "posthog"
 version = "3.25.0"
 description = "Integrate PostHog into any python application."
@@ -4233,4 +4250,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "e35db2552ea72329e3327a326ab5ed6acc5ac24d4087249054c5b59c22c3e375"
+content-hash = "2616a5653a3e3e7e375479a59293fdfce692edf36ce6707827327403de3abf68"

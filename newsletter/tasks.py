@@ -18,7 +18,6 @@ def add_email_to_buttondown(email, tag, ip_address=None):
         "subscriber_type": "unactivated",
     }
 
-    # Add IP address to metadata if provided
     if ip_address:
         data["ip_address"] = ip_address
     if tag == "user":
@@ -30,20 +29,18 @@ def add_email_to_buttondown(email, tag, ip_address=None):
         json=data,
     )
 
-    # Parse response data
     try:
         response_data = r.json() if r.text.strip() else {}
     except requests.exceptions.JSONDecodeError:
         response_data = {"error": "Non-JSON response", "content": r.text}
 
-    # Prepare log context with all relevant data
     log_context = {
         "email": email,
         "tag": tag,
         "ip_address": ip_address,
         "status_code": r.status_code,
         "response_data": response_data,
-        "response_text": r.text[:500] if r.text else None,  # Truncate long responses
+        "response_text": r.text[:500] if r.text else None,
     }
 
     logger.info("Buttondown API response", **log_context)
