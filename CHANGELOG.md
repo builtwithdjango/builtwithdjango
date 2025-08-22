@@ -19,6 +19,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 - Support for getting ip address of user and passing it to buttondown
 - Support for logfire
 - Version usage for buttondown
+- Added admin command to unpublish projects
 
 ### Changed
 - buttondown api version we are using

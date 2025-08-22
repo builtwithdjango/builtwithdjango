@@ -58,7 +58,12 @@ def getWeeklyTemplateView(request):
     if form.is_valid():
         days = form.cleaned_data["days"]
         filter_date = datetime.today() - timedelta(days=days)
-        projects = Project.objects.filter(created_date__gte=filter_date).filter(published=True)
+        projects = Project.objects.filter(
+            created_date__gte=filter_date,
+            published=True,
+            might_be_spam=False,
+            active=True,
+        )
         jobs = Job.objects.filter(created_datetime__gte=filter_date).filter(approved=True)
         podcast_episodes = Episode.objects.filter(created_datetime__gte=filter_date)
         context = {

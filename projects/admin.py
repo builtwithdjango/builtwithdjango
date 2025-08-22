@@ -35,10 +35,19 @@ def tweet_selected_projects(modeladmin, request, queryset):
 tweet_selected_projects.short_description = "Tweet about selected project(s) on Twitter"
 
 
+def unpublish_selected_projects(modeladmin, request, queryset):
+    """Admin action to unpublish selected projects."""
+    updated = queryset.update(published=False)
+    modeladmin.message_user(request, f"Successfully unpublished {updated} project(s).", level=messages.SUCCESS)
+
+
+unpublish_selected_projects.short_description = "Unpublish selected project(s)"
+
+
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ["title", "logged_in_maker", "active", "published", "maker", "date_added", "might_be_spam"]
     inlines = [CommentInline, LikeInline]
-    actions = [tweet_selected_projects]
+    actions = [unpublish_selected_projects]
 
 
 admin.site.register(Project, ProjectAdmin)

@@ -30,7 +30,12 @@ def get_news_and_updates_block():
 def get_projects_block():
     block = ""
     last_7_days = timezone.now() - timedelta(days=7)
-    projects = Project.objects.filter(created_date__gte=last_7_days).filter(published=True)
+    projects = Project.objects.filter(
+        created_date__gte=last_7_days,
+        published=True,
+        might_be_spam=False,
+        active=True,
+    )
     for project in projects:
         if project.maker:
             maker = f"by [{project.maker.first_name} {project.maker.last_name}](https://builtwithdjango.com{project.maker.get_absolute_url}):"
