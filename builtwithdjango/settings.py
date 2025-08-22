@@ -102,8 +102,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "posthog.sentry.django.PosthogDistinctIdMiddleware",
-    "kolo.middleware.KoloMiddleware",
+    "django_structlog.middlewares.RequestMiddleware",  # adds log for each request
 ]
 
 ROOT_URLCONF = "builtwithdjango.urls"

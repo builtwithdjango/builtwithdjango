@@ -21,6 +21,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 ### Removed
 - Usage of opentelemetry directly
+- Kolo and Posthog Sentry middleware
 
 ## [0.4.5] - 2025-02-13
 ### Added
