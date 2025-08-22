@@ -70,6 +70,7 @@ sentry-sdk = "^2.20.0"
 pydantic-ai = "^0.0.24"
 twikit = "^2.3.3"
 google-genai = "^1.28.0"
+logfire = "^4.3.4"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"

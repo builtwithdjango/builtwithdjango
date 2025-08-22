@@ -16,6 +16,12 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 ## [0.4.5] - 2025-02-13
 ### Added
+- Support for getting ip address of user and passing it to buttondown
+- Support for logfire
+
+
+## [0.4.5] - 2025-02-13
+### Added
 - Added Jina Reader API and Pydantic AI to programmatically analyze newly submitted project
 
 ## [0.4.4] - 2025-02-08

@@ -29,9 +29,19 @@ class NewsletterSignupView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy("home")
     success_message = "Thanks for subscribing!"
 
+    def get_client_ip(self, request):
+        """Get the client's IP address from the request."""
+        x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(",")[0]
+        else:
+            ip = request.META.get("REMOTE_ADDR")
+        return ip
+
     def form_valid(self, form):
         self.object = form.save()
-        async_task(add_email_to_buttondown, self.object.user_email, tag="newsletter")
+        ip_address = self.get_client_ip(self.request)
+        async_task(add_email_to_buttondown, self.object.user_email, tag="newsletter", ip_address=ip_address)
 
         messages.success(self.request, "Thanks for subscribing!")
 

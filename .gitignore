@@ -168,3 +168,5 @@ dev-debug.log
 *.sw?
 # OS specific
 # Task files
+
+.logfire/

@@ -14,6 +14,7 @@ import os
 
 import cloudinary
 import environ
+import logfire
 import posthog
 import sentry_sdk
 import structlog
@@ -28,6 +29,8 @@ env = environ.Env(
 environ.Env.read_env()
 
 ENVIRONMENT = env("ENV")
+
+logfire.configure(environment=ENVIRONMENT)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -370,6 +373,7 @@ structlog.configure(
         structlog.stdlib.add_logger_name,
         structlog.stdlib.add_log_level,
         structlog.stdlib.PositionalArgumentsFormatter(),
+        logfire.StructlogProcessor(),
         structlog.processors.StackInfoRenderer(),
         structlog.processors.format_exc_info,
         structlog.processors.UnicodeDecoder(),
