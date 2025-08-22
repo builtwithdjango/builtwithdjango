@@ -1,8 +1,12 @@
 import requests
+import structlog
 from django.conf import settings
 from django.utils import timezone
 
+from builtwithdjango.utils import get_builtwithdjango_logger
 from newsletter.utils import generate_buttondown_newsletter_subject, prepare_newsletter
+
+logger = get_builtwithdjango_logger(__name__)
 
 
 def add_email_to_buttondown(email, tag, ip_address=None):
@@ -26,26 +30,30 @@ def add_email_to_buttondown(email, tag, ip_address=None):
         json=data,
     )
 
-    # Check if the response is successful
-    if r.status_code in [200, 201]:
-        # Check if the response has content before parsing JSON
-        if r.text.strip():
-            try:
-                return r.json()
-            except requests.exceptions.JSONDecodeError:
-                # If JSON parsing fails, return the text content
-                return {"error": "Invalid JSON response", "content": r.text}
-        else:
-            # Empty response but successful status code
-            return {"success": True, "message": "Email added successfully"}
-    else:
-        # Handle error responses
-        try:
-            error_data = r.json() if r.text.strip() else {"error": "Empty error response"}
-        except requests.exceptions.JSONDecodeError:
-            error_data = {"error": "Non-JSON error response", "content": r.text}
+    # Parse response data
+    try:
+        response_data = r.json() if r.text.strip() else {}
+    except requests.exceptions.JSONDecodeError:
+        response_data = {"error": "Non-JSON response", "content": r.text}
 
-        raise Exception(f"Buttondown API error (status {r.status_code}): {error_data}")
+    # Prepare log context with all relevant data
+    log_context = {
+        "email": email,
+        "tag": tag,
+        "ip_address": ip_address,
+        "status_code": r.status_code,
+        "response_data": response_data,
+        "response_text": r.text[:500] if r.text else None,  # Truncate long responses
+    }
+
+    # Log the response
+    logger.info("Buttondown API response", **log_context)
+
+    # Return structured response
+    if r.status_code in [200, 201]:
+        return {"success": True, "data": response_data}
+    else:
+        return {"success": False, "status_code": r.status_code, "error_data": response_data}
 
 
 def send_buttondown_newsletter():
