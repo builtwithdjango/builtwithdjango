@@ -51,7 +51,6 @@ boto3 = "^1.26.154"
 posthog = "^3.4.0"
 uvicorn = "^0.29.0"
 django = "^5.0.3"
-django-q2 = "^1.6.2"
 redis = "^5.0.3"
 django-anymail = {extras = ["mailgun"], version = "^10.3"}
 ipython = "^8.23.0"
@@ -65,6 +64,7 @@ logfire = "^4.3.4"
 plotext = "^5.3.2"
 sentry-sdk = "^2.41.0"
 structlog-sentry = "^2.2.1"
+django-q2 = {extras = ["sentry"], version = "^1.8.0"}
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
