@@ -1,8 +1,8 @@
 from functools import partial
 
 import stripe
+from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
-from allauth.account.utils import send_email_confirmation
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
@@ -174,6 +174,8 @@ def update_user_to_pro(event):
 
 def resend_email_confirmation_email(request):
     user = request.user
-    send_email_confirmation(request, user, user.email)
+    adapter = get_adapter(request)
+    emailaddress = EmailAddress.objects.get_for_user(user, user.email)
+    adapter.send_confirmation_mail(request, emailaddress, signup=False)
 
     return redirect("update-profile")
