@@ -17,7 +17,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 ## [0.4.5] - 2025-02-13
 ### Changed
 - better Logfire and Sentry support
-- updated a bunch of libraries which cause a few failures. so fixed all of these
+- updated a bunch of libraries which cause a few failures. so fixed all of these.
 
 
 ## [0.4.5] - 2025-02-13
