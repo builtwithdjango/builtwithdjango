@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+import logging
 import os
 
 import cloudinary
@@ -20,6 +21,11 @@ import sentry_sdk
 import structlog
 from posthog.sentry.posthog_integration import PostHogIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.logging import LoggingIntegration
+from sentry_sdk.integrations.redis import RedisIntegration
+from structlog_sentry import SentryProcessor
+
+from builtwithdjango.logging_utils import scrubbing_callback
 
 env = environ.Env(
     # set casting, default value
@@ -30,7 +36,15 @@ environ.Env.read_env()
 
 ENVIRONMENT = env("ENV")
 
-logfire.configure(environment=ENVIRONMENT)
+SENTRY_DSN = env("dsn", default="")
+
+LOGFIRE_TOKEN = env("LOGFIRE_TOKEN", default="")
+
+if LOGFIRE_TOKEN != "":
+    logfire.configure(
+        environment=ENVIRONMENT,
+        scrubbing=logfire.ScrubbingOptions(callback=scrubbing_callback),
+    )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -220,21 +234,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 # Sites
 SITE_ID = 1
 
-if ENVIRONMENT == "prod":
-    sentry_sdk.init(
-        dsn=env("dsn"),
-        send_default_pii=True,
-        traces_sample_rate=1.0,
-        profiles_sample_rate=1.0,
-        integrations=[
-            PostHogIntegration(),
-            DjangoIntegration(
-                middleware_spans=True,
-                signals_spans=True,
-            ),
-        ],
-    )
-
 # Newsletters
 EMAILOCTOPUS_API = env("EMAILOCTOPUS_API")
 OCTO_LIST_ID = env("OCTO_LIST_ID")
@@ -316,18 +315,36 @@ Q_CLUSTER = {
     "workers": 4,
     "max_attempts": 2,
     "redis": env("REDIS_URL"),
+    "error_reporter": {},
 }
 
 # Screenshot API
 SCREENSHOT_API_KEY = env("SCREENSHOT_API_KEY")
 
+
+def extract_from_record(logger, name, event_dict):
+    """
+    Extract thread name and add them to the event dict.
+    """
+    record = event_dict["_record"]
+    event_dict["thread_id"] = record.thread
+    return event_dict
+
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
+        "simple": {"format": "%(levelname)s %(message)s"},
+        "verbose": {"format": "%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"},
+        "json": {"format": "%(message)s"},
         "json_formatter": {
             "()": structlog.stdlib.ProcessorFormatter,
-            "processor": structlog.processors.JSONRenderer(),
+            "processors": [
+                extract_from_record,
+                structlog.stdlib.ProcessorFormatter.remove_processors_meta,
+                structlog.processors.JSONRenderer(),
+            ],
         },
         "plain_console": {
             "()": structlog.stdlib.ProcessorFormatter,
@@ -338,8 +355,22 @@ LOGGING = {
             "processor": structlog.processors.KeyValueRenderer(key_order=["timestamp", "level", "event", "logger"]),
         },
     },
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
     "handlers": {
         "console": {
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+            "formatter": "plain_console",
+            "level": "DEBUG",
+        },
+        "prod_console": {
             "class": "logging.StreamHandler",
             "formatter": "plain_console",
             "level": "DEBUG",
@@ -356,6 +387,22 @@ LOGGING = {
             "level": "INFO",
             "propagate": False,
         },
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
+        # django.server can log some low-level logs, but also does log requests,
+        # for some reason...
+        "django.server": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "level": "ERROR",  # so we don't chunder 404s, etc
+            "propagate": False,
+        },
         "builtwithdjango": {
             "level": "DEBUG",
             "handlers": ["console"],
@@ -364,28 +411,75 @@ LOGGING = {
     },
 }
 
-structlog.configure(
-    processors=[
-        structlog.contextvars.merge_contextvars,
-        structlog.stdlib.filter_by_level,
-        structlog.processors.TimeStamper(fmt="iso"),
-        structlog.stdlib.add_logger_name,
-        structlog.stdlib.add_log_level,
-        structlog.stdlib.PositionalArgumentsFormatter(),
-        logfire.StructlogProcessor(),
-        structlog.processors.StackInfoRenderer(),
-        structlog.processors.format_exc_info,
+structlog_processors = [
+    structlog.contextvars.merge_contextvars,
+    structlog.stdlib.filter_by_level,
+    structlog.processors.TimeStamper(fmt="iso"),
+    structlog.stdlib.add_logger_name,
+    structlog.stdlib.add_log_level,
+    structlog.stdlib.PositionalArgumentsFormatter(),
+    structlog.processors.StackInfoRenderer(),
+    # structlog.processors.format_exc_info,
+]
+
+if SENTRY_DSN:
+    structlog_processors.append(
+        SentryProcessor(
+            event_level=logging.ERROR,
+            level=logging.INFO,
+            active=True,
+            as_context=True,
+            tag_keys="__all__",
+            verbose=True,
+        )
+    )
+
+if LOGFIRE_TOKEN:
+    structlog_processors.append(logfire.StructlogProcessor())
+
+structlog_processors.extend(
+    [
         structlog.processors.UnicodeDecoder(),
         structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
-    ],
+    ]
+)
+
+structlog.configure(
+    processors=structlog_processors,
     logger_factory=structlog.stdlib.LoggerFactory(),
     cache_logger_on_first_use=True,
 )
 
 if ENVIRONMENT == "prod":
+    LOGGING["loggers"]["django.server"]["level"] = "WARNING"
+    LOGGING["loggers"]["django_structlog"]["handlers"].append("json_console")
     LOGGING["loggers"]["builtwithdjango"]["level"] = env("DJANGO_LOG_LEVEL", default="INFO")
-    LOGGING["loggers"]["builtwithdjango"]["handlers"] = ["json_console"]
-    LOGGING["loggers"]["django_structlog"]["handlers"] = ["json_console"]
+    LOGGING["loggers"]["builtwithdjango"]["handlers"].append("json_console")
+
+if SENTRY_DSN:
+    Q_CLUSTER["error_reporter"]["sentry"] = {"dsn": SENTRY_DSN}
+    sentry_sdk.init(
+        debug=DEBUG,
+        dsn=SENTRY_DSN,
+        environment=ENVIRONMENT,
+        send_default_pii=False,
+        traces_sample_rate=1,
+        profile_session_sample_rate=1,
+        profile_lifecycle="trace",
+        integrations=[
+            PostHogIntegration(),
+            DjangoIntegration(
+                middleware_spans=True,
+                signals_spans=True,
+            ),
+            RedisIntegration(),
+        ],
+        disabled_integrations=[
+            LoggingIntegration(),
+        ],
+        attach_stacktrace=True,
+        include_local_variables=True,
+    )
 
 posthog.project_api_key = env("POSTHOG_API_KEY")
 posthog.host = "https://app.posthog.com"

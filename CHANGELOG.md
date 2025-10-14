@@ -15,6 +15,11 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 
 ## [0.4.5] - 2025-02-13
+### Changed
+- better Logfire and Sentry support
+
+
+## [0.4.5] - 2025-02-13
 ### Added
 - Support for getting ip address of user and passing it to buttondown
 - Support for logfire
