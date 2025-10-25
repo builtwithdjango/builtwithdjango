@@ -3,7 +3,6 @@ from functools import partial
 import stripe
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -11,11 +10,9 @@ from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, TemplateView, UpdateView
-from django_q.tasks import async_task
-from djstripe import models, settings as djstripe_settings, webhooks
+from djstripe import models, settings as djstripe_settings
+from djstripe.event_handlers import djstripe_receiver
 
 from builtwithdjango.utils import get_builtwithdjango_logger
 from developers.forms import UpdateDeveloperForm
@@ -24,33 +21,15 @@ from developers.views import process_django_devs_webhook
 from jobs.views import process_job_webhook
 from newsletter.views import NewsletterSignupForm
 
-from .forms import CustomLoginForm, CustomUserCreationForm, CustomUserUpdateForm
+from .forms import CustomUserUpdateForm
 from .models import CustomUser
 
 stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
 logger = get_builtwithdjango_logger(__name__)
 
 
-class SignUpView(CreateView):
-    form_class = CustomUserCreationForm
-    success_url = reverse_lazy("login")
-    template_name = "account/signup.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(SignUpView, self).get_context_data(**kwargs)
-        context["newsletter_form"] = NewsletterSignupForm
-
-        return context
-
-
-class CustomLoginView(LoginView):
-    form_class = CustomLoginForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["newsletter_form"] = NewsletterSignupForm
-
-        return context
+# Authentication is handled by Django Allauth
+# See ACCOUNT_FORMS in settings.py for custom form configuration
 
 
 class ProfileUpdateForm(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
@@ -131,7 +110,7 @@ def create_checkout_session(request, pk):
     return redirect(checkout_session.url, code=303)
 
 
-@webhooks.handler("checkout.session.completed")
+@djstripe_receiver("checkout.session.completed")
 def successfull_payment_webhook(event, **kwargs):
     pro_price_id = models.Price.objects.get(nickname="pro").id
     devs_price_id = models.Price.objects.get(nickname="django_devs").id

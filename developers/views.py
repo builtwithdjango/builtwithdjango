@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView, UpdateView
-from djstripe import models, settings as djstripe_settings, webhooks
+from djstripe import models, settings as djstripe_settings
 
 from builtwithdjango.utils import get_builtwithdjango_logger
 from users.models import CustomUser

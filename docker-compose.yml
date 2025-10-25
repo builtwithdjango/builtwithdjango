@@ -1,0 +1,141 @@
+services:
+  db:
+    image: rasulkireev/custom-postgres:17
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=bwd
+      - POSTGRES_USER=bwd
+      - POSTGRES_PASSWORD=bwd
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bwd"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --requirepass bwd
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    environment:
+      - REDIS_PASSWORD=bwd
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./deployment/Dockerfile.python
+    working_dir: /app
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      frontend:
+        condition: service_started
+    env_file:
+      - builtwithdjango/.env
+
+  workers:
+    build:
+      context: .
+      dockerfile: ./deployment/Dockerfile.python
+    working_dir: /app
+    command: python manage.py qcluster
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    env_file:
+      - builtwithdjango/.env
+
+  frontend:
+    image: node:18
+    working_dir: /app
+    command: sh -c "npm install && npm run start"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "9091:9091"
+
+  mailhog:
+    image: mailhog/mailhog
+    expose:
+      - 1025
+      - 8025
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  stripe:
+    image: stripe/stripe-cli:latest
+    command: [
+      "listen",
+      "-H", "x-djstripe-webhook-secret: ${DJSTRIPE_WEBHOOK_SECRET}",
+      "--forward-to", "http://backend:8000/stripe/webhook/${WEBHOOK_UUID}/"
+    ]
+    environment:
+      - STRIPE_API_KEY=${STRIPE_TEST_SECRET_KEY}
+      - STRIPE_DEVICE_NAME=djstripe_docker
+      - DJSTRIPE_WEBHOOK_SECRET=${DJSTRIPE_WEBHOOK_SECRET}
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    env_file:
+      - builtwithdjango/.env
+
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    environment:
+      MINIO_ROOT_USER: builtwithdjango
+      MINIO_ROOT_PASSWORD: builtwithdjango
+    command: server --console-address ":9001" /data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      sleep 5 &&
+      /usr/bin/mc config host add myminio http://minio:9000 bwd bwd &&
+      /usr/bin/mc mb myminio/bwd-dev &&
+      /usr/bin/mc anonymous set download myminio/bwd-dev &&
+      exit 0;
+      "
+
+  mjml:
+    image: danihodovic/mjml-server
+    ports:
+      - "15500:15500"
+
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:

@@ -1,19 +1,29 @@
 from datetime import datetime, timedelta
 
+from allauth.account.models import EmailAddress
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponseRedirect
 from django.templatetags.static import static  # Add this import
 from django.urls import reverse, reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, RedirectView, TemplateView, UpdateView
+from django_q.tasks import async_task
 
 from blog.models import Post
 from jobs.models import Job
+from jobs.tasks import get_latest_jobs_from_tj_alerts, send_sponsorship_request_email
 from newsletter.views import NewsletterSignupForm
 from podcast.models import Episode
 from projects.models import Project
 
 from .forms import AddNftRequest, ConfirmEmail
 from .models import CistercianDateNftRequest
+
+User = get_user_model()
 
 
 class HomeView(TemplateView):
@@ -102,3 +112,91 @@ class ConfirmEmail(SuccessMessageMixin, UpdateView):
 
 class TermsOfService(TemplateView):
     template_name = "pages/terms-of-service.html"
+
+
+class AdminPanelView(UserPassesTestMixin, TemplateView):
+    """Admin panel view - only accessible to superusers"""
+
+    template_name = "pages/admin-panel.html"
+
+    def test_func(self):
+        """Only allow superusers to access this view"""
+        return self.request.user.is_superuser
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Get statistics
+        # Count confirmed users (users with verified email addresses)
+        confirmed_users = (
+            EmailAddress.objects.filter(verified=True).values_list("user_id", flat=True).distinct().count()
+        )
+
+        # Count total users
+        total_users = User.objects.count()
+
+        # Count published projects
+        published_projects = Project.objects.filter(published=True).count()
+
+        # Count total projects
+        total_projects = Project.objects.count()
+
+        # Get latest jobs (approved jobs)
+        latest_jobs = Job.objects.filter(approved=True).order_by("-created_datetime")[:5]
+
+        # Get the very latest job for sponsorship email
+        latest_job = Job.objects.filter(approved=True).order_by("-created_datetime").first()
+
+        context.update(
+            {
+                "confirmed_users_count": confirmed_users,
+                "total_users_count": total_users,
+                "published_projects_count": published_projects,
+                "total_projects_count": total_projects,
+                "latest_jobs": latest_jobs,
+                "latest_job": latest_job,
+            }
+        )
+
+        return context
+
+
+class SendSponsorshipEmailView(UserPassesTestMixin, View):
+    """View to trigger sponsorship email for the latest job"""
+
+    def test_func(self):
+        """Only allow superusers to access this view"""
+        return self.request.user.is_superuser
+
+    def post(self, request, *args, **kwargs):
+        # Get the latest approved job
+        latest_job = Job.objects.filter(approved=True).order_by("-created_datetime").first()
+
+        if not latest_job:
+            messages.error(request, "No approved jobs found to send sponsorship email.")
+            return HttpResponseRedirect(reverse("admin-panel"))
+
+        # Queue the async task
+        async_task(send_sponsorship_request_email, latest_job, task_name=f"send_sponsorship_email_job_{latest_job.id}")
+
+        messages.success(
+            request, f"Sponsorship email task queued for job: {latest_job.title} at {latest_job.company_name}"
+        )
+
+        return HttpResponseRedirect(reverse("admin-panel"))
+
+
+class FetchJobsFromTJAlertsView(UserPassesTestMixin, View):
+    """View to trigger fetching latest jobs from TJ Alerts"""
+
+    def test_func(self):
+        """Only allow superusers to access this view"""
+        return self.request.user.is_superuser
+
+    def post(self, request, *args, **kwargs):
+        # Queue the async task to fetch jobs
+        async_task(get_latest_jobs_from_tj_alerts, task_name="fetch_jobs_from_tj_alerts")
+
+        messages.success(request, "Job fetching task queued! New jobs from TJ Alerts will be imported shortly.")
+
+        return HttpResponseRedirect(reverse("admin-panel"))

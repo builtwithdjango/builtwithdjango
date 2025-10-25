@@ -1,4 +1,4 @@
-from allauth.account.forms import LoginForm
+from allauth.account.forms import LoginForm, SignupForm
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm
@@ -14,7 +14,7 @@ class ImageWidget(forms.widgets.ClearableFileInput):
     template_name = "widgets/image_widget.html"
 
 
-class CustomUserCreationForm(UserCreationForm):
+class CustomUserCreationForm(SignupForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.error_class = DivErrorList
@@ -22,6 +22,11 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = get_user_model()
         fields = ("username", "email", "password1", "password2")
+
+    def save(self, request):
+        # Call the parent save method which handles the allauth signup process
+        user = super().save(request)
+        return user
 
 
 class CustomUserUpdateForm(UserChangeForm):
