@@ -7,7 +7,6 @@ from django_filters.views import FilterView
 from django_q.tasks import async_task
 
 from newsletter.forms import NewsletterSignupForm
-from users.forms import CustomUserCreationForm
 
 from .filters import ProjectFilter
 from .forms import AddComment, AddProject, ProjectUpdateViewForm
@@ -91,8 +90,7 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["registration_form"] = CustomUserCreationForm
-
+        # Registration is handled by Django Allauth via account_signup URL
         return context
 
     def form_valid(self, form):

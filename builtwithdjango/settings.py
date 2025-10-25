@@ -60,8 +60,12 @@ SECRET_KEY = env("SECRET_KEY")
 # False if not in os.environ
 DEBUG = env.bool("DEBUG")
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
-CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS")
+SITE_URL = env("SITE_URL")
+
+# Remove the port from the SITE_URL and the https prefix (mostly for dev)
+ALLOWED_HOSTS = [SITE_URL.replace("http://", "").replace("https://", "").split(":")[0]]
+
+CSRF_TRUSTED_ORIGINS = [SITE_URL]
 
 ADMIN_URL = env("ADMIN_URL")
 
@@ -136,6 +140,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "users.context_processors.available_social_providers",
             ],
         },
     },
@@ -264,9 +269,18 @@ ANYMAIL = {
 }
 
 if DEBUG:
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = "mailhog"  # Use the service name from docker-compose
+    EMAIL_PORT = 1025
+    EMAIL_USE_TLS = False
+    EMAIL_HOST_USER = ""
+    EMAIL_HOST_PASSWORD = ""
 else:
-    EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+    if env("MAILGUN_API_KEY", default="") == "":
+        EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    else:
+        EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+
 
 DEFAULT_FROM_EMAIL = "Built with Django <rasul@builtwithdjango.com>"
 SERVER_EMAIL = "error@builtwithdjango.com"
@@ -288,9 +302,8 @@ ACCOUNT_FORMS = {
 }
 
 ACCOUNT_SESSION_REMEMBER = True
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = "username"
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_SIGNUP_FIELDS = ["email*", "username*", "password1*", "password2*"]
+ACCOUNT_LOGIN_METHODS = {"username"}
 ACCOUNT_UNIQUE_EMAIL = True
 if ENVIRONMENT == "prod":
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
@@ -299,7 +312,6 @@ if ENVIRONMENT == "prod":
 STRIPE_LIVE_SECRET_KEY = env("STRIPE_LIVE_SECRET_KEY")
 STRIPE_TEST_SECRET_KEY = env("STRIPE_TEST_SECRET_KEY")
 STRIPE_LIVE_MODE = env.bool("STRIPE_LIVE_MODE")
-DJSTRIPE_WEBHOOK_VALIDATION = "retrieve_event"
 DJSTRIPE_USE_NATIVE_JSONFIELD = True
 DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
 
@@ -396,7 +408,7 @@ LOGGING = {
         # for some reason...
         "django.server": {
             "handlers": ["console"],
-            "level": "ERROR",
+            "level": "CRITICAL",
             "propagate": False,
         },
         "django.request": {
@@ -423,7 +435,7 @@ structlog_processors = [
     # structlog.processors.format_exc_info,
 ]
 
-if SENTRY_DSN:
+if SENTRY_DSN and ENVIRONMENT == "prod":
     structlog_processors.append(
         SentryProcessor(
             event_level=logging.ERROR,
@@ -457,7 +469,7 @@ if ENVIRONMENT == "prod":
     LOGGING["loggers"]["builtwithdjango"]["level"] = env("DJANGO_LOG_LEVEL", default="INFO")
     LOGGING["loggers"]["builtwithdjango"]["handlers"].append("json_console")
 
-if SENTRY_DSN:
+if SENTRY_DSN and ENVIRONMENT == "prod":
     Q_CLUSTER["error_reporter"]["sentry"] = {"dsn": SENTRY_DSN}
     sentry_sdk.init(
         debug=DEBUG,

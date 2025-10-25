@@ -1,8 +1,6 @@
 from datetime import timedelta
-from functools import partial
 
 import stripe
-from django.db import transaction
 from django.shortcuts import redirect
 from django.templatetags.static import static
 from django.urls import reverse, reverse_lazy
@@ -127,14 +125,30 @@ def create_checkout_session(request, pk):
     return redirect(checkout_session.url, code=303)
 
 
-def process_job_webhook(event):
-    if event.type == "checkout.session.completed":
-        transaction.on_commit(partial(update_job_to_paid, event))
+def sponsor_job_checkout_session(request, pk):
+    """
+    Create a Stripe checkout session for sponsoring an existing job posting.
+    This is used when someone wants to sponsor a job that was already posted.
+    """
+    price_id = models.Price.objects.get(nickname="job").id
 
+    # Get the job to include in metadata
+    job = Job.objects.get(pk=pk)
 
-def update_job_to_paid(event):
-    job_id = event.data["object"]["metadata"]["pk"]
-    job = Job.objects.get(pk=job_id)
-    job.paid = True
-    job.approved = True
-    job.save()
+    checkout_session = stripe.checkout.Session.create(
+        success_url=request.build_absolute_uri(reverse_lazy("job_thank_you")) + "?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url=request.build_absolute_uri(reverse("job_details", kwargs={"pk": job.pk, "slug": job.slug}))
+        + "?status=failed",
+        mode="payment",
+        line_items=[
+            {
+                "quantity": 1,
+                "price": price_id,
+            }
+        ],
+        allow_promotion_codes=True,
+        automatic_tax={"enabled": True},
+        metadata={"pk": pk, "price_id": price_id},
+    )
+
+    return redirect(checkout_session.url, code=303)

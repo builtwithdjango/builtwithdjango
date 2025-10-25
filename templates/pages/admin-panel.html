@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <title>Admin Panel - Built with Django</title>
+{% endblock meta %}
+
+{% block content %}
+
+<div class="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Admin Panel</h1>
+        <p class="mt-2 text-gray-600">Dashboard overview and administrative actions</p>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="mb-6">
+            {% for message in messages %}
+                <div class="p-4 mb-4 rounded-md {% if message.tags == 'success' %}bg-green-50 text-green-800{% elif message.tags == 'error' %}bg-red-50 text-red-800{% else %}bg-blue-50 text-blue-800{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Statistics Cards -->
+    <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
+        <!-- Confirmed Users -->
+        <div class="overflow-hidden bg-white rounded-lg shadow">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1 ml-5 w-0">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">
+                                Confirmed Users
+                            </dt>
+                            <dd class="text-3xl font-semibold text-gray-900">
+                                {{ confirmed_users_count }}
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <p class="text-sm text-gray-500">Total users: {{ total_users_count }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Published Projects -->
+        <div class="overflow-hidden bg-white rounded-lg shadow">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1 ml-5 w-0">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">
+                                Published Projects
+                            </dt>
+                            <dd class="text-3xl font-semibold text-gray-900">
+                                {{ published_projects_count }}
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <p class="text-sm text-gray-500">Total projects: {{ total_projects_count }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Latest Jobs Count -->
+        <div class="overflow-hidden bg-white rounded-lg shadow">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1 ml-5 w-0">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">
+                                Approved Jobs
+                            </dt>
+                            <dd class="text-3xl font-semibold text-gray-900">
+                                {{ latest_jobs|length }}
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <p class="text-sm text-gray-500">Last 5 jobs shown below</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sponsorship Action Card -->
+        <div class="overflow-hidden bg-gradient-to-br from-green-50 to-green-100 rounded-lg shadow">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="w-6 h-6 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1 ml-5 w-0">
+                        <dl>
+                            <dt class="text-sm font-medium text-green-700 truncate">
+                                Quick Actions
+                            </dt>
+                            <dd class="mt-1 text-sm text-green-600">
+                                Send sponsorship emails
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Latest Jobs Table -->
+    <div class="overflow-hidden mb-8 bg-white rounded-lg shadow">
+        <div class="px-6 py-4 border-b border-gray-200">
+            <h2 class="text-xl font-semibold text-gray-900">Latest Jobs</h2>
+        </div>
+        <div class="overflow-x-auto">
+            {% if latest_jobs %}
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                Job Title
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                Company
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                Location
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                Remote
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                Posted
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for job in latest_jobs %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">
+                                        <a href="{{ job.get_absolute_url }}" class="hover:text-green-600">
+                                            {{ job.title }}
+                                        </a>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ job.company_name }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">{{ job.location|default:"Not specified" }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if job.remote %}
+                                        <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                            Yes
+                                        </span>
+                                    {% else %}
+                                        <span class="inline-flex px-2 text-xs font-semibold leading-5 text-gray-800 bg-gray-100 rounded-full">
+                                            No
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                    {{ job.created_datetime|date:"M d, Y" }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="px-6 py-8 text-center text-gray-500">
+                    No approved jobs found.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Admin Actions Grid -->
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <!-- Fetch Jobs from TJ Alerts -->
+        <div class="overflow-hidden bg-white rounded-lg shadow">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-900">Fetch Jobs from TJ Alerts</h2>
+            </div>
+            <div class="p-6">
+                <p class="mb-4 text-sm text-gray-600">
+                    This will queue an async task to fetch the latest Django jobs from TJ Alerts API and import them into the database.
+                </p>
+
+                <form method="post" action="{% url 'fetch-jobs-from-tj-alerts' %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                            class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md border border-transparent shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        Fetch Latest Jobs (Async)
+                    </button>
+                </form>
+
+                <div class="p-3 mt-4 bg-blue-50 rounded-md">
+                    <p class="text-xs text-blue-800">
+                        <strong>Note:</strong> This task will fetch jobs with Django technology from TJ Alerts and automatically create new Job records for those not already in the database.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sponsorship Email Action -->
+        {% if latest_job %}
+            <div class="overflow-hidden bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-900">Send Sponsorship Email</h2>
+                </div>
+                <div class="p-6">
+                    <div class="mb-4">
+                        <p class="mb-2 text-sm text-gray-600">This will queue an async task to send a sponsorship request email for the latest job:</p>
+                        <div class="p-4 bg-gray-50 rounded-md">
+                            <p class="text-sm font-medium text-gray-900">{{ latest_job.title }}</p>
+                            <p class="text-sm text-gray-600">at {{ latest_job.company_name }}</p>
+                            <p class="mt-1 text-xs text-gray-500">Email: {{ latest_job.email|default:"No email" }}</p>
+                            <p class="text-xs text-gray-500">Posted: {{ latest_job.created_datetime|date:"M d, Y" }}</p>
+                        </div>
+                    </div>
+
+                    <form method="post" action="{% url 'send-sponsorship-email' %}">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md border border-transparent shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                {% if not latest_job.email %}disabled{% endif %}>
+                            <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Send Sponsorship Email (Async)
+                        </button>
+                        {% if not latest_job.email %}
+                            <p class="mt-2 text-sm text-red-600">Cannot send email - no email address for this job.</p>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <div class="overflow-hidden bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-900">Send Sponsorship Email</h2>
+                </div>
+                <div class="p-6 text-center text-gray-500">
+                    No jobs available to send sponsorship emails.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

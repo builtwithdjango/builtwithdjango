@@ -1,17 +1,12 @@
-from functools import partial
-
 import stripe
 from allauth.account.models import EmailAddress
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db import transaction
-from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView, UpdateView
-from djstripe import models, settings as djstripe_settings, webhooks
+from djstripe import models, settings as djstripe_settings
 
 from builtwithdjango.utils import get_builtwithdjango_logger
-from users.models import CustomUser
 
 from .forms import UpdateDeveloperForm
 from .models import Developer
@@ -111,25 +106,6 @@ def create_checkout_session(request):
     )
 
     return redirect(checkout_session.url, code=303)
-
-
-def process_django_devs_webhook(event):
-    if event.type == "checkout.session.completed":
-        subscription_id = event.data["object"]["subscription"]
-        logger.info(f"Updating Subsctiprion ID: {subscription_id}")
-        models.Subscription.sync_from_stripe_data(stripe.Subscription.retrieve(subscription_id))
-
-        transaction.on_commit(partial(update_django_dev_subscription_flag, event))
-
-    return HttpResponse(status=200)
-
-
-def update_django_dev_subscription_flag(event):
-    logger.info(f"update_django_dev_subscription_flag started")
-    user_id = event.data["object"]["metadata"]["user_id"]
-    user = CustomUser.objects.get(id=user_id)
-    user.has_active_django_devs_subscription = True
-    user.save()
 
 
 def create_customer_portal_session(request):
