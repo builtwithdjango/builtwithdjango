@@ -1,8 +1,6 @@
 from datetime import timedelta
-from functools import partial
 
 import stripe
-from django.db import transaction
 from django.shortcuts import redirect
 from django.templatetags.static import static
 from django.urls import reverse, reverse_lazy
@@ -154,16 +152,3 @@ def sponsor_job_checkout_session(request, pk):
     )
 
     return redirect(checkout_session.url, code=303)
-
-
-def process_job_webhook(event):
-    if event.type == "checkout.session.completed":
-        transaction.on_commit(partial(update_job_to_paid, event))
-
-
-def update_job_to_paid(event):
-    job_id = event.data["object"]["metadata"]["pk"]
-    job = Job.objects.get(pk=job_id)
-    job.paid = True
-    job.approved = True
-    job.save()

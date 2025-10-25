@@ -44,7 +44,7 @@ def send_sponsorship_request_email(job_instance):
 
     message = f"""Hey there,
 
-I just found the Django job on HackerNews and added it to Built with Django Job Board ({job_url}).
+I just found your job on HackerNews and added it to Built with Django Job Board ({job_url}).
 
 Emailing you to ask if you want to sponsor that posting.
 
@@ -141,7 +141,7 @@ def get_latest_jobs_from_tj_alerts():
         new_job.save()
 
         # Send sponsorship request email if job has an email address
-        send_sponsorship_request_email(new_job)
+        # send_sponsorship_request_email(new_job)
 
         count += 1
 

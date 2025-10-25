@@ -9,4 +9,4 @@ class UsersConfig(AppConfig):
     name = "users"
 
     def ready(self):
-        from . import tasks
+        from . import tasks, webhooks  # noqa: F401
