@@ -14,9 +14,10 @@ logger = get_builtwithdjango_logger(__name__)
 
 
 def get_intro_block():
-    return r"""Hey, Happy Wednesday!
+    day_of_week = timezone.now().strftime("%A")
+    return f"""Hey, Happy {day_of_week}!
 
-> ***Why are you getting this***: \*You signed up to receive this newsletter on [Built with Django](https://builtwithdjango.com). I promised to send you the latest projects and jobs on the site as well as any other interesting Django content I encountered during the month. *If you don't want to receive this newsletter, feel free to* [*unsubscribe*](\{\{ unsubscribe_url }}) *anytime.*
+> ***Why are you getting this***: \*You signed up to receive this newsletter on [Built with Django](https://builtwithdjango.com). I promised to send you the latest projects and jobs on the site as well as any other interesting Django content I encountered during the month. *If you don't want to receive this newsletter, feel free to* [*unsubscribe*]({{{{ unsubscribe_url }}}}) *anytime.*
     """
 
 
