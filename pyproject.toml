@@ -66,7 +66,6 @@ oauthlib = "^3.3.1"
 requests-oauthlib = "^2.0.0"
 django-oauth-toolkit = "^3.1.0"
 pillow = "^12.0.0"
-dj-stripe = "^2.10.3"
 stripe = "^13.0.1"
 
 [tool.poetry.dev-dependencies]

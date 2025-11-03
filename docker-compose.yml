@@ -85,9 +85,10 @@ services:
       context: .
       dockerfile: ./deployment/Dockerfile.python
     working_dir: /app
-    command: python manage.py stripe_listen
+    command: python manage.py stripe_listen --host backend
     volumes:
       - .:/app
+
     depends_on:
       db:
         condition: service_healthy

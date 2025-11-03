@@ -12,6 +12,11 @@ RUN apt-get update && apt-get install -y \
     && apt-get install -y stripe \
     && rm -rf /var/lib/apt/lists/*
 
+
+COPY deployment/dj_stripe-2.10.4-py3-none-any.whl /tmp/
+RUN pip install --upgrade pip && pip install /tmp/dj_stripe-2.10.4-py3-none-any.whl
+
+
 # Install Python dependencies
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt

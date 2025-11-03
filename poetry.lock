@@ -771,26 +771,6 @@ files = [
 ]
 
 [[package]]
-name = "dj-stripe"
-version = "2.10.3"
-description = "Django + Stripe made easy"
-optional = false
-python-versions = "<4.0,>=3.11"
-groups = ["main"]
-files = [
-    {file = "dj_stripe-2.10.3-py3-none-any.whl", hash = "sha256:035b8f991429d5a474d1d46e4f3ab36722250fa9dac39b5d835c694c49a19dea"},
-    {file = "dj_stripe-2.10.3.tar.gz", hash = "sha256:fe870a93dfcbb7f17432fb1da7291a2222c89b32a6d6fba16cb34ed6b37f1584"},
-]
-
-[package.dependencies]
-django = ">=5.0"
-stripe = ">=11.3.0"
-
-[package.extras]
-mysql = ["mysqlclient (>=1.4.0)"]
-postgres = ["psycopg (>=3.2.3,<4.0.0)"]
-
-[[package]]
 name = "django"
 version = "5.2.7"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
@@ -4474,4 +4454,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "4f66db9b8a24e6c059f63e5ef23c1572183752c74e95a0198e41ac434a25165a"
+content-hash = "cfba399589c4af06ab28f8eede52b853cf89038a160bf471b2e1ff04d6ead4b4"
