@@ -16,6 +16,7 @@ from django_q.tasks import async_task
 from blog.models import Post
 from jobs.models import Job
 from jobs.tasks import get_latest_jobs_from_tj_alerts, send_sponsorship_request_email
+from newsletter.tasks import send_buttondown_newsletter
 from newsletter.views import NewsletterSignupForm
 from podcast.models import Episode
 from projects.models import Project
@@ -198,5 +199,35 @@ class FetchJobsFromTJAlertsView(UserPassesTestMixin, View):
         async_task(get_latest_jobs_from_tj_alerts, task_name="fetch_jobs_from_tj_alerts")
 
         messages.success(request, "Job fetching task queued! New jobs from TJ Alerts will be imported shortly.")
+
+        return HttpResponseRedirect(reverse("admin-panel"))
+
+
+class PrepareNewsletterView(UserPassesTestMixin, View):
+    """View to prepare and schedule newsletter with custom days_back parameter"""
+
+    def test_func(self):
+        """Only allow superusers to access this view"""
+        return self.request.user.is_superuser
+
+    def post(self, request, *args, **kwargs):
+        # Get days_back from POST data, default to 7
+        try:
+            days_back = int(request.POST.get("days_back", 7))
+            if days_back < 1 or days_back > 365:
+                raise ValueError("Days must be between 1 and 365")
+        except (ValueError, TypeError):
+            messages.error(request, "Invalid number of days. Please enter a number between 1 and 365.")
+            return HttpResponseRedirect(reverse("admin-panel"))
+
+        # Queue the async task to prepare and send newsletter
+        task_id = async_task(
+            send_buttondown_newsletter, days_back=days_back, task_name=f"prepare_newsletter_{days_back}_days"
+        )
+
+        messages.success(
+            request,
+            f"Newsletter task queued successfully! Content from the last {days_back} days will be included. Task ID: {task_id}",
+        )
 
         return HttpResponseRedirect(reverse("admin-panel"))

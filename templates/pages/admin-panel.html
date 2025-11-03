@@ -200,6 +200,49 @@
 
     <!-- Admin Actions Grid -->
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <!-- Prepare Newsletter -->
+        <div class="overflow-hidden bg-white rounded-lg shadow">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-900">Prepare Newsletter</h2>
+            </div>
+            <div class="p-6">
+                <p class="mb-4 text-sm text-gray-600">
+                    This will queue an async task to prepare and schedule a newsletter with content from the last X days (projects, jobs, blog posts).
+                </p>
+
+                <form method="post" action="{% url 'prepare-newsletter' %}">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="days_back" class="block mb-2 text-sm font-medium text-gray-700">
+                            Days to look back
+                        </label>
+                        <input type="number"
+                               id="days_back"
+                               name="days_back"
+                               value="7"
+                               min="1"
+                               max="365"
+                               class="block px-3 py-2 w-32 text-sm rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                        <p class="mt-1 text-xs text-gray-500">Enter number between 1 and 365</p>
+                    </div>
+
+                    <button type="submit"
+                            class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md border border-transparent shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        Prepare Newsletter (Async)
+                    </button>
+                </form>
+
+                <div class="p-3 mt-4 bg-green-50 rounded-md">
+                    <p class="text-xs text-green-800">
+                        <strong>Note:</strong> This will create a newsletter draft in Buttondown scheduled for 9 AM today with an AI-generated subject line.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <!-- Fetch Jobs from TJ Alerts -->
         <div class="overflow-hidden bg-white rounded-lg shadow">
             <div class="px-6 py-4 border-b border-gray-200">

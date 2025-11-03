@@ -52,12 +52,21 @@ def add_email_to_buttondown(email, tag, ip_address=None):
         return {"success": False, "status_code": r.status_code, "error_data": response_data}
 
 
-def send_buttondown_newsletter():
+def send_buttondown_newsletter(days_back: int = 7):
+    """
+    Create and send a newsletter via Buttondown API.
+
+    Args:
+        days_back: Number of days to look back for content. Defaults to 7.
+    """
     now = timezone.now()
     nine_am_today = now.replace(hour=9, minute=0, second=0, microsecond=0)
     publish_date = nine_am_today.isoformat()
 
-    body = prepare_newsletter()
+    logger.info("Preparing newsletter with content from the last %d days", days_back)
+
+    # Prepare newsletter with content from the specified number of days
+    body = prepare_newsletter(days_back=days_back)
     subject = generate_buttondown_newsletter_subject(body)
 
     url = "https://api.buttondown.com/v1/emails"
@@ -67,6 +76,8 @@ def send_buttondown_newsletter():
     response = requests.post(url, headers=headers, json=data)
 
     if response.status_code == 200 or response.status_code == 201:
+        logger.info("Newsletter created successfully", subject=subject, days_back=days_back)
         return "Success"
     else:
+        logger.error("Failed to create newsletter", status_code=response.status_code, response=response.text[:500])
         response.raise_for_status()
