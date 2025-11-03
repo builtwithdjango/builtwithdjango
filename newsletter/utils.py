@@ -14,9 +14,10 @@ logger = get_builtwithdjango_logger(__name__)
 
 
 def get_intro_block():
-    return """Hey, Happy Wednesday!
+    day_of_week = timezone.now().strftime("%A")
+    return f"""Hey, Happy {day_of_week}!
 
-> ***Why are you getting this***: \*You signed up to receive this newsletter on [Built with Django](https://builtwithdjango.com). I promised to send you the latest projects and jobs on the site as well as any other interesting Django content I encountered during the month. *If you don't want to receive this newsletter, feel free to* [*unsubscribe*](\{\{ unsubscribe_url }}) *anytime.*
+> ***Why are you getting this***: \*You signed up to receive this newsletter on [Built with Django](https://builtwithdjango.com). I promised to send you the latest projects and jobs on the site as well as any other interesting Django content I encountered during the month. *If you don't want to receive this newsletter, feel free to* [*unsubscribe*]({{{{ unsubscribe_url }}}}) *anytime.*
     """
 
 
@@ -27,15 +28,23 @@ def get_news_and_updates_block():
     return ""
 
 
-def get_projects_block():
+def get_projects_block(days_back: int = 7):
+    """
+    Get projects block for newsletter.
+
+    Args:
+        days_back: Number of days to look back for projects. Defaults to 7.
+    """
     block = ""
-    last_7_days = timezone.now() - timedelta(days=7)
+    cutoff_date = timezone.now() - timedelta(days=days_back)
+
     projects = Project.objects.filter(
-        created_date__gte=last_7_days,
+        created_date__gte=cutoff_date,
         published=True,
         might_be_spam=False,
         active=True,
     )
+
     for project in projects:
         if project.maker:
             maker = f"by [{project.maker.first_name} {project.maker.last_name}](https://builtwithdjango.com{project.maker.get_absolute_url}):"
@@ -48,10 +57,17 @@ def get_projects_block():
     return block
 
 
-def get_jobs_block():
+def get_jobs_block(days_back: int = 7):
+    """
+    Get jobs block for newsletter.
+
+    Args:
+        days_back: Number of days to look back for jobs. Defaults to 7.
+    """
     block = ""
-    last_7_days = timezone.now() - timedelta(days=7)
-    jobs = Job.objects.filter(created_datetime__gte=last_7_days).filter(approved=True)
+    cutoff_date = timezone.now() - timedelta(days=days_back)
+
+    jobs = Job.objects.filter(created_datetime__gte=cutoff_date).filter(approved=True)
     for job in jobs:
         stars = "⭐⭐⭐" if getattr(job, "paid", False) else ""
         block += (
@@ -143,6 +159,13 @@ def get_latest_django_documents(limit: int = 10, days_back: int = 7) -> List[Dic
 
 
 def get_blog_posts_block(limit: int = 10, days_back: int = 7):
+    """
+    Get blog posts block for newsletter.
+
+    Args:
+        limit: Maximum number of blog posts to include.
+        days_back: Number of days to look back for blog posts. Defaults to 7.
+    """
     docs = get_latest_django_documents(limit=limit, days_back=days_back)
 
     block = ""
@@ -152,7 +175,13 @@ def get_blog_posts_block(limit: int = 10, days_back: int = 7):
     return block
 
 
-def prepare_newsletter():
+def prepare_newsletter(days_back: int = 7):
+    """
+    Prepare the newsletter content.
+
+    Args:
+        days_back: Number of days to look back for content. Defaults to 7.
+    """
     newsletter = ""
     newsletter += "\n\n"
 
@@ -172,13 +201,13 @@ def prepare_newsletter():
     # newsletter += get_news_and_updates_block()
 
     newsletter += "\n\n## Projects\n"
-    newsletter += get_projects_block()
+    newsletter += get_projects_block(days_back=days_back)
 
     newsletter += "\n\n## Jobs\n"
-    newsletter += get_jobs_block()
+    newsletter += get_jobs_block(days_back=days_back)
 
     newsletter += "\n\n## Blog Posts from the Community\n"
-    newsletter += get_blog_posts_block()
+    newsletter += get_blog_posts_block(days_back=days_back)
 
     # newsletter += "\n\n## Top Links from Last Issue\n"
     # newsletter += get_top_links_block()

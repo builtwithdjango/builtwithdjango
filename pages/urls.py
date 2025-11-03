@@ -6,6 +6,7 @@ from .views import (
     ConfirmEmail,
     FetchJobsFromTJAlertsView,
     HomeView,
+    PrepareNewsletterView,
     RequestNftView,
     SendSponsorshipEmailView,
     Support,
@@ -28,4 +29,5 @@ urlpatterns = [
     path(
         "admin-panel/fetch-jobs-from-tj-alerts/", FetchJobsFromTJAlertsView.as_view(), name="fetch-jobs-from-tj-alerts"
     ),
+    path("admin-panel/prepare-newsletter/", PrepareNewsletterView.as_view(), name="prepare-newsletter"),
 ]
