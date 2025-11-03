@@ -67,7 +67,6 @@ def send_buttondown_newsletter(days_back: int = 7):
 
     url = "https://api.buttondown.com/v1/emails"
     headers = {"Authorization": f"Token {settings.BUTTONDOWN_API_TOKEN}"}
-    # Omitting publish_date creates a draft instead of scheduling the email
     data = {"subject": subject, "body": body, "status": "draft"}
 
     r = requests.post(url, headers=headers, json=data)
