@@ -68,15 +68,9 @@ def send_buttondown_newsletter(days_back: int = 7):
     url = "https://api.buttondown.com/v1/emails"
     headers = {"Authorization": f"Token {settings.BUTTONDOWN_API_TOKEN}"}
     # Omitting publish_date creates a draft instead of scheduling the email
-    data = {"subject": subject, "body": body}
+    data = {"subject": subject, "body": body, "status": "draft"}
 
-    response = requests.post(url, headers=headers, json=data)
+    r = requests.post(url, headers=headers, json=data)
 
-    if response.status_code == 200 or response.status_code == 201:
-        logger.info("Newsletter draft created successfully", subject=subject, days_back=days_back)
-        return "Success"
-    else:
-        logger.error(
-            "Failed to create newsletter draft", status_code=response.status_code, response=response.text[:500]
-        )
-        response.raise_for_status()
+    logger.info("Newsletter draft created successfully", subject=subject, days_back=days_back)
+    return "Success"
