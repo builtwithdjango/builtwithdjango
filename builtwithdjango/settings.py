@@ -64,6 +64,9 @@ SITE_URL = env("SITE_URL")
 
 # Remove the port from the SITE_URL and the https prefix (mostly for dev)
 ALLOWED_HOSTS = [SITE_URL.replace("http://", "").replace("https://", "").split(":")[0]]
+if DEBUG:
+    # this is for stripe webhooks
+    ALLOWED_HOSTS.append("backend")
 
 CSRF_TRUSTED_ORIGINS = [SITE_URL]
 

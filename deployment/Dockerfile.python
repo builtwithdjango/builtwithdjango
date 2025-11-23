@@ -2,6 +2,22 @@ FROM python:3.13
 
 WORKDIR /app
 
+# Install Stripe CLI
+RUN apt-get update && apt-get install -y \
+    curl \
+    gpg \
+    && curl -s https://packages.stripe.dev/api/security/keypair/stripe-cli-gpg/public | gpg --dearmor > /usr/share/keyrings/stripe.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/stripe.gpg] https://packages.stripe.dev/stripe-cli-debian-local stable main" > /etc/apt/sources.list.d/stripe.list \
+    && apt-get update \
+    && apt-get install -y stripe \
+    && rm -rf /var/lib/apt/lists/*
+
+
+COPY deployment/dj_stripe-2.10.4-py3-none-any.whl /tmp/
+RUN pip install --upgrade pip && pip install /tmp/dj_stripe-2.10.4-py3-none-any.whl
+
+
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
