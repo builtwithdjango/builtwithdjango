@@ -121,7 +121,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_structlog.middlewares.RequestMiddleware",  # adds log for each request
+    # "django_structlog.middlewares.RequestMiddleware",  # adds log for each request
 ]
 
 ROOT_URLCONF = "builtwithdjango.urls"
