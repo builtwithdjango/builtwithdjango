@@ -1,10 +1,16 @@
 import os
 import tempfile
 
+import environ
+
 
 def set_test_env(name, value):
     if os.environ.get(name) in {None, "", "''", '""'}:
         os.environ[name] = value
+
+
+def env_flag(name):
+    return os.environ.get(name, "").strip().lower() in {"1", "true", "yes", "on"}
 
 
 set_test_env("ENV", "test")
@@ -43,12 +49,19 @@ DEBUG = False
 ALLOWED_HOSTS = ["testserver", "localhost", "127.0.0.1"]
 CSRF_TRUSTED_ORIGINS = ["http://localhost:8000"]
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ":memory:",
+if env_flag("DJANGO_TEST_USE_DATABASE_URL"):
+    DATABASES = {
+        "default": environ.Env.db_url_config(os.environ["DATABASE_URL"]),
     }
-}
+    if env_flag("DJANGO_TEST_REUSE_EXISTING_DATABASE"):
+        DATABASES["default"]["TEST"] = {"NAME": DATABASES["default"]["NAME"]}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": ":memory:",
+        }
+    }
 
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.MD5PasswordHasher",
