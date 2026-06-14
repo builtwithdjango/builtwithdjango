@@ -1,3 +1,5 @@
+.PHONY: serve manage makemigrations shell test test-pgsandbox bash test-webhook stripe-listen restart-worker prod-shell
+
 serve:
 	docker compose up -d --build
 	docker compose logs -f backend
@@ -12,7 +14,16 @@ shell:
 	docker compose run --rm backend python ./manage.py shell_plus --ipython
 
 test:
-	docker compose run --rm backend pytest
+	docker compose run --rm backend pytest $(ARGS)
+
+test-pgsandbox:
+	@test -n "$$DATABASE_URL" || (echo "DATABASE_URL is required. Create a pgsandbox database, then run: DATABASE_URL='postgresql://...' make test-pgsandbox"; exit 1)
+	@pgsandbox_database_url=$$(printf '%s' "$$DATABASE_URL" | sed -e 's/@localhost:/@host.docker.internal:/' -e 's/@127\.0\.0\.1:/@host.docker.internal:/'); \
+	docker compose run --rm --no-deps \
+		-e DJANGO_TEST_USE_DATABASE_URL=true \
+		-e DJANGO_TEST_REUSE_EXISTING_DATABASE=true \
+		-e DATABASE_URL="$$pgsandbox_database_url" \
+		backend pytest --reuse-db $(ARGS)
 
 bash:
 	docker compose run --rm backend bash
