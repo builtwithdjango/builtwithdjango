@@ -18,7 +18,7 @@ test:
 
 test-pgsandbox:
 	@test -n "$$DATABASE_URL" || (echo "DATABASE_URL is required. Create a pgsandbox database, then run: DATABASE_URL='postgresql://...' make test-pgsandbox"; exit 1)
-	@pgsandbox_database_url=$$(printf '%s' "$$DATABASE_URL" | sed -e 's/@localhost:/@host.docker.internal:/' -e 's/@127\.0\.0\.1:/@host.docker.internal:/' -e 's/@\[::1\]:/@host.docker.internal:/'); \
+	@pgsandbox_database_url=$$(printf '%s' "$$DATABASE_URL" | sed -e 's/@localhost\([:/]\)/@host.docker.internal\1/' -e 's/@127\.0\.0\.1\([:/]\)/@host.docker.internal\1/' -e 's/@\[::1\]\([:/]\)/@host.docker.internal\1/'); \
 	docker compose run --rm --no-deps \
 		-e DJANGO_TEST_USE_DATABASE_URL=true \
 		-e DJANGO_TEST_REUSE_EXISTING_DATABASE=true \
