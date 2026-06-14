@@ -53,6 +53,8 @@ if env_flag("DJANGO_TEST_USE_DATABASE_URL"):
     DATABASES = {
         "default": environ.Env.db_url_config(os.environ["DATABASE_URL"]),
     }
+    if env_flag("DJANGO_TEST_REUSE_EXISTING_DATABASE"):
+        DATABASES["default"]["TEST"] = {"NAME": DATABASES["default"]["NAME"]}
 else:
     DATABASES = {
         "default": {
@@ -60,9 +62,6 @@ else:
             "NAME": ":memory:",
         }
     }
-
-if env_flag("DJANGO_TEST_REUSE_EXISTING_DATABASE"):
-    DATABASES["default"]["TEST"] = {"NAME": DATABASES["default"]["NAME"]}
 
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.MD5PasswordHasher",
