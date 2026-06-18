@@ -33,6 +33,7 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = (
             "id",
+            "author",
             "title",
             "description",
             "slug",
@@ -41,39 +42,42 @@ class PostSerializer(serializers.ModelSerializer):
             "content",
             "status",
             "type",
+            "level",
+            "unsplashID",
             "created",
             "modified",
         )
-        read_only_fields = ("id", "created", "modified", "tag_list")
+        read_only_fields = ("id", "author", "created", "modified", "tag_list")
 
     def create(self, validated_data):
-        from django.contrib.auth import get_user_model
+        tags_string = validated_data.pop("tags", None)
+        if not getattr(validated_data.get("author"), "is_superuser", False):
+            raise serializers.ValidationError("Superuser author is required.")
 
-        # Extract tags string if provided
-        tags_string = validated_data.pop("tags", "")
-
-        # Set author to first superuser
-        User = get_user_model()
-        author = User.objects.filter(is_superuser=True).first()
-        if not author:
-            raise serializers.ValidationError("No superuser found in the system. Please create one first.")
-
-        validated_data["author"] = author
-
-        # Set default level if not provided
         if "level" not in validated_data:
             validated_data["level"] = Post.BEGINNER
 
-        # Create the post
         post = Post.objects.create(**validated_data)
-
-        # Process tags if provided
-        if tags_string:
-            tag_names = [name.strip() for name in tags_string.split(",") if name.strip()]
-            for tag_name in tag_names:
-                tag, created = Tag.objects.get_or_create(
-                    name=tag_name, defaults={"slug": tag_name.lower().replace(" ", "-")}
-                )
-                post.tags.add(tag)
+        self.set_tags(post, tags_string)
 
         return post
+
+    def update(self, instance, validated_data):
+        tags_string = validated_data.pop("tags", None)
+        post = super().update(instance, validated_data)
+        self.set_tags(post, tags_string)
+        return post
+
+    def set_tags(self, post, tags_string):
+        if not tags_string:
+            return
+
+        tag_names = [name.strip() for name in tags_string.split(",") if name.strip()]
+        if not tag_names:
+            return
+
+        post.tags.clear()
+        for tag_name in tag_names:
+            slug = tag_name.lower().replace(" ", "-")
+            tag, _created = Tag.objects.get_or_create(slug=slug, defaults={"name": tag_name})
+            post.tags.add(tag)

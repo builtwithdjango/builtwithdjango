@@ -1,8 +1,9 @@
 from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, status
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from rest_framework.permissions import AllowAny, BasePermission, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -11,6 +12,11 @@ from builtwithdjango.analytics import capture
 from projects.models import Like, Project
 
 from .serializers import LikeSerializer, LikeSerializerNoId, PostSerializer
+
+
+class IsSuperuser(BasePermission):
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_authenticated and request.user.is_superuser)
 
 
 class CreateLikeProjectAPIView(generics.ListCreateAPIView):
@@ -194,18 +200,20 @@ def search_projects(request):
     return Response(results)
 
 
-class CreatePostAPIView(generics.CreateAPIView):
+class BlogPostListCreateAPIView(generics.ListCreateAPIView):
     """
-    Create a new blog post.
-    Only superusers can create posts.
+    List and create blog posts for token-authenticated superusers.
     """
 
-    queryset = Post.objects.all()
+    queryset = Post.objects.select_related("author").prefetch_related("tags")
     serializer_class = PostSerializer
-    permission_classes = [IsAdminUser]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsSuperuser]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["status", "type", "level"]
 
     def perform_create(self, serializer):
-        post = serializer.save()
+        post = serializer.save(author=self.request.user)
         capture(
             self.request,
             "post created",
@@ -215,5 +223,49 @@ class CreatePostAPIView(generics.CreateAPIView):
                 "post_slug": post.slug,
                 "post_status": post.status,
                 "post_type": post.type,
+            },
+        )
+
+
+class BlogPostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve, update, and delete blog posts for token-authenticated superusers.
+    """
+
+    queryset = Post.objects.select_related("author").prefetch_related("tags")
+    serializer_class = PostSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsSuperuser]
+
+    def perform_update(self, serializer):
+        post = serializer.save()
+        capture(
+            self.request,
+            "post updated",
+            properties={
+                "post_id": post.id,
+                "post_title": post.title,
+                "post_slug": post.slug,
+                "post_status": post.status,
+                "post_type": post.type,
+            },
+        )
+
+    def perform_destroy(self, instance):
+        post_id = instance.id
+        post_title = instance.title
+        post_slug = instance.slug
+        post_status = instance.status
+        post_type = instance.type
+        instance.delete()
+        capture(
+            self.request,
+            "post deleted",
+            properties={
+                "post_id": post_id,
+                "post_title": post_title,
+                "post_slug": post_slug,
+                "post_status": post_status,
+                "post_type": post_type,
             },
         )
