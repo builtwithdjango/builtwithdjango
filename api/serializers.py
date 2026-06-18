@@ -51,13 +51,8 @@ class PostSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         tags_string = validated_data.pop("tags", None)
-
-        if "author" not in validated_data:
-            request = self.context.get("request")
-            user = getattr(request, "user", None)
-            if not getattr(user, "is_authenticated", False) or not getattr(user, "is_superuser", False):
-                raise serializers.ValidationError("Superuser author is required.")
-            validated_data["author"] = user
+        if not getattr(validated_data.get("author"), "is_superuser", False):
+            raise serializers.ValidationError("Superuser author is required.")
 
         if "level" not in validated_data:
             validated_data["level"] = Post.BEGINNER
@@ -74,14 +69,13 @@ class PostSerializer(serializers.ModelSerializer):
         return post
 
     def set_tags(self, post, tags_string):
-        if tags_string is None:
+        if not tags_string:
             return
 
         post.tags.clear()
         tag_names = [name.strip() for name in tags_string.split(",") if name.strip()]
         for tag_name in tag_names:
-            tag, _created = Tag.objects.get_or_create(
-                name=tag_name,
-                defaults={"slug": tag_name.lower().replace(" ", "-")},
-            )
+            tag = Tag.objects.filter(name__iexact=tag_name).first()
+            if tag is None:
+                tag = Tag.objects.create(name=tag_name, slug=tag_name.lower().replace(" ", "-"))
             post.tags.add(tag)

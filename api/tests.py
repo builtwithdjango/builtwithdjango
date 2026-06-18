@@ -316,9 +316,10 @@ class BlogPostApiTests(TestCase):
         self.assertEqual(post.level, Post.ADVANCED)
         self.assertEqual(set(post.tags.values_list("name", flat=True)), {"Django", "Agents"})
 
-    def test_update_post_with_blank_tags_clears_tags(self):
+    def test_update_post_with_blank_tags_leaves_tags_unchanged(self):
         post = self.make_post(title="Tagged Guide", slug="tagged-guide")
-        post.tags.add(Tag.objects.create(name="Old", slug="old"))
+        tag = Tag.objects.create(name="Old", slug="old")
+        post.tags.add(tag)
 
         response = self.client.patch(
             reverse("api_post_detail", args=[post.id]),
@@ -328,7 +329,23 @@ class BlogPostApiTests(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertFalse(post.tags.exists())
+        self.assertEqual(list(post.tags.all()), [tag])
+
+    def test_update_post_reuses_case_variant_tag_names(self):
+        django_tag = Tag.objects.create(name="Django", slug="django")
+        post = self.make_post(title="Case Tags", slug="case-tags")
+
+        response = self.client.patch(
+            reverse("api_post_detail", args=[post.id]),
+            data=json.dumps({"tags": "DJANGO, Agents"}),
+            content_type="application/json",
+            **self.auth_headers(self.admin_token),
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(set(post.tags.values_list("name", flat=True)), {"Django", "Agents"})
+        self.assertIn(django_tag, post.tags.all())
+        self.assertEqual(Tag.objects.filter(slug="django").count(), 1)
 
     def test_delete_post_removes_post(self):
         post = self.make_post(title="Delete Me", slug="delete-me")
