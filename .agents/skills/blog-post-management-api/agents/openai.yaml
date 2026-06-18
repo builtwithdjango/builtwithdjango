@@ -1,0 +1,4 @@
+interface:
+  display_name: "Blog Post API"
+  short_description: "Manage blog posts through the superuser API"
+  default_prompt: "Use $blog-post-management-api to create, read, update, or delete blog posts with the superuser token API."
