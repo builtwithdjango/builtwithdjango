@@ -55,8 +55,8 @@ class PostSerializer(serializers.ModelSerializer):
         if "author" not in validated_data:
             request = self.context.get("request")
             user = getattr(request, "user", None)
-            if not getattr(user, "is_authenticated", False):
-                raise serializers.ValidationError("Authenticated author is required.")
+            if not getattr(user, "is_authenticated", False) or not getattr(user, "is_superuser", False):
+                raise serializers.ValidationError("Superuser author is required.")
             validated_data["author"] = user
 
         if "level" not in validated_data:

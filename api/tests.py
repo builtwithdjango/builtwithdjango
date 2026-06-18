@@ -316,6 +316,20 @@ class BlogPostApiTests(TestCase):
         self.assertEqual(post.level, Post.ADVANCED)
         self.assertEqual(set(post.tags.values_list("name", flat=True)), {"Django", "Agents"})
 
+    def test_update_post_with_blank_tags_clears_tags(self):
+        post = self.make_post(title="Tagged Guide", slug="tagged-guide")
+        post.tags.add(Tag.objects.create(name="Old", slug="old"))
+
+        response = self.client.patch(
+            reverse("api_post_detail", args=[post.id]),
+            data=json.dumps({"tags": ""}),
+            content_type="application/json",
+            **self.auth_headers(self.admin_token),
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(post.tags.exists())
+
     def test_delete_post_removes_post(self):
         post = self.make_post(title="Delete Me", slug="delete-me")
 
