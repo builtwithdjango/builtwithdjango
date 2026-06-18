@@ -75,7 +75,6 @@ class PostSerializer(serializers.ModelSerializer):
         post.tags.clear()
         tag_names = [name.strip() for name in tags_string.split(",") if name.strip()]
         for tag_name in tag_names:
-            tag = Tag.objects.filter(name__iexact=tag_name).first()
-            if tag is None:
-                tag = Tag.objects.create(name=tag_name, slug=tag_name.lower().replace(" ", "-"))
+            slug = tag_name.lower().replace(" ", "-")
+            tag, _created = Tag.objects.get_or_create(slug=slug, defaults={"name": tag_name})
             post.tags.add(tag)
