@@ -62,7 +62,7 @@ Tag behavior:
 - On create, non-empty `tags` creates or reuses tags by slug and attaches them.
 - On update, non-empty `tags` replaces the full tag set.
 - Omitted `tags` leaves tags unchanged.
-- Blank `tags` is treated as no-op. Do not send `tags: ""` expecting tags to be cleared.
+- Blank, whitespace-only, or comma-only `tags` is treated as no-op. Do not send `tags: ""` expecting tags to be cleared.
 
 ## Request Examples
 

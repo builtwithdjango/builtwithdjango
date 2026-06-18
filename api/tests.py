@@ -317,19 +317,21 @@ class BlogPostApiTests(TestCase):
         self.assertEqual(set(post.tags.values_list("name", flat=True)), {"Django", "Agents"})
 
     def test_update_post_with_blank_tags_leaves_tags_unchanged(self):
-        post = self.make_post(title="Tagged Guide", slug="tagged-guide")
-        tag = Tag.objects.create(name="Old", slug="old")
-        post.tags.add(tag)
+        for index, tags_value in enumerate(["", "  ", ",, ,"]):
+            with self.subTest(tags_value=tags_value):
+                post = self.make_post(title=f"Tagged Guide {index}", slug=f"tagged-guide-{index}")
+                tag = Tag.objects.create(name=f"Old {index}", slug=f"old-{index}")
+                post.tags.add(tag)
 
-        response = self.client.patch(
-            reverse("api_post_detail", args=[post.id]),
-            data=json.dumps({"tags": ""}),
-            content_type="application/json",
-            **self.auth_headers(self.admin_token),
-        )
+                response = self.client.patch(
+                    reverse("api_post_detail", args=[post.id]),
+                    data=json.dumps({"tags": tags_value}),
+                    content_type="application/json",
+                    **self.auth_headers(self.admin_token),
+                )
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(post.tags.all()), [tag])
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(list(post.tags.all()), [tag])
 
     def test_update_post_reuses_case_variant_tag_names(self):
         django_tag = Tag.objects.create(name="Django", slug="django")
