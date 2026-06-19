@@ -10,6 +10,7 @@ export default class extends Dropdown {
 
   disconnect() {
     document.removeEventListener("keydown", this.boundCloseOnEscape);
+    super.disconnect?.();
   }
 
   toggle(event) {

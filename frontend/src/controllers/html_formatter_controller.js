@@ -117,8 +117,15 @@ export default class extends Controller {
     textarea.style.top = '-9999px';
     document.body.appendChild(textarea);
     textarea.select();
-    document.execCommand('copy');
-    textarea.remove();
+
+    try {
+      const copied = document.execCommand('copy');
+      if (!copied) {
+        throw new Error('Copy command was rejected');
+      }
+    } finally {
+      textarea.remove();
+    }
   }
 
   clearResult() {

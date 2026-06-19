@@ -59,20 +59,20 @@
                </div>
            </div>
        </div>
-	       <form class="mt-5 w-full sm:ml-4 sm:mt-4"
-	             action="{% url 'newsletter_home' %}"
-	             method="post"
-	             enctype="multipart/form-data">
-	           {% csrf_token %} {{ newsletter_form.non_field_errors }}
-	           <label for="modal-newsletter-email" class="sr-only">Email address</label>
-	           <div class="bw-inline-form">
-	               <span class="min-w-0 flex-1">
-	                   {% render_field newsletter_form.user_email id="modal-newsletter-email" class="bw-form-input" type="email" autocomplete="email" placeholder="you@example.com" %}
-	               </span>
-	               <button class="bw-button bw-button-primary"
-	                       type="submit">
-	                   Submit
-	               </button>
+       <form class="mt-5 w-full sm:ml-4 sm:mt-4"
+             action="{% url 'newsletter_home' %}"
+             method="post"
+             enctype="multipart/form-data">
+           {% csrf_token %} {{ newsletter_form.non_field_errors }}
+           <label for="modal-newsletter-email" class="sr-only">Email address</label>
+           <div class="bw-inline-form">
+               <span class="min-w-0 flex-1">
+                   {% render_field newsletter_form.user_email id="modal-newsletter-email" class="bw-form-input" type="email" autocomplete="email" placeholder="you@example.com" %}
+               </span>
+               <button class="bw-button bw-button-primary"
+                       type="submit">
+                   Submit
+               </button>
            </div>
        </form>
    </div>
