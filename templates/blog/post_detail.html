@@ -29,8 +29,8 @@
 <div data-controller="exit-intent" data-action="mouseout@document->exit-intent#openModal">
 {# djlint:on #}
   <section class="pb-16">
-    <div class="bw-container max-w-4xl">
-      <article class="bw-surface p-5 sm:p-8">
+    <div class="bw-container">
+      <article class="bw-surface max-w-4xl p-5 sm:p-8">
         <div class="bw-prose prose max-w-none md:prose-lg">
           <div class="blog-post">
             {{ object.content | markdown | safe }}
