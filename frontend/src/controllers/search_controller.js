@@ -68,10 +68,10 @@ export default class extends Controller {
     updateSelection(results) {
         results.forEach((result, index) => {
             if (index === this.selectedIndex) {
-                result.classList.add("bg-gray-50");
+                result.classList.add("bw-search-result--active");
                 result.scrollIntoView({ block: "nearest" });
             } else {
-                result.classList.remove("bg-gray-50");
+                result.classList.remove("bw-search-result--active");
             }
         });
     }
@@ -116,7 +116,6 @@ export default class extends Controller {
                 has_results: data.length > 0
             });
         } catch (error) {
-            console.error("Search error:", error);
             this.capture("project search failed", {
                 query_length: query.length,
                 error: error.message
@@ -128,7 +127,7 @@ export default class extends Controller {
     showResults(results) {
         if (!results.length) {
             const emptyState = document.createElement("div");
-            emptyState.className = "p-4 text-sm text-gray-500";
+            emptyState.className = "bw-search-empty";
             emptyState.textContent = "No projects found";
             this.resultsTarget.replaceChildren(emptyState);
             this.resultsTarget.classList.remove("hidden");
@@ -146,14 +145,14 @@ export default class extends Controller {
         link.dataset.analyticsProjectId = String(result.id || "");
         link.dataset.analyticsProjectTitle = result.title || "";
         link.dataset.analyticsProjectSlug = result.slug || "";
-        link.className = "flex flex-col p-4 border-b border-gray-100 hover:bg-gray-50 last:border-b-0";
+        link.className = "bw-search-result";
 
         const title = document.createElement("div");
-        title.className = "font-medium text-gray-900";
+        title.className = "bw-search-result__title";
         title.textContent = result.title || "";
 
         const description = document.createElement("div");
-        description.className = "text-sm text-gray-500";
+        description.className = "bw-search-result__description";
         description.textContent = result.short_description || "";
 
         link.append(title, description);

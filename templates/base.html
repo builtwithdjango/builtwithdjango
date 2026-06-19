@@ -14,12 +14,12 @@
     {% endblock meta %}
 
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" />
     {% stylesheet_pack 'hotwire' attrs='data-turbo-track="reload"' %}
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <script defer data-domain="builtwithdjango.com" src="https://plausible-v2.cr.lvtd.dev/js/script.js"></script>
+    {% if app_environment == "prod" %}
+      <script defer data-domain="builtwithdjango.com" src="https://plausible-v2.cr.lvtd.dev/js/script.js"></script>
+    {% endif %}
     {% if sentry_browser_enabled %}
       {{ sentry_browser_config|json_script:"bwd-sentry-config" }}
     {% endif %}
@@ -234,7 +234,7 @@
     <header class="bw-site-header" x-data="{ isOn: false }">
       <nav class="bw-container flex min-h-[4.5rem] items-center justify-between gap-4" aria-label="Primary navigation">
         <a href="{% url 'home' %}" class="bw-brand">
-          <img src="{% static 'vendors/images/logo.png' %}" alt="Built with Django Logo" />
+          <img src="{% static 'vendors/images/logo.png' %}" width="220" height="234" alt="Built with Django Logo" />
           <span class="hidden text-lg sm:inline">Built with Django</span>
         </a>
 
@@ -243,11 +243,17 @@
           <a href="{% url 'blog' %}" class="bw-nav-link" data-analytics-event="nav clicked" data-analytics-nav-item="guides">Guides</a>
           <a href="{% url 'jobs' %}" class="bw-nav-link" data-analytics-event="nav clicked" data-analytics-nav-item="jobs">Jobs</a>
           <div data-controller="dropdown" class="relative">
-            <button type="button" data-action="dropdown#toggle click@window->dropdown#hide" class="bw-nav-link" aria-expanded="false">
+            <button type="button"
+                    data-action="dropdown#toggle click@window->dropdown#hide"
+                    class="bw-nav-link"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    aria-controls="resources-menu">
               Resources
               <i class="las la-angle-down ml-1 text-sm" aria-hidden="true"></i>
             </button>
             <div data-dropdown-target="menu"
+                 id="resources-menu"
                  data-transition-enter-active="transition ease-out duration-200"
                  data-transition-enter-from="opacity-0 translate-y-1"
                  data-transition-enter-to="opacity-100 translate-y-0"
@@ -274,11 +280,17 @@
             </div>
           </div>
           <div data-controller="dropdown" class="relative">
-            <button type="button" data-action="dropdown#toggle click@window->dropdown#hide" class="bw-nav-link" aria-expanded="false">
+            <button type="button"
+                    data-action="dropdown#toggle click@window->dropdown#hide"
+                    class="bw-nav-link"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    aria-controls="tools-menu">
               Tools
               <i class="las la-angle-down ml-1 text-sm" aria-hidden="true"></i>
             </button>
             <div data-dropdown-target="menu"
+                 id="tools-menu"
                  data-transition-enter-active="transition ease-out duration-200"
                  data-transition-enter-from="opacity-0 translate-y-1"
                  data-transition-enter-to="opacity-100 translate-y-0"
@@ -318,7 +330,8 @@
                       data-action="dropdown#toggle click@window->dropdown#hide"
                       class="inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-md border border-[var(--bw-border)] bg-[var(--bw-surface)]"
                       aria-expanded="false"
-                      aria-haspopup="true">
+                      aria-haspopup="true"
+                      aria-controls="user-menu">
                 <span class="sr-only">Open user menu</span>
                 {% include "components/profile-image.html" %}
               </button>
@@ -329,6 +342,7 @@
                    data-transition-leave-active="transition ease-in duration-75"
                    data-transition-leave-from="transform opacity-100 scale-100"
                    data-transition-leave-to="transform opacity-0 scale-95"
+                   id="user-menu"
                    class="bw-menu-panel hidden absolute right-0 z-20 mt-3 w-56 p-2"
                    role="menu">
                 <p class="px-3 py-2 text-sm font-bold bw-muted">{{ user.username }}</p>
@@ -410,8 +424,8 @@
     <footer class="bw-footer">
       <div class="bw-container grid gap-10 py-12 md:grid-cols-[1.2fr_0.8fr_0.8fr] lg:py-16">
         <div>
-          <a href="{% url 'home' %}" class="inline-flex items-center gap-3 font-black">
-            <img class="h-10 w-10" src="{% static 'vendors/images/logo.png' %}" alt="Built with Django Logo" />
+          <a href="{% url 'home' %}" class="bw-footer-brand">
+            <img class="h-10 w-10" src="{% static 'vendors/images/logo.png' %}" width="220" height="234" alt="Built with Django Logo" />
             <span>Built with Django</span>
           </a>
           <p class="mt-4 max-w-md text-sm leading-6 text-[oklch(82%_0.03_126)]">
@@ -424,20 +438,20 @@
         <div>
           <h2 class="text-sm font-black uppercase tracking-wider text-[oklch(94%_0.025_126)]">Explore</h2>
           <div class="mt-4 grid gap-3 text-sm">
-            <a href="{% url 'projects' %}">Projects</a>
-            <a href="{% url 'blog' %}">Guides</a>
-            <a href="{% url 'jobs' %}">Jobs</a>
-            <a href="{% url 'podcast_episodes' %}">Podcast</a>
+            <a href="{% url 'projects' %}" class="bw-footer-link">Projects</a>
+            <a href="{% url 'blog' %}" class="bw-footer-link">Guides</a>
+            <a href="{% url 'jobs' %}" class="bw-footer-link">Jobs</a>
+            <a href="{% url 'podcast_episodes' %}" class="bw-footer-link">Podcast</a>
           </div>
         </div>
         <div>
           <h2 class="text-sm font-black uppercase tracking-wider text-[oklch(94%_0.025_126)]">Build with us</h2>
           <div class="mt-4 grid gap-3 text-sm">
-            <a href="{% url 'submit_project' %}">Submit a project</a>
-            <a href="{% url 'post_job' %}">Post a job</a>
-            <a href="{% url 'advertize' %}">Advertise</a>
-            <a href="https://github.com/LVTD-LLC/builtwithdjango">GitHub</a>
-            <a href="https://x.com/rasulkireev">X</a>
+            <a href="{% url 'submit_project' %}" class="bw-footer-link">Submit a project</a>
+            <a href="{% url 'post_job' %}" class="bw-footer-link">Post a job</a>
+            <a href="{% url 'advertize' %}" class="bw-footer-link">Advertise</a>
+            <a href="https://github.com/LVTD-LLC/builtwithdjango" class="bw-footer-link">GitHub</a>
+            <a href="https://x.com/rasulkireev" class="bw-footer-link">X</a>
           </div>
         </div>
       </div>
@@ -449,11 +463,21 @@
             <p>Follow the ring to visit a previous, random, or next member site from the Django community.</p>
           </div>
           <div class="bw-webring-widget" role="navigation" aria-label="Django Webring navigation">
-            <webring-css site="https://builtwithdjango.com"></webring-css>
+            {% if app_environment == "prod" %}
+              <webring-css site="https://builtwithdjango.com"></webring-css>
+            {% else %}
+              <div class="bw-webring-fallback">
+                <a href="https://djangowebring.com/" target="_blank" rel="noopener">
+                  <span>Visit the ring</span>
+                  <span>Django Webring directory</span>
+                </a>
+              </div>
+            {% endif %}
           </div>
         </div>
-        <script src="https://djangowebring.com/static/webring.js" defer></script>
-        <script>
+        {% if app_environment == "prod" %}
+          <script src="https://djangowebring.com/static/webring.js" defer></script>
+          <script>
           function restyleDjangoWebring() {
             const host = document.querySelector('.bw-webring-widget webring-css');
             if (!host) return;
@@ -638,7 +662,8 @@
 
           document.addEventListener('DOMContentLoaded', restyleDjangoWebring);
           document.addEventListener('turbo:load', restyleDjangoWebring);
-        </script>
+          </script>
+        {% endif %}
       </div>
     </footer>
 

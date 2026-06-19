@@ -56,6 +56,7 @@ class ProjectListView(FilterView):
 
 
 class InactiveProjectListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    login_url = "account_login"
     model = Project
     template_name = "projects/all_inactive_projects.html"
 

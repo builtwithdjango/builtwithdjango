@@ -39,7 +39,7 @@ export default class extends Controller {
         this.trackChange(this.likedValue, previousLikeCount);
       })
       .catch((error) => {
-        console.log(error);
+        void error;
         this.showError();
       })
       .finally(() => {

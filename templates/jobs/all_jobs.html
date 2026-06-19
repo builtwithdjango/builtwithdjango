@@ -8,18 +8,8 @@
 {% endblock meta %}
 
 {% block content %}
-<section class="bw-page-hero">
-  <div class="bw-container grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-    <div>
-      <p class="bw-kicker">Django job board</p>
-      <h1 class="bw-heading-lg mt-3">Find teams building with Django</h1>
-      <p class="bw-lede mt-5">
-        Jobs from teams that care about Django experience, practical web development, and shipping real products.
-      </p>
-    </div>
-    <a href="{% url 'post_job' %}" class="bw-button bw-button-accent">Post a job</a>
-  </div>
-</section>
+{% url 'post_job' as post_job_url %}
+{% include "components/page-hero.html" with kicker="Django job board" title="Find teams building with Django" description="Jobs from teams that care about Django experience, practical web development, and shipping real products." cta_url=post_job_url cta_label="Post a job" %}
 
 <section class="pb-16">
   <div class="bw-container">

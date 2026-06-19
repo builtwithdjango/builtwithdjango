@@ -1,5 +1,3 @@
-import * as Sentry from "@sentry/browser";
-
 const SENSITIVE_QUERY_PARTS = [
   "token",
   "auth",
@@ -70,9 +68,12 @@ function scrubEvent(event) {
   return event;
 }
 
-const config = readSentryConfig();
+async function initializeSentry() {
+  const config = readSentryConfig();
 
-if (config.enabled && config.dsn) {
+  if (!config.enabled || !config.dsn) return;
+
+  const Sentry = await import(/* webpackChunkName: "sentry" */ "@sentry/browser");
   const tracePropagationTargets =
     Array.isArray(config.tracePropagationTargets) && config.tracePropagationTargets.length
       ? config.tracePropagationTargets
@@ -107,3 +108,7 @@ if (config.enabled && config.dsn) {
     Sentry.setUser(config.user);
   }
 }
+
+initializeSentry().catch((error) => {
+  void error;
+});

@@ -1,11 +1,16 @@
-<aside id="ad-container-mobile" class="fixed inset-x-0 bottom-0 z-50 hidden border-t border-[var(--bw-border-strong)] shadow-lg lg:hidden">
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+<aside id="ad-container-mobile" class="bw-ad-mobile hidden lg:hidden" aria-label="Advertisement">
+  <div class="bw-ad-mobile__inner">
     <a target="_blank"
        rel="noopener"
        href='https://djass.dev/?ref=builtwithdjango.com&utm_source={{ request.get_host }}{{ request.path }}&utm_campaign=mobile-bottom-ad-{% now "F-Y" %}'
-       class="flex min-w-0 items-center gap-3">
-      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-[var(--bw-border)] bg-[oklch(99%_0.01_118)]">
-        <img src="https://djass.dev/static/vendors/images/logo.svg" alt="Djass" class="h-7 w-7 object-contain" />
+       class="bw-ad-mobile__link">
+      <span class="bw-ad__logo bw-ad__logo--mobile">
+        <img src="https://djass.dev/static/vendors/images/logo.svg"
+             alt="Djass"
+             width="28"
+             height="28"
+             decoding="async"
+             class="bw-ad__logo-image bw-ad__logo-image--mobile" />
       </span>
       <span class="min-w-0">
         <span class="block text-sm font-black text-[var(--bw-ink)]">Djass <span class="font-bold bw-muted">Ad</span></span>
@@ -18,14 +23,19 @@
   </div>
 </aside>
 
-<aside id="ad-container-desktop" class="fixed bottom-4 right-4 z-50 hidden w-80 rounded-lg border border-[var(--bw-border-strong)] p-4 shadow-lg">
+<aside id="ad-container-desktop" class="bw-ad-desktop hidden" aria-label="Advertisement">
   <p class="text-xs font-black uppercase tracking-wider bw-muted">Ad</p>
   <div class="mt-2 flex gap-3">
     <a target="_blank"
        rel="noopener"
        href='https://djass.dev/?ref=builtwithdjango.com&utm_source={{ request.get_host }}{{ request.path }}&utm_campaign=desktop-bottom-right-corner-ad-{% now "F-Y" %}'
-       class="flex h-14 w-14 shrink-0 items-center justify-center rounded-md border border-[var(--bw-border)] bg-[oklch(99%_0.01_118)]">
-      <img src="https://djass.dev/static/vendors/images/logo.svg" alt="Djass" class="h-10 w-10 object-contain" />
+       class="bw-ad__logo bw-ad__logo--desktop">
+      <img src="https://djass.dev/static/vendors/images/logo.svg"
+           alt="Djass"
+           width="40"
+           height="40"
+           decoding="async"
+           class="bw-ad__logo-image bw-ad__logo-image--desktop" />
     </a>
     <div class="min-w-0">
       <a target="_blank"
@@ -35,7 +45,7 @@
       <p class="mt-1 text-sm leading-5 bw-muted">Generate a production-ready Django SaaS starter repo.</p>
     </div>
   </div>
-  <button class="bw-icon-button close-ad absolute right-2 top-2 h-8 min-h-0 w-8 min-w-0" type="button" aria-label="Close ad">
+  <button class="bw-icon-button bw-ad__close-desktop close-ad" type="button" aria-label="Close ad">
     <i class="las la-times" aria-hidden="true"></i>
   </button>
 </aside>
@@ -45,21 +55,21 @@
     const adContainerMobile = document.getElementById('ad-container-mobile');
     const adContainerDesktop = document.getElementById('ad-container-desktop');
     const closeAdButtons = document.querySelectorAll('.close-ad');
+    const desktopMedia = window.matchMedia('(min-width: 1024px)');
+    const hiddenClass = 'hidden';
+    const visibleClass = 'bw-ad--visible';
+    let adIsVisible = false;
+    let adIsClosed = hasClosedCookie();
+    let revealFrame = 0;
+    let hideTimer = 0;
 
     if (!adContainerMobile || !adContainerDesktop) return;
 
-    function hideAd() {
-      if (window.innerWidth < 1024) {
-        adContainerMobile.style.transform = 'translateY(100%)';
-      } else {
-        adContainerDesktop.style.transform = 'translateY(8px)';
-      }
+    function hasClosedCookie() {
+      return document.cookie.split('; ').includes('adClosed=true');
+    }
 
-      window.setTimeout(() => {
-        adContainerMobile.style.display = 'none';
-        adContainerDesktop.style.display = 'none';
-      }, 220);
-
+    function setClosedCookie() {
       const date = new Date();
       date.setTime(date.getTime() + (24 * 60 * 60 * 1000));
       document.cookie = `adClosed=true; expires=${date.toUTCString()}; path=/`;
@@ -69,26 +79,75 @@
       return window.scrollY > Math.min(420, window.innerHeight * 0.6);
     }
 
-    function showAd() {
-      if (window.innerWidth < 1024) {
-        adContainerDesktop.style.display = 'none';
-        adContainerMobile.style.display = 'block';
-        window.setTimeout(() => {
-          adContainerMobile.style.transform = 'translateY(0)';
-        }, 80);
-      } else {
-        adContainerMobile.style.display = 'none';
-        adContainerDesktop.style.display = 'block';
-        window.setTimeout(() => {
-          adContainerDesktop.style.transform = 'translateY(0)';
-        }, 80);
+    function hideContainer(container) {
+      container.classList.remove(visibleClass);
+      container.classList.add(hiddenClass);
+    }
+
+    function showContainer(container) {
+      window.clearTimeout(hideTimer);
+      container.classList.remove(hiddenClass);
+
+      if (revealFrame) {
+        window.cancelAnimationFrame(revealFrame);
       }
+
+      revealFrame = window.requestAnimationFrame(() => {
+        container.classList.add(visibleClass);
+        revealFrame = 0;
+      });
+    }
+
+    function activeContainer() {
+      return desktopMedia.matches ? adContainerDesktop : adContainerMobile;
+    }
+
+    function syncVisibleAd() {
+      if (!adIsVisible) return;
+
+      const activeAd = activeContainer();
+      const inactiveAd = activeAd === adContainerDesktop ? adContainerMobile : adContainerDesktop;
+
+      hideContainer(inactiveAd);
+      showContainer(activeAd);
+    }
+
+    function showAd() {
+      if (adIsVisible || adIsClosed || hasClosedCookie()) return;
+
+      adIsVisible = true;
+      window.removeEventListener('scroll', maybeShowAd);
+      window.addEventListener('resize', syncVisibleAd);
+      syncVisibleAd();
     }
 
     function maybeShowAd() {
-      if (!document.cookie.includes('adClosed=true') && isPastIntro()) {
+      if (adIsClosed || hasClosedCookie()) {
+        adIsClosed = true;
+        window.removeEventListener('scroll', maybeShowAd);
+        return;
+      }
+
+      if (isPastIntro()) {
         showAd();
       }
+    }
+
+    function hideAd() {
+      adIsClosed = true;
+      adIsVisible = false;
+      window.removeEventListener('scroll', maybeShowAd);
+      window.removeEventListener('resize', syncVisibleAd);
+      window.cancelAnimationFrame(revealFrame);
+      setClosedCookie();
+
+      adContainerMobile.classList.remove(visibleClass);
+      adContainerDesktop.classList.remove(visibleClass);
+
+      hideTimer = window.setTimeout(() => {
+        adContainerMobile.classList.add(hiddenClass);
+        adContainerDesktop.classList.add(hiddenClass);
+      }, 220);
     }
 
     closeAdButtons.forEach((button) => {
@@ -97,34 +156,8 @@
 
     maybeShowAd();
 
-    window.addEventListener('scroll', maybeShowAd, { passive: true });
-
-    window.addEventListener('resize', () => {
-      if (!document.cookie.includes('adClosed=true') && isPastIntro()) {
-        showAd();
-      }
-    });
+    if (!adIsVisible && !adIsClosed) {
+      window.addEventListener('scroll', maybeShowAd, { passive: true });
+    }
   });
 </script>
-
-<style>
-  #ad-container-mobile {
-    background: oklch(98.8% 0.012 112);
-    background-color: oklch(98.8% 0.012 112);
-    opacity: 1;
-    transform: translateY(100%);
-    transition: transform 220ms var(--bw-ease);
-  }
-
-  #ad-container-desktop {
-    isolation: isolate;
-    background: oklch(98.8% 0.012 112);
-    background-color: oklch(98.8% 0.012 112);
-    background-clip: padding-box;
-    opacity: 1;
-    backdrop-filter: none;
-    box-shadow: 0 24px 60px oklch(16% 0.04 151 / 0.26), 0 1px 0 oklch(100% 0.01 118) inset;
-    transform: translateY(8px);
-    transition: transform 220ms var(--bw-ease);
-  }
-</style>

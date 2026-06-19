@@ -15,7 +15,7 @@
   <section class="isolate overflow-hidden relative px-6 lg:px-8">
     <h2>Testimonials</h2>
     <div class="px-6 mx-auto max-w-2xl rounded-lg border border-gray-100 lg:max-w-4xl">
-      <img class="mx-auto h-12" src="{% static 'vendors/images/hovercode.png' %}" alt="Hovercode Logo">
+      <img class="mx-auto h-12" src="{% static 'vendors/images/hovercode.png' %}" width="128" height="128" alt="Hovercode Logo" decoding="async">
       <figure class="mt-10">
         <blockquote class="font-semibold text-center text-gray-900 text-xl/8 sm:text-2xl/9">
           <p>
@@ -26,7 +26,7 @@
           </p>
         </blockquote>
         <figcaption class="mt-10">
-          <img class="mx-auto w-16 rounded-full size-10" src="{% static 'vendors/images/ramy.jpg' %}" alt="Ramy Khuffash">
+          <img class="mx-auto h-16 w-16 rounded-full" src="{% static 'vendors/images/ramy.jpg' %}" width="400" height="400" alt="Ramy Khuffash" loading="lazy" decoding="async">
           <div class="flex justify-center items-center mt-4 space-x-3 text-base">
             <div class="font-semibold text-gray-900">Ramy Khuffash</div>
             <svg viewBox="0 0 2 2" width="3" height="3" aria-hidden="true" class="fill-gray-900">
@@ -43,24 +43,24 @@
 
   <h2>1. Highlighted product</h2>
   <p>Your site will be featured on the <a href="{% url 'home' %}">homepage</a> and on the <a href="{% url 'projects' %}">projects list</a>, which combined 2k - 2.5k unique users per month (images below). Since I just started and not entirely sure what this traffic is worth, I'm offering a whole month for $100.</p>
-  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 10.26.41.png' %}" alt="Highlighted product example 1">
-  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 10.26.05.png' %}" alt="Highlighted product example 2">
+  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 10.26.41.png' %}" width="1292" height="863" alt="Highlighted product example 1" loading="lazy" decoding="async">
+  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 10.26.05.png' %}" width="1227" height="874" alt="Highlighted product example 2" loading="lazy" decoding="async">
 
   <h2>2. Ad on the bottom right of the screen</h2>
   <p>This is displayed on every single page for every single visit. So you will be getting all the eyes that are coming from the site ~10K page views per month. I'm selling this ad spot for $200 per month (below are images for how it looks on desktop and mobile).</p>
-  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 10.31.35.png' %}" alt="Ad on desktop">
-  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 10.32.49.png' %}" alt="Ad on mobile">
+  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 10.31.35.png' %}" width="2185" height="1278" alt="Ad on desktop" loading="lazy" decoding="async">
+  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 10.32.49.png' %}" width="369" height="663" alt="Ad on mobile" loading="lazy" decoding="async">
 
   <h2>3. Sponsor block in the newsletter</h2>
   <p>~2000 subscribers and the open rate is always >50%, but close to 65% most of the time. I send 4 newsletters a month with 50 clicks on average. This will be $200 for 4 newsletter issues.</p>
-  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 11.53.00.png' %}" alt="Newsletter sponsor block example 1">
-  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 11.51.36.png' %}" alt="Newsletter sponsor block example 2">
-  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 11.51.59.png' %}" alt="Newsletter sponsor block example 3">
+  <img class="mx-auto my-3 max-h-[36rem] w-auto max-w-full rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 11.53.00.png' %}" width="523" height="1111" alt="Newsletter sponsor block example 1" loading="lazy" decoding="async">
+  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 11.51.36.png' %}" width="763" height="423" alt="Newsletter sponsor block example 2" loading="lazy" decoding="async">
+  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 11.51.59.png' %}" width="758" height="419" alt="Newsletter sponsor block example 3" loading="lazy" decoding="async">
 
   <h2>4. Sponsored Job Posting</h2>
   <p>This is perfect if you are hiring for Django Engineers. Your post will be first and highlighted on the <a href="{% url 'jobs' %}">Job Board</a> and on <a href="https://newsletter.builtwithdjango.com">the newsletter</a>. This will cost $200 for a month (4 newsletter issues).</p>
-  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/image.png' %}" alt="Sponsored Job Posting example 1">
-  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 11.57.45.png' %}" alt="Sponsored Job Posting example 2">
+  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/image.png' %}" width="1283" height="764" alt="Sponsored Job Posting example 1" loading="lazy" decoding="async">
+  <img class="my-1 rounded border border-gray-200" src="{% static 'vendors/images/CleanShot 2024-09-19 at 11.57.45.png' %}" width="649" height="232" alt="Sponsored Job Posting example 2" loading="lazy" decoding="async">
 </article>
 
 {% endblock content %}

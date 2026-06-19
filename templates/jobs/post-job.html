@@ -7,13 +7,7 @@
 {% endblock meta %}
 
 {% block content %}
-<section class="bw-page-hero pb-10">
-  <div class="bw-container">
-    <p class="bw-kicker">Reach Django builders</p>
-    <h1 class="bw-heading-lg mt-3">Post a Django job</h1>
-    <p class="bw-lede mt-5">Share the core role details. After submitting, you'll be taken to a payment page for an optional sponsored post. You can skip sponsorship; your job will still be added to the job board.</p>
-  </div>
-</section>
+{% include "components/page-hero.html" with section_class="pb-10" kicker="Reach Django builders" title="Post a Django job" description="Share the core role details. After submitting, you'll be taken to a payment page for an optional sponsored post. You can skip sponsorship; your job will still be added to the job board." %}
 
 <section class="pb-16">
   <div class="bw-container grid gap-8 lg:grid-cols-[minmax(0,42rem)_1fr]">
@@ -23,35 +17,35 @@
         {{ form.non_field_errors }}
         <div>
           {{ form.title.errors }}
-          <label class="block text-sm font-black text-[var(--bw-ink)]" for="{{ form.title.id_for_label }}">Role title</label>
-          {% render_field form.title class="mt-2 block w-full rounded-md border-[var(--bw-border)] bg-[var(--bw-surface)] text-base focus:border-[var(--bw-primary)] focus:ring-[var(--bw-primary)]" placeholder="Senior Django Engineer" %}
+          <label class="bw-form-label" for="{{ form.title.id_for_label }}">Role title</label>
+          {% render_field form.title class="bw-form-input text-base" placeholder="Senior Django Engineer" %}
         </div>
         <div>
           {{ form.company_name.errors }}
-          <label class="block text-sm font-black text-[var(--bw-ink)]" for="{{ form.company_name.id_for_label }}">Company name</label>
-          {% render_field form.company_name class="mt-2 block w-full rounded-md border-[var(--bw-border)] bg-[var(--bw-surface)] text-base focus:border-[var(--bw-primary)] focus:ring-[var(--bw-primary)]" placeholder="Acme Studio" %}
+          <label class="bw-form-label" for="{{ form.company_name.id_for_label }}">Company name</label>
+          {% render_field form.company_name class="bw-form-input text-base" placeholder="Acme Studio" %}
         </div>
         <div>
           {{ form.listing_url.errors }}
-          <label class="block text-sm font-black text-[var(--bw-ink)]" for="{{ form.listing_url.id_for_label }}">Job listing URL</label>
-          {% render_field form.listing_url class="mt-2 block w-full rounded-md border-[var(--bw-border)] bg-[var(--bw-surface)] text-base focus:border-[var(--bw-primary)] focus:ring-[var(--bw-primary)]" placeholder="https://example.com/jobs/django-engineer" %}
+          <label class="bw-form-label" for="{{ form.listing_url.id_for_label }}">Job listing URL</label>
+          {% render_field form.listing_url class="bw-form-input text-base" placeholder="https://example.com/jobs/django-engineer" %}
         </div>
         <div>
           {{ form.email.errors }}
-          <label class="block text-sm font-black text-[var(--bw-ink)]" for="{{ form.email.id_for_label }}">Your email</label>
-          {% render_field form.email class="mt-2 block w-full rounded-md border-[var(--bw-border)] bg-[var(--bw-surface)] text-base focus:border-[var(--bw-primary)] focus:ring-[var(--bw-primary)]" placeholder="hiring@example.com" %}
+          <label class="bw-form-label" for="{{ form.email.id_for_label }}">Your email</label>
+          {% render_field form.email class="bw-form-input text-base" placeholder="hiring@example.com" %}
           <p class="mt-2 text-sm bw-muted">Only used to contact you about this listing.</p>
         </div>
         <div class="grid gap-5 sm:grid-cols-2">
           <div>
             {{ form.min_yearly_salary.errors }}
-            <label class="block text-sm font-black text-[var(--bw-ink)]" for="{{ form.min_yearly_salary.id_for_label }}">Min salary, USD</label>
-            {% render_field form.min_yearly_salary class="mt-2 block w-full rounded-md border-[var(--bw-border)] bg-[var(--bw-surface)] text-base focus:border-[var(--bw-primary)] focus:ring-[var(--bw-primary)]" placeholder="120000" %}
+            <label class="bw-form-label" for="{{ form.min_yearly_salary.id_for_label }}">Min salary, USD</label>
+            {% render_field form.min_yearly_salary class="bw-form-input text-base" placeholder="120000" %}
           </div>
           <div>
             {{ form.max_yearly_salary.errors }}
-            <label class="block text-sm font-black text-[var(--bw-ink)]" for="{{ form.max_yearly_salary.id_for_label }}">Max salary, USD</label>
-            {% render_field form.max_yearly_salary class="mt-2 block w-full rounded-md border-[var(--bw-border)] bg-[var(--bw-surface)] text-base focus:border-[var(--bw-primary)] focus:ring-[var(--bw-primary)]" placeholder="180000" %}
+            <label class="bw-form-label" for="{{ form.max_yearly_salary.id_for_label }}">Max salary, USD</label>
+            {% render_field form.max_yearly_salary class="bw-form-input text-base" placeholder="180000" %}
           </div>
         </div>
         <button data-action="click->loading#load" data-loading-target="button" class="bw-button bw-button-primary justify-self-start" type="submit">
