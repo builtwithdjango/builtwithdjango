@@ -32,7 +32,16 @@ module.exports = {
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [
-        { from: Path.resolve(__dirname, "../vendors"), to: "vendors" },
+        {
+          from: Path.resolve(__dirname, "../vendors"),
+          to: "vendors",
+          globOptions: {
+            ignore: [
+              "**/images/sample.jpg",
+              "**/images/webpack.png",
+            ],
+          },
+        },
       ],
     }),
     new WebpackAssetsManifest({

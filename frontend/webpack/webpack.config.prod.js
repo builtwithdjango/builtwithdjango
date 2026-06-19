@@ -40,6 +40,14 @@ module.exports = merge(common, {
       chunkFilename: "css/[id].[contenthash].css",
     }),
   ].concat(sentryPluginEnabled ? [sentryWebpackPlugin(sentryPluginOptions)] : []),
+  performance: {
+    maxAssetSize: 244 * 1024,
+    maxEntrypointSize: 244 * 1024,
+    assetFilter: (assetFilename) => {
+      if (/\.map$/.test(assetFilename)) return false;
+      return !/^js\/sentry\.[a-f0-9]+\.chunk\.js$/.test(assetFilename);
+    },
+  },
   module: {
     rules: [
       {

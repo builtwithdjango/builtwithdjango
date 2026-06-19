@@ -57,7 +57,7 @@
         <p class="bw-kicker">Guides</p>
         <h2 class="bw-heading-md mt-3">Learn by building</h2>
       </div>
-      <a href="{% url 'blog' %}" class="hidden font-bold text-[var(--bw-primary-dark)] md:inline-flex">All guides</a>
+      <a href="{% url 'blog' %}" class="hidden min-h-[2.75rem] items-center rounded-md px-3 font-bold text-[var(--bw-primary-dark)] hover:bg-[var(--bw-primary-soft)] md:inline-flex">All guides</a>
     </div>
     <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
       {% for guide in guides %}

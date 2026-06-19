@@ -8,13 +8,7 @@
 {% endblock meta %}
 
 {% block content %}
-<section class="bw-page-hero">
-  <div class="bw-container">
-    <p class="bw-kicker">Django guides</p>
-    <h1 class="bw-heading-lg mt-3">Learn Django by building</h1>
-    <p class="bw-lede mt-5">Tutorials and notes for developers who want practical patterns, not abstract framework tours.</p>
-  </div>
-</section>
+{% include "components/page-hero.html" with kicker="Django guides" title="Learn Django by building" description="Tutorials and notes for developers who want practical patterns, not abstract framework tours." %}
 
 <section class="pb-16">
   <div class="bw-container">

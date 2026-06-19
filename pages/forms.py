@@ -12,19 +12,19 @@ class AddNftRequest(ModelForm):
         super(AddNftRequest, self).__init__(*args, **kwargs)
         self.fields["email"].widget.attrs.update(
             {
-                "class": "block w-full border-0 p-1 bg-gray-100 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-md",
+                "class": "bw-form-input text-base",
                 "placeholder": "test@example.com",
             }
         )
         self.fields["wallet_public_key"].widget.attrs.update(
             {
-                "class": "block w-full border-0 p-1 bg-gray-100 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-md",
+                "class": "bw-form-input text-base",
                 "placeholder": "0x123456789651bE2ad266e9ca6A9d50686B183e49",
             }
         )
         self.fields["date_requested"].widget.attrs.update(
             {
-                "class": "block w-full border-0 p-1 bg-gray-100 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-md",
+                "class": "bw-form-input text-base",
                 "placeholder": "2021-11-23",
             }
         )

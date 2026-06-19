@@ -6,29 +6,36 @@
 {% endblock meta %}
 
 {% block content %}
-<div data-controller="html-formatter" class="container px-4 py-8 mx-auto max-w-7xl">
-    <h1 class="mb-6 text-3xl font-bold text-center">Django HTML Template Formatter</h1>
-    <div class="flex flex-col gap-6 md:flex-row">
-        <div class="flex-1">
-            <h2 class="mb-2 text-xl font-semibold">Input HTML</h2>
+<section data-controller="html-formatter" class="bw-section">
+  <div class="bw-container-wide">
+    <h1 class="bw-heading-md text-center">Django HTML Template Formatter</h1>
+    <p data-html-formatter-target="status" class="mx-auto mt-3 max-w-2xl text-center text-sm bw-muted" role="status" aria-live="polite">
+      Paste a Django template, format it, then copy the result.
+    </p>
+    <div class="mt-8 flex flex-col gap-6 md:flex-row">
+        <div class="min-w-0 flex-1">
+            <label for="formatter-input" class="bw-form-label text-base font-black text-[var(--bw-ink)]">Input HTML</label>
             <textarea
+                id="formatter-input"
                 data-html-formatter-target="input"
                 placeholder="Enter your HTML here..."
-                class="p-3 w-full h-96 font-mono text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+                class="bw-form-input h-96 font-mono text-sm leading-6"
             ></textarea>
         </div>
-        <div class="relative flex-1">
-            <h2 class="mb-2 text-xl font-semibold">Formatted HTML</h2>
+        <div class="relative min-w-0 flex-1">
+            <label for="formatter-result" class="bw-form-label text-base font-black text-[var(--bw-ink)]">Formatted HTML</label>
             <textarea
+                id="formatter-result"
                 data-html-formatter-target="result"
                 readonly
-                class="p-3 w-full h-96 font-mono text-sm bg-gray-50 rounded-md border border-gray-300"
+                class="bw-form-input h-96 bg-[var(--bw-surface-raised)] pb-16 font-mono text-sm leading-6"
             ></textarea>
             <button
               type="button"
               data-action="click->html-formatter#copy"
               data-html-formatter-target="copyButton"
-              class="absolute right-2 bottom-2 px-3 py-1 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+              class="bw-button bw-button-secondary absolute bottom-2 right-2 text-sm"
+              disabled
             >
               Copy
             </button>
@@ -39,12 +46,13 @@
             type="button"
             data-action="click->html-formatter#formatHTML"
             data-html-formatter-target="submitButton"
-            class="px-6 py-2 font-semibold text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+            class="bw-button bw-button-primary"
         >
             Format HTML
         </button>
     </div>
-</div>
+  </div>
+</section>
 
 {% include "components/newsletter.html" with newsletter_form=newsletter_form %}
 

@@ -1,0 +1,18 @@
+<section class="bw-page-hero{% if section_class %} {{ section_class }}{% endif %}">
+  <div class="{% firstof container_class 'bw-container' %}{% if cta_url and cta_label %} grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end{% endif %}">
+    <div{% if content_class %} class="{{ content_class }}"{% endif %}>
+      {% if kicker %}
+        <p class="bw-kicker">{{ kicker }}</p>
+      {% endif %}
+      {% if title %}
+        <h1 class="{% firstof heading_class 'bw-heading-lg mt-3' %}">{{ title }}</h1>
+      {% endif %}
+      {% if description %}
+        <p class="{% firstof description_class 'bw-lede mt-5' %}">{{ description }}</p>
+      {% endif %}
+    </div>
+    {% if cta_url and cta_label %}
+      <a href="{{ cta_url }}" class="{% firstof cta_class 'bw-button bw-button-accent' %}">{{ cta_label }}</a>
+    {% endif %}
+  </div>
+</section>

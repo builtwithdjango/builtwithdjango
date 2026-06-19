@@ -7,18 +7,8 @@
 {% endblock meta %}
 
 {% block content %}
-<section class="bw-page-hero">
-  <div class="bw-container grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-    <div>
-      <p class="bw-kicker">Developer directory</p>
-      <h1 class="bw-heading-lg mt-3">Hire Django people</h1>
-      <p class="bw-lede mt-5">
-        A community directory for developers who know Django and teams looking for practical web builders.
-      </p>
-    </div>
-    <a href="{% url 'update-profile' %}" class="bw-button bw-button-accent">Create your profile</a>
-  </div>
-</section>
+{% url 'update-profile' as update_profile_url %}
+{% include "components/page-hero.html" with kicker="Developer directory" title="Hire Django people" description="A community directory for developers who know Django and teams looking for practical web builders." cta_url=update_profile_url cta_label="Create your profile" %}
 
 <section class="pb-16">
   <div class="bw-container">

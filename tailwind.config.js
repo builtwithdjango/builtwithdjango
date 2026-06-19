@@ -1,12 +1,19 @@
 module.exports = {
   content: [
     './templates/**/*.html',
+    './frontend/src/**/*.js',
   ],
-  // https://nexxai.dev/tell-purgecss-to-ignore-purging-all-tailwind-colours/
+  // Dynamic classes that come from template data rather than static markup.
   safelist: [
-    {pattern: /(bg|text)-(.*)-(.*)/},
-    {pattern: /(w)-(.*)/},
-    {pattern: /(h)-(.*)/},
+    'h-12',
+    'h-20',
+    'h-40',
+    'w-12',
+    'w-20',
+    'w-40',
+    {
+      pattern: /^(bg|text)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(50|100|200|300|400|500|600|700|800|900)$/,
+    },
   ],
   theme: {
     extend: {

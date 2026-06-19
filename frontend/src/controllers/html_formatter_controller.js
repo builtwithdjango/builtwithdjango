@@ -1,46 +1,54 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = [ "input", "result", "submitButton", "copyButton" ];
+  static targets = [ "input", "result", "submitButton", "copyButton", "status" ];
 
   formatHTML() {
+    const input = this.inputTarget.value.trim();
+    if (!input) {
+      this.setError('Paste a Django template before formatting.');
+      return;
+    }
+
     this.setLoading(true);
+    this.setStatus('Formatting template...');
 
     const formData = new FormData();
-    formData.append('html_string', this.inputTarget.value);
+    formData.append('html_string', input);
 
     fetch('/tools/api/format-html/', {
       method: 'POST',
       body: formData,
     })
-    .then(response => {
+    .then(async response => {
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || `Request failed with status ${response.status}`);
       }
       return response.json();
     })
     .then(data => {
       if (data.formatted_html) {
         this.resultTarget.value = data.formatted_html;
-        this.copyButtonTarget.classList.remove('hidden');
+        this.copyButtonTarget.disabled = false;
+        this.resetCopyButton();
+        this.setStatus('Formatted HTML is ready.');
         this.capture('html formatted', {
-          input_length: this.inputTarget.value.length,
+          input_length: input.length,
           output_length: data.formatted_html.length
         });
       } else if (data.error) {
-        this.resultTarget.value = 'Error: ' + data.error;
-        this.copyButtonTarget.classList.add('hidden');
+        this.setError(data.error);
         this.capture('html formatter failed', {
-          input_length: this.inputTarget.value.length,
+          input_length: input.length,
           error: data.error
         });
       }
     })
     .catch(error => {
-      this.resultTarget.value = 'Error: ' + error;
-      this.copyButtonTarget.classList.add('hidden');
+      this.setError(error.message || 'Could not format HTML. Check your connection and try again.');
       this.capture('html formatter failed', {
-        input_length: this.inputTarget.value.length,
+        input_length: input.length,
         error: error.message
       });
     })
@@ -49,10 +57,24 @@ export default class extends Controller {
     });
   }
 
-  copy() {
-    navigator.clipboard.writeText(this.resultTarget.value);
-    this.copyButtonTarget.classList.replace("bg-blue-500", "bg-green-500");
+  async copy() {
+    if (!this.resultTarget.value) {
+      this.setError('Format HTML before copying.');
+      return;
+    }
+
+    try {
+      await this.copyText(this.resultTarget.value);
+    } catch (error) {
+      this.setError('Could not copy automatically. Select the result and copy it manually.');
+      this.capture('formatted html copy failed', {
+        error: error.message
+      });
+      return;
+    }
+
     this.copyButtonTarget.textContent = "Copied!";
+    this.setStatus('Formatted HTML copied.');
     this.capture('formatted html copied', {
       output_length: this.resultTarget.value.length
     });
@@ -60,20 +82,56 @@ export default class extends Controller {
   }
 
   resetCopyButton() {
-    this.copyButtonTarget.classList.replace("bg-green-500", "bg-blue-500");
     this.copyButtonTarget.textContent = "Copy";
   }
 
   setLoading(isLoading) {
     this.submitButtonTarget.disabled = isLoading;
     this.submitButtonTarget.textContent = isLoading ? 'Formatting...' : 'Format HTML';
-    this.submitButtonTarget.classList.toggle('opacity-50', isLoading);
-    this.submitButtonTarget.classList.toggle('cursor-not-allowed', isLoading);
+  }
+
+  setStatus(message) {
+    this.statusTarget.textContent = message;
+    this.statusTarget.classList.add('bw-muted');
+    this.statusTarget.classList.remove('bw-status-error');
+  }
+
+  setError(message) {
+    this.resultTarget.value = '';
+    this.copyButtonTarget.disabled = true;
+    this.statusTarget.textContent = message;
+    this.statusTarget.classList.remove('bw-muted');
+    this.statusTarget.classList.add('bw-status-error');
+  }
+
+  async copyText(value) {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(value);
+      return;
+    }
+
+    const textarea = document.createElement('textarea');
+    textarea.value = value;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+      const copied = document.execCommand('copy');
+      if (!copied) {
+        throw new Error('Copy command was rejected');
+      }
+    } finally {
+      textarea.remove();
+    }
   }
 
   clearResult() {
     this.resultTarget.value = '';
-    this.copyButtonTarget.classList.add('hidden');
+    this.copyButtonTarget.disabled = true;
+    this.setStatus('Result cleared.');
     this.capture('html formatter cleared');
   }
 

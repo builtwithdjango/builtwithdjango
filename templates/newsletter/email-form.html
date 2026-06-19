@@ -1,24 +1,32 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 {% block meta %}
     {% include "components/seo_meta.html" with title="Built with Django Newsletter" description="Get new Django projects, guides, jobs, and podcast episodes by email." canonical_path="/newsletter/" twitter_card="summary" image_alt="Built with Django logo" %}
 {% endblock meta %}
 {% block content %}
-    <div class="w-auto mx-auto mt-10 lg:w-1/3">
-        <div class="p-8 mb-6 bg-white border-t-8 border-green-500 rounded-lg shadow-lg">
+    <section class="bw-section">
+      <div class="bw-container">
+        <div class="bw-surface mx-auto max-w-xl p-5 sm:p-8">
+            <p class="bw-kicker">Newsletter</p>
+            <h1 class="bw-heading-md mt-3">Get useful Django updates by email</h1>
+            <p class="mt-4 text-base leading-7 bw-muted">
+                New projects, guides, jobs, and community notes for people building with Django.
+            </p>
             <form method="post"
+                  class="mt-6 grid gap-4"
                   enctype="multipart/form-data"
                   data-analytics-source="newsletter page">
                 {% csrf_token %}
                 <input type="hidden" name="source" value="newsletter page" />
                 {{ form.non_field_errors }}
-                <div class="mb-4">
+                <div>
                     {{ form.user_email.errors }}
-                    <label class="block mb-2 font-bold text-gray-700" for="{{ form.user_email.id_for_label }}">
+                    <label class="bw-form-label" for="{{ form.user_email.id_for_label }}">
                         Email
                     </label>
-                    {{ form.user_email }}
+                    {% render_field form.user_email class="bw-form-input text-base" type="email" autocomplete="email" placeholder="you@example.com" %}
                 </div>
-                <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-300"
+                <button class="bw-button bw-button-primary justify-self-start"
                         type="submit"
                         data-analytics-event="newsletter submit clicked"
                         data-analytics-source="newsletter page">
@@ -26,5 +34,6 @@
                 </button>
             </form>
         </div>
-    </div>
+      </div>
+    </section>
 {% endblock content %}

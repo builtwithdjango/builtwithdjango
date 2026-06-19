@@ -8,13 +8,7 @@
 {% endblock meta %}
 
 {% block content %}
-<section class="bw-page-hero pb-10">
-  <div class="bw-container">
-    <p class="bw-kicker">Add to the showcase</p>
-    <h1 class="bw-heading-lg mt-3">Submit a Django project</h1>
-    <p class="bw-lede mt-5">Share what you built so people using Django can learn from it, use it, and send useful attention back to the project.</p>
-  </div>
-</section>
+{% include "components/page-hero.html" with section_class="pb-10" kicker="Add to the showcase" title="Submit a Django project" description="Share what you built so people using Django can learn from it, use it, and send useful attention back to the project." %}
 
 <section class="pb-16">
   <div class="bw-container">
@@ -32,18 +26,18 @@
           <div class="grid gap-5">
             <div>
               {{ form.title.errors | safe }}
-              <label for="title" class="block text-sm font-black text-[var(--bw-ink)]">Project title</label>
-              {% render_field form.title class="mt-2 block w-full rounded-md border-[var(--bw-border)] bg-[var(--bw-surface)] text-base focus:border-[var(--bw-primary)] focus:ring-[var(--bw-primary)]" placeholder="My Django App" %}
+              <label for="title" class="bw-form-label">Project title</label>
+              {% render_field form.title class="bw-form-input text-base" placeholder="My Django App" %}
             </div>
             <div>
               {{ form.url.errors | safe }}
-              <label for="url" class="block text-sm font-black text-[var(--bw-ink)]">Project URL</label>
-              {% render_field form.url class="mt-2 block w-full rounded-md border-[var(--bw-border)] bg-[var(--bw-surface)] text-base focus:border-[var(--bw-primary)] focus:ring-[var(--bw-primary)]" placeholder="https://example.com" %}
+              <label for="url" class="bw-form-label">Project URL</label>
+              {% render_field form.url class="bw-form-input text-base" placeholder="https://example.com" %}
             </div>
             <div>
               {{ form.short_description.errors | safe }}
-              <label for="short_description" class="block text-sm font-black text-[var(--bw-ink)]">Short description</label>
-              {% render_field form.short_description class="mt-2 block w-full rounded-md border-[var(--bw-border)] bg-[var(--bw-surface)] text-base focus:border-[var(--bw-primary)] focus:ring-[var(--bw-primary)]" placeholder="What does it do, and who is it for?" %}
+              <label for="short_description" class="bw-form-label">Short description</label>
+              {% render_field form.short_description class="bw-form-input text-base" placeholder="What does it do, and who is it for?" %}
               <p class="mt-2 text-sm bw-muted">A few useful sentences, up to 200 characters.</p>
             </div>
           </div>
@@ -57,19 +51,19 @@
             <div class="grid gap-5 sm:grid-cols-2">
               <div>
                 {{ form.twitter_url.errors | safe }}
-                <label for="twitter_url" class="block text-sm font-black text-[var(--bw-ink)]">X/Twitter URL</label>
-                {% render_field form.twitter_url class="mt-2 block w-full rounded-md border-[var(--bw-border)] bg-[var(--bw-surface)] text-base focus:border-[var(--bw-primary)] focus:ring-[var(--bw-primary)]" placeholder="https://twitter.com/builtwithdjango" %}
+                <label for="twitter_url" class="bw-form-label">X/Twitter URL</label>
+                {% render_field form.twitter_url class="bw-form-input text-base" placeholder="https://twitter.com/builtwithdjango" %}
               </div>
               <div>
                 {{ form.github_url.errors | safe }}
-                <label for="github_url" class="block text-sm font-black text-[var(--bw-ink)]">GitHub URL</label>
-                {% render_field form.github_url class="mt-2 block w-full rounded-md border-[var(--bw-border)] bg-[var(--bw-surface)] text-base focus:border-[var(--bw-primary)] focus:ring-[var(--bw-primary)]" placeholder="https://github.com/example/repo" %}
+                <label for="github_url" class="bw-form-label">GitHub URL</label>
+                {% render_field form.github_url class="bw-form-input text-base" placeholder="https://github.com/example/repo" %}
               </div>
             </div>
             <div>
               {{ form.technology_suggestions_by_user.errors | safe }}
-              <label for="technology_suggestions_by_user" class="block text-sm font-black text-[var(--bw-ink)]">Technologies used</label>
-              {% render_field form.technology_suggestions_by_user class="mt-2 block w-full rounded-md border-[var(--bw-border)] bg-[var(--bw-surface)] text-base focus:border-[var(--bw-primary)] focus:ring-[var(--bw-primary)]" rows=5 placeholder="Django, HTMX, Tailwind, Postgres..." %}
+              <label for="technology_suggestions_by_user" class="bw-form-label">Technologies used</label>
+              {% render_field form.technology_suggestions_by_user class="bw-form-input text-base" rows=5 placeholder="Django, HTMX, Tailwind, Postgres..." %}
             </div>
           </div>
 

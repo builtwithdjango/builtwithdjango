@@ -1,3 +1,5 @@
+{% load widget_tweaks %}
+
 <div data-turbo-cache="false"
       data-exit-intent-target="modal"
       class="fixed inset-0 z-10 hidden overflow-y-auto"
@@ -25,11 +27,10 @@
         data-transition-leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         class="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
        <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
-           <button data-action="click->
-               exit-intent#closeModal"
+           <button data-action="click->exit-intent#closeModal"
                data-exit-intent-target="closeButton"
                type="button"
-               class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+               class="inline-flex h-11 w-11 items-center justify-center rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                >
                <span class="sr-only">Close</span>
                <!-- Heroicon name: outline/x -->
@@ -58,21 +59,20 @@
                </div>
            </div>
        </div>
-       <form class="flex flex-row items-center mt-5 sm:ml-4 sm:mt-4"
+       <form class="mt-5 w-full sm:ml-4 sm:mt-4"
              action="{% url 'newsletter_home' %}"
              method="post"
              enctype="multipart/form-data">
            {% csrf_token %} {{ newsletter_form.non_field_errors }}
-           <div class="flex flex-row items-center">
-               <div class="flex flex-col">
-                   <div class="flex flex-row item-center">
-                       <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
-                       <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300"
-                               type="submit">
-                           Submit
-                       </button>
-                   </div>
-               </div>
+           <label for="modal-newsletter-email" class="sr-only">Email address</label>
+           <div class="bw-inline-form">
+               <span class="min-w-0 flex-1">
+                   {% render_field newsletter_form.user_email id="modal-newsletter-email" class="bw-form-input" type="email" autocomplete="email" placeholder="you@example.com" %}
+               </span>
+               <button class="bw-button bw-button-primary"
+                       type="submit">
+                   Submit
+               </button>
            </div>
        </form>
    </div>

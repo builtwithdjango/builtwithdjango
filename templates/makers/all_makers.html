@@ -1,35 +1,33 @@
 {% extends "base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 {% block meta %}
     {% include "components/seo_meta.html" with title="Django Makers | Built with Django" description="Meet the makers behind projects built with Django." canonical_path="/makers/" twitter_card="summary" image_alt="Built with Django logo" %}
 {% endblock meta %}
 {% block content %}
-    <div class="overflow-hidden my-4 bg-white rounded-lg shadow">
-        <div class="px-4 py-5 sm:p-6">
-            <h1 class="text-3xl font-semibold text-gray-800">
-                Django Makers
-            </h1>
-            <p class="mb-5 text-2xl text-gray-600">
-                Subscribe to know about the coolest Django makers out there.
-            </p>
-            <form class="flex flex-row items-center"
-                  action="{% url 'newsletter_home' %}"
-                  method="post"
-                  enctype="multipart/form-data">
-                {% csrf_token %} {{ newsletter_form.non_field_errors }}
-                <div class="flex flex-row items-center">
-                    <div class="flex flex-col">
-                        <div class="flex flex-row item-center">
-                            <span class="rounded-l-lg">{{ newsletter_form.user_email }}</span>
-                            <button class="px-4 py-2 font-bold text-white bg-green-700 rounded-r-lg shadow hover:bg-green-300"
-                                    type="submit">
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
+    <div class="bw-surface mx-auto my-4 p-4 sm:p-6">
+        <h1 class="bw-heading-md">
+            Django Makers
+        </h1>
+        <p class="mt-2 max-w-2xl text-xl leading-8 bw-muted">
+            Subscribe to know about the coolest Django makers out there.
+        </p>
+        <form class="w-full"
+              action="{% url 'newsletter_home' %}"
+              method="post"
+              enctype="multipart/form-data">
+            {% csrf_token %} {{ newsletter_form.non_field_errors }}
+            <label for="makers-newsletter-email" class="sr-only">Email address</label>
+            <div class="bw-inline-form mt-5">
+                <span class="min-w-0 flex-1">
+                    {% render_field newsletter_form.user_email id="makers-newsletter-email" class="bw-form-input" type="email" autocomplete="email" placeholder="you@example.com" %}
+                </span>
+                <button class="bw-button bw-button-primary"
+                        type="submit">
+                    Submit
+                </button>
+            </div>
+        </form>
     </div>
     {% if messages %}
         <div class="p-4 my-4 bg-green-50 rounded-md border border-green-500 border-solid">
@@ -139,6 +137,16 @@
                     </a>
                 </div>
             {% endif %}
+        {% empty %}
+            <div class="bw-surface col-span-full p-6 text-center">
+                <h2 class="text-xl font-black text-[var(--bw-ink)]">No makers yet</h2>
+                <p class="mx-auto mt-2 max-w-md text-base leading-7 bw-muted">
+                    Published projects with linked makers will appear here once the directory has enough data.
+                </p>
+                <a class="bw-button bw-button-secondary mt-5" href="{% url 'projects' %}">
+                    Browse projects
+                </a>
+            </div>
         {% endfor %}
     </div>
 {% endblock content %}

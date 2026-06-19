@@ -1,54 +1,112 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = [ "output", "copyButton" ];
+    static targets = [ "output", "copyButton", "generateButton", "status" ];
     static values = { url: String };
 
-    generate() {
+    async generate() {
         if (!this.urlValue) {
-            console.error('URL is undefined');
-            this.outputTarget.value = 'Error: URL is not set';
+            this.setStatus("Secret key generation is not configured. Try again later.", true);
             return;
         }
 
-        fetch(this.urlValue, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': this.getCookie('csrftoken'),
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({}),
-        })
-        .then(response => {
+        this.setGenerating(true);
+        this.setStatus("Generating a new secret key...");
+
+        try {
+            const response = await fetch(this.urlValue, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': this.getCookie('csrftoken'),
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}),
+            });
+
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Request failed with status ${response.status}`);
             }
-            return response.json();
-        })
-        .then(data => {
+
+            const data = await response.json();
+            if (!data.secret_key) {
+                throw new Error("The server did not return a secret key");
+            }
+
             this.outputTarget.value = data.secret_key;
-            this.resetCopyButton();  // Reset the copy button when new secret is generated
+            this.copyButtonTarget.disabled = false;
+            this.resetCopyButton();
+            this.setStatus("Secret key generated. Copy it before leaving this page.");
             this.capture('django secret generated');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            this.outputTarget.value = 'An error occurred: ' + error.message;
+        } catch (error) {
+            this.outputTarget.value = "";
+            this.copyButtonTarget.disabled = true;
+            this.setStatus("Could not generate a secret key. Check your connection and try again.", true);
             this.capture('django secret generation failed', {
                 error: error.message
             });
-        });
+        } finally {
+            this.setGenerating(false);
+        }
     }
 
-    copy() {
-        navigator.clipboard.writeText(this.outputTarget.value);
-        this.copyButtonTarget.classList.replace("bg-green-600", "bg-blue-600");
+    async copy() {
+        if (!this.outputTarget.value) {
+            this.setStatus("Generate a secret key before copying.", true);
+            return;
+        }
+
+        try {
+            await this.copyText(this.outputTarget.value);
+        } catch (error) {
+            this.setStatus("Could not copy automatically. Select the key and copy it manually.", true);
+            this.capture('django secret copy failed', {
+                error: error.message
+            });
+            return;
+        }
+
         this.copyButtonTarget.textContent = "Copied";
+        this.setStatus("Secret key copied.");
         this.capture('django secret copied');
     }
 
     resetCopyButton() {
-        this.copyButtonTarget.classList.replace("bg-blue-600", "bg-green-600");
         this.copyButtonTarget.textContent = "Copy";
+    }
+
+    setGenerating(isGenerating) {
+        this.generateButtonTarget.disabled = isGenerating;
+        this.generateButtonTarget.textContent = isGenerating ? "Generating..." : "Generate Secret Key";
+    }
+
+    setStatus(message, isError = false) {
+        this.statusTarget.textContent = message;
+        this.statusTarget.classList.toggle("bw-muted", !isError);
+        this.statusTarget.classList.toggle("bw-status-error", isError);
+    }
+
+    async copyText(value) {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(value);
+            return;
+        }
+
+        const textarea = document.createElement("textarea");
+        textarea.value = value;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.top = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        try {
+            const copied = document.execCommand("copy");
+            if (!copied) {
+                throw new Error("Copy command was rejected");
+            }
+        } finally {
+            textarea.remove();
+        }
     }
 
     getCookie(name) {

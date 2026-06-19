@@ -3,15 +3,20 @@
     {% include "components/seo_meta.html" with title="Newsletter Signup Complete | Built with Django" description="Thanks for signing up for the Built with Django newsletter." canonical_path="/newsletter/email-signup-thanks/" robots="noindex,nofollow" twitter_card="summary" image_alt="Built with Django logo" %}
 {% endblock meta %}
 {% block content %}
-    <div class="mx-auto mb-10 text-center">
-        <h1 class="text-4xl">Thanks for signing up!</h1>
-        <h2 class="text-2xl">
-            We will send you a rare email whenever we have a couple of new projects!
-        </h2>
-    </div>
-    <div class="mx-auto my-4 mb-10 text-center">
-        <a class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700" href="{% url 'home' %}">
-            Back to Home Page
-        </a>
-    </div>
+    <section class="bw-section">
+      <div class="bw-container">
+        <div class="bw-surface mx-auto max-w-xl p-8 text-center">
+            <span class="bw-menu-icon mx-auto" aria-hidden="true">
+              <i class="las la-check"></i>
+            </span>
+            <h1 class="mt-5 text-3xl font-black leading-tight text-[var(--bw-ink)]">Thanks for signing up!</h1>
+            <p class="mx-auto mt-3 max-w-md text-base leading-7 bw-muted">
+                We will send a rare email whenever there are new Django projects worth seeing.
+            </p>
+            <a class="bw-button bw-button-primary mt-6" href="{% url 'home' %}">
+                Back to home
+            </a>
+        </div>
+      </div>
+    </section>
 {% endblock content %}

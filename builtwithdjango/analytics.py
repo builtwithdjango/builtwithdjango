@@ -24,6 +24,7 @@ _MAX_HEADER_LENGTH = 1000
 
 def posthog_template_context(request):
     return {
+        "app_environment": getattr(settings, "ENVIRONMENT", ""),
         "posthog_enabled": getattr(settings, "POSTHOG_ENABLED", False),
         "posthog_api_key": getattr(settings, "POSTHOG_API_KEY", ""),
         "posthog_api_host": getattr(settings, "POSTHOG_HOST", "https://us.i.posthog.com"),
