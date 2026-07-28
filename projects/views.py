@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db import transaction
 from django.db.models import Q
 from django.templatetags.static import static
 from django.urls import reverse, reverse_lazy
@@ -13,7 +14,7 @@ from newsletter.forms import NewsletterSignupForm
 from .filters import ProjectFilter
 from .forms import AddProject, ProjectUpdateViewForm
 from .hooks import screenshot_saved
-from .models import Project
+from .models import Project, ProjectTitleAlias
 from .querysets import with_like_metadata
 from .tasks import fetch_page_content, notify_of_new_project, save_screenshot
 
@@ -209,7 +210,16 @@ class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageM
             if not screenshot_uploaded:
                 form.instance.homepage_screenshot = ""
 
-        response = super().form_valid(form)
+        with transaction.atomic():
+            previous_title = (
+                Project.objects.select_for_update().filter(id=form.instance.id).values_list("title", flat=True).get()
+            )
+            response = super().form_valid(form)
+            if previous_title != self.object.title:
+                ProjectTitleAlias.objects.get_or_create(
+                    title=previous_title,
+                    defaults={"project": self.object},
+                )
 
         if url_changed:
             if not screenshot_uploaded:

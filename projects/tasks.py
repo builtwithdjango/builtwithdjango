@@ -8,7 +8,7 @@ from builtwithdjango.notifications import send_admin_notification
 from builtwithdjango.sentry_utils import sentry_count, sentry_task_transaction
 from builtwithdjango.utils import get_builtwithdjango_logger
 
-from .models import Project
+from .models import Project, ProjectTitleAlias
 
 logger = get_builtwithdjango_logger(__name__)
 
@@ -19,7 +19,8 @@ def save_screenshot(project_identifier, expected_url=None, expected_screenshot=N
     else:
         # Keep jobs queued by releases that identified projects by title working
         # while new jobs use the stable primary key.
-        project = Project.objects.get(title=project_identifier)
+        alias = ProjectTitleAlias.objects.select_related("project").filter(title=project_identifier).first()
+        project = alias.project if alias else Project.objects.get(title=project_identifier)
 
     if expected_url is None:
         # Legacy jobs did not carry state. They may fill a missing screenshot,

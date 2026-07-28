@@ -18,7 +18,7 @@ from django.utils import timezone
 from webpack_boilerplate import utils as webpack_utils
 
 from .hooks import screenshot_saved
-from .models import Like, Project, get_content_analysis_agent
+from .models import Like, Project, ProjectTitleAlias, get_content_analysis_agent
 from .tasks import analyze_project, fetch_page_content, save_screenshot
 from .views import ProjectListView
 
@@ -200,6 +200,7 @@ class ProjectOwnershipTests(TestCase):
         )
         self.assertEqual(self.project.title, "Renamed Owner Project")
         self.assertEqual(self.project.slug, original_slug)
+        self.assertTrue(ProjectTitleAlias.objects.filter(project=self.project, title="Owner Project").exists())
         self.assertEqual(self.client.get(reverse("project", kwargs={"slug": original_slug})).status_code, 200)
 
     def test_non_owner_cannot_view_or_update_project(self):
@@ -711,6 +712,33 @@ class ProjectTaskTests(TestCase):
         self.assertEqual(project.homepage_screenshot.name, "website_homepage_screenshot/owner-upload.gif")
         self.assertFalse(project.published)
         get.assert_not_called()
+
+    def test_legacy_save_screenshot_uses_title_alias_after_rename_and_reuse(self):
+        original_project = Project.objects.create(
+            title="Legacy Original Title",
+            url="https://legacy-original.example.com",
+            short_description="The project that queued the legacy job.",
+        )
+        ProjectTitleAlias.objects.create(project=original_project, title=original_project.title)
+        original_project.title = "Renamed Legacy Project"
+        original_project.save()
+        reused_title_project = Project.objects.create(
+            title="Legacy Original Title",
+            url="https://reused-title.example.com",
+            short_description="A different project that reused the title.",
+        )
+        response = Mock(content=b"image-bytes")
+        response.raise_for_status.return_value = None
+
+        with patch("projects.tasks.requests.get", return_value=response):
+            self.assertTrue(save_screenshot("Legacy Original Title"))
+
+        original_project.refresh_from_db()
+        reused_title_project.refresh_from_db()
+        self.assertTrue(original_project.published)
+        self.assertTrue(original_project.homepage_screenshot.name.endswith("Renamed_Legacy_Project.png"))
+        self.assertFalse(reused_title_project.published)
+        self.assertFalse(reused_title_project.homepage_screenshot)
 
     def test_save_screenshot_returns_false_when_screenshot_fetch_fails(self):
         project = Project.objects.create(

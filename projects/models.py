@@ -284,6 +284,11 @@ class Project(models.Model):
         ordering = ["-date_added"]
 
 
+class ProjectTitleAlias(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="title_aliases")
+    title = models.CharField(max_length=100, unique=True)
+
+
 class Technology(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
