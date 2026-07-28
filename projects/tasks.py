@@ -21,9 +21,15 @@ def save_screenshot(project_identifier, expected_url=None, expected_screenshot=N
         # while new jobs use the stable primary key.
         project = Project.objects.get(title=project_identifier)
 
+    if expected_url is None:
+        # Legacy jobs did not carry state. They may fill a missing screenshot,
+        # but must not replace media an owner uploaded before the job ran.
+        expected_url = project.url
+        expected_screenshot = ""
+
     def screenshot_state_matches(candidate):
-        return expected_url is None or (
-            candidate.url == expected_url and (candidate.homepage_screenshot.name or "") == (expected_screenshot or "")
+        return candidate.url == expected_url and (candidate.homepage_screenshot.name or "") == (
+            expected_screenshot or ""
         )
 
     if not screenshot_state_matches(project):

@@ -696,6 +696,22 @@ class ProjectTaskTests(TestCase):
         self.assertTrue(project.published)
         self.assertTrue(project.homepage_screenshot.name.endswith("Legacy_Queued_Screenshot.png"))
 
+    def test_legacy_save_screenshot_keeps_newer_manual_upload(self):
+        project = Project.objects.create(
+            title="Legacy Screenshot With Owner Upload",
+            url="https://legacy-owner-upload.example.com",
+            short_description="A project.",
+            homepage_screenshot="website_homepage_screenshot/owner-upload.gif",
+        )
+
+        with patch("projects.tasks.requests.get") as get:
+            self.assertFalse(save_screenshot(project.title))
+
+        project.refresh_from_db()
+        self.assertEqual(project.homepage_screenshot.name, "website_homepage_screenshot/owner-upload.gif")
+        self.assertFalse(project.published)
+        get.assert_not_called()
+
     def test_save_screenshot_returns_false_when_screenshot_fetch_fails(self):
         project = Project.objects.create(
             title="Broken Screenshot Project",
