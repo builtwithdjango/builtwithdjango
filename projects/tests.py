@@ -172,7 +172,7 @@ class ProjectOwnershipTests(TestCase):
         self.assertEqual(self.project.content_summary, "")
         self.assertFalse(self.project.might_be_spam)
         self.assertFalse(self.project.homepage_screenshot)
-        mock_async_task.assert_any_call(save_screenshot, self.project.title, hook=screenshot_saved)
+        mock_async_task.assert_any_call(save_screenshot, self.project.id, hook=screenshot_saved)
         mock_async_task.assert_any_call(fetch_page_content, self.project.id)
 
     def test_owner_title_update_preserves_existing_project_slug(self):
@@ -626,12 +626,31 @@ class ProjectTaskTests(TestCase):
         response.raise_for_status.return_value = None
 
         with patch("projects.tasks.requests.get", return_value=response) as get:
-            self.assertTrue(save_screenshot(project.title))
+            self.assertTrue(save_screenshot(project.id))
 
         project.refresh_from_db()
         self.assertTrue(project.published)
         self.assertTrue(project.homepage_screenshot.name.endswith(".png"))
         self.assertEqual(get.call_args.kwargs["timeout"], 30)
+
+    def test_save_screenshot_uses_stable_project_id_after_title_change(self):
+        project = Project.objects.create(
+            title="Queued Screenshot Project",
+            url="https://queued-screenshot.example.com",
+            short_description="A project.",
+        )
+        queued_project_id = project.id
+        project.title = "Renamed Before Screenshot"
+        project.save()
+        response = Mock(content=b"image-bytes")
+        response.raise_for_status.return_value = None
+
+        with patch("projects.tasks.requests.get", return_value=response):
+            self.assertTrue(save_screenshot(queued_project_id))
+
+        project.refresh_from_db()
+        self.assertTrue(project.published)
+        self.assertTrue(project.homepage_screenshot.name.endswith("Renamed_Before_Screenshot.png"))
 
     def test_save_screenshot_returns_false_when_screenshot_fetch_fails(self):
         project = Project.objects.create(
@@ -643,7 +662,7 @@ class ProjectTaskTests(TestCase):
         response.raise_for_status.side_effect = requests.HTTPError("failed")
 
         with patch("projects.tasks.requests.get", return_value=response):
-            self.assertFalse(save_screenshot(project.title))
+            self.assertFalse(save_screenshot(project.id))
 
         project.refresh_from_db()
         self.assertFalse(project.published)

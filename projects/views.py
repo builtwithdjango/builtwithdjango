@@ -142,7 +142,7 @@ class ProjectCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.instance.logged_in_maker = self.request.user
         self.object = form.save()
 
-        async_task(save_screenshot, self.object.title, hook=screenshot_saved)
+        async_task(save_screenshot, self.object.id, hook=screenshot_saved)
         async_task(notify_of_new_project, self.object)
         async_task(fetch_page_content, self.object.id)
         capture(
@@ -207,7 +207,7 @@ class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageM
 
         if url_changed:
             if not screenshot_uploaded:
-                async_task(save_screenshot, self.object.title, hook=screenshot_saved)
+                async_task(save_screenshot, self.object.id, hook=screenshot_saved)
             async_task(fetch_page_content, self.object.id)
 
         capture(

@@ -12,8 +12,8 @@ from .models import Project
 logger = get_builtwithdjango_logger(__name__)
 
 
-def save_screenshot(project_title):
-    project = Project.objects.get(title=project_title)
+def save_screenshot(project_id):
+    project = Project.objects.get(id=project_id)
 
     image_url = (
         f"https://api.screenshotmachine.com?key={settings.SCREENSHOT_API_KEY}&url={project.url}&dimension=1680x876"
