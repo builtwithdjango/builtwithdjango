@@ -16,6 +16,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 ## Unreleased
 ### Added
 - Restored production PostHog activation from the Built with Django public project key and added explicit checkout return/cancel analytics events for job, sponsored job, and Django Developers checkout flows.
+- Let signed-in project submitters update their linked listing metadata and screenshot.
 
 ### Changed
 - Simplified the landing page by removing the hero showcase, proof strip, and quick-link card band.

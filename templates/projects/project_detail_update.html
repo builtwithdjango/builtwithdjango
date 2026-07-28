@@ -23,6 +23,26 @@
                         </div>
                         <div class="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                {{ form.title.errors | safe }}
+                                <label for="{{ form.title.id_for_label }}"
+                                       class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Project title
+                                </label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    {{ form.title }}
+                                </div>
+                            </div>
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                {{ form.url.errors | safe }}
+                                <label for="{{ form.url.id_for_label }}"
+                                       class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Project URL
+                                </label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    {{ form.url }}
+                                </div>
+                            </div>
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 {{ form.short_description.errors | safe }}
                                 <label for="short_description"
                                        class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
@@ -32,6 +52,24 @@
                                     {{ form.short_description }}
                                     <p class="mt-2 text-sm text-gray-500">
                                         Write a few sentences about project (Up to 200 characters).
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                {{ form.homepage_screenshot.errors | safe }}
+                                <label for="{{ form.homepage_screenshot.id_for_label }}"
+                                       class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Project screenshot
+                                </label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    {% if object.homepage_screenshot %}
+                                        <img src="{{ object.homepage_screenshot.url }}"
+                                             alt="Current screenshot for {{ object.title }}"
+                                             class="mb-4 w-full max-w-lg rounded-md border border-gray-200" />
+                                    {% endif %}
+                                    {{ form.homepage_screenshot }}
+                                    <p class="mt-2 text-sm text-gray-500">
+                                        Upload a new image to replace the current project screenshot.
                                     </p>
                                 </div>
                             </div>

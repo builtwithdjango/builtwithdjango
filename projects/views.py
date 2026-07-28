@@ -123,7 +123,8 @@ class ProjectDetailView(DetailView):
         return context
 
 
-class ProjectCreateView(SuccessMessageMixin, CreateView):
+class ProjectCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    login_url = "account_login"
     model = Project
     form_class = AddProject
     template_name = "projects/submit-project.html"
@@ -161,12 +162,19 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
         return super(ProjectCreateView, self).form_valid(form)
 
 
-class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     login_url = "account_login"
     model = Project
     form_class = ProjectUpdateViewForm
     template_name = "projects/project_detail_update.html"
     success_message = "Project updated successfully!"
+
+    def test_func(self):
+        project = self.get_object()
+        user_id = self.request.user.id
+        return project.logged_in_maker_id == user_id or (
+            project.maker_id is not None and project.maker.user_id == user_id
+        )
 
     def get_success_url(self):
         return reverse("project", kwargs={"slug": self.object.slug})

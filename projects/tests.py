@@ -1,17 +1,183 @@
 import importlib
+import json
+from base64 import b64decode
 from contextlib import nullcontext
 from datetime import timedelta
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 import requests
 from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import RequestFactory, TestCase
+from django.test.utils import override_settings
+from django.urls import reverse
 from django.utils import timezone
+from webpack_boilerplate import utils as webpack_utils
 
 from .models import Like, Project, get_content_analysis_agent
 from .tasks import analyze_project, fetch_page_content, save_screenshot
 from .views import ProjectListView
+
+
+class ProjectOwnershipTests(TestCase):
+    def setUp(self):
+        User = get_user_model()
+        self.test_files = TemporaryDirectory()
+        self.addCleanup(self.test_files.cleanup)
+
+        manifest_path = Path(self.test_files.name) / "manifest.json"
+        manifest_path.write_text(
+            json.dumps(
+                {
+                    "entrypoints": {
+                        "hotwire": {
+                            "assets": {
+                                "js": ["/static/js/hotwire.js"],
+                                "css": ["/static/css/hotwire.css"],
+                            },
+                        },
+                    },
+                    "css/hotwire.css": "/static/css/hotwire.css",
+                    "js/hotwire.js": "/static/js/hotwire.js",
+                },
+            ),
+            encoding="utf-8",
+        )
+
+        webpack_utils._loaders.clear()
+        self.file_settings = override_settings(
+            MEDIA_ROOT=str(Path(self.test_files.name) / "media"),
+            WEBPACK_LOADER={
+                "CACHE": False,
+                "MANIFEST_FILE": str(manifest_path),
+            },
+        )
+        self.file_settings.enable()
+        self.addCleanup(self.file_settings.disable)
+        self.addCleanup(webpack_utils._loaders.clear)
+
+        self.owner = User.objects.create_user(username="owner", email="owner@example.com", password="password")
+        self.other_user = User.objects.create_user(
+            username="other-user",
+            email="other@example.com",
+            password="password",
+        )
+        self.project = Project.objects.create(
+            title="Owner Project",
+            url="https://owner-project.example.com",
+            short_description="The original description.",
+            logged_in_maker=self.owner,
+            published=True,
+        )
+
+    def test_anonymous_users_must_sign_in_before_submitting_a_project(self):
+        response = self.client.post(
+            reverse("submit_project"),
+            {
+                "title": "Anonymous Project",
+                "url": "https://anonymous-project.example.com",
+                "short_description": "This should not be created.",
+            },
+        )
+
+        self.assertRedirects(
+            response,
+            f"{reverse('account_login')}?next={reverse('submit_project')}",
+            fetch_redirect_response=False,
+        )
+        self.assertFalse(Project.objects.filter(title="Anonymous Project").exists())
+
+    def test_anonymous_users_must_sign_in_before_editing_a_project(self):
+        update_url = reverse("project_update", kwargs={"slug": self.project.slug})
+
+        response = self.client.get(update_url)
+
+        self.assertRedirects(
+            response,
+            f"{reverse('account_login')}?next={update_url}",
+            fetch_redirect_response=False,
+        )
+
+    def test_authenticated_submitter_becomes_project_owner(self):
+        self.client.force_login(self.owner)
+
+        with patch("projects.views.async_task"):
+            response = self.client.post(
+                reverse("submit_project"),
+                {
+                    "title": "Submitted Project",
+                    "url": "https://submitted-project.example.com",
+                    "short_description": "Submitted by its owner.",
+                },
+            )
+
+        self.assertRedirects(response, reverse("projects"), fetch_redirect_response=False)
+        self.assertEqual(Project.objects.get(title="Submitted Project").logged_in_maker, self.owner)
+
+    def test_owner_can_update_project_metadata_and_screenshot(self):
+        self.client.force_login(self.owner)
+        update_url = reverse("project_update", kwargs={"slug": self.project.slug})
+        edit_response = self.client.get(update_url)
+        screenshot = SimpleUploadedFile(
+            "updated-screenshot.gif",
+            b64decode("R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="),
+            content_type="image/gif",
+        )
+
+        response = self.client.post(
+            update_url,
+            {
+                "title": "Updated Owner Project",
+                "url": "https://updated-owner-project.example.com",
+                "short_description": "An updated description.",
+                "homepage_screenshot": screenshot,
+            },
+        )
+
+        self.project.refresh_from_db()
+        self.assertContains(edit_response, 'name="homepage_screenshot"', html=False)
+        self.assertRedirects(response, self.project.get_absolute_url(), fetch_redirect_response=False)
+        self.assertEqual(self.project.title, "Updated Owner Project")
+        self.assertEqual(self.project.url, "https://updated-owner-project.example.com")
+        self.assertEqual(self.project.short_description, "An updated description.")
+        self.assertTrue(self.project.homepage_screenshot.name.endswith("updated-screenshot.gif"))
+
+    def test_non_owner_cannot_view_or_update_project(self):
+        self.client.force_login(self.other_user)
+        update_url = reverse("project_update", kwargs={"slug": self.project.slug})
+
+        get_response = self.client.get(update_url)
+        post_response = self.client.post(
+            update_url,
+            {
+                "title": "Stolen Project",
+                "url": "https://stolen-project.example.com",
+                "short_description": "Changed by someone else.",
+            },
+        )
+
+        self.project.refresh_from_db()
+        self.assertEqual(get_response.status_code, 403)
+        self.assertEqual(post_response.status_code, 403)
+        self.assertEqual(self.project.title, "Owner Project")
+        self.assertEqual(self.project.url, "https://owner-project.example.com")
+
+    def test_matching_submitter_email_does_not_claim_an_unlinked_project(self):
+        unlinked_project = Project.objects.create(
+            title="Legacy Project",
+            url="https://legacy-project.example.com",
+            short_description="Submitted before account ownership was linked.",
+            user_email=self.owner.email,
+            published=True,
+        )
+        self.client.force_login(self.owner)
+
+        response = self.client.get(reverse("project_update", kwargs={"slug": unlinked_project.slug}))
+
+        self.assertEqual(response.status_code, 403)
 
 
 class ProjectTestCase(TestCase):
