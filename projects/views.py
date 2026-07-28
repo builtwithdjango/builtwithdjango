@@ -180,7 +180,36 @@ class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageM
         return reverse("project", kwargs={"slug": self.object.slug})
 
     def form_valid(self, form):
+        url_changed = "url" in form.changed_data
+        screenshot_uploaded = "homepage_screenshot" in form.changed_data
+
+        if url_changed:
+            for fieldname in [
+                "page_content_markdown",
+                "page_title",
+                "page_description",
+                "page_content_html",
+                "target_audience",
+                "content_summary",
+                "key_features",
+                "pain_points",
+                "usage_instructions",
+                "page_links",
+                "content_language",
+            ]:
+                setattr(form.instance, fieldname, "")
+            form.instance.date_scraped = None
+            form.instance.might_be_spam = False
+            if not screenshot_uploaded:
+                form.instance.homepage_screenshot = ""
+
         response = super().form_valid(form)
+
+        if url_changed:
+            if not screenshot_uploaded:
+                async_task(save_screenshot, self.object.title, hook=screenshot_saved)
+            async_task(fetch_page_content, self.object.id)
+
         capture(
             self.request,
             "project updated",

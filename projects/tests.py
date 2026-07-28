@@ -17,6 +17,7 @@ from django.urls import reverse
 from django.utils import timezone
 from webpack_boilerplate import utils as webpack_utils
 
+from .hooks import screenshot_saved
 from .models import Like, Project, get_content_analysis_agent
 from .tasks import analyze_project, fetch_page_content, save_screenshot
 from .views import ProjectListView
@@ -144,6 +145,56 @@ class ProjectOwnershipTests(TestCase):
         self.assertEqual(self.project.url, "https://updated-owner-project.example.com")
         self.assertEqual(self.project.short_description, "An updated description.")
         self.assertTrue(self.project.homepage_screenshot.name.endswith("updated-screenshot.gif"))
+
+    def test_owner_url_update_clears_stale_enrichment_and_queues_refreshes(self):
+        self.project.page_title = "Old page title"
+        self.project.page_content_markdown = "Old page content"
+        self.project.content_summary = "Old analysis"
+        self.project.might_be_spam = True
+        self.project.homepage_screenshot = "website_homepage_screenshot/old.png"
+        self.project.save()
+        self.client.force_login(self.owner)
+
+        with patch("projects.views.async_task") as mock_async_task:
+            response = self.client.post(
+                reverse("project_update", kwargs={"slug": self.project.slug}),
+                {
+                    "title": self.project.title,
+                    "url": "https://new-owner-project.example.com",
+                    "short_description": self.project.short_description,
+                },
+            )
+
+        self.project.refresh_from_db()
+        self.assertRedirects(response, self.project.get_absolute_url(), fetch_redirect_response=False)
+        self.assertEqual(self.project.page_title, "")
+        self.assertEqual(self.project.page_content_markdown, "")
+        self.assertEqual(self.project.content_summary, "")
+        self.assertFalse(self.project.might_be_spam)
+        self.assertFalse(self.project.homepage_screenshot)
+        mock_async_task.assert_any_call(save_screenshot, self.project.title, hook=screenshot_saved)
+        mock_async_task.assert_any_call(fetch_page_content, self.project.id)
+
+    def test_owner_title_update_preserves_existing_project_slug(self):
+        original_slug = self.project.slug
+        self.client.force_login(self.owner)
+
+        response = self.client.post(
+            reverse("project_update", kwargs={"slug": original_slug}),
+            {
+                "title": "Renamed Owner Project",
+                "url": self.project.url,
+                "short_description": self.project.short_description,
+            },
+        )
+
+        self.project.refresh_from_db()
+        self.assertRedirects(
+            response, reverse("project", kwargs={"slug": original_slug}), fetch_redirect_response=False
+        )
+        self.assertEqual(self.project.title, "Renamed Owner Project")
+        self.assertEqual(self.project.slug, original_slug)
+        self.assertEqual(self.client.get(reverse("project", kwargs={"slug": original_slug})).status_code, 200)
 
     def test_non_owner_cannot_view_or_update_project(self):
         self.client.force_login(self.other_user)

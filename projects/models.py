@@ -75,7 +75,7 @@ class Project(models.Model):
     url = models.URLField(unique=True)
     short_description = models.CharField(max_length=200)
     user_email = models.EmailField(blank=True, null=True)
-    slug = AutoSlugField(populate_from="title", always_update=True)
+    slug = AutoSlugField(populate_from="title")
     published = models.BooleanField(default=False)
     large_company = models.BooleanField(default=False)
     type = models.CharField(max_length=50, blank=True)
