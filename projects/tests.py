@@ -172,7 +172,13 @@ class ProjectOwnershipTests(TestCase):
         self.assertEqual(self.project.content_summary, "")
         self.assertFalse(self.project.might_be_spam)
         self.assertFalse(self.project.homepage_screenshot)
-        mock_async_task.assert_any_call(save_screenshot, self.project.id, hook=screenshot_saved)
+        mock_async_task.assert_any_call(
+            save_screenshot,
+            self.project.id,
+            self.project.url,
+            "",
+            hook=screenshot_saved,
+        )
         mock_async_task.assert_any_call(fetch_page_content, self.project.id)
 
     def test_owner_title_update_preserves_existing_project_slug(self):
@@ -651,6 +657,44 @@ class ProjectTaskTests(TestCase):
         project.refresh_from_db()
         self.assertTrue(project.published)
         self.assertTrue(project.homepage_screenshot.name.endswith("Renamed_Before_Screenshot.png"))
+
+    def test_save_screenshot_keeps_newer_manual_upload(self):
+        project = Project.objects.create(
+            title="Stale Screenshot Project",
+            url="https://stale-screenshot.example.com",
+            short_description="A project.",
+        )
+        response = Mock(content=b"generated-image-bytes")
+        response.raise_for_status.return_value = None
+
+        def upload_screenshot_during_fetch(*args, **kwargs):
+            Project.objects.filter(id=project.id).update(
+                homepage_screenshot="website_homepage_screenshot/manual-upload.gif"
+            )
+            return response
+
+        with patch("projects.tasks.requests.get", side_effect=upload_screenshot_during_fetch):
+            self.assertFalse(save_screenshot(project.id, project.url, ""))
+
+        project.refresh_from_db()
+        self.assertEqual(project.homepage_screenshot.name, "website_homepage_screenshot/manual-upload.gif")
+        self.assertFalse(project.published)
+
+    def test_save_screenshot_supports_legacy_title_argument(self):
+        project = Project.objects.create(
+            title="Legacy Queued Screenshot",
+            url="https://legacy-screenshot.example.com",
+            short_description="A project.",
+        )
+        response = Mock(content=b"image-bytes")
+        response.raise_for_status.return_value = None
+
+        with patch("projects.tasks.requests.get", return_value=response):
+            self.assertTrue(save_screenshot(project.title))
+
+        project.refresh_from_db()
+        self.assertTrue(project.published)
+        self.assertTrue(project.homepage_screenshot.name.endswith("Legacy_Queued_Screenshot.png"))
 
     def test_save_screenshot_returns_false_when_screenshot_fetch_fails(self):
         project = Project.objects.create(

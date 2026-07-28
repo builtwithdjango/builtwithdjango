@@ -1,6 +1,7 @@
 import requests
 from django.conf import settings
 from django.core.files.base import ContentFile
+from django.db import transaction
 from django_q.tasks import async_task
 
 from builtwithdjango.notifications import send_admin_notification
@@ -12,8 +13,22 @@ from .models import Project
 logger = get_builtwithdjango_logger(__name__)
 
 
-def save_screenshot(project_id):
-    project = Project.objects.get(id=project_id)
+def save_screenshot(project_identifier, expected_url=None, expected_screenshot=None):
+    if isinstance(project_identifier, int):
+        project = Project.objects.get(id=project_identifier)
+    else:
+        # Keep jobs queued by releases that identified projects by title working
+        # while new jobs use the stable primary key.
+        project = Project.objects.get(title=project_identifier)
+
+    def screenshot_state_matches(candidate):
+        return expected_url is None or (
+            candidate.url == expected_url and (candidate.homepage_screenshot.name or "") == (expected_screenshot or "")
+        )
+
+    if not screenshot_state_matches(project):
+        logger.info("screenshot_refresh_skipped", project_id=project.id, reason="project_changed")
+        return False
 
     image_url = (
         f"https://api.screenshotmachine.com?key={settings.SCREENSHOT_API_KEY}&url={project.url}&dimension=1680x876"
@@ -27,10 +42,16 @@ def save_screenshot(project_id):
         logger.error("screenshot_fetch_failed", project_id=project.id, error=str(e))
         return False
 
-    file = ContentFile(response.content)
-    project.homepage_screenshot.save(f"{project.title}.png", file, save=True)
-    project.published = True
-    project.save()
+    with transaction.atomic():
+        project = Project.objects.select_for_update().get(id=project.id)
+        if not screenshot_state_matches(project):
+            logger.info("screenshot_refresh_skipped", project_id=project.id, reason="project_changed")
+            return False
+
+        file = ContentFile(response.content)
+        project.homepage_screenshot.save(f"{project.title}.png", file, save=False)
+        project.published = True
+        project.save()
     return True
 
 
