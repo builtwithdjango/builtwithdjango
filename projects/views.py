@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db import transaction
 from django.db.models import Q
 from django.templatetags.static import static
 from django.urls import reverse, reverse_lazy
@@ -13,7 +14,7 @@ from newsletter.forms import NewsletterSignupForm
 from .filters import ProjectFilter
 from .forms import AddProject, ProjectUpdateViewForm
 from .hooks import screenshot_saved
-from .models import Project
+from .models import Project, ProjectTitleAlias
 from .querysets import with_like_metadata
 from .tasks import fetch_page_content, notify_of_new_project, save_screenshot
 
@@ -123,7 +124,8 @@ class ProjectDetailView(DetailView):
         return context
 
 
-class ProjectCreateView(SuccessMessageMixin, CreateView):
+class ProjectCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    login_url = "account_login"
     model = Project
     form_class = AddProject
     template_name = "projects/submit-project.html"
@@ -141,7 +143,13 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
         form.instance.logged_in_maker = self.request.user
         self.object = form.save()
 
-        async_task(save_screenshot, self.object.title, hook=screenshot_saved)
+        async_task(
+            save_screenshot,
+            self.object.id,
+            self.object.url,
+            self.object.homepage_screenshot.name,
+            hook=screenshot_saved,
+        )
         async_task(notify_of_new_project, self.object)
         async_task(fetch_page_content, self.object.id)
         capture(
@@ -161,18 +169,69 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
         return super(ProjectCreateView, self).form_valid(form)
 
 
-class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     login_url = "account_login"
     model = Project
     form_class = ProjectUpdateViewForm
     template_name = "projects/project_detail_update.html"
     success_message = "Project updated successfully!"
 
+    def test_func(self):
+        project = self.get_object()
+        user_id = self.request.user.id
+        return project.logged_in_maker_id == user_id or (
+            project.maker_id is not None and project.maker.user_id == user_id
+        )
+
     def get_success_url(self):
         return reverse("project", kwargs={"slug": self.object.slug})
 
     def form_valid(self, form):
-        response = super().form_valid(form)
+        url_changed = "url" in form.changed_data
+        screenshot_uploaded = "homepage_screenshot" in form.changed_data
+
+        if url_changed:
+            for fieldname in [
+                "page_content_markdown",
+                "page_title",
+                "page_description",
+                "page_content_html",
+                "target_audience",
+                "content_summary",
+                "key_features",
+                "pain_points",
+                "usage_instructions",
+                "page_links",
+                "content_language",
+            ]:
+                setattr(form.instance, fieldname, "")
+            form.instance.date_scraped = None
+            form.instance.might_be_spam = False
+            if not screenshot_uploaded:
+                form.instance.homepage_screenshot = ""
+
+        with transaction.atomic():
+            previous_title = (
+                Project.objects.select_for_update().filter(id=form.instance.id).values_list("title", flat=True).get()
+            )
+            response = super().form_valid(form)
+            if previous_title != self.object.title:
+                ProjectTitleAlias.objects.get_or_create(
+                    title=previous_title,
+                    defaults={"project": self.object},
+                )
+
+        if url_changed:
+            if not screenshot_uploaded:
+                async_task(
+                    save_screenshot,
+                    self.object.id,
+                    self.object.url,
+                    self.object.homepage_screenshot.name,
+                    hook=screenshot_saved,
+                )
+            async_task(fetch_page_content, self.object.id)
+
         capture(
             self.request,
             "project updated",

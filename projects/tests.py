@@ -1,17 +1,241 @@
 import importlib
+import json
+from base64 import b64decode
 from contextlib import nullcontext
 from datetime import timedelta
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 import requests
 from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import RequestFactory, TestCase
+from django.test.utils import override_settings
+from django.urls import reverse
 from django.utils import timezone
+from webpack_boilerplate import utils as webpack_utils
 
-from .models import Like, Project, get_content_analysis_agent
+from .hooks import screenshot_saved
+from .models import Like, Project, ProjectTitleAlias, get_content_analysis_agent
 from .tasks import analyze_project, fetch_page_content, save_screenshot
 from .views import ProjectListView
+
+
+class ProjectOwnershipTests(TestCase):
+    def setUp(self):
+        User = get_user_model()
+        self.test_files = TemporaryDirectory()
+        self.addCleanup(self.test_files.cleanup)
+
+        manifest_path = Path(self.test_files.name) / "manifest.json"
+        manifest_path.write_text(
+            json.dumps(
+                {
+                    "entrypoints": {
+                        "hotwire": {
+                            "assets": {
+                                "js": ["/static/js/hotwire.js"],
+                                "css": ["/static/css/hotwire.css"],
+                            },
+                        },
+                    },
+                    "css/hotwire.css": "/static/css/hotwire.css",
+                    "js/hotwire.js": "/static/js/hotwire.js",
+                },
+            ),
+            encoding="utf-8",
+        )
+
+        webpack_utils._loaders.clear()
+        self.file_settings = override_settings(
+            MEDIA_ROOT=str(Path(self.test_files.name) / "media"),
+            WEBPACK_LOADER={
+                "CACHE": False,
+                "MANIFEST_FILE": str(manifest_path),
+            },
+        )
+        self.file_settings.enable()
+        self.addCleanup(self.file_settings.disable)
+        self.addCleanup(webpack_utils._loaders.clear)
+
+        self.owner = User.objects.create_user(username="owner", email="owner@example.com", password="password")
+        self.other_user = User.objects.create_user(
+            username="other-user",
+            email="other@example.com",
+            password="password",
+        )
+        self.project = Project.objects.create(
+            title="Owner Project",
+            url="https://owner-project.example.com",
+            short_description="The original description.",
+            logged_in_maker=self.owner,
+            published=True,
+        )
+
+    def test_anonymous_users_must_sign_in_before_submitting_a_project(self):
+        response = self.client.post(
+            reverse("submit_project"),
+            {
+                "title": "Anonymous Project",
+                "url": "https://anonymous-project.example.com",
+                "short_description": "This should not be created.",
+            },
+        )
+
+        self.assertRedirects(
+            response,
+            f"{reverse('account_login')}?next={reverse('submit_project')}",
+            fetch_redirect_response=False,
+        )
+        self.assertFalse(Project.objects.filter(title="Anonymous Project").exists())
+
+    def test_anonymous_users_must_sign_in_before_editing_a_project(self):
+        update_url = reverse("project_update", kwargs={"slug": self.project.slug})
+
+        response = self.client.get(update_url)
+
+        self.assertRedirects(
+            response,
+            f"{reverse('account_login')}?next={update_url}",
+            fetch_redirect_response=False,
+        )
+
+    def test_authenticated_submitter_becomes_project_owner(self):
+        self.client.force_login(self.owner)
+
+        with patch("projects.views.async_task"):
+            response = self.client.post(
+                reverse("submit_project"),
+                {
+                    "title": "Submitted Project",
+                    "url": "https://submitted-project.example.com",
+                    "short_description": "Submitted by its owner.",
+                },
+            )
+
+        self.assertRedirects(response, reverse("projects"), fetch_redirect_response=False)
+        self.assertEqual(Project.objects.get(title="Submitted Project").logged_in_maker, self.owner)
+
+    def test_owner_can_update_project_metadata_and_screenshot(self):
+        self.client.force_login(self.owner)
+        update_url = reverse("project_update", kwargs={"slug": self.project.slug})
+        edit_response = self.client.get(update_url)
+        screenshot = SimpleUploadedFile(
+            "updated-screenshot.gif",
+            b64decode("R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="),
+            content_type="image/gif",
+        )
+
+        response = self.client.post(
+            update_url,
+            {
+                "title": "Updated Owner Project",
+                "url": "https://updated-owner-project.example.com",
+                "short_description": "An updated description.",
+                "homepage_screenshot": screenshot,
+            },
+        )
+
+        self.project.refresh_from_db()
+        self.assertContains(edit_response, 'name="homepage_screenshot"', html=False)
+        self.assertRedirects(response, self.project.get_absolute_url(), fetch_redirect_response=False)
+        self.assertEqual(self.project.title, "Updated Owner Project")
+        self.assertEqual(self.project.url, "https://updated-owner-project.example.com")
+        self.assertEqual(self.project.short_description, "An updated description.")
+        self.assertTrue(self.project.homepage_screenshot.name.endswith("updated-screenshot.gif"))
+
+    def test_owner_url_update_clears_stale_enrichment_and_queues_refreshes(self):
+        self.project.page_title = "Old page title"
+        self.project.page_content_markdown = "Old page content"
+        self.project.content_summary = "Old analysis"
+        self.project.might_be_spam = True
+        self.project.homepage_screenshot = "website_homepage_screenshot/old.png"
+        self.project.save()
+        self.client.force_login(self.owner)
+
+        with patch("projects.views.async_task") as mock_async_task:
+            response = self.client.post(
+                reverse("project_update", kwargs={"slug": self.project.slug}),
+                {
+                    "title": self.project.title,
+                    "url": "https://new-owner-project.example.com",
+                    "short_description": self.project.short_description,
+                },
+            )
+
+        self.project.refresh_from_db()
+        self.assertRedirects(response, self.project.get_absolute_url(), fetch_redirect_response=False)
+        self.assertEqual(self.project.page_title, "")
+        self.assertEqual(self.project.page_content_markdown, "")
+        self.assertEqual(self.project.content_summary, "")
+        self.assertFalse(self.project.might_be_spam)
+        self.assertFalse(self.project.homepage_screenshot)
+        mock_async_task.assert_any_call(
+            save_screenshot,
+            self.project.id,
+            self.project.url,
+            "",
+            hook=screenshot_saved,
+        )
+        mock_async_task.assert_any_call(fetch_page_content, self.project.id)
+
+    def test_owner_title_update_preserves_existing_project_slug(self):
+        original_slug = self.project.slug
+        self.client.force_login(self.owner)
+
+        response = self.client.post(
+            reverse("project_update", kwargs={"slug": original_slug}),
+            {
+                "title": "Renamed Owner Project",
+                "url": self.project.url,
+                "short_description": self.project.short_description,
+            },
+        )
+
+        self.project.refresh_from_db()
+        self.assertRedirects(
+            response, reverse("project", kwargs={"slug": original_slug}), fetch_redirect_response=False
+        )
+        self.assertEqual(self.project.title, "Renamed Owner Project")
+        self.assertEqual(self.project.slug, original_slug)
+        self.assertTrue(ProjectTitleAlias.objects.filter(project=self.project, title="Owner Project").exists())
+        self.assertEqual(self.client.get(reverse("project", kwargs={"slug": original_slug})).status_code, 200)
+
+    def test_non_owner_cannot_view_or_update_project(self):
+        self.client.force_login(self.other_user)
+        update_url = reverse("project_update", kwargs={"slug": self.project.slug})
+
+        get_response = self.client.get(update_url)
+        post_response = self.client.post(
+            update_url,
+            {
+                "title": "Stolen Project",
+                "url": "https://stolen-project.example.com",
+                "short_description": "Changed by someone else.",
+            },
+        )
+
+        self.project.refresh_from_db()
+        self.assertEqual(get_response.status_code, 403)
+        self.assertEqual(post_response.status_code, 403)
+        self.assertEqual(self.project.title, "Owner Project")
+        self.assertEqual(self.project.url, "https://owner-project.example.com")
+
+    def test_matching_submitter_email_does_not_claim_an_unlinked_project(self):
+        unlinked_project = Project.objects.create(
+            title="Legacy Project",
+            url="https://legacy-project.example.com",
+            short_description="Submitted before account ownership was linked.",
+            user_email=self.owner.email,
+            published=True,
+        )
+        self.client.force_login(self.owner)
+
+        response = self.client.get(reverse("project_update", kwargs={"slug": unlinked_project.slug}))
+
+        self.assertEqual(response.status_code, 403)
 
 
 class ProjectTestCase(TestCase):
@@ -409,12 +633,112 @@ class ProjectTaskTests(TestCase):
         response.raise_for_status.return_value = None
 
         with patch("projects.tasks.requests.get", return_value=response) as get:
-            self.assertTrue(save_screenshot(project.title))
+            self.assertTrue(save_screenshot(project.id))
 
         project.refresh_from_db()
         self.assertTrue(project.published)
         self.assertTrue(project.homepage_screenshot.name.endswith(".png"))
         self.assertEqual(get.call_args.kwargs["timeout"], 30)
+
+    def test_save_screenshot_uses_stable_project_id_after_title_change(self):
+        project = Project.objects.create(
+            title="Queued Screenshot Project",
+            url="https://queued-screenshot.example.com",
+            short_description="A project.",
+        )
+        queued_project_id = project.id
+        project.title = "Renamed Before Screenshot"
+        project.save()
+        response = Mock(content=b"image-bytes")
+        response.raise_for_status.return_value = None
+
+        with patch("projects.tasks.requests.get", return_value=response):
+            self.assertTrue(save_screenshot(queued_project_id))
+
+        project.refresh_from_db()
+        self.assertTrue(project.published)
+        self.assertTrue(project.homepage_screenshot.name.endswith("Renamed_Before_Screenshot.png"))
+
+    def test_save_screenshot_keeps_newer_manual_upload(self):
+        project = Project.objects.create(
+            title="Stale Screenshot Project",
+            url="https://stale-screenshot.example.com",
+            short_description="A project.",
+        )
+        response = Mock(content=b"generated-image-bytes")
+        response.raise_for_status.return_value = None
+
+        def upload_screenshot_during_fetch(*args, **kwargs):
+            Project.objects.filter(id=project.id).update(
+                homepage_screenshot="website_homepage_screenshot/manual-upload.gif"
+            )
+            return response
+
+        with patch("projects.tasks.requests.get", side_effect=upload_screenshot_during_fetch):
+            self.assertFalse(save_screenshot(project.id, project.url, ""))
+
+        project.refresh_from_db()
+        self.assertEqual(project.homepage_screenshot.name, "website_homepage_screenshot/manual-upload.gif")
+        self.assertFalse(project.published)
+
+    def test_save_screenshot_supports_legacy_title_argument(self):
+        project = Project.objects.create(
+            title="Legacy Queued Screenshot",
+            url="https://legacy-screenshot.example.com",
+            short_description="A project.",
+        )
+        response = Mock(content=b"image-bytes")
+        response.raise_for_status.return_value = None
+
+        with patch("projects.tasks.requests.get", return_value=response):
+            self.assertTrue(save_screenshot(project.title))
+
+        project.refresh_from_db()
+        self.assertTrue(project.published)
+        self.assertTrue(project.homepage_screenshot.name.endswith("Legacy_Queued_Screenshot.png"))
+
+    def test_legacy_save_screenshot_keeps_newer_manual_upload(self):
+        project = Project.objects.create(
+            title="Legacy Screenshot With Owner Upload",
+            url="https://legacy-owner-upload.example.com",
+            short_description="A project.",
+            homepage_screenshot="website_homepage_screenshot/owner-upload.gif",
+        )
+
+        with patch("projects.tasks.requests.get") as get:
+            self.assertFalse(save_screenshot(project.title))
+
+        project.refresh_from_db()
+        self.assertEqual(project.homepage_screenshot.name, "website_homepage_screenshot/owner-upload.gif")
+        self.assertFalse(project.published)
+        get.assert_not_called()
+
+    def test_legacy_save_screenshot_uses_title_alias_after_rename_and_reuse(self):
+        original_project = Project.objects.create(
+            title="Legacy Original Title",
+            url="https://legacy-original.example.com",
+            short_description="The project that queued the legacy job.",
+        )
+        ProjectTitleAlias.objects.create(project=original_project, title=original_project.title)
+        original_project.title = "Renamed Legacy Project"
+        original_project.save()
+        reused_title_project = Project.objects.create(
+            title="Legacy Original Title",
+            url="https://reused-title.example.com",
+            short_description="A different project that reused the title.",
+        )
+        response = Mock(content=b"image-bytes")
+        response.raise_for_status.return_value = None
+
+        with patch("projects.tasks.requests.get", return_value=response):
+            self.assertTrue(save_screenshot("Legacy Original Title"))
+
+        original_project.refresh_from_db()
+        reused_title_project.refresh_from_db()
+        self.assertTrue(original_project.published)
+        self.assertTrue(original_project.homepage_screenshot.name.endswith("Renamed_Legacy_Project.png"))
+        self.assertFalse(reused_title_project.published)
+        self.assertFalse(reused_title_project.homepage_screenshot)
 
     def test_save_screenshot_returns_false_when_screenshot_fetch_fails(self):
         project = Project.objects.create(
@@ -426,7 +750,7 @@ class ProjectTaskTests(TestCase):
         response.raise_for_status.side_effect = requests.HTTPError("failed")
 
         with patch("projects.tasks.requests.get", return_value=response):
-            self.assertFalse(save_screenshot(project.title))
+            self.assertFalse(save_screenshot(project.id))
 
         project.refresh_from_db()
         self.assertFalse(project.published)

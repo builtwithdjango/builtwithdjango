@@ -67,7 +67,7 @@ jobs:
             The user has provided this instruction: "${{ github.event.inputs.instruction }}"
 
             Please execute this instruction and make the necessary changes to the codebase.
-            Follow all project guidelines in CLAUDE.md.
+            Follow all project guidelines in AGENTS.md.
             After making changes, do not commit them - the workflow will handle that.
 
             Be thorough and ensure your changes are complete and functional.

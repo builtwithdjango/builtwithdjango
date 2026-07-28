@@ -45,6 +45,8 @@ class ProjectUpdateViewForm(ModelForm):
         super(ProjectUpdateViewForm, self).__init__(*args, **kwargs)
 
         for fieldname in [
+            "title",
+            "url",
             "short_description",
             "sale_link",
         ]:
@@ -72,8 +74,11 @@ class ProjectUpdateViewForm(ModelForm):
     class Meta:
         model = Project
         fields = [
+            "title",
+            "url",
             "short_description",
             "description",
+            "homepage_screenshot",
             "twitter_url",
             "github_url",
             "technology_suggestions_by_user",
